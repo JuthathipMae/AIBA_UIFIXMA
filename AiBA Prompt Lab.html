@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AiBA Prompt Lab — เครื่องมือฝึกเขียนคำสั่ง AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ==========================================================================
+   1. DESIGN SYSTEM — CSS VARIABLES & TOKENS (AiBA Connect)
+   ========================================================================== */
+:root {
+  /* Typography */
+  --font-heading: 'Kanit', sans-serif;
+  --font-body: 'Sarabun', sans-serif;
+  --mono: 'Kanit', ui-monospace, Menlo, Consolas, monospace;
+
+  /* Base Palette — Light Mode */
+  --bg-base: #F8F9FE;
+  --bg-lavender: #F1EFFB;
+  --text-primary: #131836;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  /* Brand Primary & Secondary */
+  --brand-coral: #FF6B6B;
+  --brand-violet: #7C3AED;
+  --brand-blue: #38BDF8;
+  --brand-mint: #10B981;
+  --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+  --secondary-gradient: linear-gradient(135deg, #38BDF8 0%, #10B981 100%);
+
+  /* Liquid Glass System */
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-bg-strong: rgba(255, 255, 255, 0.90);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-outline: rgba(124, 58, 237, 0.12);
+  --glass-blur: blur(18px);
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+  /* Surface Helpers — Light Mode */
+  --surface-input: rgba(248, 249, 254, 0.88);
+  --surface-subtle: rgba(241, 239, 251, 0.62);
+  --border-subtle: rgba(19, 24, 54, 0.09);
+
+  /* Status Colors — Light Mode */
+  --ok-solid: #10B981;
+  --ok-text: #047857;
+  --ok-bg: rgba(16, 185, 129, 0.10);
+  --ok-border: rgba(16, 185, 129, 0.36);
+
+  --err-solid: #EF4444;
+  --err-text: #B91C1C;
+  --err-bg: rgba(239, 68, 68, 0.08);
+  --err-border: rgba(239, 68, 68, 0.32);
+
+  --warn-solid: #F59E0B;
+  --warn-text: #B45309;
+  --warn-bg: rgba(245, 158, 11, 0.10);
+  --warn-border: rgba(245, 158, 11, 0.35);
+
+  /* Shadows & Radii */
+  --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.04);
+  --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.07);
+  --shadow-lg: 0 20px 48px rgba(124, 58, 237, 0.12);
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Spacing & Container */
+  --container-max: 1240px;
+
+  /* Color-Coded Levels (Default = Level 01) */
+  --lv1-from: #10B981;
+  --lv1-to: #0EA5E9;
+  --lv1-grad: linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+  --lv1-solid: #059669;
+  --lv1-text: #047857;
+  --lv1-soft: rgba(16, 185, 129, 0.11);
+  --lv1-soft-strong: rgba(14, 165, 233, 0.15);
+  --lv1-border: rgba(16, 185, 129, 0.42);
+  --lv1-glow: rgba(14, 165, 233, 0.24);
+
+  --lv2-from: #F97316;
+  --lv2-to: #F59E0B;
+  --lv2-grad: linear-gradient(135deg, #F97316 0%, #F59E0B 100%);
+  --lv2-solid: #EA580C;
+  --lv2-text: #C2410C;
+  --lv2-soft: rgba(249, 115, 22, 0.11);
+  --lv2-soft-strong: rgba(245, 158, 11, 0.16);
+  --lv2-border: rgba(249, 115, 22, 0.44);
+  --lv2-glow: rgba(249, 115, 22, 0.24);
+
+  --lv3-from: #7C3AED;
+  --lv3-to: #F43F5E;
+  --lv3-grad: linear-gradient(135deg, #7C3AED 0%, #F43F5E 100%);
+  --lv3-solid: #7C3AED;
+  --lv3-text: #6D28D9;
+  --lv3-soft: rgba(124, 58, 237, 0.11);
+  --lv3-soft-strong: rgba(244, 63, 94, 0.14);
+  --lv3-border: rgba(124, 58, 237, 0.42);
+  --lv3-glow: rgba(124, 58, 237, 0.24);
+
+  /* Active Level Dynamic Variables */
+  --lv-from: var(--lv1-from);
+  --lv-to: var(--lv1-to);
+  --lv-grad: var(--lv1-grad);
+  --lv-solid: var(--lv1-solid);
+  --lv-text: var(--lv1-text);
+  --lv-soft: var(--lv1-soft);
+  --lv-soft-strong: var(--lv1-soft-strong);
+  --lv-border: var(--lv1-border);
+  --lv-glow: var(--lv1-glow);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  --bg-base: #0F1225;
+  --bg-lavender: #171B36;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+
+  --glass-bg: rgba(27, 32, 62, 0.78);
+  --glass-bg-strong: rgba(30, 36, 68, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-outline: rgba(167, 139, 250, 0.22);
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  --surface-input: rgba(15, 18, 37, 0.72);
+  --surface-subtle: rgba(15, 18, 37, 0.50);
+  --border-subtle: rgba(255, 255, 255, 0.10);
+
+  --ok-solid: #10B981;
+  --ok-text: #34D399;
+  --ok-bg: rgba(16, 185, 129, 0.14);
+  --ok-border: rgba(52, 211, 153, 0.40);
+
+  --err-solid: #F87171;
+  --err-text: #FCA5A5;
+  --err-bg: rgba(239, 68, 68, 0.14);
+  --err-border: rgba(248, 113, 113, 0.42);
+
+  --warn-solid: #FBBF24;
+  --warn-text: #FCD34D;
+  --warn-bg: rgba(245, 158, 11, 0.14);
+  --warn-border: rgba(251, 191, 36, 0.38);
+
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+
+  --lv1-solid: #10B981;
+  --lv1-text: #34D399;
+  --lv1-soft: rgba(16, 185, 129, 0.16);
+  --lv1-soft-strong: rgba(14, 165, 233, 0.20);
+  --lv1-border: rgba(52, 211, 153, 0.48);
+  --lv1-glow: rgba(14, 165, 233, 0.30);
+
+  --lv2-solid: #F97316;
+  --lv2-text: #FBBF24;
+  --lv2-soft: rgba(249, 115, 22, 0.16);
+  --lv2-soft-strong: rgba(245, 158, 11, 0.22);
+  --lv2-border: rgba(251, 146, 60, 0.50);
+  --lv2-glow: rgba(249, 115, 22, 0.30);
+
+  --lv3-solid: #A78BFA;
+  --lv3-text: #E879F9;
+  --lv3-soft: rgba(124, 58, 237, 0.20);
+  --lv3-soft-strong: rgba(244, 63, 94, 0.22);
+  --lv3-border: rgba(167, 139, 250, 0.52);
+  --lv3-glow: rgba(244, 63, 94, 0.30);
+}
+
+/* Level Scoped Bindings */
+[data-level="0"], .lv[data-i="0"] {
+  --lv-from: var(--lv1-from);
+  --lv-to: var(--lv1-to);
+  --lv-grad: var(--lv1-grad);
+  --lv-solid: var(--lv1-solid);
+  --lv-text: var(--lv1-text);
+  --lv-soft: var(--lv1-soft);
+  --lv-soft-strong: var(--lv1-soft-strong);
+  --lv-border: var(--lv1-border);
+  --lv-glow: var(--lv1-glow);
+}
+
+[data-level="1"], .lv[data-i="1"] {
+  --lv-from: var(--lv2-from);
+  --lv-to: var(--lv2-to);
+  --lv-grad: var(--lv2-grad);
+  --lv-solid: var(--lv2-solid);
+  --lv-text: var(--lv2-text);
+  --lv-soft: var(--lv2-soft);
+  --lv-soft-strong: var(--lv2-soft-strong);
+  --lv-border: var(--lv2-border);
+  --lv-glow: var(--lv2-glow);
+}
+
+[data-level="2"], .lv[data-i="2"] {
+  --lv-from: var(--lv3-from);
+  --lv-to: var(--lv3-to);
+  --lv-grad: var(--lv3-grad);
+  --lv-solid: var(--lv3-solid);
+  --lv-text: var(--lv3-text);
+  --lv-soft: var(--lv3-soft);
+  --lv-soft-strong: var(--lv3-soft-strong);
+  --lv-border: var(--lv3-border);
+  --lv-glow: var(--lv3-glow);
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background:
+    radial-gradient(900px 500px at 10% -5%, rgba(255, 107, 107, 0.12), transparent 60%),
+    radial-gradient(900px 550px at 92% 4%, rgba(124, 58, 237, 0.13), transparent 60%),
+    radial-gradient(700px 500px at 50% 45%, rgba(56, 189, 248, 0.08), transparent 70%),
+    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+  background-attachment: fixed;
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: var(--font-heading);
+  line-height: 1.25;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-heading);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand-violet);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ==========================================================================
+   3. FLOATING GLASS NAVBAR
+   ========================================================================== */
+.navbar-wrapper {
+  position: sticky;
+  top: 16px;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.floating-navbar {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md), var(--glass-inset);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nav-back-btn {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-outline);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.nav-back-btn:hover {
+  border-color: var(--brand-violet);
+  color: var(--brand-violet);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .nav-back-btn:hover {
+  color: #C4B5FD;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logo-slot {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-slot img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--glass-outline);
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.a11y-btn {
+  height: 40px;
+  min-width: 40px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-outline);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.a11y-btn:hover {
+  border-color: var(--brand-violet);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-reset {
+  padding: 0 15px;
+  color: var(--err-text);
+  background: var(--err-bg);
+  border-color: var(--err-border);
+}
+
+.btn-reset:hover {
+  border-color: var(--err-solid);
+  background: rgba(239, 68, 68, 0.16);
+}
+
+/* ==========================================================================
+   4. MAIN WORKSPACE WRAPPER & INTRO HEADER
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 28px 24px 56px;
+  flex: 1;
+}
+
+.lab-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.lab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-outline);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brand-violet);
+  margin-bottom: 8px;
+}
+
+[data-theme="dark"] .lab-badge {
+  color: #C4B5FD;
+}
+
+.lab-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lv-grad);
+  box-shadow: 0 0 10px var(--lv-glow);
+}
+
+.lab-title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+}
+
+.lab-subtitle {
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   5. COLOR-CODED LEVEL CARDS
+   ========================================================================== */
+.levels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.lv {
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--glass-border);
+  box-shadow: var(--shadow-sm), var(--glass-inset);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  text-align: left;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.lv::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--lv-grad);
+  opacity: 0.65;
+  transition: opacity 0.22s ease, height 0.22s ease;
+}
+
+.lv:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--lv-border);
+  box-shadow: var(--shadow-md), 0 8px 24px var(--lv-glow);
+}
+
+.lv:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.lv:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+  filter: saturate(0.65);
+}
+
+.lv .num {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--lv-soft);
+  border: 1px solid var(--lv-border);
+  color: var(--lv-text);
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.lv .nm {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.lv .sb {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.lv[data-on="1"] {
+  border-color: var(--lv-solid);
+  background: linear-gradient(155deg, var(--lv-soft-strong) 0%, var(--glass-bg-strong) 72%);
+  box-shadow: var(--shadow-md), 0 10px 28px var(--lv-glow), var(--glass-inset);
+}
+
+.lv[data-on="1"]::before {
+  opacity: 1;
+  height: 6px;
+}
+
+.lv[data-on="1"] .num {
+  background: var(--lv-grad);
+  border-color: transparent;
+  color: #FFFFFF;
+}
+
+.lv[data-cleared="1"] .num::after {
+  content: "✓ ผ่านแล้ว";
+  display: inline-block;
+  margin-left: 4px;
+  font-weight: 700;
+  color: var(--ok-text);
+}
+
+.lv[data-on="1"][data-cleared="1"] .num::after {
+  color: #FFFFFF;
+}
+
+.lv .lock {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   6. QUESTION SELECTOR BAR
+   ========================================================================== */
+.qbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm), var(--glass-inset);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+}
+
+.qbar .lab {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-right: 4px;
+}
+
+.chip {
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  padding: 7px 18px;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--lv-border);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--lv-grad);
+  border-color: transparent;
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px var(--lv-glow);
+}
+
+.chip .st {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.45;
+  flex: none;
+  transition: all 0.2s ease;
+}
+
+.chip[aria-pressed="true"] .st {
+  background: #FFFFFF;
+  opacity: 0.9;
+}
+
+.chip[data-done="1"] .st {
+  background: var(--ok-solid);
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.65);
+}
+
+.chip[aria-pressed="true"][data-done="1"] .st {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45);
+}
+
+.qbar .spacer {
+  flex: 1;
+}
+
+.qbar .meta {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--lv-soft);
+  border: 1px solid var(--lv-border);
+  color: var(--lv-text);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   7. MAIN 2-COLUMN WORKSPACE (BRIEF + EDITOR / READOUT)
+   ========================================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.pane {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md), var(--glass-inset);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Left Pane — Brief Card */
+.brief .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--lv-soft);
+  border: 1px solid var(--lv-border);
+  color: var(--lv-text);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  margin-bottom: 16px;
+}
+
+.brief .kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lv-grad);
+}
+
+.brief dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.92rem;
+}
+
+.brief dt {
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding-top: 2px;
+  white-space: nowrap;
+}
+
+.brief dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.brief .rule {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0 0 16px;
+}
+
+.brief .body {
+  font-size: 0.98rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+
+.brief .task {
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+  padding: 15px 18px 15px 22px;
+  border-radius: var(--radius-md);
+  background: var(--lv-soft);
+  border: 1px solid var(--lv-border);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lv-text);
+  line-height: 1.55;
+}
+
+.brief .task::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--lv-grad);
+}
+
+/* Right Pane — Prompt Editor */
+.ehead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ehead b {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ehead span {
+  padding: 3px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+textarea {
+  width: 100%;
+  min-height: 210px;
+  resize: vertical;
+  background: var(--surface-input);
+  border: 1.5px solid var(--glass-outline);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  caret-color: var(--lv-solid);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--lv-solid);
+  box-shadow: 0 0 0 4px var(--lv-soft);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.go {
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 12px 28px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--lv-grad);
+  color: #FFFFFF;
+  box-shadow: 0 8px 22px var(--lv-glow);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.go:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px var(--lv-glow);
+}
+
+.go:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.go:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   8. SCORE READOUT & CRITERIA LIST
+   ========================================================================== */
+.readout {
+  margin-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px;
+}
+
+.rtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.rtop .cap {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--lv-text);
+}
+
+.rtop .sub {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.num {
+  font-family: var(--font-heading);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.num b {
+  font-size: 2.85rem;
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.num i {
+  font-style: normal;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.num.full b {
+  background: var(--lv-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Segmented Progress Bar (Color-Coded by Level) */
+.seg {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.seg div {
+  flex: 1;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  background: var(--border-subtle);
+}
+
+.seg div.on {
+  background: var(--lv-grad);
+  box-shadow: 0 2px 10px var(--lv-glow);
+}
+
+.seg div.off {
+  background: var(--err-bg);
+  border: 1px solid var(--err-border);
+}
+
+/* Criteria List */
+ul.crit {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+ul.crit li {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 13px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border-subtle);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+ul.crit li.ok {
+  border-color: var(--ok-border);
+  background: var(--ok-bg);
+}
+
+ul.crit li.no {
+  border-color: var(--err-border);
+  background: var(--err-bg);
+}
+
+.gl {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-top: 1px;
+  background: var(--border-subtle);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+li.ok .gl {
+  background: var(--ok-solid);
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
+}
+
+li.no .gl {
+  background: var(--err-solid);
+}
+
+.cl {
+  font-family: var(--font-heading);
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ch {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+  line-height: 1.55;
+}
+
+li.ok .ch {
+  color: var(--ok-text);
+  font-weight: 600;
+}
+
+.cq {
+  display: inline-block;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 3px 10px;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.cw {
+  padding: 3px 11px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 1px;
+  white-space: nowrap;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+li.ok .cw {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: var(--ok-border);
+  color: var(--ok-text);
+}
+
+li.no .cw {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: var(--err-border);
+  color: var(--err-text);
+}
+
+/* Alerts, Verdicts & Unlock Banner */
+.alert {
+  margin-top: 14px;
+  padding: 13px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.55;
+  background: var(--err-bg);
+  border: 1.5px solid var(--err-border);
+  color: var(--err-text);
+}
+
+.said {
+  margin-top: 14px;
+  padding: 13px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.said.ok {
+  background: var(--ok-bg);
+  border: 1.5px solid var(--ok-border);
+  color: var(--ok-text);
+}
+
+.said.no {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.unlock {
+  margin-top: 16px;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--lv-soft-strong), var(--glass-bg-strong));
+  border: 1.5px solid var(--lv-solid);
+  box-shadow: 0 10px 26px var(--lv-glow);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.unlock p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.unlock p b {
+  font-family: var(--font-heading);
+  color: var(--lv-text);
+}
+
+.unlock button {
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  font-family: var(--font-heading);
+  font-size: 0.94rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--lv-grad);
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px var(--lv-glow);
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.unlock button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Summary / Done View */
+.done {
+  text-align: center;
+  padding: 56px 28px;
+}
+
+.done h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.done p {
+  color: var(--text-secondary);
+  max-width: 52ch;
+  margin: 0 auto 28px;
+  font-size: 1rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 28px 0 34px;
+}
+
+.stats div {
+  min-width: 140px;
+  padding: 18px 24px;
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.stats div b {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2.3rem;
+  line-height: 1.05;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.stats div span {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Lab Footnote */
+.foot {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+}
+
+/* ==========================================================================
+   9. STANDARD FOOTER (AiBA & PIM — MATCHING index.html)
+   ========================================================================== */
+.site-footer {
+  background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+  color: #F8FAFC;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 48px;
+  margin-top: auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr;
+  gap: 32px;
+  padding-bottom: 36px;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.footer-brand-title {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+.footer-text {
+  font-size: 15px;
+  color: #CBD5E1;
+  line-height: 1.7;
+}
+
+.footer-pim-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #38BDF8;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.footer-pim-link:hover {
+  text-decoration: underline;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.social-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+  background: var(--brand-gradient);
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+
+.footer-bottom-bar {
+  background: linear-gradient(90deg, rgba(255, 107, 107, 0.22), rgba(124, 58, 237, 0.28));
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #E2E8F0;
+}
+
+/* ==========================================================================
+   10. MOTION & RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .seg div { transition: background 0.28s ease; }
+  .seg div:nth-child(2) { transition-delay: 0.06s; }
+  .seg div:nth-child(3) { transition-delay: 0.12s; }
+  .seg div:nth-child(4) { transition-delay: 0.18s; }
+  .seg div:nth-child(5) { transition-delay: 0.24s; }
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .levels {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .floating-navbar {
+    border-radius: 24px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .nav-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-actions {
+    width: 100%;
+    justify-content: flex-end;
+    padding-top: 8px;
+    border-top: 1px solid var(--glass-outline);
+  }
+}
+
+@media (max-width: 560px) {
+  .navbar-wrapper {
+    top: 8px;
+    padding: 0 10px;
+  }
+
+  .wrap {
+    padding: 18px 14px 44px;
+  }
+
+  .pane {
+    padding: 20px 18px;
+  }
+
+  .brand-name {
+    font-size: 1.08rem;
+  }
+
+  .logo-slot img {
+    height: 36px;
+  }
+
+  .nav-back-btn {
+    padding: 0 11px;
+    font-size: 0.82rem;
+  }
+
+  .a11y-btn {
+    height: 36px;
+    min-width: 36px;
+    padding: 0 10px;
+    font-size: 0.84rem;
+  }
+
+  .lab-title {
+    font-size: 1.45rem;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS NAVBAR
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="เมนูหลัก AiBA Prompt Lab">
+      <div class="nav-left">
+        <a href="index.html" class="nav-back-btn" aria-label="กลับหน้าหลัก">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          <span>กลับหน้าหลัก</span>
+        </a>
+        <a href="index.html" class="nav-brand" aria-label="AiBA Prompt Lab">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">AiBA Prompt Lab</span>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="a11y-btn" id="fontDecBtn" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeToggleBtn" aria-label="สลับโหมดสีหน้าจอ">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+        <button type="button" class="a11y-btn btn-reset" id="reset" aria-label="ล้างทั้งหมด">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>ล้างทั้งหมด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN PROMPT LAB WORKSPACE
+       ======================================================================== -->
+  <main class="wrap" id="labRoot" data-level="0">
+    <div class="lab-intro">
+      <div>
+        <div class="lab-badge">
+          <span class="lab-badge-dot" aria-hidden="true"></span>
+          <span>เครื่องมือฝึกเขียนคำสั่ง AI · 3 ระดับความยาก</span>
+        </div>
+        <h1 class="lab-title">ฝึกเขียนคำสั่ง AI ให้ตรงงานและครบทุกมิติ</h1>
+        <p class="lab-subtitle">เลือกโจทย์ พิมพ์คำสั่งด้วยภาษาของท่านเอง แล้วดูผลตรวจเชิงโครงสร้างได้ทันที</p>
+      </div>
+    </div>
+
+    <div class="levels" id="levels"></div>
+    <div id="qbar"></div>
+    <div id="stage"></div>
+
+    <p class="foot">เลือกทำข้อไหนในระดับก่อนก็ได้ ต้องสั่งงานตรงโจทย์และได้ 100 คะแนนครบทั้ง 3 ข้อ จึงปลดล็อกระดับถัดไป<br>ตัวตรวจดูโครงสร้างประโยคและบริบทของโจทย์ ไม่ได้จับคำเป๊ะ ๆ ความคืบหน้าเก็บในหน้านี้เท่านั้น</p>
+  </main>
+
+  <!-- ========================================================================
+       STANDARD FOOTER (AiBA & PIM)
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column 1: AiBA Center Info -->
+        <div>
+          <div class="footer-logos">
+            <span class="logo-slot">
+              <img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" />
+            </span>
+            <span class="logo-slot">
+              <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+            </span>
+          </div>
+          <h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>
+          <p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>
+        </div>
+
+        <!-- Column 2: PIM Institution Info -->
+        <div>
+          <h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>
+          <p class="footer-text">
+            85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />
+            โทร 0 2855 0000
+          </p>
+          <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">
+            <span>www.pim.ac.th</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Column 3: Social Media -->
+        <div>
+          <h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>
+          <p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>
+          <div class="footer-socials" aria-label="โซเชียลมีเดีย">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+            <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      © 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED
+    </div>
+  </footer>
+
+<script>
+/* ==========================================================================
+   THEME & FONT SIZE CONTROLLER (Synced with index.html via localStorage)
+   ========================================================================== */
+(function () {
+  const htmlEl = document.documentElement;
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const themeText = document.getElementById('themeText');
+  const themeIcon = document.getElementById('themeIcon');
+  const fontIncBtn = document.getElementById('fontIncBtn');
+  const fontDecBtn = document.getElementById('fontDecBtn');
+
+  function applyTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('aiba:theme', theme);
+    if (theme === 'dark') {
+      themeText.textContent = 'สว่าง';
+      themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+    } else {
+      themeText.textContent = 'มืด';
+      themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+    }
+  }
+
+  const savedTheme = localStorage.getItem('aiba:theme') || 'light';
+  applyTheme(savedTheme);
+
+  themeToggleBtn.addEventListener('click', () => {
+    const current = htmlEl.getAttribute('data-theme');
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
+
+  const fontSizes = [16, 18, 20];
+  let currentSizeIndex = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+  if (isNaN(currentSizeIndex) || currentSizeIndex < 0 || currentSizeIndex >= fontSizes.length) {
+    currentSizeIndex = 0;
+  }
+
+  function applyFontSize(idx) {
+    htmlEl.style.fontSize = fontSizes[idx] + 'px';
+    localStorage.setItem('aiba:fontIdx', String(idx));
+  }
+
+  applyFontSize(currentSizeIndex);
+
+  fontIncBtn.addEventListener('click', () => {
+    if (currentSizeIndex < fontSizes.length - 1) {
+      currentSizeIndex++;
+      applyFontSize(currentSizeIndex);
+    }
+  });
+
+  fontDecBtn.addEventListener('click', () => {
+    if (currentSizeIndex > 0) {
+      currentSizeIndex--;
+      applyFontSize(currentSizeIndex);
+    }
+  });
+})();
+</script>
+
+<script>
+/* ============================================================
+   ตัวตรวจเชิงโครงสร้าง — ทำงานในหน้านี้ทั้งหมด ไม่เรียกอะไรภายนอก
+   หลักคิด: ไม่ถามว่า "มีคำนี้ไหม" แต่ถามว่า "มีคำที่ทำหน้าที่นี้
+   อยู่ในตำแหน่งที่เหมาะสมไหม" และเทียบกับข้อเท็จจริงของโจทย์ข้อนั้น
+   ============================================================ */
+
+/* 1) แปลงตัวเลขทุกแบบให้เป็นเลขอารบิก: ๕ → 5, ห้า → 5, ยี่สิบห้า → 25, ครึ่ง → 0.5 */
+const ONES = {เอ็ด:1,หนึ่ง:1,สอง:2,สาม:3,สี่:4,ห้า:5,หก:6,เจ็ด:7,แปด:8,เก้า:9};
+const NUMWORD = /(ยี่สิบ|(?:สอง|สาม|สี่|ห้า|หก|เจ็ด|แปด|เก้า)สิบ|สิบ)(เอ็ด|หนึ่ง|สอง|สาม|สี่|ห้า|หก|เจ็ด|แปด|เก้า)?|(หนึ่ง|สอง|สาม|สี่|ห้า|หก|เจ็ด|แปด|เก้า)(?!ม|ารถ|อี้|สิบ)|ครึ่ง/g;
+function numify(s){
+  s = s.replace(/[๐-๙]/g, d => '๐๑๒๓๔๕๖๗๘๙'.indexOf(d));
+  return s.replace(NUMWORD, (m, tens, one, single) => {
+    if(m==='ครึ่ง') return '0.5';
+    if(single) return ONES[single];
+    let n = tens==='ยี่สิบ' ? 20 : tens==='สิบ' ? 10 : ONES[tens.replace('สิบ','')]*10;
+    if(one) n += ONES[one];
+    return n;
+  });
+}
+
+/* 2) คลังคำตามหน้าที่ */
+const AUD_NOUN = '(?:นักศึกษา|นิสิต|นักเรียน|คณบดี|รองคณบดี|อธิการบดี|อาจารย์|ผู้สอน|ผู้บริหาร|ที่ประชุม|คณะกรรมการ|กรรมการ|ผู้พิจารณา|ผู้ทรงคุณวุฒิ|บุคลากร|เจ้าหน้าที่|เพื่อนร่วมงาน|หัวหน้า|ผู้ปกครอง|ผู้เข้าร่วม|ผู้เข้าอบรม|ทีมงาน|ประธาน|สาธารณชน|คนทั่วไป|บุคคลทั่วไป|ผู้ใช้|ฝ่าย|สาขา|คณะ|หลักสูตร|ภาควิชา)';
+const ROLE_NOUN = '(?:' + AUD_NOUN.slice(3,-1) + '|เลขานุการ|เลขา|ผู้เชี่ยวชาญ|ที่ปรึกษา|นักวิชาการ|นักวิจัย|นักเขียน|บรรณาธิการ|ผู้ช่วย|ผู้ประสานงาน|ครู|วิทยากร|ผู้ออกข้อสอบ|นักวัดผล|นักวิเคราะห์|ผู้ตรวจ|ผู้[ก-๙]{2,8}|นัก[ก-๙]{2,8})';
+
+const P = {
+  // ใคร = บทบาทที่ให้ AI สวม: ต้องมี "ตัวเชื่อมบทบาท" แล้วตามด้วยคำบอกบทบาทภายใน ~25 ตัวอักษร
+  role: new RegExp('(?:ในฐานะ|สวมบท(?:บาท)?|รับบท(?:บาท)?|คุณคือ|คุณเป็น|ท่านเป็น|ทำหน้าที่(?:เป็น|แทน)|ทำตัวเป็น|แสดงเป็น|สมมติว่า(?:คุณ|ตัวเอง)?เป็น|ให้(?:คุณ|AI|เอไอ|ai)\\s*(?:เป็น|ทำหน้าที่|สวม)|จงเป็น|เป็นเสมือน|ในมุมมอง(?:ของ)?|ในนาม(?:ของ)?|แทน(?:ตัว)?(?:ฉัน|ผม|ดิฉัน|เรา)|เสมือนเป็น|ช่วยเป็น|ขอให้เป็น).{0,25}?' + ROLE_NOUN, 's'),
+
+  // ให้ใคร = ผู้รับปลายทาง: (ก) ประกาศตรง ๆ หรือ (ข) ตัวเชื่อมทิศทาง + คำบอกคน
+  aud_decl: /(?:ผู้อ่าน|ผู้รับ|ผู้ฟัง|กลุ่มเป้าหมาย|ผู้รับสาร|คนอ่าน|คนฟัง|ผู้ใช้งาน)\s*(?:คือ|เป็น|ได้แก่|:|หลัก|ปลายทาง|ของ).{0,20}/s,
+  aud_self: /(?:สำหรับ|ให้|เพื่อให้|ส่งให้|เสนอ|ส่งกลับ)(?:ฉัน|ผม|ดิฉัน|ข้าพเจ้า|เรา)(?:เอง)?/,
+  aud_dir:  new RegExp('(?:ถึง|สำหรับ|แก่|เสนอ(?:ต่อ|ให้)?|นำเสนอ(?:ต่อ|ให้)?|แจ้ง(?:ให้|แก่|ไปยัง)?|เล่าให้|อธิบายให้|ส่ง(?:ให้|ถึง|ไปยัง)?|ชี้แจง(?:ต่อ|ให้)?|ใช้กับ|อ่านโดย|เผยแพร่(?:ให้|แก่)?|สื่อสารกับ|ให้(?!\\s*(?:AI|เอไอ|ai|คุณ|ท่าน|ผู้ช่วย|ฉัน|ผม|ดิฉัน|เรา|มัน|ระบบ)))\\s*.{0,12}?' + AUD_NOUN, 's'),
+
+  // ทำอะไร = กริยาสั่งงานที่ไม่ได้อยู่หลังคำปฏิเสธ
+  verb: /(?<!(?:ห้าม|อย่า|ไม่ต้อง|ไม่ควร|ไม่|งด)\s{0,2}(?:[ก-๙]{0,4})?)(สรุป|ร่าง|เขียน|เปรียบเทียบ|ตรวจ|แปล|จัดกลุ่ม|วิเคราะห์|ออกแบบ|จัดทำ|เรียบเรียง|แก้ไข|ปรับ(?:ปรุง|แก้)?|สร้าง|คิด(?:ชื่อ|หัวข้อ)?|เสนอ(?:ชื่อ|แนะ)?|ย่อ|จำแนก|ประเมิน|ให้ความเห็น|ตั้งชื่อ|ทำตาราง|ลิสต์|ระดม|รวบรวม|เรียง|จัดลำดับ|สกัด|ดึง|ถอด|อ่านแล้ว|ช่วย(?:ทำ|คิด|ดู|อ่าน))/,
+
+  // ออกมาแบบไหน = ปริมาณที่นับได้ (หลัง numify แล้ว)
+  qty: /(?:(?:ไม่เกิน|อย่างน้อย|ประมาณ|ราว|ไม่ต่ำกว่า|ไม่น้อยกว่า|ภายใน|ความยาว|จำนวน|ทั้งหมด|รวม|แค่|เพียง)\s*\d+(?:\.\d+)?(?:\s*[ก-๙]{1,10})?|\d+(?:\.\d+)?\s*(?:[-–~]|ถึง)\s*\d+(?:\.\d+)?\s*(?:ข้อ|บรรทัด|ย่อหน้า|คำ|หน้า|คอลัมน์|แถว|ตัวเลือก|ประโยค|ชุด|รายการ|แบบ|ทางเลือก|หัวข้อ|ประเด็น|กลุ่ม|ด้าน|มิติ|นาที|ชื่อ|ตัวอย่าง|ส่วน|ช่อง|เรื่อง|อัน|ฉบับ|ตาราง|ตัวอักษร|คำถาม|ข้อสอบ|สไลด์|ขั้นตอน|ตอน)|\d+(?:\.\d+)?\s*(?:ข้อ|บรรทัด|ย่อหน้า|คำ|หน้า|คอลัมน์|แถว|ตัวเลือก|ประโยค|ชุด|รายการ|ระดับ|แบบ|ทางเลือก|หัวข้อ|ประเด็น|กลุ่ม|ด้าน|มิติ|นาที|ชื่อ|ตัวอย่าง|ส่วน|ช่อง|เรื่อง|อัน|ฉบับ|เวอร์ชัน|ตาราง|ตัวอักษร|คำถาม|ข้อสอบ|สไลด์|บูลเล็ต|ขั้นตอน|ธีม|ตอน|ย่อ|เซต|ตัว|ระดับ|%))/,
+
+  // โครงสร้างที่ตรวจได้แม้ไม่มีตัวเลข
+  struct: /(ตาราง|บูลเล็ต|bullet|หัวข้อย่อย|โครงสร้าง|ไม่เกิน|อย่างน้อย|รูปแบบ|จัดเป็น|แบ่งเป็น|เรียงตาม|ขึ้นต้นด้วย|ปิดท้ายด้วย|ย่อหน้าเดียว|เป็นข้อ|ลำดับ|ประกอบด้วย|หน้าเดียว|ครึ่งหน้า|ภาษาทางการ|กึ่งทางการ|ไม่เป็นทางการ|น้ำเสียง|โทน|เป็นหัวข้อ|เป็นรายการ|เป็นลิสต์|มีหัวข้อ|มีส่วน|คอลัมน์|แถว|ตามลำดับ)/,
+
+  forbid: /(ห้าม|อย่า|ไม่ต้อง|งดเว้น|ไม่ให้|เว้นว่าง|ไม่ควร|หลีกเลี่ยง|ไม่เอา|ยกเว้น|ไม่ใส่|ไม่ใช้|ไม่เพิ่ม|ไม่แต่ง|ไม่เดา|ไม่สมมติ|ไม่ระบุ|ไม่รวม|ตัดออก|งด(?:ใช้|ใส่|เพิ่ม))/,
+
+  unsure: /(ไม่แน่ใจ|ไม่มั่นใจ|ห้ามเดา|อย่าเดา|ไม่(?:ต้อง)?เดา|ห้ามแต่ง|อย่าแต่ง|ไม่(?:ต้อง)?แต่ง(?:เติม|ขึ้น)?|ไม่มีข้อมูล|ห้ามสมมติ|อย่าสมมติ|เว้นว่าง|ระบุว่าไม่(?:ทราบ|พบ|มี)|บอกว่าไม่(?:ทราบ|พบ|มี|แน่ใจ)|ไม่พบใน|ไม่มีใน|ห้ามกุ|อย่ากุ|ใส่เครื่องหมาย|ทำเครื่องหมาย|\[.{0,15}\]|หมายเหตุว่า|แจ้งว่า(?:ไม่|ขาด)|ข้อมูลไม่(?:ครบ|พอ|เพียงพอ)|ไม่ปรากฏ)/,
+
+  source: /(แนบ|ไฟล์(?:ที่|นี้|แนบ|ให้|ด้านล่าง)|เอกสาร(?:ที่|นี้|แนบ|ให้|ด้านล่าง)|ตามเอกสาร|ตามรูบริก|รูบริก(?:ที่|นี้|แนบ)|ตามระเบียบ|ตามคลัง|คลัง(?:ข้อสอบ)?(?:ที่|นี้|เดิม)|ข้อมูลที่(?:ให้|แนบ|มี|ส่ง)|ที่ให้(?:ไว้|มา)|ตามที่แนบ|อ้างอิงจาก|ด้านล่างนี้|ที่วาง(?:ไว้|มา)|จากไฟล์|จากคลัง|เฉพาะข้อมูล|ใช้เฉพาะ|ตามบันทึก|จากบันทึก|บันทึก(?:ดิบ|นี้|ที่)|จากเอกสาร|ตามไฟล์|ในไฟล์|ในเอกสาร|ไฟล์สรุป|ตามข้อมูล|จากข้อมูล(?:ที่|นี้|ด้านล่าง)|ต่อไปนี้|ข้างล่าง|ข้างต้น|อิงจาก|ยึดตาม)/,
+
+  askback: /(ถาม(?:ฉัน|ผม|ดิฉัน|เรา|กลับ|ก่อน|เพิ่ม|คำถาม|ข้าพเจ้า)|สอบถาม(?:ฉัน|ผม|ดิฉัน|เรา|ก่อน|เพิ่ม)|ข้อมูล(?:ยัง)?(?:ไม่พอ|ไม่ครบ|ขาด|ไม่เพียงพอ).{0,20}?(?:ถาม|แจ้ง|บอก)|ก่อน(?:จะ)?(?:ลงมือ|เริ่ม|เขียน|ร่าง|ทำ).{0,20}?ถาม|ให้ถาม|ขอข้อมูลเพิ่ม|แจ้ง(?:ฉัน|ผม|ดิฉัน|เรา)ก่อน|ยังขาดอะไร|ต้องการอะไรเพิ่ม)/,
+
+  deident: (()=>{
+    const REMOVE = '(?:ลบ|ตัด|เอาออก|นำออก|ถอด|ซ่อน|ปกปิด|ปิดบัง|เซ็นเซอร์|censor|mask|แทนที่|แทนด้วย|แปลงเป็นรหัส|เข้ารหัส|ไม่(?:ต้อง)?(?:ระบุ|แสดง|ใส่|เอา|มี|เปิดเผย|อ้าง(?:ถึง)?|ใช้|นำ|รวม|เก็บ|พูดถึง|กล่าวถึง|เขียน|โชว์|ดึง|แนบ)|ห้าม(?:ระบุ|แสดง|ใส่|เปิดเผย|อ้าง(?:ถึง)?|ใช้|เก็บ|พูดถึง|กล่าวถึง|เขียน|โชว์|มี)|อย่า(?:ระบุ|แสดง|ใส่|เปิดเผย|ใช้|เขียน)|งด(?:ใช้|ใส่|ระบุ|แสดง)?|ละเว้น|เว้น|ตัดทิ้ง|ข้าม|ไม่สนใจ|มองข้าม)';
+    const IDENT  = '(?:ชื่อ|นามสกุล|ชื่อ-สกุล|รหัส|เลขประจำตัว|เลขที่นั่ง|ตัวตน|ตัวบุคคล|ตัวผู้ตอบ|รายบุคคล|ข้อมูลส่วน(?:บุคคล|ตัว)|ข้อมูลระบุตัว|ข้อมูลที่ระบุ(?:ตัว)?|ข้อมูลที่ชี้ตัว|สิ่งที่ชี้ตัว|ข้อมูลชี้ตัว|คอลัมน์(?:ชื่อ|รหัส)|อัตลักษณ์|identity|identif|pii|personal|ผู้ตอบ|ว่าใครตอบ|ว่าใครเป็นคน|ว่าเป็นใคร)';
+    const PHRASE = '(?:นิรนาม|ไม่ระบุตัวตน|ไม่ระบุชื่อ|แบบไม่ระบุ|anonymi|de-?identif|ไม่เปิดเผย(?:ตัวตน|ชื่อ|ตัว)?|เป็นความลับ|รักษาความลับ|คุ้มครองข้อมูลส่วนบุคคล|ปกป้องข้อมูลส่วนบุคคล|โดยไม่ให้(?:รู้|ทราบ|ระบุได้)ว่า(?:ใคร|เป็นใคร)|ไม่ให้(?:รู้|ทราบ|ระบุ|สืบ|ย้อน|สืบย้อน|ตามรอย|โยง)(?:กลับ)?(?:ได้)?ว่า(?:ใคร|เป็นใคร)|ไม่(?:ลง|ระบุ|แยก|วิเคราะห์)รายบุคคล|ระดับภาพรวมเท่านั้น|เฉพาะภาพรวม|ภาพรวมเท่านั้น|ใช้นามแฝง|ใช้รหัสแทนชื่อ|แทนชื่อด้วย|pdpa)';
+    return new RegExp(REMOVE+'.{0,25}?'+IDENT+'|'+IDENT+'.{0,25}?'+REMOVE+'|'+PHRASE, 'is');
+  })(),
+
+  sensitive: /(\b\d{13}\b|เลขประจำตัวประชาชน|เลขบัตรประชาชน|\b0\d{8,9}\b)/
+};
+
+/* 3) ตัวช่วย: คืนข้อความส่วนที่เจอ (เพื่อโชว์หลักฐาน) หรือ null */
+const hit = (rx, v) => { const m = v.match(rx); return m ? m[0].trim() : null; };
+const both = (a, b) => (a && b) ? a + ' และ ' + b : null;
+
+/* ผู้รับปลายทาง: ต้องมีโครงสร้างระบุผู้รับ และผู้รับต้องเป็นคนที่โจทย์กำหนด */
+function audAll(v){
+  const out = [];
+  for(const rx of [P.aud_decl, P.aud_dir, P.aud_self]){
+    const g = new RegExp(rx.source, rx.flags.includes('g') ? rx.flags : rx.flags + 'g');
+    for(const m of v.matchAll(g)) out.push(m[0].trim());
+  }
+  return out;
+}
+function audHit(v, q){
+  const all = audAll(v);
+  const ok = all.find(t => q.aud.rx.test(t));
+  return ok || null;
+}
+function audHint(v, q){
+  const all = audAll(v);
+  if(all.length) return `ระบุผู้รับเป็น "${all[0].slice(0,25)}" แต่โจทย์ให้ส่งถึง ${q.aud.label} ต้องให้ตรงกับโจทย์`;
+  return `ระบุให้ชัดว่างานชิ้นนี้ส่งถึงใคร โจทย์ข้อนี้ผู้รับคือ ${q.aud.label}`;
+}
+
+/* 4) เกณฑ์: test(v, q) รับข้อความที่ numify แล้ว คืน string หลักฐาน / true / null */
+function ctxHint(v, q){
+  const c = contentCheck(v, q);
+  if(c.bad.length) return `เนื้อหาไม่ตรงโจทย์: ${c.bad.join(', ')}`;
+  if(c.missing.length) return `รายละเอียดจากโจทย์ยังไม่ครบ ขาด: ${c.missing.join(', ')}`;
+  return 'คำสั่งสั้นเกินไป ขยายบริบทให้ AI ทำงานได้โดยไม่ต้องเดา';
+}
+
+function L1(x){return [
+  {label:"บอกว่าใครคือผู้อ่าน และตรงกับโจทย์", weight:25,
+   hint:audHint,
+   test:audHit},
+  {label:"สั่งงานตรงกับโจทย์", weight:25,
+   hint:(v,q)=>`โจทย์ข้อนี้ให้ "${q.task.label}" แต่ในคำสั่งยังไม่พบการสั่งให้ทำงานนี้ ใช้กริยาที่ตรงกับงาน เช่น ${q.task.eg}`,
+   test:(v,q) => hit(q.task.need,v)},
+  {label:"ระบุรูปแบบหรือความยาวที่ตรวจสอบได้", weight:25,
+   hint:"ใส่จำนวนหรือโครงสร้างที่วัดได้ เช่น ไม่เกินแปดบรรทัด, 3 หัวข้อ, เป็นตาราง — ตัวเลขจะเขียนเป็นเลขหรือตัวหนังสือก็ได้",
+   test:v => hit(P.qty,v) || hit(P.struct,v)},
+  {id:"content", label:"เนื้อหาครบและตรงกับสถานการณ์ในโจทย์", weight:25,
+   hint:ctxHint,
+   test:(v,q) => { const c = contentCheck(v,q); return (c.ok && v.replace(/\s+/g,' ').trim().length>=50) ? c.hitL.join(', ') : null; }}
+].map((c,i)=>x&&x[i]?Object.assign({},c,x[i]):c);}
+
+function L2(x){return [
+  {label:"ใคร — ให้ AI สวมบทบาทอะไร", weight:20,
+   hint:"เช่น เขียนในฐานะเลขานุการคณะ, คุณคืออาจารย์ผู้สอน, ทำหน้าที่เป็นผู้ตรวจงาน",
+   test:v => hit(P.role,v)},
+  {label:"ให้ใคร — ผู้อ่านปลายทางตรงกับโจทย์", weight:20,
+   hint:audHint,
+   test:audHit},
+  {label:"ทำอะไร — สั่งงานตรงกับโจทย์", weight:20,
+   hint:(v,q)=>`โจทย์ข้อนี้ให้ "${q.task.label}" แต่ในคำสั่งยังไม่พบการสั่งให้ทำงานนี้ เช่น ${q.task.eg}`,
+   test:(v,q) => hit(q.task.need,v)},
+  {label:"ออกมาแบบไหน — มีจำนวนที่นับได้", weight:20,
+   hint:"ต้องมีจำนวนหรือความยาวที่นับได้ เช่น สามข้อ, ไม่เกิน 10 บรรทัด, ครึ่งหน้า",
+   test:v => hit(P.qty,v)},
+  {label:"ห้ามอะไร — ระบุข้อจำกัด", weight:20,
+   hint:"บอกสิ่งที่ห้ามทำ เช่น ห้ามเพิ่มข้อมูลที่ไม่ได้ให้, ไม่ต้องใส่คำทักทาย, หลีกเลี่ยงศัพท์เทคนิค",
+   test:v => hit(P.forbid,v)}
+].map((c,i)=>x&&x[i]?Object.assign({},c,x[i]):c);}
+
+function L3(x){return [
+  {label:"ระบุทั้งบทบาทและผู้อ่านปลายทาง", weight:25,
+   hint:(v,q)=>hit(P.role,v) ? audHint(v,q) : "ยังไม่ได้กำหนดว่า AI สวมบทบาทอะไร เช่น ในฐานะ… / คุณคือ… (และผู้รับต้องตรงกับโจทย์: "+q.aud.label+")",
+   test:(v,q) => both(hit(P.role,v), audHit(v,q))},
+  {label:"กำหนดรูปแบบผลลัพธ์เป็นจำนวนที่นับได้", weight:25,
+   hint:"ต้องมีจำนวนหรือความยาวที่นับได้ เพื่อให้ตรวจได้ว่าทำครบหรือยัง",
+   test:v => hit(P.qty,v)},
+  {label:"มีข้อห้าม และบอกวิธีรับมือเมื่อไม่แน่ใจ", weight:25,
+   hint:(v,q)=>{ const a=hit(P.forbid,v), b=hit(P.unsure,v);
+     if(a&&!b) return `มีข้อห้ามแล้ว (“${a}”) แต่ยังไม่ได้บอกว่าถ้าข้อมูลไม่พอหรือไม่แน่ใจให้ทำอย่างไร เช่น ถ้าไม่แน่ใจให้ระบุว่าไม่แน่ใจ / ไม่พบให้เว้นว่างไว้`;
+     if(!a&&b) return `บอกวิธีรับมือเมื่อไม่แน่ใจแล้ว (“${b}”) แต่ยังไม่มีข้อห้าม เช่น ห้ามเพิ่มข้อมูลที่ไม่ได้ให้ / ไม่ต้องใส่คำทักทาย`;
+     return "ต้องมีทั้งคำห้าม และบอกว่าถ้าข้อมูลไม่พอให้ทำอย่างไร เช่น เขียนว่าไม่ทราบ เว้นว่างไว้ ห้ามเดา"; },
+   test:v => both(hit(P.forbid,v), hit(P.unsure,v))},
+  {label:"สั่งให้ถามกลับก่อนลงมือทำ", weight:25,
+   hint:"เติมท้ายคำสั่งว่า ถ้ามีข้อมูลที่ยังขาด ให้ถามฉันก่อน อย่าเพิ่งเขียน",
+   test:v => hit(P.askback,v)}
+].map((c,i)=>x&&x[i]?Object.assign({},c,x[i]):c);}
+
+const F = (rx,label,core) => ({rx,label,core:!!core});
+const W = (rx,label) => ({rx,label});
+const num = (ok) => new RegExp('(?<![\\d.])(?!'+ok+'(?![\\d]))\\d+(?:\\.\\d+)?\\s*');
+
+/* เนื้อหาต้องไปทางเดียวกับโจทย์: ข้อเท็จจริงหลักครบ และไม่มีสิ่งที่ขัดกับโจทย์ */
+function contentCheck(v, q){
+  const facts = q.facts||[], wrong = q.wrong||[];
+  const missing = facts.filter(f=>f.core && !f.rx.test(v)).map(f=>f.label);
+  const bad = wrong.filter(w=>w.rx.test(v)).map(w=>w.label);
+  const hitL = facts.filter(f=>f.rx.test(v)).map(f=>f.label);
+  return {ok: !missing.length && !bad.length, missing, bad, hitL};
+}
+
+const LEVELS = [
+{ name:"บอกให้ครบพอทำงานได้", rule:"4 เกณฑ์ ข้อละ 25 คะแนน", qs:[
+  { from:"อาจารย์ผู้สอนรายวิชา", to:"ผู้ช่วย AI", subject:"แจ้งเลื่อนกำหนดส่งงานกลุ่ม", aud:{label:"นักศึกษาชั้นปีที่ 2", rx:/นักศึกษา|นิสิต|นักเรียน|ผู้เรียน|ทั้งห้อง|ชั้นปี/},
+    body:"งานกลุ่มของรายวิชาที่ท่านสอน เดิมกำหนดส่งวันศุกร์ที่ 5 แต่ห้องปฏิบัติการปิดปรับปรุงกะทันหัน จึงต้องเลื่อนเป็นวันพุธที่ 10 ท่านต้องแจ้งนักศึกษาชั้นปีที่ 2 ทั้งห้องภายในวันนี้",
+    ask:"เขียนคำสั่งที่จะส่งให้ AI ร่างข้อความแจ้งเรื่องนี้", crit:L1(),
+    facts:[F(/เลื่อน|ขยาย(?:เวลา|กำหนด)|เปลี่ยน(?:วัน|กำหนด)/,"การเลื่อนกำหนดส่ง",1), F(/พุธ|(?<!\d)10(?!\d)/,"วันใหม่ (พุธที่ 10)",1), F(/ห้องปฏิบัติการ|แล็บ|แลป|ห้องแล|ปิดปรับปรุง|ปรับปรุง/,"เหตุผล (ห้องปฏิบัติการปิดปรับปรุง)",1), F(/งานกลุ่ม|งานที่มอบหมาย|การบ้าน/,"ชื่องาน (งานกลุ่ม)"), F(/ศุกร์|(?<!\d)5(?!\d)/,"วันเดิม (ศุกร์ที่ 5)")],
+    wrong:[W(/(?:เป็น|ไป)(?:วัน)?(?:จันทร์|อังคาร|พฤหัส|ศุกร์|เสาร์|อาทิตย์)/,"วันใหม่ต้องเป็นวันพุธที่ 10"), W(/พุธที่\s*(?!10(?!\d))\d+/,"วันใหม่ต้องเป็นวันพุธที่ 10"), W(/เลื่อนเข้า|ส่งเร็วขึ้น|ก่อนกำหนด|ยกเลิก(?:งาน|การส่ง)/,"โจทย์คือเลื่อนออกไป ไม่ใช่เลื่อนเข้าหรือยกเลิก")],
+    task:{label:"ร่างข้อความแจ้งเรื่องเลื่อนส่งงาน", eg:"ร่างข้อความแจ้ง… / เขียนประกาศ…",
+      need:/(?:ร่าง|เขียน|แต่ง|จัดทำ|ทำ|ช่วยทำ|เรียบเรียง)[\s\S]{0,30}?(?:ข้อความ|ประกาศ|อีเมล|อีเมล์|email|โพสต์|ไลน์|line|หนังสือ|จดหมาย|คำแจ้ง|แจ้ง)|^[\s\S]{0,15}?(?:ช่วย)?แจ้ง(?:ให้|แก่|ถึง)?[\s\S]{0,15}?(?:นักศึกษา|นิสิต|ทั้งห้อง|ทุกคน)/i} },
+  { from:"หัวหน้าสาขาวิชา", to:"ผู้ช่วย AI", subject:"สรุปบทความวิจัยก่อนประชุมพรุ่งนี้", aud:{label:"เพื่อนร่วมงานในที่ประชุม", rx:/เพื่อนร่วมงาน|ที่ประชุม|อาจารย์|คณาจารย์|ผู้เข้าประชุม|ทีม|สาขา|ภาควิชา|เพื่อน/},
+    body:"ท่านอ่านบทความวิจัยความยาว 20 หน้าจบแล้ว พรุ่งนี้เช้าต้องเล่าให้เพื่อนร่วมงานอีก 6 คนที่ยังไม่ได้อ่านฟังในที่ประชุม เวลาที่มีคือ 5 นาที",
+    ask:"เขียนคำสั่งที่จะส่งให้ AI ช่วยสรุปบทความนี้", crit:L1(),
+    facts:[F(/บทความ|งานวิจัย|วิจัย|เปเปอร์|paper/i,"สิ่งที่ให้สรุป (บทความวิจัย)",1), F(/5\s*นาที|ห้านาที|พูดได้ใน|เล่าได้ใน/,"เวลาที่มี (5 นาที)",1), F(/ยังไม่(?:ได้|เคย)อ่าน|ไม่เคยอ่าน|ไม่รู้จัก|ไม่คุ้น|ไม่มีพื้น|ยังไม่อ่าน/,"ผู้ฟังยังไม่ได้อ่าน",1), F(/ประชุม/,"บริบท (ที่ประชุม)"), F(/20\s*หน้า/,"ความยาวต้นฉบับ"), F(/พูด|เล่า|นำเสนอ|อธิบาย/,"ใช้เพื่อพูดปากเปล่า")],
+    wrong:[W(new RegExp(num('5').source+'นาที'),"เวลาที่มีคือ 5 นาที"), W(/(?:เพื่อนร่วมงาน|ทุกคน|ที่ประชุม)(?:ได้)?อ่าน(?:แล้ว|มาแล้ว)/,"ผู้ฟังยังไม่ได้อ่านบทความ")],
+    task:{label:"สรุปบทความวิจัย", eg:"สรุปบทความ… / ย่อประเด็นสำคัญของงานวิจัย…",
+      need:/(?:สรุป|ย่อ|สกัด|ถอด|ดึง)[\s\S]{0,30}?(?:บทความ|งานวิจัย|วิจัย|เปเปอร์|paper|ประเด็น|สาระ|ใจความ|เนื้อหา)|(?:บทความ|งานวิจัย|เปเปอร์|paper)[\s\S]{0,30}?(?:สรุป|ย่อ)/i} },
+  { from:"คณะทำงานจัดงานวันวิชาการ", to:"ผู้ช่วย AI", subject:"คิดชื่อหัวข้อสัมมนา", aud:{label:"ที่ประชุมคณะทำงาน", rx:/ที่ประชุม|คณะทำงาน|กรรมการ|ผู้จัดงาน|ทีม|ผู้เข้าร่วม|ผู้ฟัง/},
+    body:"งานวันวิชาการปีนี้มีเวทีสัมมนาเรื่องการใช้เทคโนโลยีในการเรียนการสอน ท่านต้องเสนอชื่อหัวข้อให้ที่ประชุมเลือกในวันศุกร์ ยังไม่มีใครคิดชื่อไว้เลย",
+    ask:"เขียนคำสั่งที่จะส่งให้ AI ช่วยคิดชื่อหัวข้อ", crit:L1(),
+    facts:[F(/สัมมนา|เสวนา|เวที/,"ประเภทงาน (สัมมนา)",1), F(/เทคโนโลยี|ดิจิทัล|AI|เอไอ|นวัตกรรม/i,"ธีม (เทคโนโลยี)",1), F(/การเรียนการสอน|การสอน|การเรียน|การศึกษา|ห้องเรียน/,"บริบท (การเรียนการสอน)",1), F(/วันวิชาการ|งานวิชาการ/,"ชื่องาน (วันวิชาการ)"), F(/ที่ประชุม|ให้เลือก|คัดเลือก|โหวต/,"ใช้ให้ที่ประชุมเลือก")],
+    wrong:[W(/(?:วิจัย|กีฬา|ดนตรี|สิ่งแวดล้อม|สุขภาพ)(?:ใน|กับ|เพื่อ)?การเรียนการสอน/,"ธีมของสัมมนาคือเทคโนโลยีในการเรียนการสอน")],
+    task:{label:"คิดชื่อหัวข้อสัมมนา", eg:"คิดชื่อหัวข้อ… / เสนอชื่อ… / ตั้งชื่อ…",
+      need:/(?:คิด|เสนอ|ตั้ง|แนะนำ|ระดม|สร้าง|ลิสต์|ช่วยหา|หา|ออกแบบ)[\s\S]{0,20}?(?:ชื่อ|หัวข้อ|ไอเดีย|ธีม|title)/i} }
+]},
+{ name:"ตอบคำถามให้ครบทั้ง 5 ข้อ", rule:"5 เกณฑ์ ข้อละ 20 คะแนน", qs:[
+  { from:"เลขานุการคณะ", to:"ผู้ช่วย AI", subject:"บันทึกข้อความขออนุมัติจัดอบรม", aud:{label:"คณบดี", rx:/คณบดี|ผู้บริหาร/},
+    body:"คณะต้องการจัดอบรมภายในเรื่องการใช้เครื่องมือดิจิทัลให้บุคลากรสายสนับสนุน 40 คน ใช้เวลาครึ่งวัน ต้องทำบันทึกข้อความเสนอคณบดีเพื่อขออนุมัติหลักการและงบประมาณ",
+    ask:"เขียนคำสั่งให้ AI ร่างบันทึกข้อความฉบับนี้", crit:L2(),
+    facts:[F(/อบรม|ฝึกอบรม|workshop/i,"กิจกรรม (จัดอบรม)",1), F(/ดิจิทัล|เครื่องมือ|digital/i,"หัวข้ออบรม (เครื่องมือดิจิทัล)",1), F(/บุคลากร|สายสนับสนุน|เจ้าหน้าที่/,"ผู้เข้าอบรม (บุคลากรสายสนับสนุน)",1), F(/อนุมัติ/,"วัตถุประสงค์ (ขออนุมัติ)",1), F(/40\s*(?:คน|ท่าน)/,"จำนวน 40 คน"), F(/ครึ่งวัน|0\.5\s*วัน/,"ระยะเวลาครึ่งวัน"), F(/งบ(?:ประมาณ)?/,"ขออนุมัติงบประมาณ")],
+    wrong:[W(new RegExp(num('40').source+'(?:คน|ท่าน)'),"ผู้เข้าอบรมมี 40 คน"), W(/เต็มวัน|ทั้งวัน|(?<![\d.])[1-9]\d*\s*วัน(?!นี้)/,"ระยะเวลาอบรมคือครึ่งวัน"), W(/นักศึกษา(?:เข้า)?อบรม|อบรม(?:ให้)?นักศึกษา/,"ผู้เข้าอบรมคือบุคลากร ไม่ใช่นักศึกษา")],
+    task:{label:"ร่างบันทึกข้อความขออนุมัติ", eg:"ร่างบันทึกข้อความ… / เขียนหนังสือขออนุมัติ…",
+      need:/(?:ร่าง|เขียน|จัดทำ|ทำ)[\s\S]{0,25}?(?:บันทึกข้อความ|บันทึก|หนังสือ|memo|เอกสาร)|ขออนุมัติ/i} },
+  { from:"ฝ่ายเลขานุการคณะกรรมการ", to:"ผู้ช่วย AI", subject:"สรุปรายงานการประชุมเป็นตารางมติ", aud:{label:"ที่ประชุมคณะกรรมการ", rx:/ที่ประชุม|คณะกรรมการ|กรรมการ|ผู้เข้าประชุม/},
+    body:"การประชุมคณะกรรมการวิชาการเมื่อวานใช้เวลา 2 ชั่วโมง มีบันทึกดิบอยู่แล้ว ที่ประชุมต้องการเห็นเฉพาะมติ ผู้รับผิดชอบ และกำหนดเวลา ไม่ต้องการรายละเอียดการอภิปราย",
+    ask:"เขียนคำสั่งให้ AI สรุปบันทึกดิบนี้",
+    facts:[F(/มติ|ข้อสรุป|ข้อตกลง/,"มติ",1), F(/ผู้รับผิดชอบ|เจ้าภาพ|ผู้ดำเนินการ|คนรับผิดชอบ|owner/i,"ผู้รับผิดชอบ",1), F(/กำหนด(?:เวลา|ส่ง|การ|แล้วเสร็จ)|เดดไลน์|deadline|ระยะเวลา|ภายในเมื่อ|วันครบกำหนด/i,"กำหนดเวลา",1), F(/ประชุม/,"การประชุม"), F(/อภิปราย|ถกเถียง|รายละเอียด/,"ตัดรายละเอียดการอภิปราย")],
+    wrong:[W(/(?:ใส่|รวม|เก็บ|เขียน)(?:รายละเอียด)?(?:การ)?อภิปราย(?:ด้วย|ทั้งหมด|ครบ)/,"ที่ประชุมไม่ต้องการรายละเอียดการอภิปราย")],
+    task:{label:"สรุปบันทึกการประชุมเป็นตารางมติ", eg:"สรุปบันทึกนี้เป็นตารางมติ… / ดึงมติจากบันทึก…",
+      need:/(?:สรุป|แปลง|จัด|ดึง|สกัด|ถอด|ทำ|เรียบเรียง)[\s\S]{0,40}?(?:ตาราง|มติ)|มติ[\s\S]{0,30}?ตาราง/},
+    crit:L2([null,null,null,
+      {label:"ออกมาแบบไหน — ระบุตารางและคอลัมน์",
+       hint:"โจทย์นี้ต้องการตาราง ให้บอกว่าเป็นตารางกี่คอลัมน์ หรือระบุชื่อคอลัมน์ให้ครบ (มติ ผู้รับผิดชอบ กำหนดเวลา)",
+       test:v => /ตาราง/.test(v) ? (hit(P.qty,v) || hit(/มติ[\s\S]{0,40}?ผู้รับผิดชอบ[\s\S]{0,40}?(?:กำหนด|เวลา|เดดไลน์|deadline)/i,v)) : null},null]) },
+  { from:"อาจารย์ผู้สอน", to:"ผู้ช่วย AI", subject:"ตรวจรายงานนักศึกษาตามรูบริก", aud:{label:"ตัวอาจารย์ผู้สอนเอง", rx:/อาจารย์|ผู้สอน|ฉัน|ผม|ดิฉัน|ข้าพเจ้า|เรา/},
+    body:"มีรายงานของนักศึกษา 1 ฉบับ และรูบริกการให้คะแนนของรายวิชาที่ระบุเกณฑ์ไว้ 4 ด้าน ท่านต้องการให้ AI ช่วยอ่านและเสนอความเห็นเบื้องต้น ก่อนที่ท่านจะตัดสินคะแนนเอง",
+    ask:"เขียนคำสั่งให้ AI ช่วยตรวจรายงานฉบับนี้", crit:L2(),
+    facts:[F(/รูบริก|เกณฑ์(?:การให้คะแนน)?|rubric/i,"รูบริกการให้คะแนน",1), F(/รายงาน/,"รายงานของนักศึกษา",1), F(/ความเห็น|ข้อเสนอแนะ|เบื้องต้น|จุดแข็ง|จุดอ่อน|ควรปรับ|feedback/i,"ขอความเห็นเบื้องต้น",1), F(/4\s*ด้าน|สี่ด้าน|ทั้ง\s*4/,"เกณฑ์ 4 ด้าน"), F(/ไม่(?:ต้อง)?(?:ตัดสิน|ให้|สรุป)คะแนน|ไม่ใช่การตัดสิน|อาจารย์(?:จะ)?ตัดสินเอง|ตัดสิน(?:คะแนน)?เอง/,"อาจารย์ตัดสินคะแนนเอง")],
+    wrong:[W(new RegExp(num('4').source+'ด้าน'),"รูบริกมี 4 ด้าน"), W(/(?:ให้|ตัดสิน|สรุป)(?:เกรด|คะแนนสุดท้าย|คะแนนจริง)/,"AI เสนอความเห็นเบื้องต้นเท่านั้น อาจารย์ตัดสินคะแนนเอง")],
+    task:{label:"ตรวจรายงานตามรูบริกและให้ความเห็น", eg:"ตรวจรายงาน… / ประเมินรายงานตามรูบริก…",
+      need:/(?:ตรวจ|ประเมิน|ให้ความเห็น|ให้คะแนน|วิเคราะห์|อ่าน|รีวิว)[\s\S]{0,30}?(?:รายงาน|งาน|ชิ้นงาน|ฉบับ|รูบริก)|รายงาน[\s\S]{0,30}?(?:ตรวจ|ประเมิน|ความเห็น|คะแนน|รูบริก)/} }
+]},
+{ name:"งานจริงที่มีความเสี่ยง", rule:"4–5 เกณฑ์ และตรวจข้อมูลอ่อนไหว", qs:[
+  { from:"ฝ่ายประกันคุณภาพ", to:"ผู้ช่วย AI", subject:"วิเคราะห์คำตอบปลายเปิดจากแบบประเมินรายวิชา", aud:{label:"ที่ประชุมคณะ", rx:/ที่ประชุม|คณะ|กรรมการ|ผู้บริหาร|คณบดี/},
+    body:"มีแบบประเมินรายวิชา 200 ฉบับ ส่วนคำตอบปลายเปิดยังไม่มีใครอ่าน ไฟล์ที่ได้จากระบบมีชื่อและรหัสนักศึกษาติดมาในทุกแถว ท่านต้องการภาพรวมว่านักศึกษาสะท้อนอะไรบ้าง เพื่อเสนอที่ประชุมคณะ",
+    ask:"เขียนคำสั่งให้ AI ช่วยวิเคราะห์คำตอบชุดนี้",
+    facts:[F(/คำตอบ|ความเห็น|ความคิดเห็น|ข้อเสนอแนะ|เสียงสะท้อน|feedback/i,"คำตอบจากนักศึกษา",1), F(/ปลายเปิด|แบบประเมิน|ประเมินรายวิชา|แบบสอบถาม/,"แหล่งข้อมูล (แบบประเมินรายวิชา)",1), F(/ภาพรวม|ประเด็น|กลุ่ม|ธีม|แนวโน้ม|สะท้อน|หมวด/,"ผลที่ต้องการ (ภาพรวม/ประเด็น)",1), F(/200/,"จำนวน 200 ฉบับ"), F(/ที่ประชุม|คณะ/,"เพื่อเสนอที่ประชุมคณะ")],
+    wrong:[W(new RegExp(num('200').source+'(?:ฉบับ|ชุด|คน|แบบ)'),"แบบประเมินมี 200 ฉบับ"), W(/(?:ระบุ|ใส่|แสดง|พร้อม)(?:ชื่อ|รหัส)(?:นักศึกษา)?(?:กำกับ|ด้วย|ทุก)/,"ต้องไม่เปิดเผยชื่อหรือรหัสนักศึกษา")],
+    task:{label:"วิเคราะห์คำตอบปลายเปิดให้เห็นภาพรวม", eg:"วิเคราะห์คำตอบ… / จัดกลุ่มความคิดเห็น…",
+      need:/(?:วิเคราะห์|จัดกลุ่ม|สรุป|ประมวล|จำแนก|ถอด|สกัด|หา)[\s\S]{0,40}?(?:คำตอบ|ความเห็น|ข้อเสนอแนะ|ความคิดเห็น|แบบประเมิน|เสียงสะท้อน|feedback|ภาพรวม|ประเด็น|ธีม|แนวโน้ม)/i},
+    crit:(()=>{ const c=L3().map(x=>Object.assign({},x,{weight:20}));
+      c.splice(2,0,{label:"จัดการข้อมูลระบุตัวบุคคล", weight:20,
+        hint:"ข้อมูลชุดนี้มีชื่อและรหัสนักศึกษาติดมาทุกแถว ต้องสั่งให้ลบหรือไม่แสดงข้อมูลที่ชี้ตัวบุคคลได้ เช่น ลบชื่อและรหัสออกก่อน / ไม่ต้องระบุตัวบุคคล / ห้ามยกคำพูดที่ชี้ตัวได้",
+        test:v => hit(P.deident,v)});
+      return c; })() },
+  { from:"หัวหน้าโครงการ", to:"ผู้ช่วย AI", subject:"ร่างข้อเสนอโครงการที่ต้องอ้างตัวเลขจริง", aud:{label:"คณะกรรมการผู้พิจารณา", rx:/คณะกรรมการ|กรรมการ|ผู้พิจารณา|ผู้ทรงคุณวุฒิ|ผู้ให้ทุน/},
+    body:"ต้องส่งข้อเสนอโครงการภายในสัปดาห์นี้ ในเอกสารต้องอ้างงบประมาณและสถิติผู้เข้าร่วมของปีที่ผ่านมา ซึ่งอยู่ในไฟล์สรุปที่ท่านมีอยู่ ผู้พิจารณาคือคณะกรรมการที่ไม่รู้จักโครงการนี้มาก่อน",
+    ask:"เขียนคำสั่งให้ AI ร่างข้อเสนอโครงการฉบับนี้", crit:L3(),
+    facts:[F(/ข้อเสนอ|โครงการ|proposal/i,"ข้อเสนอโครงการ",1), F(/งบ(?:ประมาณ)?|budget/i,"งบประมาณ",1), F(/สถิติ|ผู้เข้าร่วม|ตัวเลข|จำนวน(?:คน|ผู้)/,"สถิติผู้เข้าร่วม",1), F(/ปีที่ผ่านมา|ปีก่อน|ปีที่แล้ว|ปีล่าสุด|ย้อนหลัง/,"ข้อมูลของปีที่ผ่านมา",1), F(/ไม่รู้จัก|ไม่เคย(?:เห็น|รู้)|มาก่อน|ครั้งแรก|ไม่มีพื้น/,"กรรมการไม่รู้จักโครงการ"), F(/สัปดาห์นี้|ภายในสัปดาห์/,"ส่งภายในสัปดาห์นี้")],
+    wrong:[W(/(?:ประมาณการ|คาด(?:การณ์|เดา)|สมมติ)(?:ตัวเลข|งบ|สถิติ|จำนวน)/,"ต้องใช้ตัวเลขจริงจากไฟล์ ไม่ใช่ประมาณการ")],
+    task:{label:"ร่างข้อเสนอโครงการ", eg:"ร่างข้อเสนอโครงการ… / เขียน proposal…",
+      need:/(?:ร่าง|เขียน|จัดทำ|ทำ)[\s\S]{0,25}?(?:ข้อเสนอ|โครงการ|proposal)|ข้อเสนอโครงการ/i} },
+  { from:"ประธานหลักสูตร", to:"ผู้ช่วย AI", subject:"ออกแบบข้อสอบคู่ขนานจากคลังข้อสอบเดิม", aud:{label:"อาจารย์ในหลักสูตร", rx:/อาจารย์|ผู้สอน|คณาจารย์|หลักสูตร/},
+    body:"หลักสูตรมีคลังข้อสอบเดิมอยู่ 1 ชุด ต้องการชุดคู่ขนานที่วัดจุดประสงค์เดียวกันเพิ่มอีก เพื่อใช้กับนักศึกษาที่สอบซ่อม ผู้ใช้ข้อสอบคืออาจารย์ในหลักสูตรอีก 5 ท่าน",
+    ask:"เขียนคำสั่งให้ AI ช่วยสร้างข้อสอบชุดใหม่", crit:L3(),
+    facts:[F(/ข้อสอบ|แบบทดสอบ|โจทย์|ชุดสอบ/,"ข้อสอบ",1), F(/คู่ขนาน|เทียบเท่า|จุดประสงค์เดียวกัน|วัด(?:สิ่ง|เรื่อง|จุดประสงค์)เดียวกัน|เดียวกัน|parallel/i,"วัดจุดประสงค์เดียวกันกับชุดเดิม",1), F(/คลัง|ชุดเดิม|ข้อสอบเดิม|ต้นฉบับ|ชุดแรก/,"อ้างอิงคลังข้อสอบเดิม",1), F(/สอบซ่อม|ซ่อม|สอบแก้/,"ใช้กับนักศึกษาสอบซ่อม"), F(/5\s*(?:ท่าน|คน)|ห้าท่าน/,"อาจารย์ 5 ท่าน")],
+    wrong:[W(/(?:ง่ายกว่า|ยากกว่า|ลดความยาก|เพิ่มความยาก|ง่ายลง|ยากขึ้น)/,"ชุดคู่ขนานต้องวัดจุดประสงค์เดียวกัน ไม่ใช่ง่ายหรือยากกว่า"), W(/(?:คัดลอก|ก๊อป|copy|ใช้ซ้ำ|เอา)(?:ข้อ)?(?:เดิม|จากคลัง)(?:มา)?(?:ทั้งหมด|ตรง ๆ|ตรงๆ|เลย)/i,"ต้องเป็นข้อสอบใหม่ ไม่ใช่คัดลอกชุดเดิม")],
+    task:{label:"สร้างข้อสอบชุดคู่ขนาน", eg:"สร้างข้อสอบ… / ออกข้อสอบคู่ขนานจากคลังเดิม…",
+      need:/(?:สร้าง|ออก|ออกแบบ|เขียน|ทำ|จัดทำ|พัฒนา|ร่าง)[\s\S]{0,30}?(?:ข้อสอบ|โจทย์|ชุดสอบ|แบบทดสอบ|คู่ขนาน)/} }
+]}];
+
+/* ============================================================
+   สถานะ + การวาดหน้า
+   ============================================================ */
+const blank = () => LEVELS.map(l=>l.qs.map(()=>({draft:"",passed:false,best:0,tries:0,seen:false})));
+let S = blank(), L = 0, Q = 0, showSummary = false;
+
+const cleared  = i => S[i].every(x=>x.passed);
+const unlocked = i => i===0 || cleared(i-1);
+const $ = id => document.getElementById(id);
+const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function drawLevels(){
+  $('levels').innerHTML = LEVELS.map((lv,i)=>{
+    const un = unlocked(i);
+    return `<button class="lv" data-i="${i}" data-on="${(i===L&&!showSummary)?1:0}" data-cleared="${cleared(i)?1:0}" ${un?'':'disabled'}>
+      <div class="num">LEVEL ${String(i+1).padStart(2,'0')}</div>
+      <div class="nm">${lv.name}</div>
+      <div class="sb">${lv.rule}</div>
+      ${un?'':'<div class="lock">ล็อก</div>'}
+    </button>`;
+  }).join('');
+  $('levels').querySelectorAll('.lv').forEach(b=>b.addEventListener('click',()=>{
+    const i = +b.dataset.i;
+    if(!unlocked(i)) return;
+    L = i;
+    const nxt = S[i].findIndex(x=>!x.passed);
+    Q = nxt<0 ? 0 : nxt;
+    showSummary = false; drawAll(true);
+  }));
+}
+
+function drawQbar(){
+  if(showSummary){ $('qbar').innerHTML=''; return; }
+  const chips = LEVELS[L].qs.map((q,j)=>
+    `<button class="chip" data-j="${j}" aria-pressed="${j===Q}" data-done="${S[L][j].passed?1:0}"><span class="st"></span>ข้อ ${j+1}</button>`
+  ).join('');
+  const n = S[L].filter(x=>x.passed).length;
+  $('qbar').innerHTML = `<div class="qbar"><span class="lab">เลือกข้อ</span>${chips}
+    <span class="spacer"></span><span class="meta">ผ่านแล้ว ${n}/3 ในระดับนี้</span></div>`;
+  $('qbar').querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{
+    Q = +b.dataset.j; drawAll(true);
+  }));
+}
+
+function drawStage(focus){
+  if(showSummary){ drawSummary(); return; }
+  const q = LEVELS[L].qs[Q], st = S[L][Q];
+  $('stage').innerHTML = `
+  <div class="grid">
+    <div class="pane brief">
+      <div class="kicker">LEVEL ${String(L+1).padStart(2,'0')} / TASK ${Q+1}</div>
+      <dl><dt>จาก</dt><dd>${q.from}</dd><dt>ถึง</dt><dd>${q.to}</dd><dt>เรื่อง</dt><dd>${q.subject}</dd></dl>
+      <div class="rule"></div>
+      <div class="body">${q.body}</div>
+      <div class="task">${q.ask}</div>
+    </div>
+    <div class="pane">
+      <div class="ehead"><b>คำสั่งของท่าน</b><span id="cc">0 ตัวอักษร</span></div>
+      <textarea id="ta" placeholder="พิมพ์คำสั่งที่ท่านจะส่งให้ AI ตรงนี้ — ใช้สำนวนของท่านเองได้ ตัวเลขจะเขียนเป็นเลขหรือตัวหนังสือก็ได้"></textarea>
+      <div class="row"><button class="go" id="check">ตรวจคำสั่ง</button><span class="kbd">Ctrl + Enter</span></div>
+      <div id="out"></div>
+    </div>
+  </div>`;
+  const ta = $('ta');
+  ta.value = st.draft; count();
+  if(focus) ta.focus();
+  ta.addEventListener('input',()=>{ st.draft = ta.value; count(); if(st.seen) run(); });
+  ta.addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();check();} });
+  $('check').addEventListener('click',check);
+  if(st.seen) run();
+}
+
+function count(){ $('cc').textContent = $('ta').value.trim().length + ' ตัวอักษร'; }
+
+function check(){
+  const st = S[L][Q];
+  if(!$('ta').value.trim()) return;
+  st.seen = true; st.tries++; run();
+}
+
+function run(){
+  const q = LEVELS[L].qs[Q], st = S[L][Q];
+  const raw = $('ta').value;
+  const v = numify(raw);
+  const flagged = P.sensitive.test(raw) || P.sensitive.test(v);
+  const offtask = !q.task.need.test(v);
+  const cc = contentCheck(v, q);
+  const hasContentCrit = q.crit.some(c=>c.id==='content');
+  let total = 0; const segs = [], rows = [];
+  q.crit.forEach(c=>{
+    const ev = c.test(v, q);
+    const ok = !!ev;
+    if(ok) total += c.weight;
+    segs.push(`<div class="${ok?'on':'off'}"></div>`);
+    const hintTxt = typeof c.hint==='function' ? c.hint(v,q) : c.hint;
+    const found = (ok && typeof ev==='string') ? `<div class="cq">พบ: “${esc(ev.length>90?ev.slice(0,90)+'…':ev)}”</div>` : '';
+    rows.push(`<li class="${ok?'ok':'no'}"><span class="gl">${ok?'✓':'✕'}</span>
+      <div><div class="cl">${c.label}</div><div class="ch">${ok?'ผ่านเกณฑ์ข้อนี้':esc(hintTxt)}</div>${found}</div>
+      <div class="cw">${ok?c.weight:0}/${c.weight}</div></li>`);
+  });
+
+  const pass = total===100 && !flagged && !offtask && cc.ok;
+  st.best = Math.max(st.best,total);
+  if(pass) st.passed = true;
+
+  const verdict = pass ? `<div class="said ok">คำสั่งนี้ครบทุกเกณฑ์แล้ว</div>`
+    : flagged ? `<div class="said no">ลบข้อมูลที่ระบุตัวบุคคลออกก่อน แล้วกดตรวจอีกครั้ง</div>`
+    : offtask ? `<div class="said no">ปรับคำสั่งให้สั่งงานตามโจทย์ก่อน โครงสร้างครบแต่สั่งผิดงานไม่นับว่าผ่าน</div>`
+    : !cc.ok ? `<div class="said no">${cc.bad.length ? 'แก้เนื้อหาให้ไปทางเดียวกับโจทย์' : 'เติมรายละเอียดจากโจทย์ให้ครบ'} แล้วคะแนนจะอัปเดตทันที</div>`
+    : `<div class="said no">แก้ข้อที่ยังไม่ผ่าน คะแนนจะอัปเดตทันทีที่พิมพ์</div>`;
+
+  const alert = (flagged
+    ? `<div class="alert">พบข้อมูลที่ระบุตัวบุคคลในคำสั่ง เช่น เลขประจำตัวหรือหมายเลขโทรศัพท์ ข้อมูลที่วางลงในเครื่องมือ AI แล้วเรียกคืนไม่ได้</div>` : '')
+    + (offtask
+    ? `<div class="alert">คำสั่งไม่ตรงโจทย์ — โจทย์ให้ "${q.task.label}" แต่คำสั่งของท่านยังไม่ได้สั่งให้ทำงานนี้ (เช่น ${esc(q.task.eg)})</div>` : '')
+    + ((!hasContentCrit && cc.bad.length)
+    ? `<div class="alert">เนื้อหาไม่ตรงโจทย์ — ${esc(cc.bad.join(', '))}</div>` : '')
+    + ((!hasContentCrit && cc.missing.length)
+    ? `<div class="alert">รายละเอียดจากโจทย์ยังไม่ครบ — ขาด: ${esc(cc.missing.join(', '))}</div>` : '');
+
+  let banner = '';
+  if(pass){
+    const left = S[L].filter(x=>!x.passed).length;
+    if(left>0){
+      const nextQ = S[L].findIndex((x,j)=>!x.passed && j>Q);
+      const target = nextQ<0 ? S[L].findIndex(x=>!x.passed) : nextQ;
+      banner = `<div class="unlock"><p><b>ผ่านข้อนี้แล้ว</b> เหลืออีก ${left} ข้อในระดับนี้ ต้องผ่านครบทั้ง 3 ข้อจึงปลดล็อกระดับถัดไป</p><button id="jump" data-q="${target}">ไปข้อ ${target+1}</button></div>`;
+    } else {
+      banner = (L < LEVELS.length-1)
+        ? `<div class="unlock"><p><b>ผ่านครบทั้ง 3 ข้อ ปลดล็อก Level ${L+2}</b> ${LEVELS[L+1].name}</p><button id="jump">ไป Level ${L+2}</button></div>`
+        : `<div class="unlock"><p><b>ผ่านครบทั้ง 3 ระดับแล้ว</b></p><button id="jump">ดูสรุปผล</button></div>`;
+    }
+  }
+
+  $('out').innerHTML = `<div class="readout">
+      <div class="rtop">
+        <div><div class="cap">SCORE</div>
+        <div class="sub">ตรวจแล้ว ${st.tries} ครั้ง ต้องได้ 100 งานและเนื้อหาตรงโจทย์ และไม่มีข้อมูลอ่อนไหว</div></div>
+        <div class="num ${pass?'full':''}"><b>${total}</b><i>/100</i></div>
+      </div>
+      <div class="seg">${segs.join('')}</div>
+      <ul class="crit">${rows.join('')}</ul>
+      ${alert}${verdict}${banner}
+    </div>`;
+
+  if(pass){
+    drawLevels(); drawQbar();
+    const j = $('jump');
+    if(j) j.addEventListener('click',()=>{
+      if(j.dataset.q!==undefined){ Q = +j.dataset.q; }
+      else if(L < LEVELS.length-1){ L++; Q=0; }
+      else { showSummary = true; }
+      drawAll(true); window.scrollTo({top:0,behavior:'smooth'});
+    });
+  }
+}
+
+function drawSummary(){
+  const all = S.flat();
+  const passed = all.filter(x=>x.passed).length;
+  const tried = all.filter(x=>x.tries>0);
+  const avg = tried.length ? Math.round(tried.reduce((a,b)=>a+b.best,0)/tried.length) : 0;
+  const tries = all.reduce((a,b)=>a+b.tries,0);
+  $('stage').innerHTML = `<div class="pane done">
+      <h2>ผ่านครบทั้ง 3 ระดับ</h2>
+      <p>ท่านเขียนคำสั่งที่ครบทั้งบทบาท ผู้อ่าน งาน รูปแบบ และข้อจำกัด ได้ครบทั้ง 9 ข้อในทุกระดับความยาก</p>
+      <div class="stats">
+        <div><b>${passed}</b><span>ข้อที่ผ่าน / 9</span></div>
+        <div><b>${avg}</b><span>คะแนนเฉลี่ย</span></div>
+        <div><b>${tries}</b><span>ครั้งที่ตรวจ</span></div>
+      </div>
+      <button class="go" id="back">กลับไปดูข้อที่ทำไว้</button>
+    </div>`;
+  $('back').addEventListener('click',()=>{
+    showSummary = false; L = LEVELS.length-1; Q = 0;
+    drawAll(true);
+  });
+}
+
+function drawAll(focus){ $('labRoot').setAttribute('data-level', L); drawLevels(); drawQbar(); drawStage(focus); }
+
+$('reset').addEventListener('click',()=>{
+  S = blank(); L=0; Q=0; showSummary=false; drawAll(true);
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+drawAll(false);
+</script>
+
+</body>
+</html>

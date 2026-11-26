@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg-grad-1: #eef2ff;
+      --bg-grad-2: #fdf2f8;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --border-soft: rgba(148, 163, 184, 0.25);
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --accent-primary: #be123c;
+      --accent-primary-hover: #9f1239;
+      --accent-secondary: #1e293b;
+      --accent-secondary-hover: #0f172a;
+      --input-bg: #f8fafc;
+      --ring: rgba(190, 18, 60, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Kanit", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, var(--bg-grad-1), transparent 55%),
+        radial-gradient(circle at bottom right, var(--bg-grad-2), transparent 55%),
+        #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 920px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-soft);
+      border-radius: 28px;
+      box-shadow: 0 24px 60px -15px rgba(15, 23, 42, 0.12);
+      padding: 32px;
+    }
+
+    .app-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .app-header h1 {
+      margin: 0 0 6px;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .app-header p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .form-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .text-input,
+    .file-input {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      background: var(--input-bg);
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .text-input:focus,
+    .file-input:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+
+    .file-input::file-selector-button {
+      margin-right: 12px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .file-input::file-selector-button:hover {
+      background: #f1f5f9;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      padding: 13px 18px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: #ffffff;
+      box-shadow: 0 10px 20px -8px rgba(190, 18, 60, 0.5);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--accent-secondary);
+      color: #ffffff;
+      box-shadow: 0 10px 20px -8px rgba(30, 41, 59, 0.45);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-secondary-hover);
+    }
+
+    .preview-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      border-radius: 22px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 330px;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .qr-canvas-wrap {
+      width: 240px;
+      height: 240px;
+      border-radius: 18px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas#qrCanvas {
+      width: 240px;
+      height: 240px;
+      display: block;
+      border-radius: 14px;
+    }
+
+    .preview-caption {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .status-text {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: var(--accent-primary);
+      min-height: 1.2em;
+    }
+
+    @media (max-width: 768px) {
+      .app-shell {
+        padding: 22px 18px;
+        border-radius: 22px;
+      }
+
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <h1>QR Code Generator</h1>
+      <p>สร้าง QR Code พร้อมโลโก้ตรงกลางและดาวน์โหลดไฟล์ PNG ได้ทันที</p>
+    </header>
+
+    <div class="grid-layout">
+      <section class="form-panel" aria-label="ตั้งค่า QR Code">
+        <div class="field-group">
+          <label class="field-label" for="urlInput">1. วางลิงก์ URL ที่ต้องการ:</label>
+          <input
+            id="urlInput"
+            class="text-input"
+            type="url"
+            placeholder="https://et.pim.ac.th"
+            value="https://et.pim.ac.th"
+          />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="logoInput">2. อัปโหลดรูปภาพ Logo ตรงกลาง (ทางเลือก):</label>
+          <input
+            id="logoInput"
+            class="file-input"
+            type="file"
+            accept="image/*"
+          />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="filenameInput">3. ตั้งชื่อไฟล์ดาวน์โหลด:</label>
+          <input
+            id="filenameInput"
+            class="text-input"
+            type="text"
+            placeholder="my-qrcode"
+            value="my-qrcode"
+          />
+        </div>
+
+        <div class="actions">
+          <button id="updateBtn" class="btn btn-primary" type="button">อัปเดต QR Code</button>
+          <button id="downloadBtn" class="btn btn-secondary" type="button">ดาวน์โหลด .PNG</button>
+        </div>
+      </section>
+
+      <aside class="preview-panel" aria-label="ตัวอย่าง QR Code">
+        <div class="qr-canvas-wrap">
+          <canvas id="qrCanvas" width="600" height="600"></canvas>
+        </div>
+        <p id="statusText" class="status-text"></p>
+        <p class="preview-caption">ไฟล์ที่ดาวน์โหลดจะบันทึกเป็นนามสกุล .png</p>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const urlInput = document.getElementById("urlInput");
+    const logoInput = document.getElementById("logoInput");
+    const filenameInput = document.getElementById("filenameInput");
+    const updateBtn = document.getElementById("updateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const canvas = document.getElementById("qrCanvas");
+    const ctx = canvas.getContext("2d");
+    const statusText = document.getElementById("statusText");
+
+    let uploadedLogoImg = null;
+
+    function drawRoundedRect(context, x, y, width, height, radius) {
+      context.beginPath();
+      context.moveTo(x + radius, y);
+      context.arcTo(x + width, y, x + width, y + height, radius);
+      context.arcTo(x + width, y + height, x, y + height, radius);
+      context.arcTo(x, y + height, x, y, radius);
+      context.arcTo(x, y, x + width, y, radius);
+      context.closePath();
+    }
+
+    async function renderQRCode() {
+      const rawValue = urlInput.value.trim();
+      const textToEncode = rawValue || "https://et.pim.ac.th";
+
+      if (typeof window.QRCode === "undefined") {
+        statusText.textContent = "ไม่สามารถโหลดไลบรารีสร้าง QR Code ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต";
+        return;
+      }
+
+      statusText.textContent = "";
+
+      try {
+        await window.QRCode.toCanvas(canvas, textToEncode, {
+          width: 600,
+          margin: 2,
+          errorCorrectionLevel: "H",
+          color: {
+            dark: "#0f172a",
+            light: "#ffffff"
+          }
+        });
+
+        if (uploadedLogoImg) {
+          const logoBoxSize = canvas.width * 0.22;
+          const logoSize = logoBoxSize * 0.78;
+          const boxX = (canvas.width - logoBoxSize) / 2;
+          const boxY = (canvas.height - logoBoxSize) / 2;
+          const imgX = (canvas.width - logoSize) / 2;
+          const imgY = (canvas.height - logoSize) / 2;
+
+          ctx.save();
+          drawRoundedRect(ctx, boxX, boxY, logoBoxSize, logoBoxSize, 24);
+          ctx.fillStyle = "#ffffff";
+          ctx.fill();
+
+          drawRoundedRect(ctx, imgX, imgY, logoSize, logoSize, 18);
+          ctx.clip();
+          ctx.drawImage(uploadedLogoImg, imgX, imgY, logoSize, logoSize);
+          ctx.restore();
+        }
+      } catch (err) {
+        statusText.textContent = "เกิดข้อผิดพลาดในการสร้าง QR Code";
+      }
+    }
+
+    function sanitizeFilename(name) {
+      const cleaned = (name || "my-qrcode")
+        .trim()
+        .replace(/\.png$/i, "")
+        .replace(/[\\/:*?"<>|]+/g, "-");
+      return cleaned || "my-qrcode";
+    }
+
+    function downloadPNG() {
+      const fileBase = sanitizeFilename(filenameInput.value);
+      const link = document.createElement("a");
+      link.download = `${fileBase}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    logoInput.addEventListener("change", (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) {
+        uploadedLogoImg = null;
+        renderQRCode();
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          uploadedLogoImg = img;
+          renderQRCode();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    updateBtn.addEventListener("click", renderQRCode);
+    downloadBtn.addEventListener("click", downloadPNG);
+    urlInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        renderQRCode();
+      }
+    });
+
+    renderQRCode();
+  </script>
+</body>
+</html>

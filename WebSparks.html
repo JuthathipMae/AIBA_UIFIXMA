@@ -1,0 +1,2139 @@
+<!DOCTYPE html> 
+<html lang="th" data-theme="light" data-palette="coral-violet">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>WebSparks — เครื่องมือร่าง Prompt สร้างเว็บออฟไลน์ | AiBA Connect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ==========================================================================
+   1. DESIGN SYSTEM — AiBA CONNECT TOKENS & LIGHT / DARK THEMES
+   ========================================================================== */
+:root {
+  /* Typography */
+  --font-heading: 'Kanit', sans-serif;
+  --font-body: 'Sarabun', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Sarabun', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Base Palette — Light Mode */
+  --bg-base: #F8F9FE;
+  --bg-lavender: #F1EFFB;
+  --text-primary: #131836;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  /* Liquid Glass System — Light Mode */
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-bg-strong: rgba(255, 255, 255, 0.90);
+  --glass-border: rgba(255, 255, 255, 0.88);
+  --glass-outline: rgba(124, 58, 237, 0.12);
+  --glass-blur: blur(18px);
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+  /* Surface Helpers — Light Mode */
+  --surface-input: rgba(248, 249, 254, 0.92);
+  --surface-subtle: rgba(241, 239, 251, 0.68);
+  --border-subtle: rgba(19, 24, 54, 0.10);
+
+  /* Prompt Sheet (High-Contrast Dark Surface in Light Mode) */
+  --sheet-bg: linear-gradient(160deg, #131836 0%, #1C234B 100%);
+  --sheet-header-bg: rgba(10, 14, 34, 0.42);
+  --sheet-border: rgba(255, 255, 255, 0.12);
+  --sheet-outline: rgba(19, 24, 54, 0.16);
+  --sheet-ink: #EEF2FF;
+  --sheet-dim: #94A3C4;
+  --sheet-shadow: 0 22px 48px rgba(19, 24, 54, 0.22);
+
+  /* Status Colors */
+  --ok-solid: #10B981;
+  --err-solid: #EF4444;
+  --err-text: #DC2626;
+  --err-bg: rgba(239, 68, 68, 0.10);
+  --err-border: rgba(239, 68, 68, 0.30);
+
+  /* Shadows & Radii */
+  --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+  --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+  --shadow-lg: 0 20px 48px rgba(19, 24, 54, 0.12);
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 30px;
+  --radius-pill: 9999px;
+  --container-max: 1240px;
+
+  /* Default Dynamic Palette (Coral Violet) */
+  --pal-from: #FF6B6B;
+  --pal-to: #7C3AED;
+  --pal-grad: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+  --pal-solid: #7C3AED;
+  --pal-text: #6D28D9;
+  --pal-soft: rgba(124, 58, 237, 0.11);
+  --pal-border: rgba(124, 58, 237, 0.34);
+  --pal-glow: rgba(124, 58, 237, 0.26);
+  --pal-sheet-key: #C4B5FD;
+  --pal-orb-1: rgba(255, 107, 107, 0.13);
+  --pal-orb-2: rgba(124, 58, 237, 0.13);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-base: #0F1225;
+  --bg-lavender: #171B36;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+
+  --glass-bg: rgba(26, 31, 60, 0.80);
+  --glass-bg-strong: rgba(30, 36, 68, 0.90);
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --glass-outline: rgba(167, 139, 250, 0.22);
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+  --surface-input: rgba(14, 17, 36, 0.78);
+  --surface-subtle: rgba(15, 18, 37, 0.56);
+  --border-subtle: rgba(255, 255, 255, 0.11);
+
+  /* Prompt Sheet — Deeper Obsidian Layer to Contrast Dark Glass Cards */
+  --sheet-bg: linear-gradient(160deg, #070A18 0%, #0D1229 100%);
+  --sheet-header-bg: rgba(255, 255, 255, 0.03);
+  --sheet-border: rgba(255, 255, 255, 0.14);
+  --sheet-outline: var(--pal-border);
+  --sheet-ink: #F1F5F9;
+  --sheet-dim: #7C8BB0;
+  --sheet-shadow: 0 24px 56px rgba(0, 0, 0, 0.56);
+
+  --err-solid: #F87171;
+  --err-text: #FCA5A5;
+  --err-bg: rgba(239, 68, 68, 0.15);
+  --err-border: rgba(248, 113, 113, 0.36);
+
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+}
+
+/* ==========================================================================
+   2. COLOR PALETTES (5 SWITCHABLE SETS)
+   ========================================================================== */
+:root[data-palette="coral-violet"] {
+  --pal-from: #FF6B6B;
+  --pal-to: #7C3AED;
+  --pal-grad: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+  --pal-solid: #7C3AED;
+  --pal-text: #6D28D9;
+  --pal-soft: rgba(124, 58, 237, 0.11);
+  --pal-border: rgba(124, 58, 237, 0.34);
+  --pal-glow: rgba(124, 58, 237, 0.28);
+  --pal-sheet-key: #C4B5FD;
+  --pal-orb-1: rgba(255, 107, 107, 0.14);
+  --pal-orb-2: rgba(124, 58, 237, 0.14);
+}
+:root[data-theme="dark"][data-palette="coral-violet"] {
+  --pal-solid: #A78BFA;
+  --pal-text: #DDD6FE;
+  --pal-soft: rgba(167, 139, 250, 0.18);
+  --pal-border: rgba(167, 139, 250, 0.46);
+  --pal-glow: rgba(124, 58, 237, 0.38);
+}
+
+:root[data-palette="sky-mint"] {
+  --pal-from: #38BDF8;
+  --pal-to: #10B981;
+  --pal-grad: linear-gradient(135deg, #38BDF8 0%, #10B981 100%);
+  --pal-solid: #0D9488;
+  --pal-text: #0F766E;
+  --pal-soft: rgba(16, 185, 129, 0.11);
+  --pal-border: rgba(16, 185, 129, 0.36);
+  --pal-glow: rgba(16, 185, 129, 0.26);
+  --pal-sheet-key: #5EEAD4;
+  --pal-orb-1: rgba(56, 189, 248, 0.15);
+  --pal-orb-2: rgba(16, 185, 129, 0.13);
+}
+:root[data-theme="dark"][data-palette="sky-mint"] {
+  --pal-solid: #2DD4BF;
+  --pal-text: #5EEAD4;
+  --pal-soft: rgba(45, 212, 191, 0.17);
+  --pal-border: rgba(45, 212, 191, 0.46);
+  --pal-glow: rgba(16, 185, 129, 0.36);
+}
+
+:root[data-palette="amber-sunset"] {
+  --pal-from: #F97316;
+  --pal-to: #F59E0B;
+  --pal-grad: linear-gradient(135deg, #F97316 0%, #F59E0B 100%);
+  --pal-solid: #EA580C;
+  --pal-text: #C2410C;
+  --pal-soft: rgba(249, 115, 22, 0.12);
+  --pal-border: rgba(249, 115, 22, 0.38);
+  --pal-glow: rgba(249, 115, 22, 0.28);
+  --pal-sheet-key: #FCD34D;
+  --pal-orb-1: rgba(249, 115, 22, 0.14);
+  --pal-orb-2: rgba(245, 158, 11, 0.13);
+}
+:root[data-theme="dark"][data-palette="amber-sunset"] {
+  --pal-solid: #FB923C;
+  --pal-text: #FCD34D;
+  --pal-soft: rgba(251, 146, 60, 0.18);
+  --pal-border: rgba(251, 146, 60, 0.48);
+  --pal-glow: rgba(249, 115, 22, 0.36);
+}
+
+:root[data-palette="rose-berry"] {
+  --pal-from: #E11D48;
+  --pal-to: #FB7185;
+  --pal-grad: linear-gradient(135deg, #E11D48 0%, #FB7185 100%);
+  --pal-solid: #E11D48;
+  --pal-text: #BE123C;
+  --pal-soft: rgba(225, 29, 72, 0.11);
+  --pal-border: rgba(225, 29, 72, 0.36);
+  --pal-glow: rgba(225, 29, 72, 0.26);
+  --pal-sheet-key: #FDA4AF;
+  --pal-orb-1: rgba(225, 29, 72, 0.13);
+  --pal-orb-2: rgba(251, 113, 133, 0.14);
+}
+:root[data-theme="dark"][data-palette="rose-berry"] {
+  --pal-solid: #FB7185;
+  --pal-text: #FDA4AF;
+  --pal-soft: rgba(251, 113, 133, 0.18);
+  --pal-border: rgba(251, 113, 133, 0.46);
+  --pal-glow: rgba(225, 29, 72, 0.38);
+}
+
+:root[data-palette="indigo-cyber"] {
+  --pal-from: #6366F1;
+  --pal-to: #06B6D4;
+  --pal-grad: linear-gradient(135deg, #6366F1 0%, #06B6D4 100%);
+  --pal-solid: #4F46E5;
+  --pal-text: #4338CA;
+  --pal-soft: rgba(99, 102, 241, 0.11);
+  --pal-border: rgba(99, 102, 241, 0.36);
+  --pal-glow: rgba(99, 102, 241, 0.28);
+  --pal-sheet-key: #67E8F9;
+  --pal-orb-1: rgba(99, 102, 241, 0.14);
+  --pal-orb-2: rgba(6, 182, 212, 0.13);
+}
+:root[data-theme="dark"][data-palette="indigo-cyber"] {
+  --pal-solid: #818CF8;
+  --pal-text: #A5F3FC;
+  --pal-soft: rgba(129, 140, 248, 0.18);
+  --pal-border: rgba(56, 189, 248, 0.46);
+  --pal-glow: rgba(99, 102, 241, 0.38);
+}
+
+/* ==========================================================================
+   3. RESET & BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background:
+    radial-gradient(920px 520px at 8% -4%, var(--pal-orb-1), transparent 60%),
+    radial-gradient(920px 560px at 94% 4%, var(--pal-orb-2), transparent 60%),
+    radial-gradient(720px 520px at 50% 48%, rgba(56, 189, 248, 0.06), transparent 70%),
+    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+  background-attachment: fixed;
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, legend, .font-heading {
+  font-family: var(--font-heading);
+  line-height: 1.25;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-heading);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--pal-solid);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ==========================================================================
+   4. FLOATING GLASS NAVBAR (MATCHING AiBA CONNECT)
+   ========================================================================== */
+.navbar-wrapper {
+  position: sticky;
+  top: 14px;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.floating-navbar {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md), var(--glass-inset);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nav-back-btn {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-outline);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.nav-back-btn:hover {
+  border-color: var(--pal-solid);
+  color: var(--pal-text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.logo-slot {
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-slot img {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--glass-outline);
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: var(--font-heading);
+  font-size: 1.28rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: var(--pal-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.a11y-btn {
+  height: 40px;
+  min-width: 40px;
+  padding: 0 13px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-outline);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.a11y-btn:hover {
+  border-color: var(--pal-solid);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   5. WORKSPACE WRAPPER, HERO INTRO & PALETTE PICKER
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+  flex: 1;
+}
+
+.page-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 24px;
+  margin-bottom: 20px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-outline);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--pal-text);
+  margin-bottom: 10px;
+}
+
+.hero-badge-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--pal-grad);
+  box-shadow: 0 0 10px var(--pal-glow);
+  flex-shrink: 0;
+}
+
+.page-hero h1 {
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.page-hero h1 .accent-word {
+  background: var(--pal-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lead {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  max-width: 62ch;
+}
+
+.step-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.step-nav span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  outline: 1px solid var(--glass-outline);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.step-nav span b {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--pal-grad);
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--pal-glow);
+}
+
+/* Color Palette Bar */
+.palette-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  padding: 12px 18px;
+  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  outline: 1px solid var(--glass-outline);
+  box-shadow: var(--shadow-sm), var(--glass-inset);
+}
+
+.palette-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.palette-label svg {
+  color: var(--pal-solid);
+  flex-shrink: 0;
+}
+
+.palette-options {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1.5px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.pal-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--pal-border);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.pal-btn[aria-pressed="true"] {
+  background: var(--pal-soft);
+  border-color: var(--pal-solid);
+  color: var(--pal-text);
+  box-shadow: 0 4px 14px var(--pal-glow);
+}
+
+.pal-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 2px 6px rgba(0, 0, 0, 0.16);
+}
+
+/* ==========================================================================
+   6. MAIN 2-COLUMN WORKSPACE (LIQUID GLASS FORM + CONTRASTING PROMPT SHEET)
+   ========================================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* Left Column: Liquid Glass Form Panel */
+.panel {
+  position: relative;
+  min-width: 0;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  outline: 1px solid var(--glass-outline);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  box-shadow: var(--shadow-md), var(--glass-inset);
+  overflow: hidden;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--pal-grad);
+}
+
+fieldset {
+  border: 0;
+  padding: 0 0 24px;
+  margin: 0 0 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  min-width: 0;
+}
+
+fieldset:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.12rem;
+  color: var(--text-primary);
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.legend-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  background: var(--pal-grad);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px var(--pal-glow);
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 12px;
+}
+
+label.f {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.96rem;
+  color: var(--text-primary);
+  margin: 14px 0 6px;
+}
+
+input[type=text],
+textarea,
+select {
+  width: 100%;
+  background: var(--surface-input);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 11px 14px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+input[type=text]:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--pal-border);
+}
+
+input[type=text]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--pal-solid);
+  box-shadow: 0 0 0 4px var(--pal-soft);
+}
+
+textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.82;
+}
+
+/* Conditional Sub-boxes */
+.sub-box {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--pal-solid);
+}
+
+.sub-box > label.f:first-child {
+  margin-top: 0;
+}
+
+/* Pill Chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.chip {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.3;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--pal-solid);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--pal-grad);
+  border-color: transparent;
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 6px 16px var(--pal-glow);
+}
+
+.chip[aria-pressed="true"]:hover {
+  filter: brightness(1.06);
+  color: #FFFFFF;
+}
+
+/* Feature List */
+.featlist {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.featlist li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 9px 12px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.featlist li:hover {
+  border-color: var(--pal-border);
+}
+
+.featlist li .num {
+  flex: 0 0 auto;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: var(--radius-pill);
+  background: var(--pal-grad);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px var(--pal-glow);
+}
+
+.featlist li .txt {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+  font-size: 0.96rem;
+  color: var(--text-primary);
+}
+
+.featlist li button {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: all 0.18s ease;
+}
+
+.featlist li button:hover {
+  background: var(--err-bg);
+  border-color: var(--err-border);
+  color: var(--err-text);
+}
+
+.addrow {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.addrow input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px dashed var(--border-subtle);
+  background: var(--surface-subtle);
+}
+
+/* Radio Options */
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.radio-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.radio-row label:hover {
+  border-color: var(--pal-border);
+  color: var(--text-primary);
+}
+
+.radio-row label:has(input:checked) {
+  background: var(--pal-soft);
+  border-color: var(--pal-solid);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.radio-row input[type="radio"] {
+  accent-color: var(--pal-solid);
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.94rem;
+  font-weight: 600;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--glass-bg-strong);
+  color: var(--text-primary);
+  border-radius: var(--radius-pill);
+  padding: 10px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  border-color: var(--pal-solid);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn.primary {
+  background: var(--pal-grad);
+  border-color: transparent;
+  color: #FFFFFF;
+  box-shadow: 0 8px 22px var(--pal-glow);
+}
+
+.btn.primary:hover {
+  filter: brightness(1.07);
+  box-shadow: 0 12px 28px var(--pal-glow);
+}
+
+/* ==========================================================================
+   7. RIGHT COLUMN — CONTRASTING DARK PROMPT SHEET
+   ========================================================================== */
+.sheet-wrap {
+  position: sticky;
+  top: calc(86px + env(safe-area-inset-top, 0px));
+  min-width: 0;
+}
+
+.sheet {
+  position: relative;
+  background: var(--sheet-bg);
+  color: var(--sheet-ink);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  overflow: hidden;
+  border: 1.5px solid var(--sheet-border);
+  outline: 1px solid var(--sheet-outline);
+  box-shadow: var(--sheet-shadow);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.sheet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--pal-grad);
+  z-index: 2;
+}
+
+.sheet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px 14px;
+  background: var(--sheet-header-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.sheet-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sheet-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--pal-grad);
+  box-shadow: 0 0 12px var(--pal-sheet-key);
+  flex-shrink: 0;
+}
+
+.sheet-top h2 {
+  font-family: var(--font-heading);
+  margin: 0;
+  font-size: 1.06rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.sheet-top .meta {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--pal-sheet-key);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+pre {
+  margin: 0;
+  padding: 20px;
+  max-height: 60vh;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--sheet-ink);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+pre .k {
+  color: var(--pal-sheet-key);
+  font-weight: 600;
+}
+
+pre .d {
+  color: var(--sheet-dim);
+}
+
+.sheet-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--sheet-header-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  flex-wrap: wrap;
+}
+
+.sheet-actions .btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: #F8FAFC;
+  font-size: 0.9rem;
+  padding: 10px 16px;
+}
+
+.sheet-actions .btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--pal-sheet-key);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+.sheet-actions .btn.primary {
+  background: var(--pal-grad);
+  border-color: transparent;
+  color: #FFFFFF;
+  flex: 1 1 auto;
+  box-shadow: 0 8px 24px var(--pal-glow);
+}
+
+.sheet-actions .btn.primary:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 12px 28px var(--pal-glow);
+}
+
+.sheet-actions .btn.danger {
+  color: #FCA5A5;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(248, 113, 113, 0.30);
+}
+
+.sheet-actions .btn.danger:hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(248, 113, 113, 0.56);
+}
+
+.foot-card {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  outline: 1px solid var(--glass-outline);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.foot-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--pal-soft);
+  color: var(--pal-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 18px);
+  background: var(--pal-grad);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 14px 34px var(--pal-glow);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1200;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast, .btn, .chip, .pal-btn, .a11y-btn {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   8. STANDARD FOOTER (AiBA & PIM — MATCHING index.html)
+   ========================================================================== */
+.site-footer {
+  background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+  color: #F8FAFC;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 44px;
+  margin-top: auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr;
+  gap: 32px;
+  padding-bottom: 32px;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.footer-brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+.footer-text {
+  font-size: 0.94rem;
+  color: #CBD5E1;
+  line-height: 1.7;
+}
+
+.footer-pim-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #38BDF8;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.footer-pim-link:hover {
+  text-decoration: underline;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.social-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+  background: var(--pal-grad);
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+
+.footer-bottom-bar {
+  background: linear-gradient(90deg, rgba(255, 107, 107, 0.22), rgba(124, 58, 237, 0.28));
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: #E2E8F0;
+}
+
+/* ==========================================================================
+   9. RESPONSIVE BREAKPOINTS (TABLET & MOBILE — ZERO OVERFLOW)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .sheet-wrap {
+    position: static;
+  }
+
+  pre {
+    max-height: 52vh;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar-wrapper {
+    top: 8px;
+    padding: 0 10px;
+  }
+
+  .floating-navbar {
+    padding: 8px 12px;
+    border-radius: 22px;
+    gap: 8px;
+  }
+
+  .nav-left {
+    gap: 8px;
+  }
+
+  .nav-back-btn {
+    height: 36px;
+    padding: 0 10px;
+    font-size: 0.82rem;
+  }
+
+  .logo-slot {
+    height: 32px;
+  }
+
+  .logo-slot img {
+    height: 34px;
+  }
+
+  .brand-name {
+    font-size: 1.08rem;
+  }
+
+  .a11y-btn {
+    height: 36px;
+    min-width: 36px;
+    padding: 0 10px;
+    font-size: 0.84rem;
+  }
+
+  .wrap {
+    padding: 20px 14px 44px;
+  }
+
+  .panel {
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+
+  .palette-bar {
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+
+  .pal-btn {
+    padding: 5px 11px 5px 7px;
+    font-size: 0.8rem;
+  }
+
+  .pal-swatch {
+    width: 17px;
+    height: 17px;
+  }
+
+  .addrow {
+    flex-direction: column;
+  }
+
+  .addrow .btn {
+    width: 100%;
+  }
+
+  .sheet {
+    border-radius: 20px;
+  }
+
+  .sheet-top {
+    padding: 14px 16px;
+  }
+
+  pre {
+    padding: 16px;
+    font-size: 0.84rem;
+  }
+
+  .sheet-actions {
+    padding: 12px 14px;
+  }
+
+  .sheet-actions .btn {
+    flex: 1 1 calc(50% - 6px);
+  }
+
+  .sheet-actions .btn.primary {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 460px) {
+  .nav-back-text,
+  .brand-divider {
+    display: none;
+  }
+
+  .nav-back-btn {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  #themeText {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS NAVBAR
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="เมนูหลัก WebSparks">
+      <div class="nav-left">
+        <a href="index.html" class="nav-back-btn" aria-label="กลับหน้าหลัก">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          <span class="nav-back-text">กลับหน้าหลัก</span>
+        </a>
+        <a href="index.html" class="nav-brand" aria-label="WebSparks — AiBA Connect">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">WebSparks</span>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="a11y-btn" id="fontDecBtn" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeToggleBtn" aria-label="สลับโหมดสีหน้าจอ">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN WORKSPACE
+       ======================================================================== -->
+  <main class="wrap">
+    <section class="page-hero">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          <span>เครื่องมือร่าง Prompt · สร้างเว็บไฟล์เดียวแบบออฟไลน์</span>
+        </div>
+        <h1><span class="accent-word">WebSparks</span> เปลี่ยนความคิดเป็น Website</h1>
+        <p class="lead">สำหรับเว็บแบบไฟล์เดียว (HTML เดียวจบ) ที่เปิดบนเครื่องได้โดยไม่ต้องต่ออินเทอร์เน็ต กรอกด้านซ้าย แล้ว Prompt ด้านขวาจะอัปเดตเองทันที</p>
+      </div>
+      <nav class="step-nav" aria-label="ขั้นตอน">
+        <span><b>1</b> กรอกความต้องการ</span>
+        <span><b>2</b> คัดลอก Prompt</span>
+        <span><b>3</b> วางให้ AI สร้างเว็บ</span>
+      </nav>
+    </section>
+
+    <!-- Color Palette Selector -->
+    <section class="palette-bar" aria-label="เลือกชุดสี">
+      <div class="palette-label">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+          <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+          <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+          <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+        </svg>
+        <span>ชุดสี (Color Palette)</span>
+      </div>
+      <div class="palette-options" id="palettePicker" role="group" aria-label="เลือกชุดสีหลักของหน้า">
+        <button type="button" class="pal-btn" data-palette="coral-violet" aria-pressed="true">
+          <span class="pal-swatch" style="background:linear-gradient(135deg,#FF6B6B,#7C3AED)"></span>
+          <span>Coral Violet</span>
+        </button>
+        <button type="button" class="pal-btn" data-palette="sky-mint" aria-pressed="false">
+          <span class="pal-swatch" style="background:linear-gradient(135deg,#38BDF8,#10B981)"></span>
+          <span>Sky Mint</span>
+        </button>
+        <button type="button" class="pal-btn" data-palette="amber-sunset" aria-pressed="false">
+          <span class="pal-swatch" style="background:linear-gradient(135deg,#F97316,#F59E0B)"></span>
+          <span>Amber Sunset</span>
+        </button>
+        <button type="button" class="pal-btn" data-palette="rose-berry" aria-pressed="false">
+          <span class="pal-swatch" style="background:linear-gradient(135deg,#E11D48,#FB7185)"></span>
+          <span>Rose Berry</span>
+        </button>
+        <button type="button" class="pal-btn" data-palette="indigo-cyber" aria-pressed="false">
+          <span class="pal-swatch" style="background:linear-gradient(135deg,#6366F1,#06B6D4)"></span>
+          <span>Indigo Cyber</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- ===== ฝั่งซ้าย: ฟอร์มแบบการ์ดกระจกฝ้า ===== -->
+      <form class="panel" id="form" onsubmit="return false">
+
+        <fieldset>
+          <legend><span class="legend-num">1</span>ระบบที่อยากได้</legend>
+          <label class="f" for="name">ชื่อระบบ</label>
+          <input type="text" id="name" placeholder="เช่น ระบบจัดการสต๊อกร้านกาแฟ" />
+          <label class="f" for="purpose">ใช้ทำอะไร / แก้ปัญหาอะไร</label>
+          <textarea id="purpose" placeholder="เช่น ใช้บันทึกวัตถุดิบเข้าออกในแต่ละวัน เพื่อรู้ว่าของจะหมดเมื่อไหร่ ไม่ต้องจดใส่สมุดแล้วหาย"></textarea>
+          <label class="f" for="users">ใครเป็นคนใช้</label>
+          <input type="text" id="users" placeholder="เช่น เจ้าของร้านกับพนักงาน 2 คน ใช้บนแท็บเล็ตหน้าร้าน" />
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">2</span>ฟังก์ชันที่ต้องมี</legend>
+          <p class="hint">เลือกจากที่มีให้ หรือพิมพ์เพิ่มเองก็ได้ เรียงบนลงล่างตามความสำคัญ</p>
+          <div class="chips" id="featPresets"></div>
+          <ul class="featlist" id="featList"></ul>
+          <p class="empty" id="featEmpty">ยังไม่มีฟังก์ชัน เลือกจากด้านบนหรือพิมพ์เพิ่มด้านล่าง</p>
+          <div class="addrow">
+            <input type="text" id="featInput" placeholder="พิมพ์ฟังก์ชันเพิ่ม แล้วกด Enter" />
+            <button class="btn primary" type="button" id="featAdd">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              <span>เพิ่ม</span>
+            </button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">3</span>ข้อมูลที่ต้องเก็บ</legend>
+          <p class="hint">ระบุเป็นรายการหรือฟิลด์หลัก ๆ ถ้าไม่แน่ใจปล่อยว่างได้ AI จะออกแบบให้</p>
+          <textarea id="data" placeholder="เช่น วัตถุดิบ (ชื่อ, หน่วย, จำนวนคงเหลือ, จุดสั่งซื้อ), รายการเข้า/ออก (วันที่, วัตถุดิบ, จำนวน, หมายเหตุ)"></textarea>
+          <label class="f">เก็บข้อมูลไว้ที่ไหน</label>
+          <div class="radio-row" id="storage">
+            <label><input type="radio" name="storage" value="local" checked /> ในเบราว์เซอร์ (localStorage/IndexedDB) ปิดเปิดแล้วข้อมูลยังอยู่</label>
+            <label><input type="radio" name="storage" value="file" /> บันทึก/เปิดจากไฟล์ (.json) เป็นหลัก</label>
+            <label><input type="radio" name="storage" value="none" /> ไม่ต้องเก็บ ใช้แล้วทิ้ง</label>
+            <label><input type="radio" name="storage" value="gsheet" /> Google Sheets (ต้องมีอินเทอร์เน็ตตอนซิงค์)</label>
+            <label><input type="radio" name="storage" value="other" /> อื่น ๆ ระบุเอง</label>
+          </div>
+          <div id="gsheetBox" class="sub-box" hidden>
+            <label class="f" for="gsheetNote">รายละเอียด Google Sheets (ถ้ามี)</label>
+            <input type="text" id="gsheetNote" placeholder="เช่น มีชีตอยู่แล้วชื่อ สต๊อก 2026, แท็บละเดือน, อยากให้คนอื่นเปิดชีตดูได้ด้วย" />
+          </div>
+          <div id="otherBox" class="sub-box" hidden>
+            <label class="f" for="storageOther">อยากเก็บไว้ที่ไหน / อย่างไร</label>
+            <textarea id="storageOther" placeholder="เช่น เก็บเป็นไฟล์ .csv ในโฟลเดอร์ที่เลือก (File System Access API), หรือเก็บในเบราว์เซอร์และซิงค์ขึ้น Firebase ตอนมีเน็ต"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">4</span>การนำเข้าข้อมูลจากภายนอก</legend>
+          <p class="hint">ระบบต้องรับไฟล์จากที่อื่นเข้ามาไหม เช่น รายชื่อจาก Excel หรือรูปสินค้า</p>
+          <div class="radio-row" id="imp">
+            <label><input type="radio" name="imp" value="no" checked /> ไม่ต้องนำเข้า</label>
+            <label><input type="radio" name="imp" value="yes" /> ต้องนำเข้าได้</label>
+          </div>
+          <div id="impBox" class="sub-box" hidden>
+            <label class="f">นามสกุลไฟล์ที่ต้องรองรับ (เลือกได้หลายอัน)</label>
+            <div class="chips" id="impTypes">
+              <button type="button" class="chip" data-v=".csv" aria-pressed="false">.csv</button>
+              <button type="button" class="chip" data-v=".xlsx / .xls (Excel)" aria-pressed="false">.xlsx / .xls</button>
+              <button type="button" class="chip" data-v=".json" aria-pressed="false">.json</button>
+              <button type="button" class="chip" data-v=".txt" aria-pressed="false">.txt</button>
+              <button type="button" class="chip" data-v=".xml" aria-pressed="false">.xml</button>
+              <button type="button" class="chip" data-v=".pdf" aria-pressed="false">.pdf</button>
+              <button type="button" class="chip" data-v=".jpg / .png (รูปภาพ)" aria-pressed="false">.jpg / .png</button>
+              <button type="button" class="chip" data-v=".docx" aria-pressed="false">.docx</button>
+            </div>
+            <label class="f" for="impOther">นามสกุลอื่นที่ไม่มีในรายการ</label>
+            <input type="text" id="impOther" placeholder="เช่น .ics, .gpx, .md (คั่นด้วยลูกน้ำ)" />
+            <label class="f" for="impDesc">นำเข้าอะไร และเอาไปใช้ต่ออย่างไร</label>
+            <textarea id="impDesc" placeholder="เช่น นำเข้ารายชื่อสินค้าจากไฟล์ Excel ที่มีคอลัมน์ รหัส ชื่อ ราคา จำนวน ถ้ารหัสซ้ำให้อัปเดตแทนการเพิ่มใหม่"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">5</span>การส่งออกข้อมูล</legend>
+          <p class="hint">ระบบต้องส่งออกข้อมูลเป็นไฟล์ไปใช้ที่อื่นไหม เช่น เอารายงานไปเปิดใน Excel หรือส่งให้คนอื่น</p>
+          <div class="radio-row" id="exp">
+            <label><input type="radio" name="exp" value="no" checked /> ไม่ต้องส่งออก</label>
+            <label><input type="radio" name="exp" value="yes" /> ต้องส่งออกได้</label>
+          </div>
+          <div id="expBox" class="sub-box" hidden>
+            <label class="f">นามสกุลไฟล์ที่ต้องส่งออกได้ (เลือกได้หลายอัน)</label>
+            <div class="chips" id="expTypes">
+              <button type="button" class="chip" data-v=".csv" aria-pressed="false">.csv</button>
+              <button type="button" class="chip" data-v=".xlsx (Excel)" aria-pressed="false">.xlsx</button>
+              <button type="button" class="chip" data-v=".json" aria-pressed="false">.json</button>
+              <button type="button" class="chip" data-v=".txt" aria-pressed="false">.txt</button>
+              <button type="button" class="chip" data-v=".pdf (ผ่านหน้าต่างพิมพ์ของเบราว์เซอร์)" aria-pressed="false">.pdf</button>
+              <button type="button" class="chip" data-v=".html" aria-pressed="false">.html</button>
+              <button type="button" class="chip" data-v=".png (ภาพกราฟหรือตาราง)" aria-pressed="false">.png</button>
+              <button type="button" class="chip" data-v=".md" aria-pressed="false">.md</button>
+            </div>
+            <label class="f" for="expOther">นามสกุลอื่นที่ไม่มีในรายการ</label>
+            <input type="text" id="expOther" placeholder="เช่น .ics, .xml (คั่นด้วยลูกน้ำ)" />
+            <label class="f" for="expDesc">ส่งออกอะไร และเอาไปใช้ต่ออย่างไร</label>
+            <textarea id="expDesc" placeholder="เช่น ส่งออกรายการเข้าออกของเดือนที่เลือก เป็น .csv เพื่อส่งให้ฝ่ายบัญชี คอลัมน์เรียงตาม วันที่, วัตถุดิบ, จำนวน, หมายเหตุ"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">6</span>หน้าตาและภาษา</legend>
+          <label class="f">ภาษาของหน้าเว็บ</label>
+          <div class="radio-row" id="lang">
+            <label><input type="radio" name="lang" value="th" checked /> ไทย</label>
+            <label><input type="radio" name="lang" value="en" /> อังกฤษ</label>
+            <label><input type="radio" name="lang" value="both" /> สลับได้สองภาษา</label>
+          </div>
+          <label class="f">อุปกรณ์ที่ใช้เป็นหลัก</label>
+          <p class="hint">กดเลือกได้หลายอัน กดซ้ำเพื่อยกเลิก</p>
+          <div class="chips" id="devices">
+            <button type="button" class="chip" data-v="คอมพิวเตอร์" aria-pressed="true">คอมพิวเตอร์</button>
+            <button type="button" class="chip" data-v="แท็บเล็ต" aria-pressed="false">แท็บเล็ต</button>
+            <button type="button" class="chip" data-v="มือถือ" aria-pressed="false">มือถือ</button>
+          </div>
+          <label class="f" for="style">สไตล์ที่ชอบ (ถ้ามี)</label>
+          <input type="text" id="style" placeholder="เช่น เรียบ ๆ อ่านง่าย ตัวหนังสือใหญ่ โทนสีเขียวอ่อน มีโหมดมืด" />
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">7</span>เงื่อนไขเพิ่มเติม</legend>
+          <div class="chips" id="extras">
+            <button type="button" class="chip" data-v="มีข้อมูลตัวอย่างให้ทดลองใช้ทันที" aria-pressed="true">มีข้อมูลตัวอย่าง</button>
+            <button type="button" class="chip" data-v="พิมพ์หรือบันทึกเป็น PDF ได้จากเบราว์เซอร์" aria-pressed="false">พิมพ์ / PDF</button>
+            <button type="button" class="chip" data-v="ใช้คีย์บอร์ดอย่างเดียวได้ครบทุกฟังก์ชัน" aria-pressed="false">ใช้คีย์บอร์ดได้</button>
+            <button type="button" class="chip" data-v="มีโหมดมืดตามการตั้งค่าเครื่อง" aria-pressed="false">โหมดมืด</button>
+            <button type="button" class="chip" data-v="ก่อนลบข้อมูลต้องถามยืนยันทุกครั้ง" aria-pressed="true">ถามก่อนลบ</button>
+            <button type="button" class="chip" data-v="มีคำอธิบายวิธีใช้สั้น ๆ ในหน้าเว็บ" aria-pressed="false">มีคู่มือในตัว</button>
+          </div>
+          <label class="f" for="notes">อย่างอื่นที่อยากบอก AI</label>
+          <textarea id="notes" placeholder="เช่น ห้ามใช้ฟอนต์จากอินเทอร์เน็ต, ตัวเลขเงินให้มีลูกน้ำคั่นหลักพัน, เอาแบบที่พนักงานใหม่ใช้เป็นภายใน 5 นาที"></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-num">8</span>ภาษาของ Prompt</legend>
+          <p class="hint">Prompt เป็นภาษาอังกฤษมักได้ผลลัพธ์นิ่งกว่า แต่ภาษาไทยก็ใช้ได้กับ AI สมัยใหม่</p>
+          <div class="radio-row" id="plang">
+            <label><input type="radio" name="plang" value="th" checked /> ไทย</label>
+            <label><input type="radio" name="plang" value="en" /> อังกฤษ</label>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- ===== ฝั่งขวา: กรอบแสดง Prompt พื้นหลังเข้มต่างระดับ ===== -->
+      <div class="sheet-wrap">
+        <section class="sheet" aria-live="polite">
+          <div class="sheet-top">
+            <div class="sheet-title-group">
+              <span class="sheet-dot" aria-hidden="true"></span>
+              <h2>Prompt ที่ได้</h2>
+            </div>
+            <span class="meta" id="count"></span>
+          </div>
+          <pre id="out"></pre>
+          <div class="sheet-actions">
+            <button class="btn primary" type="button" id="copy">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>คัดลอก Prompt</span>
+            </button>
+            <button class="btn" type="button" id="download">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <span>ดาวน์โหลด .txt</span>
+            </button>
+            <button class="btn danger" type="button" id="reset">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>ล้างฟอร์ม</span>
+            </button>
+          </div>
+        </section>
+
+        <div class="foot-card">
+          <span class="foot-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          </span>
+          <p><strong>วิธีใช้ต่อ:</strong> วาง Prompt นี้ให้ AI (Claude, ChatGPT, Gemini ฯลฯ) แล้วขอไฟล์ .html กลับมา บันทึกลงเครื่อง ดับเบิลคลิกเปิดได้เลย ถ้าผลลัพธ์ยังไม่ตรงใจ ให้คุยต่อในแชทเดิมว่าอยากแก้ตรงไหน</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       STANDARD FOOTER (AiBA & PIM)
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logos">
+            <span class="logo-slot">
+              <img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" />
+            </span>
+            <span class="logo-slot">
+              <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+            </span>
+          </div>
+          <h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>
+          <p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>
+        </div>
+
+        <div>
+          <h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>
+          <p class="footer-text">
+            85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />
+            โทร 0 2855 0000
+          </p>
+          <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">
+            <span>www.pim.ac.th</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+
+        <div>
+          <h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>
+          <p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>
+          <div class="footer-socials" aria-label="โซเชียลมีเดีย">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+            <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      © 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">คัดลอกแล้ว</div>
+
+<script>
+/* ==========================================================================
+   THEME, FONT SIZE & COLOR PALETTE CONTROLLER (Synced with AiBA Connect)
+   ========================================================================== */
+(function () {
+  const htmlEl = document.documentElement;
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const themeText = document.getElementById('themeText');
+  const themeIcon = document.getElementById('themeIcon');
+  const fontIncBtn = document.getElementById('fontIncBtn');
+  const fontDecBtn = document.getElementById('fontDecBtn');
+  const paletteBtns = Array.from(document.querySelectorAll('#palettePicker .pal-btn'));
+  const validPalettes = ['coral-violet', 'sky-mint', 'amber-sunset', 'rose-berry', 'indigo-cyber'];
+
+  function applyTheme(theme) {
+    const t = theme === 'dark' ? 'dark' : 'light';
+    htmlEl.setAttribute('data-theme', t);
+    try { localStorage.setItem('aiba:theme', t); } catch (e) {}
+    if (t === 'dark') {
+      themeText.textContent = 'สว่าง';
+      themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+    } else {
+      themeText.textContent = 'มืด';
+      themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+    }
+  }
+
+  let savedTheme = 'light';
+  try { savedTheme = localStorage.getItem('aiba:theme') || 'light'; } catch (e) {}
+  applyTheme(savedTheme);
+
+  themeToggleBtn.addEventListener('click', () => {
+    const current = htmlEl.getAttribute('data-theme');
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
+
+  // Font Size Controller (100%, 112.5%, 125%)
+  const fontSizes = [16, 18, 20];
+  let currentSizeIndex = 0;
+  try {
+    currentSizeIndex = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+  } catch (e) {}
+  if (isNaN(currentSizeIndex) || currentSizeIndex < 0 || currentSizeIndex >= fontSizes.length) {
+    currentSizeIndex = 0;
+  }
+
+  function applyFontSize(idx) {
+    htmlEl.style.fontSize = fontSizes[idx] + 'px';
+    try { localStorage.setItem('aiba:fontIdx', String(idx)); } catch (e) {}
+  }
+
+  applyFontSize(currentSizeIndex);
+
+  fontIncBtn.addEventListener('click', () => {
+    if (currentSizeIndex < fontSizes.length - 1) {
+      currentSizeIndex++;
+      applyFontSize(currentSizeIndex);
+    }
+  });
+
+  fontDecBtn.addEventListener('click', () => {
+    if (currentSizeIndex > 0) {
+      currentSizeIndex--;
+      applyFontSize(currentSizeIndex);
+    }
+  });
+
+  // Color Palette Switcher (persisted in localStorage)
+  function applyPalette(pal) {
+    const chosen = validPalettes.includes(pal) ? pal : 'coral-violet';
+    htmlEl.setAttribute('data-palette', chosen);
+    try { localStorage.setItem('aiba:websparks:palette', chosen); } catch (e) {}
+    paletteBtns.forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.palette === chosen));
+    });
+  }
+
+  let savedPalette = 'coral-violet';
+  try { savedPalette = localStorage.getItem('aiba:websparks:palette') || 'coral-violet'; } catch (e) {}
+  applyPalette(savedPalette);
+
+  paletteBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyPalette(btn.dataset.palette);
+    });
+  });
+})();
+</script>
+
+<script>
+/* ==========================================================================
+   WEBSPARKS PROMPT BUILDER — CORE LOGIC (PRESERVED 100%)
+   ========================================================================== */
+(function(){
+  const $=id=>document.getElementById(id);
+  const presets=[
+    "เพิ่ม / แก้ไข / ลบรายการ","ค้นหาและกรองข้อมูล","จัดเรียงตามคอลัมน์",
+    "สรุปยอดหรือสถิติในหน้าแรก","กราฟแสดงแนวโน้ม",
+    "สำรองและกู้คืนข้อมูลทั้งหมด (Backup / Restore)","แจ้งเตือนเมื่อถึงเงื่อนไข",
+    "ปฏิทินหรือมุมมองรายวัน","แบ่งหมวดหมู่ / แท็ก","ยกเลิกการกระทำล่าสุด (Undo)","พิมพ์รายงาน"
+  ];
+  let features=[];
+
+  // ---------- presets ----------
+  const pWrap=$("featPresets");
+  presets.forEach(p=>{
+    const b=document.createElement("button");
+    b.type="button";b.className="chip";b.textContent=p;b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",()=>{
+      const i=features.indexOf(p);
+      if(i>=0){features.splice(i,1)}else{features.push(p)}
+      renderFeatures();update();
+    });
+    pWrap.appendChild(b);
+  });
+
+  function renderFeatures(){
+    const ul=$("featList");ul.innerHTML="";
+    features.forEach((f,i)=>{
+      const li=document.createElement("li");
+      li.innerHTML=`<span class="num">${i+1}.</span><span class="txt"></span><button type="button" aria-label="ลบ">×</button>`;
+      li.querySelector(".txt").textContent=f;
+      li.querySelector("button").addEventListener("click",()=>{features.splice(i,1);renderFeatures();update();});
+      ul.appendChild(li);
+    });
+    $("featEmpty").style.display=features.length?"none":"block";
+    pWrap.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(features.includes(c.textContent))));
+  }
+  function addFeature(){
+    const v=$("featInput").value.trim();
+    if(!v)return;
+    if(!features.includes(v))features.push(v);
+    $("featInput").value="";renderFeatures();update();
+  }
+  $("featAdd").addEventListener("click",addFeature);
+  $("featInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addFeature();}});
+
+  // ---------- toggle chips ----------
+  $("imp").addEventListener("change",()=>{$("impBox").hidden=radio("imp")!=="yes";});
+  $("storage").addEventListener("change",()=>{const s=radio("storage");$("gsheetBox").hidden=s!=="gsheet";$("otherBox").hidden=s!=="other";});
+  $("exp").addEventListener("change",()=>{$("expBox").hidden=radio("exp")!=="yes";});
+  ["devices","extras","impTypes","expTypes"].forEach(id=>{
+    $(id).querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+      c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")==="true"?"false":"true");update();
+    }));
+  });
+  const pressed=id=>[...$(id).querySelectorAll('.chip[aria-pressed="true"]')].map(c=>c.dataset.v);
+  const radio=name=>(document.querySelector(`input[name="${name}"]:checked`)||{}).value;
+
+  // ---------- prompt ----------
+  function build(){
+    const name=$("name").value.trim(), purpose=$("purpose").value.trim(), users=$("users").value.trim(),
+          data=$("data").value.trim(), style=$("style").value.trim(), notes=$("notes").value.trim();
+    const storage=radio("storage"), lang=radio("lang"), plang=radio("plang");
+    const devices=pressed("devices"), extras=pressed("extras");
+    const hasData=storage!=="none";
+    const online=storage==="gsheet";
+    const gsheetNote=$("gsheetNote").value.trim(), storageOther=$("storageOther").value.trim();
+    const impYes=radio("imp")==="yes";
+    const impTypes=pressed("impTypes").concat($("impOther").value.split(",").map(s=>s.trim()).filter(Boolean));
+    const impDesc=$("impDesc").value.trim();
+    const expYes=radio("exp")==="yes";
+    const expTypes=pressed("expTypes").concat($("expOther").value.split(",").map(s=>s.trim()).filter(Boolean));
+    const expDesc=$("expDesc").value.trim();
+
+    if(plang==="en"){
+      const langTxt={th:"Thai",en:"English",both:"Thai and English, switchable from the UI"}[lang];
+      const storTxt={
+        local:"Persist all data in the browser (localStorage, or IndexedDB if the data may grow large) so it survives closing and reopening the file. Also provide Export and Import of the entire dataset as a .json file for backup and moving between machines.",
+        file:"The primary way to save and load is a .json file: a Save button downloads the current data, an Open button loads a file the user picks. Keep a working copy in localStorage so an accidental refresh loses nothing.",
+        none:"No persistence needed. Everything lives in memory for the session.",
+        gsheet:`Store the data in a Google Sheet${gsheetNote?` (${gsheetNote})`:""}. Do it through a Google Apps Script web app (doGet/doPost returning JSON) bound to the sheet, called with fetch from the page; include the complete Apps Script code and step-by-step deployment instructions (Deploy > New deployment > Web app, Execute as me, Anyone with the link) and let the user paste the deployed URL into a settings panel in the app. Cache data in localStorage so the app still opens and queues changes while offline, then syncs when a connection is back and shows sync status clearly.`,
+        other:`Storage requirement from the user, follow it exactly:\n${storageOther||"(not specified; use localStorage and say so)"}`
+      }[storage];
+      return [
+`You are a senior front-end engineer. Build a complete, self-contained single-page web app that I can run on my computer by opening one .html file, with no internet connection.`,
+``,
+`# What the app is`,
+`Name: ${name||"(please propose a short name)"}`,
+`Purpose: ${purpose||"(not specified; infer from the features below and state your assumption at the top of your reply)"}`,
+`Who uses it: ${users||"a single non-technical user"}`,
+`Primary devices: ${devices.length?devices.join(", "):"desktop"}`,
+``,
+`# Required features (in priority order)`,
+features.length?features.map((f,i)=>`${i+1}. ${f}`).join("\n"):`(none listed; propose the 4 to 6 features such an app most needs and build them)`,
+``,
+`# Data`,
+data?`Data to store:\n${data}`:`Design the data model yourself from the purpose and features; keep it as simple as possible and list the fields in a short comment at the top of the script.`,
+storTxt,
+``,
+`# Importing external files`,
+impYes?[
+`The app must let the user import files from their computer via a file picker and drag-and-drop.`,
+`Supported file types: ${impTypes.length?impTypes.join(", "):"(not specified; choose the formats that make sense for the data above and list them)"}`,
+impDesc?`What is imported and how it is used:\n${impDesc}`:`Map the imported content onto the data model above; show a preview and let the user confirm before anything is saved.`,
+`Parse everything in the browser with no libraries. For Excel files, if a dependency-free parse isn’t feasible, ask the user to save as .csv instead and say so clearly in the UI. Report rows that could not be read, with the reason, instead of skipping them silently.`
+].join("\n"):`No import of external files is needed. Do not add an import feature.`,
+``,
+`# Exporting data to files`,
+expYes?[
+`The app must let the user export data as files downloaded to their computer.`,
+`Export file types: ${expTypes.length?expTypes.join(", "):"(not specified; choose the formats that make sense for the data above and list them)"}`,
+expDesc?`What is exported and how it will be used:\n${expDesc}`:`Let the user choose what to export (everything, the current filtered view, or a selected date range) and name the file with the app name and the date.`,
+`Generate every file in the browser with no libraries: CSV must open cleanly in Excel (UTF-8 with BOM, quoted fields); for .xlsx, if a dependency-free writer isn’t feasible, produce CSV and say so in the UI; PDF goes through the browser’s print dialog with a dedicated print stylesheet.`
+].join("\n"):`No export to files is needed. Do not add an export feature.`,
+``,
+`# Interface`,
+`- UI language: ${langTxt}.`,
+style?`- Visual style: ${style}.`:`- Visual style: clean and readable; good spacing, clear hierarchy, nothing decorative that doesn’t help the task.`,
+`- Responsive: works at phone, tablet and desktop widths; nothing overflows horizontally.`,
+`- Every action gives feedback (a short status message or visible change). Empty states explain what to do first. Errors say what went wrong and how to fix it.`,
+extras.length?extras.map(e=>`- ${e}`).join("\n"):null,
+notes?`\n# Additional requirements\n${notes}`:null,
+``,
+`# Hard technical constraints`,
+`- Exactly ONE file: index.html containing all HTML, CSS and JavaScript inline. No build step, no frameworks, no npm.`,
+`- Zero network access${online?" apart from calls to the Apps Script URL above":""}: no CDN links, no web fonts, no external images, no other API calls. Use system fonts and inline SVG for icons.`,
+`- Must work when opened directly via file:// in current Chrome, Edge, Firefox and Safari.`,
+`- Plain modern JavaScript (ES2020+), no TypeScript, no external libraries.`,
+hasData?`- Never lose user data silently: validate before saving, confirm before destructive actions, and keep Export working at all times.`:null,
+`- Keep the code organized: small named functions, a single state object, one render function, comments only where intent isn’t obvious.`,
+``,
+`# How to answer`,
+`1. Start with 3 to 5 lines listing the assumptions you made.`,
+`2. Then give the full index.html in one code block, complete and runnable, no placeholders like “// rest of code here”.`,
+`3. End with 3 short lines on how to use it. If the file would be too long for one reply, say so and send it in clearly numbered parts that concatenate cleanly.`
+      ].filter(x=>x!==null).join("\n");
+    }
+
+    // ---------- Thai ----------
+    const langTxt={th:"ภาษาไทย",en:"ภาษาอังกฤษ",both:"ไทยและอังกฤษ สลับได้จากหน้าเว็บ"}[lang];
+    const storTxt={
+      local:"เก็บข้อมูลทั้งหมดไว้ในเบราว์เซอร์ (localStorage หรือ IndexedDB ถ้าข้อมูลอาจมีจำนวนมาก) ปิดแล้วเปิดใหม่ข้อมูลต้องยังอยู่ และต้องมีปุ่ม ส่งออก / นำเข้า ข้อมูลทั้งหมดเป็นไฟล์ .json สำหรับสำรองข้อมูลและย้ายเครื่อง",
+      file:"วิธีบันทึกหลักคือไฟล์ .json: ปุ่ม บันทึก จะดาวน์โหลดข้อมูลปัจจุบัน ปุ่ม เปิด จะโหลดไฟล์ที่ผู้ใช้เลือก และให้เก็บสำเนาชั่วคราวใน localStorage เผื่อเผลอรีเฟรชหน้าจอข้อมูลจะไม่หาย",
+      none:"ไม่ต้องเก็บข้อมูลถาวร ใช้ในหน่วยความจำระหว่างเปิดใช้งานเท่านั้น",
+      gsheet:`เก็บข้อมูลลง Google Sheets${gsheetNote?` (${gsheetNote})`:""} โดยทำผ่าน Google Apps Script แบบ Web app (doGet/doPost คืนค่าเป็น JSON) ที่ผูกกับชีต แล้วให้หน้าเว็บเรียกด้วย fetch ต้องให้โค้ด Apps Script ฉบับเต็มพร้อมขั้นตอนการ Deploy ทีละขั้น (Deploy > New deployment > Web app, Execute as me, Anyone with the link) และมีหน้าตั้งค่าในแอปให้ผู้ใช้วาง URL ที่ Deploy แล้ว ให้เก็บสำเนาใน localStorage เพื่อให้เปิดใช้และคิวการเปลี่ยนแปลงได้ตอนไม่มีเน็ต แล้วซิงค์เมื่อต่อเน็ตได้ โดยแสดงสถานะการซิงค์ให้เห็นชัด`,
+      other:`ข้อกำหนดการเก็บข้อมูลจากผู้ใช้ ให้ทำตามนี้เป๊ะ ๆ:\n${storageOther||"(ไม่ได้ระบุ ให้ใช้ localStorage และแจ้งไว้)"}`
+    }[storage];
+    return [
+`คุณคือวิศวกร Front-end อาวุโส ช่วยสร้างเว็บแอปแบบหน้าเดียวที่สมบูรณ์ในตัวเอง ฉันต้องเปิดใช้บนคอมพิวเตอร์ได้ด้วยการดับเบิลคลิกไฟล์ .html ไฟล์เดียว โดยไม่ต้องต่ออินเทอร์เน็ต`,
+``,
+`# ระบบนี้คืออะไร`,
+`ชื่อระบบ: ${name||"(ช่วยเสนอชื่อสั้น ๆ ให้ด้วย)"}`,
+`ใช้ทำอะไร: ${purpose||"(ไม่ได้ระบุ ให้อนุมานจากฟังก์ชันด้านล่างและบอกสมมติฐานไว้ต้นคำตอบ)"}`,
+`ใครใช้: ${users||"ผู้ใช้ทั่วไปคนเดียว ไม่ใช่สายเทคนิค"}`,
+`อุปกรณ์หลัก: ${devices.length?devices.join(", "):"คอมพิวเตอร์"}`,
+``,
+`# ฟังก์ชันที่ต้องมี (เรียงตามความสำคัญ)`,
+features.length?features.map((f,i)=>`${i+1}. ${f}`).join("\n"):`(ยังไม่ได้ระบุ ให้เสนอฟังก์ชันที่ระบบแบบนี้จำเป็นต้องมี 4–6 อย่าง แล้วสร้างให้เลย)`,
+``,
+`# ข้อมูล`,
+data?`ข้อมูลที่ต้องเก็บ:\n${data}`:`ออกแบบโครงสร้างข้อมูลเองจากวัตถุประสงค์และฟังก์ชัน ให้เรียบง่ายที่สุด และเขียนรายชื่อฟิลด์ไว้ในคอมเมนต์สั้น ๆ ต้นสคริปต์`,
+storTxt,
+``,
+`# การนำเข้าไฟล์จากภายนอก`,
+impYes?[
+`ระบบต้องให้ผู้ใช้นำเข้าไฟล์จากเครื่องได้ ทั้งผ่านปุ่มเลือกไฟล์และลากไฟล์มาวาง`,
+`นามสกุลไฟล์ที่ต้องรองรับ: ${impTypes.length?impTypes.join(", "):"(ไม่ได้ระบุ ให้เลือกรูปแบบที่เหมาะกับข้อมูลด้านบนและแจ้งไว้)"}`,
+impDesc?`นำเข้าอะไรและใช้อย่างไร:\n${impDesc}`:`จับคู่เนื้อหาที่นำเข้ากับโครงสร้างข้อมูลด้านบน แสดงตัวอย่างก่อนและให้ผู้ใช้กดยืนยันก่อนบันทึกจริง`,
+`อ่านไฟล์ทั้งหมดในเบราว์เซอร์โดยไม่ใช้ไลบรารี สำหรับไฟล์ Excel ถ้าอ่านโดยไม่ใช้ไลบรารีไม่ได้จริง ให้แจ้งผู้ใช้ชัดเจนในหน้าเว็บว่าให้บันทึกเป็น .csv ก่อน และแถวที่อ่านไม่ได้ต้องรายงานพร้อมเหตุผล ห้ามข้ามเงียบ ๆ`
+].join("\n"):`ไม่ต้องมีการนำเข้าไฟล์จากภายนอก ไม่ต้องเพิ่มฟังก์ชันนำเข้า`,
+``,
+`# การส่งออกข้อมูลเป็นไฟล์`,
+expYes?[
+`ระบบต้องให้ผู้ใช้ส่งออกข้อมูลเป็นไฟล์ดาวน์โหลดลงเครื่องได้`,
+`นามสกุลไฟล์ที่ต้องส่งออกได้: ${expTypes.length?expTypes.join(", "):"(ไม่ได้ระบุ ให้เลือกรูปแบบที่เหมาะกับข้อมูลด้านบนและแจ้งไว้)"}`,
+expDesc?`ส่งออกอะไรและใช้อย่างไร:\n${expDesc}`:`ให้ผู้ใช้เลือกได้ว่าจะส่งออกอะไร (ทั้งหมด, เฉพาะที่กรองอยู่, หรือช่วงวันที่ที่เลือก) และตั้งชื่อไฟล์ด้วยชื่อระบบและวันที่`,
+`สร้างไฟล์ทุกชนิดในเบราว์เซอร์โดยไม่ใช้ไลบรารี: CSV ต้องเปิดใน Excel แล้วภาษาไทยไม่เพี้ยน (UTF-8 มี BOM ครอบฟิลด์ด้วยเครื่องหมายคำพูด) สำหรับ .xlsx ถ้าเขียนโดยไม่ใช้ไลบรารีไม่ได้จริง ให้สร้าง CSV แทนและแจ้งในหน้าเว็บ ส่วน PDF ให้ผ่านหน้าต่างพิมพ์ของเบราว์เซอร์โดยมี stylesheet สำหรับพิมพ์โดยเฉพาะ`
+].join("\n"):`ไม่ต้องมีการส่งออกเป็นไฟล์ ไม่ต้องเพิ่มฟังก์ชันส่งออก`,
+``,
+`# หน้าตาและการใช้งาน`,
+`- ภาษาของหน้าเว็บ: ${langTxt}`,
+style?`- สไตล์: ${style}`:`- สไตล์: สะอาด อ่านง่าย เว้นระยะพอดี ลำดับความสำคัญชัด ไม่ใส่ของตกแต่งที่ไม่ช่วยงาน`,
+`- รองรับทุกขนาดหน้าจอ (มือถือ แท็บเล็ต คอมพิวเตอร์) ห้ามมีอะไรล้นออกด้านข้าง`,
+`- ทุกการกระทำต้องมีผลตอบกลับให้เห็น (ข้อความสถานะสั้น ๆ หรือการเปลี่ยนแปลงบนจอ) หน้าว่างต้องบอกว่าควรเริ่มทำอะไร ข้อผิดพลาดต้องบอกว่าผิดตรงไหนและแก้อย่างไร`,
+extras.length?extras.map(e=>`- ${e}`).join("\n"):null,
+notes?`\n# ข้อกำหนดเพิ่มเติม\n${notes}`:null,
+``,
+`# ข้อจำกัดทางเทคนิค (ต้องทำตามทุกข้อ)`,
+`- ไฟล์เดียวเท่านั้นคือ index.html รวม HTML, CSS และ JavaScript ไว้ในไฟล์เดียวกัน ไม่มีขั้นตอน build ไม่ใช้ framework ไม่ใช้ npm`,
+`- ห้ามใช้อินเทอร์เน็ต${online?" ยกเว้นการเรียก URL ของ Apps Script ตามข้อด้านบน":"เด็ดขาด"}: ไม่มีลิงก์ CDN ไม่โหลดเว็บฟอนต์ ไม่มีรูปจากภายนอก ไม่เรียก API อื่นใด ๆ ใช้ฟอนต์ของระบบและไอคอนแบบ SVG ฝังในไฟล์`,
+`- ต้องทำงานได้เมื่อเปิดผ่าน file:// โดยตรงบน Chrome, Edge, Firefox และ Safari รุ่นปัจจุบัน`,
+`- ใช้ JavaScript สมัยใหม่ธรรมดา (ES2020 ขึ้นไป) ไม่ใช้ TypeScript ไม่ใช้ไลบรารีภายนอก`,
+hasData?`- ห้ามทำข้อมูลผู้ใช้หายเงียบ ๆ: ตรวจสอบก่อนบันทึก ถามยืนยันก่อนการกระทำที่ย้อนกลับไม่ได้ และปุ่มส่งออกต้องใช้ได้ตลอดเวลา`:null,
+`- โค้ดต้องเป็นระเบียบ: ฟังก์ชันเล็กมีชื่อชัด มี state object เดียว มีฟังก์ชัน render หลักฟังก์ชันเดียว ใส่คอมเมนต์เฉพาะจุดที่เจตนาไม่ชัดเจน`,
+``,
+`# รูปแบบคำตอบ`,
+`1. เริ่มด้วยสมมติฐานที่คุณตั้งไว้ 3–5 บรรทัด`,
+`2. จากนั้นให้โค้ด index.html ทั้งไฟล์ในโค้ดบล็อกเดียว ครบถ้วนรันได้จริง ห้ามมีข้อความแทนที่แบบ “// โค้ดส่วนที่เหลือ”`,
+`3. ปิดท้ายด้วยวิธีใช้งานสั้น ๆ 3 บรรทัด ถ้าไฟล์ยาวเกินกว่าจะส่งในคำตอบเดียว ให้บอกก่อนแล้วแบ่งส่งเป็นส่วน ๆ ที่มีหมายเลขกำกับและนำมาต่อกันได้พอดี`
+    ].filter(x=>x!==null).join("\n");
+  }
+
+  let current="";
+  function update(){
+    current=build();
+    const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    const html=current.split("\n").map(l=>{
+      if(/^# /.test(l))return `<span class="k">${esc(l)}</span>`;
+      if(/^\(/.test(l)||/\(ยังไม่|\(ไม่ได้|\(ช่วย|\(please|\(not spec|\(none/.test(l))return `<span class="d">${esc(l)}</span>`;
+      return esc(l);
+    }).join("\n");
+    $("out").innerHTML=html;
+    $("count").textContent=`${current.length.toLocaleString()} ตัวอักษร`;
+    save();
+  }
+
+  // ---------- actions ----------
+  function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),1800);}
+  $("copy").addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(current);toast("คัดลอกแล้ว วางให้ AI ได้เลย");}
+    catch(e){
+      const r=document.createRange();r.selectNodeContents($("out"));
+      const s=getSelection();s.removeAllRanges();s.addRange(r);
+      toast("กด Ctrl+C / ⌘C เพื่อคัดลอก");
+    }
+  });
+  $("download").addEventListener("click",()=>{
+    const blob=new Blob([current],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+    a.download=(($("name").value.trim()||"prompt").replace(/[\\/:*?"<>|]/g,"_"))+"-prompt.txt";
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+    toast("ดาวน์โหลดไฟล์ .txt แล้ว");
+  });
+  $("reset").addEventListener("click",()=>{
+    if(!confirm("ล้างทุกช่องในฟอร์มใช่ไหม"))return;
+    $("form").reset();features=[];
+    document.querySelectorAll("#devices .chip,#extras .chip,#impTypes .chip,#expTypes .chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+    document.querySelector('#devices .chip').setAttribute("aria-pressed","true");
+    $("impBox").hidden=true;$("expBox").hidden=true;$("gsheetBox").hidden=true;$("otherBox").hidden=true;
+    renderFeatures();update();
+    try{localStorage.removeItem("pb:draft")}catch(e){}
+    toast("ล้างฟอร์มเรียบร้อยแล้ว");
+  });
+
+  // ---------- draft persistence (per-browser convenience) ----------
+  function save(){
+    try{
+      const d={
+        name:$("name").value,purpose:$("purpose").value,users:$("users").value,data:$("data").value,
+        style:$("style").value,notes:$("notes").value,features,storage:radio("storage"),lang:radio("lang"),plang:radio("plang"),
+        devices:pressed("devices"),extras:pressed("extras"),
+        imp:radio("imp"),impTypes:pressed("impTypes"),impOther:$("impOther").value,impDesc:$("impDesc").value,
+        exp:radio("exp"),expTypes:pressed("expTypes"),expOther:$("expOther").value,expDesc:$("expDesc").value,
+        gsheetNote:$("gsheetNote").value,storageOther:$("storageOther").value
+      };
+      localStorage.setItem("pb:draft",JSON.stringify(d));
+    }catch(e){}
+  }
+  function load(){
+    try{
+      const d=JSON.parse(localStorage.getItem("pb:draft")||"null");if(!d)return;
+      ["name","purpose","users","data","style","notes","impOther","impDesc","expOther","expDesc","gsheetNote","storageOther"].forEach(k=>{if(typeof d[k]==="string")$(k).value=d[k]});
+      if(Array.isArray(d.features))features=d.features.filter(x=>typeof x==="string");
+      ["storage","lang","plang","imp","exp"].forEach(n=>{const el=document.querySelector(`input[name="${n}"][value="${d[n]}"]`);if(el)el.checked=true;});
+      $("impBox").hidden=radio("imp")!=="yes";
+      $("expBox").hidden=radio("exp")!=="yes";
+      $("gsheetBox").hidden=radio("storage")!=="gsheet";$("otherBox").hidden=radio("storage")!=="other";
+      [["devices",d.devices],["extras",d.extras],["impTypes",d.impTypes],["expTypes",d.expTypes]].forEach(([id,vals])=>{
+        if(!Array.isArray(vals))return;
+        $(id).querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(vals.includes(c.dataset.v))));
+      });
+    }catch(e){}
+  }
+
+  $("form").addEventListener("input",update);
+  $("form").addEventListener("change",update);
+  load();renderFeatures();update();
+})();
+</script>
+</body>
+</html>

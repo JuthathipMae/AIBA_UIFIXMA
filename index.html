@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AiBA Connect — ศูนย์รวมเครื่องมือ AI เพื่อทุกวัย</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — CSS VARIABLES & TOKENS
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+
+      /* Brand Primary & Secondary */
+      --brand-coral: #FF6B6B;
+      --brand-violet: #7C3AED;
+      --brand-blue: #38BDF8;
+      --brand-mint: #10B981;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+      --secondary-gradient: linear-gradient(135deg, #38BDF8 0%, #10B981 100%);
+
+      /* Liquid Glass System */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-outline: rgba(124, 58, 237, 0.12);
+      --glass-blur: blur(18px);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.04);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.07);
+      --shadow-lg: 0 20px 48px rgba(124, 58, 237, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --radius-pill: 9999px;
+
+      /* Category Colors (7 Categories) */
+      --cat-lab-solid: #EA580C;
+      --cat-lab-soft: rgba(234, 88, 12, 0.12);
+      --cat-lab-grad: linear-gradient(135deg, #F97316, #F59E0B);
+
+      --cat-tool-solid: #0284C7;
+      --cat-tool-soft: rgba(2, 132, 199, 0.12);
+      --cat-tool-grad: linear-gradient(135deg, #0EA5E9, #4F46E5);
+
+      --cat-create-solid: #E11D48;
+      --cat-create-soft: rgba(244, 63, 94, 0.12);
+      --cat-create-grad: linear-gradient(135deg, #FF6B6B, #FDBA74);
+
+      --cat-video-solid: #7C3AED;
+      --cat-video-soft: rgba(124, 58, 237, 0.12);
+      --cat-video-grad: linear-gradient(135deg, #8B5CF6, #06B6D4);
+
+      --cat-ai-solid: #0D9488;
+      --cat-ai-soft: rgba(13, 148, 136, 0.12);
+      --cat-ai-grad: linear-gradient(135deg, #10B981, #0EA5E9);
+
+      --cat-safe-solid: #BE123C;
+      --cat-safe-soft: rgba(225, 29, 72, 0.12);
+      --cat-safe-grad: linear-gradient(135deg, #F43F5E, #EAB308);
+
+      --cat-guide-solid: #9333EA;
+      --cat-guide-soft: rgba(147, 51, 234, 0.12);
+      --cat-guide-grad: linear-gradient(135deg, #9333EA, #EC4899);
+
+      /* Spacing Scale */
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 36px;
+      --space-2xl: 56px;
+      --container-max: 1240px;
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+
+      --glass-bg: rgba(27, 32, 62, 0.78);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-outline: rgba(167, 139, 250, 0.22);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+
+      --cat-lab-solid: #FB923C;
+      --cat-tool-solid: #38BDF8;
+      --cat-create-solid: #FB7185;
+      --cat-video-solid: #A78BFA;
+      --cat-ai-solid: #2DD4BF;
+      --cat-safe-solid: #FDA4AF;
+      --cat-guide-solid: #C084FC;
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(900px 500px at 10% -5%, rgba(255, 107, 107, 0.12), transparent 60%),
+        radial-gradient(900px 550px at 92% 4%, rgba(124, 58, 237, 0.13), transparent 60%),
+        radial-gradient(700px 500px at 50% 45%, rgba(56, 189, 248, 0.08), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--brand-violet);
+      outline-offset: 3px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       SECTION 01 — FLOATING GLASS NAVBAR
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 16px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      flex-direction: column;
+      transition: border-radius 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.3s ease,
+                  background 0.3s ease;
+    }
+
+    .floating-navbar.has-capsules {
+      border-radius: 26px;
+      padding: 10px 18px 12px;
+      box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .nav-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+    }
+
+    /* Navbar Left: Dual Brand */
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-slot {
+      height: 40px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-slot img {
+      height: 45px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 26px;
+      background: var(--glass-outline);
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-left: 2px;
+    }
+
+    /* Navbar Right: Accessibility Tools */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Docked Category Capsules Row (Revealed on Scroll) */
+    .nav-categories-row {
+      width: 100%;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 1px solid transparent;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease,
+                  margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  padding-top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.3s ease;
+    }
+
+    .floating-navbar.has-capsules .nav-categories-row {
+      max-height: 70px;
+      opacity: 1;
+      overflow: visible;
+      pointer-events: auto;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--glass-outline);
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 12px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--brand-violet);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       SECTION 02 — HERO SECTION (2 COLUMNS)
+       ========================================================================== */
+    .hero-section {
+      padding: 48px 0 32px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--brand-coral);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.18;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title .highlight {
+      display: block;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 19px;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 28px;
+    }
+
+    /* Hero Search & CTA */
+    .hero-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 560px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--glass-outline);
+      border-radius: var(--radius-pill);
+      padding: 6px 8px 6px 20px;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--brand-violet);
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.14);
+    }
+
+    .search-box svg {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 12px 14px;
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-gradient {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      background: var(--brand-gradient);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(124, 58, 237, 0.35);
+    }
+
+/* Hero Right Column: Visual Container */
+    .hero-visual-placeholder {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      border-radius: var(--radius-xl);
+      background:transparent;
+      backdrop-filter: none;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .hero-visual-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* หากเป็นภาพโปร่งใส/กราฟิกที่ไม่อยากให้โดนตัดขอบ ให้เปลี่ยนเป็น contain */
+      display: block;
+      transform: scale(1.1);
+    }
+
+    .abstract-orb-1 {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 107, 107, 0.32), transparent 70%);
+      top: -40px;
+      right: -30px;
+      pointer-events: none;
+    }
+
+    .abstract-orb-2 {
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.28), transparent 70%);
+      bottom: -50px;
+      left: -30px;
+      pointer-events: none;
+    }
+
+    .placeholder-badge-tag {
+      position: relative;
+      z-index: 1;
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: var(--secondary-gradient);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.25);
+    }
+
+    .placeholder-label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .placeholder-sub {
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       SECTION 03 — CATEGORY QUICK NAVIGATION (CAPSULES)
+       ========================================================================== */
+    .quick-nav-section {
+      padding: 12px 0 36px;
+      min-height: 98px;
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .quick-nav-section.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+    }
+
+    .category-capsules {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 2px 12px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      width: 100%;
+    }
+
+    .category-capsules::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+    }
+
+    .cat-capsule:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--cat-color);
+      color: var(--text-primary);
+    }
+
+    .cat-capsule-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      background: var(--cat-grad);
+      flex-shrink: 0;
+      transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* Active State — Scroll Spy */
+.cat-capsule.active {
+      background: var(--cat-grad);
+      border-color: rgba(255, 255, 255, 0.45);
+      color: #FFFFFF !important;
+      box-shadow: none;
+      transform: translateY(-1px);
+    }
+
+    .cat-capsule.active .cat-capsule-icon {
+      background: rgba(255, 255, 255, 0.28);
+      color: #FFFFFF;
+      box-shadow: none;
+    }
+
+    .cat-capsule.active:hover {
+      transform: translateY(-2px);
+      box-shadow: none;
+      color: #FFFFFF !important;
+    }
+
+    [data-theme="dark"] .cat-capsule.active {
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+    }
+
+    /* Docked styles when inside Floating Navbar */
+    .floating-navbar .category-capsules {
+      gap: 8px;
+      padding: 2px 2px 4px;
+    }
+
+    .floating-navbar .cat-capsule {
+      padding: 6px 14px;
+      font-size: 14px;
+      gap: 8px;
+    }
+
+    .floating-navbar .cat-capsule-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .floating-navbar .cat-capsule-icon svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* ==========================================================================
+       SECTION 04 — TOOL CATEGORY & CARDS (14 TOOLS)
+       ========================================================================== */
+    .tools-main {
+      padding-bottom: 24px;
+    }
+
+    .category-block {
+      margin-bottom: 48px;
+      scroll-margin-top: 140px;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .category-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      background: var(--cat-grad);
+      box-shadow: var(--shadow-md);
+      flex-shrink: 0;
+    }
+
+    .category-title-group h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .category-title-group p {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    /* Responsive Tool Grid: Desktop 3 Col, Tablet 2 Col, Mobile 1 Col */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* Tool Card Component */
+    .tool-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--cat-color);
+    }
+
+  /* 1. Image Preview Placeholder (1:1 Aspect Ratio, 16px Radius) */
+    .card-image-placeholder {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(241, 239, 251, 0.9));
+      border: 1px solid var(--glass-outline);
+      overflow: hidden;
+      padding: 0;
+      margin-bottom: 16px;
+    }
+
+    [data-theme="dark"] .card-image-placeholder {
+      background: linear-gradient(145deg, rgba(35, 42, 78, 0.7), rgba(23, 27, 54, 0.9));
+    }
+
+    .card-image-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .placeholder-slot-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--cat-soft);
+      color: var(--cat-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .placeholder-layer-name {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .placeholder-ratio-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 2. Category Label & 5. Vector Icon */
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card-cat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-soft);
+      color: var(--cat-color);
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .card-tool-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--cat-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* 3. Tool Title & 4. Description */
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* 6. Always-Visible CTA Button */
+    .card-cta {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--cat-color);
+      color: var(--cat-color);
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tool-card:hover .card-cta,
+    .card-cta:hover {
+      background: var(--cat-grad);
+      border-color: transparent;
+      color: #FFFFFF;
+      box-shadow: 0 8px 20px rgba(19, 24, 54, 0.12);
+    }
+
+    /* Empty Search State */
+    .empty-search-state {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+      background: var(--glass-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-outline);
+      margin-bottom: 40px;
+    }
+
+    /* ==========================================================================
+       SECTION 05 — GUIDE FEATURE BANNER (FULL WIDTH — 4 STEPS)
+       ========================================================================== */
+    .guide-banner-section {
+      padding: 16px 0 64px;
+      scroll-margin-top: 140px;
+    }
+
+    .guide-banner-card {
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      border: 1.5px solid rgba(147, 51, 234, 0.25);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .guide-banner-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .guide-banner-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .guide-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step-item {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-outline);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .step-number {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-guide-soft);
+      color: var(--cat-guide-solid);
+    }
+
+    .step-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--cat-guide-grad);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .step-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       SECTION 06 — FOOTER (MODERN GRADIENT + INSTITUTIONAL INFO)
+       ========================================================================== */
+    .site-footer {
+      background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 48px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 36px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 15px;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--brand-gradient);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(255, 107, 107, 0.22), rgba(124, 58, 237, 0.28));
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 18px 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS (TABLET 768px & MOBILE 390px)
+       ========================================================================== */
+    @media (max-width: 1120px) {
+      .floating-navbar .cat-capsule {
+        padding: 6px 12px;
+        font-size: 13.5px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .guide-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 20px;
+      }
+
+      .floating-navbar.has-capsules {
+        border-radius: 20px;
+        padding: 8px 10px 10px;
+      }
+
+      .floating-navbar .category-capsules {
+        gap: 6px;
+        padding: 2px 0 4px;
+      }
+
+      .floating-navbar .cat-capsule {
+        padding: 5px 11px;
+        font-size: 13px;
+        gap: 6px;
+      }
+
+      .floating-navbar .cat-capsule-icon {
+        width: 22px;
+        height: 22px;
+      }
+
+      .floating-navbar .cat-capsule-icon svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .brand-name {
+        font-size: 18px;
+      }
+
+    .logo-slot {
+        height: 34px;
+        padding: 0;
+      }
+
+      .logo-slot img {
+        height: 50px;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+
+      .hero-subtitle {
+        font-size: 17px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .guide-banner-card {
+        padding: 24px 18px;
+      }
+
+      .guide-steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       SECTION 01 — FLOATING GLASS NAVBAR
+       ======================================================================== -->
+  <header class="navbar-wrapper" data-figma-component="Navbar / Floating-Glass">
+    <nav class="floating-navbar" aria-label="เมนูหลัก">
+      <div class="nav-top-row">
+        <!-- Left: AiBA Logo + Divider + PIM Logo + Brand Name -->
+       <!-- Left: AiBA Logo + Divider + PIM Logo + Brand Name -->
+        <a href="#" class="nav-brand" aria-label="AiBA Connect หน้าหลัก">
+          <span class="logo-slot" data-figma-layer="Logo-AiBA">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="logo-slot" data-figma-layer="Logo-PIM">
+            <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+          </span>
+          <span class="brand-name">AiBA Connect</span>
+        </a>
+
+        <!-- Right: Accessibility Controls (A-, A+, Dark/Light Mode) -->
+        <div class="nav-actions" data-figma-layer="Navbar-Accessibility-Tools">
+          <button type="button" class="a11y-btn" id="fontDecBtn" aria-label="ลดขนาดตัวอักษร">A-</button>
+          <button type="button" class="a11y-btn" id="fontIncBtn" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+          <button type="button" class="a11y-btn" id="themeToggleBtn" aria-label="สลับโหมดสีหน้าจอ">
+            <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+            </svg>
+            <span id="themeText">มืด</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Docked Category Capsules Row (shown when scrolled to #cat-lab) -->
+      <div class="nav-categories-row" id="navCategoriesRow" aria-label="แถบเลือกหมวดหมู่"></div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       SECTION 02 — HERO SECTION (2 COLUMNS)
+       ======================================================================== -->
+  <section class="hero-section" data-figma-section="Section 02 — Hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left Column -->
+        <div class="hero-content" data-figma-layer="Hero-Left-Content">
+          <div class="hero-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            <span>ไม่ต้องเก่งคอมพิวเตอร์ ก็ใช้ได้</span>
+          </div>
+
+          <h1 class="hero-title">
+            อยากให้เราช่วยอะไร
+            <span class="highlight">เลือกได้เลย</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            ศูนย์รวมเครื่องมือ AI ที่ช่วยให้การทำงานและการเรียนรู้เป็นเรื่องง่าย
+          </p>
+
+          <div class="hero-controls">
+            <div class="search-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+              </svg>
+              <input
+                type="search"
+                id="toolSearchInput"
+                class="search-input"
+                placeholder="ค้นหาเครื่องมือที่ต้องการ"
+                aria-label="ค้นหาเครื่องมือที่ต้องการ"
+              />
+            </div>
+
+            <div class="hero-cta-row">
+              <a href="#tools-catalog" class="btn-primary-gradient">
+                <span>เลือกเครื่องมือเลย</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14"/>
+                  <path d="m12 5 7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+       <div class="hero-visual-placeholder has-image" data-figma-layer="Hero Illustration">
+          <img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="ภาพประกอบศูนย์รวมเครื่องมือ AI AiBA Connect" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 03 — CATEGORY QUICK NAVIGATION (7 CAPSULES)
+       ======================================================================== -->
+  <section class="quick-nav-section" id="quickNavSection" aria-label="ทางลัดเลือกหมวดหมู่" data-figma-section="Section 03 — Category Quick Nav">
+    <div class="container" id="quickNavContainer">
+      <div class="category-capsules" id="categoryCapsules">
+        <a href="#cat-lab" class="cat-capsule" style="--cat-color: var(--cat-lab-solid); --cat-grad: var(--cat-lab-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </span>
+          <span>ฝึกฝนทักษะการใช้งาน AI</span>
+        </a>
+
+        <a href="#cat-tool" class="cat-capsule" style="--cat-color: var(--cat-tool-solid); --cat-grad: var(--cat-tool-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </span>
+          <span>เครื่องมือช่วยงาน</span>
+        </a>
+
+        <a href="#cat-create" class="cat-capsule" style="--cat-color: var(--cat-create-solid); --cat-grad: var(--cat-create-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          </span>
+          <span>สร้างสรรค์</span>
+        </a>
+
+        <a href="#cat-video" class="cat-capsule" style="--cat-color: var(--cat-video-solid); --cat-grad: var(--cat-video-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>
+          </span>
+          <span>วิดีโอ</span>
+        </a>
+
+        <a href="#cat-ai" class="cat-capsule" style="--cat-color: var(--cat-ai-solid); --cat-grad: var(--cat-ai-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+          </span>
+          <span>ผู้ช่วย AI</span>
+        </a>
+
+        <a href="#cat-safe" class="cat-capsule" style="--cat-color: var(--cat-safe-solid); --cat-grad: var(--cat-safe-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+          </span>
+          <span>ปลอดภัย</span>
+        </a>
+
+        <a href="#cat-guide" class="cat-capsule" style="--cat-color: var(--cat-guide-solid); --cat-grad: var(--cat-guide-grad);">
+          <span class="cat-capsule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          </span>
+          <span>วิธีใช้งาน</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 04 — TOOL CATEGORY & CARDS (ALL 14 TOOLS)
+       ======================================================================== -->
+  <main id="tools-catalog" class="tools-main" data-figma-section="Section 04 — Tools Catalog">
+    <div class="container">
+
+      <!-- Empty Search State -->
+      <div id="emptySearchState" class="empty-search-state">
+        <h3 style="font-size: 22px; margin-bottom: 8px;">ไม่พบเครื่องมือที่ค้นหา</h3>
+        <p style="color: var(--text-secondary);">ลองพิมพ์คำค้นหาอื่น เช่น สร้างภาพ, วิดีโอ, โปสเตอร์ หรือ หลอกลวง</p>
+      </div>
+
+      <!-- CATEGORY 1: ฝึกฝนทักษะการใช้งาน AI (1 Tool) -->
+      <section id="cat-lab" class="category-block" style="--cat-color: var(--cat-lab-solid); --cat-soft: var(--cat-lab-soft); --cat-grad: var(--cat-lab-grad);" data-figma-layer="Category 01 — ฝึกฝนทักษะการใช้งาน AI">
+        <div class="category-header">
+          <div class="category-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <div class="category-title-group">
+            <h2>ฝึกฝนทักษะการใช้งาน AI</h2>
+            <p>สนามซ้อมเขียนคำสั่งด้วยตัวเอง</p>
+          </div>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool #1: AiBA Prompt Lab -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="AiBA Prompt Lab เครื่องมือฝึกเขียนคำสั่ง AI ลองเขียนเอง ดูผล ปรับจนเก่ง ฝึกฝน">
+       <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/ฝึกฝนทักษะการใช้งาน AI.jpg" alt="ชื่อเครื่องมือ" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">ฝึกฝนทักษะการใช้งาน AI</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.001"/><path d="M10 8h.001"/><path d="M14 8h.001"/><path d="M18 8h.001"/><path d="M8 12h.001"/><path d="M12 12h.001"/><path d="M16 12h.001"/><path d="M7 16h10"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">AiBA Prompt Lab</h3>
+            <p class="card-desc">เครื่องมือฝึกเขียนคำสั่ง AI ลองเขียนเอง ดูผล ปรับจนเก่ง</p>
+            <a href="https://wtkworking.github.io/Prompt-Lab/" target="_blank" rel="noopener" class="card-cta">
+              <span>เปิดเครื่องมือ</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORY 2: เครื่องมือช่วยงาน (2 Tools) -->
+      <section id="cat-tool" class="category-block" style="--cat-color: var(--cat-tool-solid); --cat-soft: var(--cat-tool-soft); --cat-grad: var(--cat-tool-grad);" data-figma-layer="Category 02 — เครื่องมือช่วยงาน">
+        <div class="category-header">
+          <div class="category-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="category-title-group">
+            <h2>เครื่องมือช่วยงาน</h2>
+            <p>ตัวช่วยเล็ก ๆ ที่ใช้บ่อย</p>
+          </div>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool #2: ET QR Code Generator -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="ET QR Code Generator เครื่องมือสร้าง QR Code จากลิงก์หรือข้อความ ดาวน์โหลดไปใช้ได้ทันที เครื่องมือช่วยงาน">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/ET QR Code Generator.jpg" alt="ET QR Code Generator" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">เครื่องมือช่วยงาน</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">ET QR Code Generator</h3>
+            <p class="card-desc">เครื่องมือสร้าง QR Code จากลิงก์หรือข้อความ ดาวน์โหลดไปใช้ได้ทันที</p>
+            <a href="https://qr-code-generator-nu-drab.vercel.app/" target="_blank" rel="noopener" class="card-cta">
+              <span>เปิดเครื่องมือ</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #3: WebSparks -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="WebSparks เปลี่ยนความคิดเป็นระบบที่ต้องการ บอกสิ่งที่อยากได้ แล้วให้ AI ช่วยสร้างเว็บหรือเครื่องมือให้ เครื่องมือช่วยงาน">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/websparks.jpg" alt="WebSparks" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">เครื่องมือช่วยงาน</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">WebSparks</h3>
+            <p class="card-desc">เปลี่ยนความคิดเป็นระบบที่ต้องการ บอกสิ่งที่อยากได้ แล้วให้ AI ช่วยสร้างเว็บหรือเครื่องมือให้</p>
+            <a href="https://wtkworking.github.io/WebBuilder/" target="_blank" rel="noopener" class="card-cta">
+              <span>เปิดเครื่องมือ</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORY 3: สร้างสรรค์ (3 Tools) -->
+      <section id="cat-create" class="category-block" style="--cat-color: var(--cat-create-solid); --cat-soft: var(--cat-create-soft); --cat-grad: var(--cat-create-grad);" data-figma-layer="Category 03 — สร้างสรรค์">
+        <div class="category-header">
+          <div class="category-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          </div>
+          <div class="category-title-group">
+            <h2>สร้างสรรค์</h2>
+            <p>ภาพ โปสเตอร์ การ์ดอวยพร</p>
+          </div>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool #4: สร้างภาพด้วย AI -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="สร้างภาพด้วย AI ตอบคำถามทีละข้อ แล้วรับ Prompt สำหรับให้ AI สร้างภาพ พร้อมคลังคำสั่งพิเศษ สร้างสรรค์">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/สร้างภาพด้วย AI.jpg" alt="สร้างภาพด้วย AI" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">สร้างสรรค์</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">สร้างภาพด้วย AI</h3>
+            <p class="card-desc">ตอบคำถามทีละข้อ แล้วรับ Prompt สำหรับให้ AI สร้างภาพ พร้อมคลังคำสั่งพิเศษ</p>
+            <a href="page-image.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #5: สไตล์โปสเตอร์โฆษณาสินค้า -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="สไตล์โปสเตอร์โฆษณาสินค้า เลือกสไตล์จากภาพตัวอย่าง 10 แบบ รับ Prompt สำเร็จรูปสำหรับรูปสินค้าของคุณ สร้างสรรค์">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/สไตล์โปสเตอร์โฆษณาสินค้า.jpg" alt="สไตล์โปสเตอร์โฆษณาสินค้า" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">สร้างสรรค์</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">สไตล์โปสเตอร์โฆษณาสินค้า</h3>
+            <p class="card-desc">เลือกสไตล์จากภาพตัวอย่าง 10 แบบ รับ Prompt สำเร็จรูปสำหรับรูปสินค้าของคุณ</p>
+            <a href="page-poster.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #6: ภาพอวยพร -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="ภาพอวยพร เลือกสไตล์ เปลี่ยนวัน คำอวยพร ชื่อ แล้วรับ Prompt สำเร็จรูป ส่งใน LINE สร้างสรรค์">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/ภาพอวยพร.jpg" alt="ภาพอวยพร" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">สร้างสรรค์</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15"/><circle cx="12" cy="12" r="3"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">ภาพอวยพร</h3>
+            <p class="card-desc">เลือกสไตล์ เปลี่ยนวัน คำอวยพร ชื่อ แล้วรับ Prompt สำเร็จรูป ส่งใน LINE</p>
+            <a href="page-greeting.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORY 4: วิดีโอ (2 Tools) -->
+      <section id="cat-video" class="category-block" style="--cat-color: var(--cat-video-solid); --cat-soft: var(--cat-video-soft); --cat-grad: var(--cat-video-grad);" data-figma-layer="Category 04 — วิดีโอ">
+        <div class="category-header">
+          <div class="category-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>
+          </div>
+          <div class="category-title-group">
+            <h2>วิดีโอ</h2>
+            <p>จากภาพนิ่งสู่คลิปสั้น</p>
+          </div>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool #7: ภาพนิ่ง → วิดีโอ 3 ช็อต -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="ภาพนิ่ง วิดีโอ 3 ช็อต กำหนดการเคลื่อนกล้องและการเคลื่อนไหวทีละช็อต สำหรับ Google Flow วิดีโอ">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/วิดีโอ 3 ช็อต.jpg" alt="ภาพนิ่ง วิดีโอ 3 ช็อต" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">วิดีโอ</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">ภาพนิ่ง → วิดีโอ 3 ช็อต</h3>
+            <p class="card-desc">กำหนดการเคลื่อนกล้องและการเคลื่อนไหวทีละช็อต สำหรับ Google Flow</p>
+            <a href="page-flow.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #8: สั่งตัดวิดีโอใน CapCut -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="สั่งตัดวิดีโอใน CapCut สร้าง Prompt สั้น ๆ สำหรับฟีเจอร์ตัดอัตโนมัติด้วย AI พร้อมนับตัวอักษร วิดีโอ">
+          <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/สั่งตัดวิดีโอใน CapCut.jpg" alt="สั่งตัดวิดีโอใน CapCut" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">วิดีโอ</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">สั่งตัดวิดีโอใน CapCut</h3>
+            <p class="card-desc">สร้าง Prompt สั้น ๆ สำหรับฟีเจอร์ตัดอัตโนมัติด้วย AI พร้อมนับตัวอักษร</p>
+            <a href="page-capcut.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORY 5: ผู้ช่วย AI (3 Tools) -->
+      <section id="cat-ai" class="category-block" style="--cat-color: var(--cat-ai-solid); --cat-soft: var(--cat-ai-soft); --cat-grad: var(--cat-ai-grad);" data-figma-layer="Category 05 — ผู้ช่วย AI">
+        <div class="category-header">
+          <div class="category-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+          </div>
+          <div class="category-title-group">
+            <h2>ผู้ช่วย AI</h2>
+            <p>ให้ AI ทำงานแทนเราอย่างปลอดภัย</p>
+          </div>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool #9: สร้าง GEM -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="สร้าง GEM สร้างผู้ช่วย AI ส่วนตัวใน Gemini พร้อมกฎความปลอดภัย ผู้ช่วย AI">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/สร้าง GEM.jpg" alt="สร้าง GEM" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">ผู้ช่วย AI</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">สร้าง GEM</h3>
+            <p class="card-desc">สร้างผู้ช่วย AI ส่วนตัวใน Gemini พร้อมกฎความปลอดภัย</p>
+            <a href="page-gem.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #10: ถาม AI เรื่องใกล้ตัว -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="ถาม AI เรื่องใกล้ตัว ยา ผลตรวจ จดหมายธนาคาร สิทธิรักษา ให้ AI อธิบายง่าย ๆ อย่างปลอดภัย ผู้ช่วย AI">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/ถาม AI เรื่องใกล้ตัว.jpg" alt="ถาม AI เรื่องใกล้ตัว" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">ผู้ช่วย AI</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">ถาม AI เรื่องใกล้ตัว</h3>
+            <p class="card-desc">ยา ผลตรวจ จดหมายธนาคาร สิทธิรักษา ให้ AI อธิบายง่าย ๆ อย่างปลอดภัย</p>
+            <a href="page-ask.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #11: เขียนโพสต์โซเชียล -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="เขียนโพสต์โซเชียล ขายของ เล่าเรื่อง แจ้งข่าว ให้ AI เขียนโพสต์มาให้เลือก 3 แบบ ผู้ช่วย AI">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/เขียนโพสต์โซเชียล.jpg" alt="เขียนโพสต์โซเชียล" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">ผู้ช่วย AI</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">เขียนโพสต์โซเชียล</h3>
+            <p class="card-desc">ขายของ เล่าเรื่อง แจ้งข่าว ให้ AI เขียนโพสต์มาให้เลือก 3 แบบ</p>
+            <a href="page-post.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORY 6: ปลอดภัย (2 Tools) -->
+      <section id="cat-safe" class="category-block" style="--cat-color: var(--cat-safe-solid); --cat-soft: var(--cat-safe-soft); --cat-grad: var(--cat-safe-grad);" data-figma-layer="Category 06 — ปลอดภัย">
+        <div class="category-header">
+          <div class="category-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+          </div>
+          <div class="category-title-group">
+            <h2>ปลอดภัย</h2>
+            <p>รู้ทันมิจฉาชีพ</p>
+          </div>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool #12: รู้ทันหลอกลวง -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="รู้ทันหลอกลวง ตรวจข้อความหรือสายแปลก ๆ กับ AI ก่อนทำอะไร พร้อมสัญญาณเตือน 5 ข้อ ปลอดภัย">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/รู้ทันหลอกลวง.jpg" alt="รู้ทันหลอกลวง" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">ปลอดภัย</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">รู้ทันหลอกลวง</h3>
+            <p class="card-desc">ตรวจข้อความหรือสายแปลก ๆ กับ AI ก่อนทำอะไร พร้อมสัญญาณเตือน 5 ข้อ</p>
+            <a href="page-scam.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+
+          <!-- Tool #13: เกม วัยเก๋ารู้ทัน -->
+          <article class="tool-card" data-figma-component="Card / Tool-Item" data-search="เกม วัยเก๋ารู้ทัน จำลอง 10 สถานการณ์จริง เลือกว่าจะทำอย่างไร กับน้องแมวจิ๋ว ปลอดภัย">
+            <div class="card-image-placeholder">
+  <img src="AiBaPicture/หน้าหลัก/เกม วัยเก๋ารู้ทัน.jpg" alt="เกม วัยเก๋ารู้ทัน" />
+</div>
+            <div class="card-meta-row">
+              <span class="card-cat-badge">ปลอดภัย</span>
+              <span class="card-tool-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
+              </span>
+            </div>
+            <h3 class="card-title">เกม วัยเก๋ารู้ทัน</h3>
+            <p class="card-desc">จำลอง 10 สถานการณ์จริง เลือกว่าจะทำอย่างไร กับน้องแมวจิ๋ว</p>
+            <a href="page-scam-game.html" class="card-cta">
+              <span>เริ่มใช้งาน</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       SECTION 05 — GUIDE FEATURE BANNER (CATEGORY 7 & TOOL #14)
+       ======================================================================== -->
+  <section id="cat-guide" class="guide-banner-section" style="--cat-color: var(--cat-guide-solid); --cat-soft: var(--cat-guide-soft); --cat-grad: var(--cat-guide-grad);" data-figma-section="Section 05 — Guide Feature Banner">
+    <div class="container">
+      <div class="guide-banner-card" data-search="วิธีใช้งาน ใช้งานเพียง 4 ขั้นตอน เหมือนกันทุกระบบ คู่มือ">
+        <div class="guide-banner-top">
+          <div class="guide-banner-title-wrap">
+            <div class="category-icon-box" style="background: var(--cat-guide-grad);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            </div>
+            <div class="category-title-group">
+              <h2>วิธีใช้งาน</h2>
+              <p>ใช้งานเพียง 4 ขั้นตอน เหมือนกันทุกระบบ</p>
+            </div>
+          </div>
+
+          <a href="page-guide.html" class="btn-primary-gradient" style="background: var(--cat-guide-grad);">
+            <span>เริ่มใช้งาน</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="guide-steps-grid">
+          <!-- Step 1 -->
+          <div class="step-item">
+            <div class="step-header">
+              <span class="step-number">ขั้นตอนที่ 1</span>
+              <span class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+              </span>
+            </div>
+            <h3 class="step-title">1. เลือกเครื่องมือ</h3>
+            <p class="step-desc">เลือกหัวข้อหรือเครื่องมือที่ตรงกับเรื่องที่ต้องการให้ช่วย</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-item">
+            <div class="step-header">
+              <span class="step-number">ขั้นตอนที่ 2</span>
+              <span class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </span>
+            </div>
+            <h3 class="step-title">2. ตอบคำถาม</h3>
+            <p class="step-desc">กรอกข้อมูลหรือเลือกตัวเลือกสั้น ๆ ตามคำแนะนำบนหน้าจอ</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-item">
+            <div class="step-header">
+              <span class="step-number">ขั้นตอนที่ 3</span>
+              <span class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              </span>
+            </div>
+            <h3 class="step-title">3. รับ Prompt</h3>
+            <p class="step-desc">ระบบจะเรียบเรียงคำสั่ง (Prompt) ที่แม่นยำให้โดยอัตโนมัติ</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-item">
+            <div class="step-header">
+              <span class="step-number">ขั้นตอนที่ 4</span>
+              <span class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              </span>
+            </div>
+            <h3 class="step-title">4. คัดลอกไปใช้งาน</h3>
+            <p class="step-desc">กดปุ่มคัดลอกแล้วนำไปวางใน AI เพื่อรับผลลัพธ์ได้ทันที</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 06 — FOOTER
+       ======================================================================== -->
+  <footer class="site-footer" data-figma-section="Section 06 — Footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column 1: AiBA Center Info -->
+        <!-- Column 1: AiBA Center Info -->
+        <div>
+          <div class="footer-logos">
+            <span class="logo-slot" data-figma-layer="Footer-Logo-AiBA">
+              <img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" />
+            </span>
+            <span class="logo-slot" data-figma-layer="Footer-Logo-PIM">
+              <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+            </span>
+          </div>
+          <h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>
+          <p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>
+        </div>
+
+        <!-- Column 2: PIM Institution Info -->
+        <div>
+          <h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>
+          <p class="footer-text">
+            85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />
+            โทร 0 2855 0000
+          </p>
+          <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">
+            <span>www.pim.ac.th</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Column 3: Social Media -->
+        <div>
+          <h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>
+          <p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>
+          <div class="footer-socials" aria-label="โซเชียลมีเดีย">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+            <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      © 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       VANILLA JAVASCRIPT — THEME, ACCESSIBILITY FONT SIZE & LIVE SEARCH
+       ======================================================================== -->
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeText = document.getElementById('themeText');
+      const themeIcon = document.getElementById('themeIcon');
+      const fontIncBtn = document.getElementById('fontIncBtn');
+      const fontDecBtn = document.getElementById('fontDecBtn');
+      const searchInput = document.getElementById('toolSearchInput');
+      const toolCards = document.querySelectorAll('.tool-card');
+      const categoryBlocks = document.querySelectorAll('.category-block');
+      const emptySearchState = document.getElementById('emptySearchState');
+
+      // 1. Light / Dark Theme Switcher
+      function applyTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        localStorage.setItem('aiba:theme', theme);
+        if (theme === 'dark') {
+          themeText.textContent = 'สว่าง';
+          themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+        } else {
+          themeText.textContent = 'มืด';
+          themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+        }
+      }
+
+      const savedTheme = localStorage.getItem('aiba:theme') || 'light';
+      applyTheme(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const current = htmlEl.getAttribute('data-theme');
+        applyTheme(current === 'light' ? 'dark' : 'light');
+      });
+
+      // 2. Font Size Controller (100%, 112.5%, 125%)
+      const fontSizes = [16, 18, 20];
+      let currentSizeIndex = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+      if (isNaN(currentSizeIndex) || currentSizeIndex < 0 || currentSizeIndex >= fontSizes.length) {
+        currentSizeIndex = 0;
+      }
+
+      function applyFontSize(idx) {
+        htmlEl.style.fontSize = fontSizes[idx] + 'px';
+        localStorage.setItem('aiba:fontIdx', String(idx));
+      }
+
+      applyFontSize(currentSizeIndex);
+
+      fontIncBtn.addEventListener('click', () => {
+        if (currentSizeIndex < fontSizes.length - 1) {
+          currentSizeIndex++;
+          applyFontSize(currentSizeIndex);
+        }
+      });
+
+      fontDecBtn.addEventListener('click', () => {
+        if (currentSizeIndex > 0) {
+          currentSizeIndex--;
+          applyFontSize(currentSizeIndex);
+        }
+      });
+
+      // 3. Real-time Tool Search Filter
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        let totalVisible = 0;
+
+        toolCards.forEach((card) => {
+          const keywords = (card.getAttribute('data-search') || '').toLowerCase();
+          const isMatch = !query || keywords.includes(query);
+          card.style.display = isMatch ? 'flex' : 'none';
+          if (isMatch) totalVisible++;
+        });
+
+        categoryBlocks.forEach((block) => {
+          const visibleCardsInBlock = Array.from(block.querySelectorAll('.tool-card')).filter(
+            (c) => c.style.display !== 'none'
+          );
+          block.style.display = visibleCardsInBlock.length > 0 ? 'block' : 'none';
+        });
+
+        emptySearchState.style.display = totalVisible === 0 ? 'block' : 'none';
+      });
+
+      // =========================================================================
+      // 4. NAVIGATION DOCKING & CATEGORY SCROLL SPY CONTROLLER
+      // =========================================================================
+      const floatingNavbar = document.querySelector('.floating-navbar');
+      const navCategoriesRow = document.getElementById('navCategoriesRow');
+      const quickNavSection = document.getElementById('quickNavSection');
+      const quickNavContainer = document.getElementById('quickNavContainer');
+      const categoryCapsules = document.getElementById('categoryCapsules');
+      const catLabSection = document.getElementById('cat-lab');
+
+      const categoryIds = ['cat-lab', 'cat-tool', 'cat-create', 'cat-video', 'cat-ai', 'cat-safe', 'cat-guide'];
+      const capsuleLinks = categoryCapsules ? Array.from(categoryCapsules.querySelectorAll('.cat-capsule')) : [];
+
+      let isDocked = false;
+      let currentActiveId = null;
+      let isSmoothScrolling = false;
+      let smoothScrollTimer = null;
+
+      // Scroll horizontal capsule container to center the active item
+      function centerActiveCapsule(capsule) {
+        if (!capsule) return;
+        const container = capsule.closest('.category-capsules');
+        if (!container) return;
+        const containerWidth = container.clientWidth;
+        const capsuleLeft = capsule.offsetLeft;
+        const capsuleWidth = capsule.clientWidth;
+        const targetScrollLeft = capsuleLeft - (containerWidth / 2) + (capsuleWidth / 2);
+        container.scrollTo({
+          left: Math.max(0, targetScrollLeft),
+          behavior: 'smooth'
+        });
+      }
+
+      // Update active capsule highlighting
+      function setActiveSection(activeId) {
+        if (activeId === currentActiveId) return;
+        currentActiveId = activeId;
+
+        capsuleLinks.forEach((capsule) => {
+          const href = capsule.getAttribute('href');
+          if (activeId && href === '#' + activeId) {
+            capsule.classList.add('active');
+            centerActiveCapsule(capsule);
+          } else {
+            capsule.classList.remove('active');
+          }
+        });
+      }
+
+      // Docking transition between Hero quick-nav and Floating Navbar
+      function updateDocking(shouldDock) {
+        if (shouldDock === isDocked) return;
+        isDocked = shouldDock;
+
+        if (isDocked) {
+          if (navCategoriesRow && categoryCapsules && !navCategoriesRow.contains(categoryCapsules)) {
+            navCategoriesRow.appendChild(categoryCapsules);
+          }
+          if (floatingNavbar) floatingNavbar.classList.add('has-capsules');
+          if (quickNavSection) quickNavSection.classList.add('is-hidden');
+        } else {
+          if (quickNavContainer && categoryCapsules && !quickNavContainer.contains(categoryCapsules)) {
+            quickNavContainer.appendChild(categoryCapsules);
+          }
+          if (floatingNavbar) floatingNavbar.classList.remove('has-capsules');
+          if (quickNavSection) quickNavSection.classList.remove('is-hidden');
+        }
+      }
+
+      // Main scroll update handler
+      function onScrollUpdate() {
+        if (!catLabSection) return;
+
+        const catLabRect = catLabSection.getBoundingClientRect();
+
+        // Dock when #cat-lab reaches top of reading area (<= 140px); undock with hysteresis (> 180px)
+        const shouldDock = isDocked ? (catLabRect.top <= 180) : (catLabRect.top <= 140);
+        updateDocking(shouldDock);
+
+        // If clicking a capsule and auto-scrolling, don't interrupt active selection
+        if (isSmoothScrolling) return;
+
+        // If user is above #cat-lab (Hero Section), no category is active
+        if (catLabRect.top > 190) {
+          setActiveSection(null);
+          return;
+        }
+
+        // If scrolled to the bottom of the page, activate the last category (#cat-guide)
+        const atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 60);
+        if (atBottom) {
+          setActiveSection('cat-guide');
+          return;
+        }
+
+        // Calculate active section based on proximity to viewing reference line
+        const navH = floatingNavbar ? floatingNavbar.offsetHeight : 115;
+        const viewingLine = 16 + navH + 30;
+
+        let activeId = 'cat-lab';
+        for (let i = 0; i < categoryIds.length; i++) {
+          const sec = document.getElementById(categoryIds[i]);
+          if (sec && sec.offsetHeight > 0) {
+            const rect = sec.getBoundingClientRect();
+            if (rect.top <= viewingLine) {
+              activeId = categoryIds[i];
+            }
+          }
+        }
+        setActiveSection(activeId);
+      }
+
+      // Smooth scroll on capsule click
+      capsuleLinks.forEach((capsule) => {
+        capsule.addEventListener('click', (e) => {
+          const href = capsule.getAttribute('href');
+          if (!href || !href.startsWith('#')) return;
+
+          const targetId = href.substring(1);
+          const targetEl = document.getElementById(targetId);
+          if (!targetEl) return;
+
+          e.preventDefault();
+
+          // Set active immediately and center capsule
+          isSmoothScrolling = true;
+          setActiveSection(targetId);
+
+          // If jumping to a category, dock navbar immediately so layout is stable
+          updateDocking(true);
+
+          // Calculate target Y coordinate taking 2-row navbar into account
+          const navHeight = floatingNavbar ? floatingNavbar.offsetHeight : 115;
+          const offset = 16 + navHeight + 16;
+          const targetY = targetEl.getBoundingClientRect().top + window.pageYOffset - offset;
+
+          window.scrollTo({
+            top: Math.max(0, targetY),
+            behavior: 'smooth'
+          });
+
+          if (history.pushState) {
+            history.pushState(null, null, '#' + targetId);
+          }
+
+          // Release smooth scroll lock after scrolling completes
+          clearTimeout(smoothScrollTimer);
+          smoothScrollTimer = setTimeout(() => {
+            isSmoothScrolling = false;
+            onScrollUpdate();
+          }, 800);
+        });
+      });
+
+      // Passive scroll and resize listeners with requestAnimationFrame
+      let scrollRaf = null;
+      function handleScroll() {
+        if (scrollRaf) cancelAnimationFrame(scrollRaf);
+        scrollRaf = requestAnimationFrame(onScrollUpdate);
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleScroll, { passive: true });
+
+      // Run on initialization
+      onScrollUpdate();
+    })();
+  </script>
+</body>
+</html>

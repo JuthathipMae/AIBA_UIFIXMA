@@ -1,0 +1,4010 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>สร้างภาพด้วย AI — AiBA Connect</title>
+  <meta name="theme-color" content="#7C3AED" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — AiBA CONNECT TOKENS & LIGHT / DARK THEMES
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif; 
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+
+      /* Liquid Glass System — Light Mode */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(124, 58, 237, 0.12);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+      /* Surface Helpers — Light Mode */
+      --surface-input: rgba(248, 249, 254, 0.92);
+      --surface-subtle: rgba(241, 239, 251, 0.68);
+      --surface-img: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(241, 239, 251, 0.95));
+      --border-subtle: rgba(19, 24, 54, 0.10);
+
+      /* Prompt Output Surface — High-Contrast Dark Layer */
+      --sheet-bg: linear-gradient(160deg, #131836 0%, #1C234B 100%);
+      --sheet-border: rgba(255, 255, 255, 0.14);
+      --sheet-ink: #EEF2FF;
+      --sheet-dim: #94A3C4;
+      --sheet-shadow: 0 20px 44px rgba(19, 24, 54, 0.20);
+
+      /* Status Colors */
+      --ok-solid: #10B981;
+      --ok-text: #047857;
+      --ok-bg: rgba(16, 185, 129, 0.12);
+      --ok-border: rgba(16, 185, 129, 0.34);
+
+      --err-solid: #EF4444;
+      --err-text: #DC2626;
+      --err-bg: rgba(239, 68, 68, 0.10);
+      --err-border: rgba(239, 68, 68, 0.32);
+
+      --warn-solid: #F59E0B;
+      --warn-text: #B45309;
+      --warn-bg: rgba(245, 158, 11, 0.12);
+      --warn-border: rgba(245, 158, 11, 0.36);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --shadow-lg: 0 20px 48px rgba(19, 24, 54, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 30px;
+      --radius-pill: 9999px;
+      --container-max: 1240px;
+
+      /* Primary Brand Theme (Coral Violet) */
+      --pal-from: #FF6B6B;
+      --pal-to: #7C3AED;
+      --pal-grad: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+      --pal-solid: #7C3AED;
+      --pal-text: #6D28D9;
+      --pal-soft: rgba(124, 58, 237, 0.11);
+      --pal-border: rgba(124, 58, 237, 0.34);
+      --pal-glow: rgba(124, 58, 237, 0.26);
+      --pal-sheet-key: #C4B5FD;
+      --pal-orb-1: rgba(255, 107, 107, 0.14);
+      --pal-orb-2: rgba(124, 58, 237, 0.14);
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(167, 139, 250, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+      --surface-input: rgba(14, 17, 36, 0.78);
+      --surface-subtle: rgba(15, 18, 37, 0.56);
+      --surface-img: linear-gradient(145deg, rgba(35, 42, 78, 0.75), rgba(20, 24, 48, 0.92));
+      --border-subtle: rgba(255, 255, 255, 0.11);
+
+      --sheet-bg: linear-gradient(160deg, #070A18 0%, #0D1229 100%);
+      --sheet-border: rgba(255, 255, 255, 0.14);
+      --sheet-ink: #F1F5F9;
+      --sheet-dim: #7C8BB0;
+      --sheet-shadow: 0 24px 56px rgba(0, 0, 0, 0.54);
+
+      --ok-text: #34D399;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --ok-border: rgba(52, 211, 153, 0.40);
+
+      --err-solid: #F87171;
+      --err-text: #FCA5A5;
+      --err-bg: rgba(239, 68, 68, 0.15);
+      --err-border: rgba(248, 113, 113, 0.36);
+
+      --warn-text: #FCD34D;
+      --warn-bg: rgba(245, 158, 11, 0.16);
+      --warn-border: rgba(251, 191, 36, 0.40);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+
+      --pal-solid: #A78BFA;
+      --pal-text: #DDD6FE;
+      --pal-soft: rgba(167, 139, 250, 0.18);
+      --pal-border: rgba(167, 139, 250, 0.46);
+      --pal-glow: rgba(124, 58, 237, 0.38);
+    }
+
+    /* ==========================================================================
+       2. SEMANTIC COLOR SYSTEM — PER-STEP (1-6) & PER-CATEGORY (LIBRARY)
+       ========================================================================== */
+
+    /* --- Builder Steps 1–6 (Light Mode) --- */
+    .step[data-step="1"] {
+      --step-grad: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+      --step-solid: #7C3AED;
+      --step-text: #5B21B6;
+      --step-soft: rgba(124, 58, 237, 0.11);
+      --step-border: rgba(124, 58, 237, 0.36);
+      --step-glow: rgba(124, 58, 237, 0.26);
+    }
+    .step[data-step="2"] {
+      --step-grad: linear-gradient(135deg, #FF6B6B 0%, #E11D48 100%);
+      --step-solid: #F43F5E;
+      --step-text: #BE123C;
+      --step-soft: rgba(244, 63, 94, 0.11);
+      --step-border: rgba(244, 63, 94, 0.36);
+      --step-glow: rgba(244, 63, 94, 0.26);
+    }
+    .step[data-step="3"] {
+      --step-grad: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+      --step-solid: #0284C7;
+      --step-text: #0369A1;
+      --step-soft: rgba(2, 132, 199, 0.11);
+      --step-border: rgba(2, 132, 199, 0.36);
+      --step-glow: rgba(2, 132, 199, 0.26);
+    }
+    .step[data-step="4"] {
+      --step-grad: linear-gradient(135deg, #EA580C 0%, #D97706 100%);
+      --step-solid: #D97706;
+      --step-text: #B45309;
+      --step-soft: rgba(217, 119, 6, 0.12);
+      --step-border: rgba(217, 119, 6, 0.38);
+      --step-glow: rgba(217, 119, 6, 0.26);
+    }
+    .step[data-step="5"] {
+      --step-grad: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      --step-solid: #059669;
+      --step-text: #047857;
+      --step-soft: rgba(5, 150, 105, 0.11);
+      --step-border: rgba(5, 150, 105, 0.36);
+      --step-glow: rgba(5, 150, 105, 0.26);
+    }
+    .step[data-step="6"] {
+      --step-grad: linear-gradient(135deg, #4F46E5 0%, #0891B2 100%);
+      --step-solid: #4F46E5;
+      --step-text: #3730A3;
+      --step-soft: rgba(79, 70, 229, 0.11);
+      --step-border: rgba(79, 70, 229, 0.36);
+      --step-glow: rgba(79, 70, 229, 0.26);
+    }
+
+    /* --- Builder Steps 1–6 (Dark Mode) --- */
+    [data-theme="dark"] .step[data-step="1"] {
+      --step-solid: #A78BFA;
+      --step-text: #DDD6FE;
+      --step-soft: rgba(167, 139, 250, 0.18);
+      --step-border: rgba(167, 139, 250, 0.46);
+      --step-glow: rgba(139, 92, 246, 0.38);
+    }
+    [data-theme="dark"] .step[data-step="2"] {
+      --step-solid: #FB7185;
+      --step-text: #FECDD3;
+      --step-soft: rgba(251, 113, 133, 0.18);
+      --step-border: rgba(251, 113, 133, 0.46);
+      --step-glow: rgba(244, 63, 94, 0.38);
+    }
+    [data-theme="dark"] .step[data-step="3"] {
+      --step-solid: #38BDF8;
+      --step-text: #BAE6FD;
+      --step-soft: rgba(56, 189, 248, 0.18);
+      --step-border: rgba(56, 189, 248, 0.46);
+      --step-glow: rgba(14, 165, 233, 0.36);
+    }
+    [data-theme="dark"] .step[data-step="4"] {
+      --step-solid: #FBBF24;
+      --step-text: #FDE68A;
+      --step-soft: rgba(251, 191, 36, 0.18);
+      --step-border: rgba(251, 191, 36, 0.46);
+      --step-glow: rgba(234, 88, 12, 0.38);
+    }
+    [data-theme="dark"] .step[data-step="5"] {
+      --step-solid: #34D399;
+      --step-text: #A7F3D0;
+      --step-soft: rgba(52, 211, 153, 0.18);
+      --step-border: rgba(52, 211, 153, 0.46);
+      --step-glow: rgba(16, 185, 129, 0.36);
+    }
+    [data-theme="dark"] .step[data-step="6"] {
+      --step-solid: #818CF8;
+      --step-text: #C7D2FE;
+      --step-soft: rgba(129, 140, 248, 0.18);
+      --step-border: rgba(129, 140, 248, 0.46);
+      --step-glow: rgba(79, 70, 229, 0.38);
+    }
+
+    /* --- Library Categories (Light Mode) --- */
+    [data-cat="ทั้งหมด"] {
+      --cat-grad: var(--pal-grad);
+      --cat-solid: var(--pal-solid);
+      --cat-text: var(--pal-text);
+      --cat-soft: var(--pal-soft);
+      --cat-border: var(--pal-border);
+      --cat-glow: var(--pal-glow);
+      --cat-overlay: rgba(124, 58, 237, 0.88);
+    }
+    [data-cat="โครงสร้าง"] {
+      --cat-grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      --cat-solid: #6366F1;
+      --cat-text: #4338CA;
+      --cat-soft: rgba(99, 102, 241, 0.12);
+      --cat-border: rgba(99, 102, 241, 0.36);
+      --cat-glow: rgba(99, 102, 241, 0.28);
+      --cat-overlay: rgba(67, 56, 202, 0.90);
+    }
+    [data-cat="มุมมอง"] {
+      --cat-grad: linear-gradient(135deg, #0284C7 0%, #0891B2 100%);
+      --cat-solid: #0284C7;
+      --cat-text: #0369A1;
+      --cat-soft: rgba(14, 165, 233, 0.12);
+      --cat-border: rgba(14, 165, 233, 0.38);
+      --cat-glow: rgba(14, 165, 233, 0.28);
+      --cat-overlay: rgba(3, 105, 161, 0.90);
+    }
+    [data-cat="เทคนิค"] {
+      --cat-grad: linear-gradient(135deg, #EA580C 0%, #D97706 100%);
+      --cat-solid: #EA580C;
+      --cat-text: #B45309;
+      --cat-soft: rgba(249, 115, 22, 0.12);
+      --cat-border: rgba(249, 115, 22, 0.38);
+      --cat-glow: rgba(234, 88, 12, 0.28);
+      --cat-overlay: rgba(180, 83, 9, 0.90);
+    }
+    [data-cat="สไตล์"] {
+      --cat-grad: linear-gradient(135deg, #DB2777 0%, #E11D48 100%);
+      --cat-solid: #E11D48;
+      --cat-text: #BE123C;
+      --cat-soft: rgba(236, 72, 153, 0.12);
+      --cat-border: rgba(236, 72, 153, 0.38);
+      --cat-glow: rgba(225, 29, 72, 0.28);
+      --cat-overlay: rgba(190, 18, 60, 0.90);
+    }
+
+    /* --- Library Categories (Dark Mode) --- */
+    [data-theme="dark"] [data-cat="โครงสร้าง"] {
+      --cat-solid: #818CF8;
+      --cat-text: #C7D2FE;
+      --cat-soft: rgba(129, 140, 248, 0.20);
+      --cat-border: rgba(129, 140, 248, 0.48);
+      --cat-glow: rgba(99, 102, 241, 0.38);
+      --cat-overlay: rgba(67, 56, 202, 0.92);
+    }
+    [data-theme="dark"] [data-cat="มุมมอง"] {
+      --cat-solid: #38BDF8;
+      --cat-text: #A5F3FC;
+      --cat-soft: rgba(56, 189, 248, 0.20);
+      --cat-border: rgba(56, 189, 248, 0.48);
+      --cat-glow: rgba(6, 182, 212, 0.38);
+      --cat-overlay: rgba(3, 105, 161, 0.92);
+    }
+    [data-theme="dark"] [data-cat="เทคนิค"] {
+      --cat-solid: #FB923C;
+      --cat-text: #FDE68A;
+      --cat-soft: rgba(251, 146, 60, 0.20);
+      --cat-border: rgba(251, 146, 60, 0.48);
+      --cat-glow: rgba(234, 88, 12, 0.38);
+      --cat-overlay: rgba(180, 83, 9, 0.92);
+    }
+    [data-theme="dark"] [data-cat="สไตล์"] {
+      --cat-solid: #F472B6;
+      --cat-text: #FBCFE8;
+      --cat-soft: rgba(244, 114, 182, 0.20);
+      --cat-border: rgba(244, 114, 182, 0.48);
+      --cat-glow: rgba(225, 29, 72, 0.38);
+      --cat-overlay: rgba(190, 18, 60, 0.92);
+    }
+
+    /* Step 6 Special Command Buttons inherit their Category Color */
+    .choice[data-group="command"][data-cat] {
+      --step-grad: var(--cat-grad);
+      --step-solid: var(--cat-solid);
+      --step-text: var(--cat-text);
+      --step-soft: var(--cat-soft);
+      --step-border: var(--cat-border);
+      --step-glow: var(--cat-glow);
+    }
+
+    .step-selected-tag[data-cat] {
+      --step-text: var(--cat-text);
+      --step-soft: var(--cat-soft);
+      --step-border: var(--cat-border);
+    }
+
+    /* ==========================================================================
+       3. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(920px 520px at 8% -4%, var(--pal-orb-1), transparent 60%),
+        radial-gradient(920px 560px at 94% 4%, var(--pal-orb-2), transparent 60%),
+        radial-gradient(720px 520px at 50% 48%, rgba(56, 189, 248, 0.06), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--pal-solid);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       4. FLOATING GLASS NAVBAR (MATCHING AiBA CONNECT)
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 38px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--pal-solid);
+      color: var(--pal-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.24rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: var(--pal-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--pal-solid);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       5. PAGE WRAPPER, HERO INTRO, QUICK JUMP & PALETTE PICKER
+       ========================================================================== */
+    .page-wrap {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 28px 24px 56px;
+      flex: 1;
+    }
+
+    .page-hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px 24px;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--pal-text);
+      margin-bottom: 10px;
+    }
+
+    .hero-badge-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--pal-grad);
+      box-shadow: 0 0 10px var(--pal-glow);
+      flex-shrink: 0;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.7rem, 3.2vw, 2.45rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .page-hero h1 .accent-word {
+      background: var(--pal-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      margin-top: 8px;
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      max-width: 60ch;
+    }
+
+    .hero-jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .jump-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    .jump-pill:hover {
+      transform: translateY(-2px);
+      border-color: var(--pal-solid);
+      color: var(--pal-text);
+      box-shadow: var(--shadow-md);
+    }
+
+    .jump-pill-badge {
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--pal-soft);
+      color: var(--pal-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       6. RESUME BANNER (SAVED WORK RECOVERY)
+       ========================================================================== */
+    .resume-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--pal-border);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--pal-soft);
+    }
+
+    .resume-banner.show {
+      display: flex;
+    }
+
+    .resume-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .resume-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: var(--pal-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--pal-glow);
+    }
+
+    .resume-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-text span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       7. LIQUID GLASS SECTION CONTAINERS & STEP CARDS (BUILDER STEPS 1-6)
+       ========================================================================== */
+    .glass-panel {
+      position: relative;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 30px 28px;
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      overflow: hidden;
+      margin-bottom: 36px;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--pal-grad);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .panel-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--pal-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px var(--pal-glow);
+    }
+
+    .panel-title-group h2 {
+      font-size: 1.42rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-description {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      margin-top: 3px;
+    }
+
+    .builder-progress-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--pal-soft);
+      border: 1px solid var(--pal-border);
+      color: var(--pal-text);
+      font-family: var(--font-heading);
+      font-size: 0.86rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Step Blocks */
+    .steps-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .step {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--step-solid, var(--pal-solid));
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .step:focus-within {
+      border-color: var(--step-border, var(--pal-border));
+      border-left-color: var(--step-solid, var(--pal-solid));
+      box-shadow: 0 6px 20px var(--step-soft, var(--pal-soft));
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-bottom: 6px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: var(--step-grad, var(--pal-grad));
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px var(--step-glow, var(--pal-glow));
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.14rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .step-optional-tag {
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft, var(--glass-bg-strong));
+      border: 1px solid var(--step-border, var(--border-subtle));
+      color: var(--step-text, var(--text-muted));
+    }
+
+    .step-selected-tag {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 3px 11px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft, var(--pal-soft));
+      border: 1px solid var(--step-border, var(--pal-border));
+      color: var(--step-text, var(--pal-text));
+      display: none;
+    }
+
+    .step-selected-tag.show {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .step-help {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      margin-bottom: 14px;
+    }
+
+    /* Textarea & Inputs */
+    .large-textarea {
+      width: 100%;
+      min-height: 104px;
+      resize: vertical;
+      background: var(--surface-input);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1.04rem;
+      line-height: 1.6;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .large-textarea:hover {
+      border-color: var(--step-border, var(--pal-border));
+    }
+
+    .large-textarea:focus {
+      outline: none;
+      border-color: var(--step-solid, var(--pal-solid));
+      box-shadow: 0 0 0 4px var(--step-soft, var(--pal-soft));
+    }
+
+    .large-textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.85;
+    }
+
+    /* Choice Grids (Steps 2-5 & Step 6) */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+      gap: 10px;
+    }
+
+    .choice-grid.compact-grid {
+      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+      gap: 9px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 52px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: left;
+      line-height: 1.3;
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    .choice:hover {
+      border-color: var(--step-solid, var(--pal-solid));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .choice-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--step-soft, var(--pal-soft));
+      color: var(--step-text, var(--pal-text));
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .choice-icon svg {
+      width: 17px;
+      height: 17px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .choice:hover .choice-icon {
+      transform: scale(1.04);
+    }
+
+    .choice-label {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .choice.selected,
+    .choice.active,
+    .choice[aria-pressed="true"] {
+      background: var(--step-grad, var(--pal-grad));
+      border-color: transparent;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 8px 20px var(--step-glow, var(--pal-glow));
+      transform: translateY(-1px);
+    }
+
+    .choice.selected .choice-icon,
+    .choice.active .choice-icon,
+    .choice[aria-pressed="true"] .choice-icon {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+    }
+
+    .choice.selected:hover,
+    .choice.active:hover,
+    .choice[aria-pressed="true"]:hover {
+      filter: brightness(1.06);
+      color: #FFFFFF;
+    }
+
+    .step6-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .step6-hint-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--step-text, var(--pal-text));
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft, var(--pal-soft));
+      border: 1px solid var(--step-border, var(--pal-border));
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .step6-hint-link:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       8. BUTTONS & RESULT PROMPT SHEET
+       ========================================================================== */
+    .button-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .gen-row {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--pal-grad);
+      color: #FFFFFF;
+      border: 1.5px solid transparent;
+      box-shadow: 0 10px 24px var(--pal-glow);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px var(--pal-glow);
+    }
+
+    .secondary-btn {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--pal-solid);
+      color: var(--pal-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .danger-btn {
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1.5px solid var(--err-border);
+    }
+
+    .danger-btn:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: var(--err-solid);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    /* Result Section */
+    .result {
+      margin-top: 26px;
+      border-radius: var(--radius-lg);
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1.5px solid var(--sheet-border);
+      box-shadow: var(--sheet-shadow);
+      overflow: hidden;
+      position: relative;
+      animation: fadeSlideUp 0.28s ease;
+    }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--pal-grad);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 18px 22px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .result-head-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--pal-grad);
+      box-shadow: 0 0 12px var(--pal-sheet-key);
+      flex-shrink: 0;
+    }
+
+    .result-head h3 {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    .result-live-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--pal-sheet-key);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .result-body {
+      padding: 20px 22px 22px;
+    }
+
+    .result-sub {
+      font-size: 0.94rem;
+      color: var(--sheet-dim);
+      margin-bottom: 14px;
+    }
+
+    .prompt-box {
+      background: rgba(7, 10, 24, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      font-family: var(--font-body);
+      font-size: 1.06rem;
+      line-height: 1.75;
+      color: var(--sheet-ink);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 16px;
+    }
+
+    .result .secondary-btn {
+      background: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #F8FAFC;
+    }
+
+    .result .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: var(--pal-sheet-key);
+      color: #FFFFFF;
+    }
+
+    .copy-message {
+      color: #34D399;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.94rem;
+      min-height: 1.4em;
+      margin-top: 10px;
+    }
+
+    .open-app-row {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .open-app-row p {
+      font-size: 0.9rem;
+      color: var(--sheet-dim);
+      margin-bottom: 12px;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 20px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .app-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .app-btn.gpt {
+      background: linear-gradient(135deg, #10A37F 0%, #059669 100%);
+      box-shadow: 0 8px 20px rgba(16, 163, 127, 0.30);
+    }
+
+    .app-btn.gemini {
+      background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.32);
+    }
+
+    .app-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       9. SPECIAL COMMAND LIBRARY (SEARCH, CATEGORY PILLS & IMAGE CARD GRID)
+       ========================================================================== */
+    .library-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--surface-input);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px 4px 18px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--pal-solid);
+      box-shadow: 0 0 0 4px var(--pal-soft);
+    }
+
+    .search-box svg {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .large-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 11px 12px;
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .large-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-clear-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      color: var(--text-muted);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .search-clear-btn.show {
+      display: inline-flex;
+    }
+
+    .search-clear-btn:hover {
+      background: var(--pal-soft);
+      color: var(--pal-text);
+    }
+
+    .category-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .category-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--cat-border, var(--border-subtle));
+      color: var(--cat-text, var(--text-secondary));
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover {
+      border-color: var(--cat-solid, var(--pal-solid));
+      background: var(--cat-soft, var(--pal-soft));
+      color: var(--cat-text, var(--text-primary));
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .category-btn.active {
+      background: var(--cat-grad, var(--pal-grad));
+      border-color: transparent;
+      color: #FFFFFF;
+      box-shadow: 0 6px 18px var(--cat-glow, var(--pal-glow));
+    }
+
+    .category-count {
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-soft, var(--surface-subtle));
+      color: var(--cat-text, var(--text-muted));
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .category-btn.active .category-count {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+    }
+
+    /* Command Cards Grid */
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .command-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease, outline-color 0.25s ease;
+    }
+
+    .command-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--cat-solid, var(--pal-solid));
+      outline-color: var(--cat-border, var(--pal-border));
+    }
+
+    .command-card.is-selected {
+      border-color: var(--cat-solid, var(--pal-solid));
+      outline: 2px solid var(--cat-solid, var(--pal-solid));
+      box-shadow: 0 14px 34px var(--cat-glow, var(--pal-glow));
+    }
+
+    /* Preview Image Container */
+    .cmd-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      background: var(--surface-img);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .cmd-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .command-card:hover .cmd-thumb img {
+      transform: scale(1.05);
+    }
+
+    /* Fallback Icon State (when image missing or failed to load) */
+    .cmd-thumb-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 25% 20%, var(--cat-soft, var(--pal-soft)), transparent 60%),
+        var(--surface-img);
+    }
+
+    .cmd-thumb.is-fallback img {
+      display: none;
+    }
+
+    .cmd-thumb.is-fallback .cmd-thumb-fallback {
+      display: flex;
+    }
+
+    .cmd-thumb.is-fallback .cmd-zoom-btn {
+      display: none;
+    }
+
+    .cmd-fallback-circle {
+      width: 66px;
+      height: 66px;
+      border-radius: 22px;
+      background: var(--cat-grad, var(--pal-grad));
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 24px var(--cat-glow, var(--pal-glow));
+    }
+
+    .cmd-fallback-circle svg {
+      width: 30px;
+      height: 30px;
+      display: block;
+    }
+
+    .cmd-fallback-label {
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--cat-text, var(--text-muted));
+    }
+
+    /* Overlay Badges on Thumb */
+    .cmd-cat-overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-overlay, rgba(15, 18, 37, 0.78));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.76rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+    }
+
+    .cmd-selected-pill {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 2;
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-grad, var(--pal-grad));
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.76rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--cat-glow, var(--pal-glow));
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .command-card.is-selected .cmd-selected-pill {
+      display: inline-flex;
+    }
+
+    .cmd-zoom-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(15, 18, 37, 0.66);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .cmd-zoom-btn:hover {
+      transform: scale(1.08);
+      background: var(--cat-solid, var(--pal-solid));
+    }
+
+    /* Card Text Content */
+    .cmd-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 0 4px 2px;
+    }
+
+    .cmd-title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .cmd-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .cmd-en {
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--cat-text, var(--pal-text));
+      background: var(--cat-soft, var(--pal-soft));
+      border: 1px solid var(--cat-border, transparent);
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cmd-desc {
+      font-size: 0.93rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+
+    .cmd-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .cmd-detail-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .cmd-detail-btn:hover {
+      border-color: var(--cat-solid, var(--pal-solid));
+      color: var(--cat-text, var(--pal-text));
+    }
+
+    .cmd-use-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-grad, var(--pal-grad));
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px var(--cat-glow, var(--pal-glow));
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+
+    .cmd-use-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .empty-library {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 44px 20px;
+      border-radius: var(--radius-lg);
+      background: var(--surface-subtle);
+      border: 1.5px dashed var(--border-subtle);
+    }
+
+    .empty-library h3 {
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .empty-library p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* ==========================================================================
+       10. RELATED TOOLS SECTION
+       ========================================================================== */
+    .related {
+      margin-top: 8px;
+    }
+
+    .related-title {
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rel-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .rel-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--pal-solid);
+    }
+
+    .rel-card .ic {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #FFFFFF;
+    }
+
+    .rel-card .ic svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    .rel-card .ic.cat-create {
+      background: linear-gradient(135deg, #FF6B6B, #FDBA74);
+    }
+
+    .rel-card .ic.cat-video {
+      background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+    }
+
+    .rel-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rel-card span {
+      display: block;
+      font-size: 0.89rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       11. MODAL & LIGHTBOX
+       ========================================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      background: rgba(10, 13, 30, 0.64);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 24px 26px 26px;
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 4;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--pal-solid);
+      color: #FFFFFF;
+      transform: rotate(90deg);
+    }
+
+    .modal-preview-wrap {
+      position: relative;
+      width: 100%;
+      max-height: 320px;
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--surface-img);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 18px;
+      cursor: zoom-in;
+    }
+
+    .modal-preview-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-preview-wrap.is-fallback {
+      cursor: default;
+      aspect-ratio: 16 / 7;
+    }
+
+    .modal-preview-wrap.is-fallback img,
+    .modal-preview-wrap.is-fallback .modal-zoom-hint {
+      display: none;
+    }
+
+    .modal-preview-wrap .cmd-thumb-fallback {
+      display: none;
+    }
+
+    .modal-preview-wrap.is-fallback .cmd-thumb-fallback {
+      display: flex;
+    }
+
+    .modal-zoom-hint {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.74);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .modal-cat-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--cat-soft, var(--pal-soft));
+      border: 1px solid var(--cat-border, var(--pal-border));
+      color: var(--cat-text, var(--pal-text));
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .modal-en-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .modal-box h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      padding-right: 36px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-title-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--cat-soft, var(--pal-soft));
+      border: 1px solid var(--cat-border, var(--pal-border));
+      color: var(--cat-text, var(--pal-text));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-box[data-cat] .primary-btn {
+      background: var(--cat-grad, var(--pal-grad));
+      box-shadow: 0 10px 24px var(--cat-glow, var(--pal-glow));
+    }
+
+    .modal-box[data-cat] .modal-close:hover {
+      background: var(--cat-solid, var(--pal-solid));
+    }
+
+    .modal-title-icon svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .modal-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .modal-box hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 16px 0;
+    }
+
+    .modal-box h3 {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 12px 0 6px;
+    }
+
+    .modal-use {
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+    }
+
+    .modal-example-box {
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1px solid var(--sheet-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 0.96rem;
+      line-height: 1.65;
+      margin: 8px 0 20px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1600;
+      background: rgba(7, 10, 24, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      gap: 14px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #FFFFFF;
+      font-size: 1.6rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .lightbox-close:hover {
+      background: var(--pal-solid);
+      transform: scale(1.06);
+    }
+
+    .lightbox img {
+      max-width: min(94vw, 960px);
+      max-height: 82vh;
+      width: auto;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      color: #F8FAFC;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .lightbox-caption svg {
+      width: 16px;
+      height: 16px;
+      color: var(--pal-sheet-key);
+      flex-shrink: 0;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      transform: translate(-50%, 18px);
+      background: var(--pal-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 14px 34px var(--pal-glow);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1700;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* ==========================================================================
+       12. STANDARD FOOTER (AiBA & PIM — MATCHING index.html)
+       ========================================================================== */
+    .site-footer {
+      background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 44px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--pal-grad);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(255, 107, 107, 0.22), rgba(124, 58, 237, 0.28));
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       13. RESPONSIVE BREAKPOINTS (DESKTOP, TABLET & MOBILE — ZERO OVERFLOW)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .command-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 10px;
+        font-size: 0.82rem;
+      }
+
+      .logo-slot {
+        height: 32px;
+      }
+
+      .logo-slot img {
+        height: 34px;
+      }
+
+      .brand-name {
+        font-size: 1.04rem;
+      }
+
+      .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+
+      .page-wrap {
+        padding: 20px 14px 44px;
+      }
+
+      .glass-panel {
+        padding: 20px 16px;
+        border-radius: 22px;
+      }
+
+      .step {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .choice-grid,
+      .choice-grid.compact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .choice {
+        padding: 9px 10px;
+        font-size: 0.88rem;
+        gap: 7px;
+        min-height: 48px;
+      }
+
+      .choice-icon {
+        width: 26px;
+        height: 26px;
+      }
+
+      .choice-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .command-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .gen-row .primary-btn,
+      .gen-row .secondary-btn,
+      .gen-row .danger-btn {
+        flex: 1 1 auto;
+      }
+
+      .gen-row .primary-btn {
+        flex: 1 1 100%;
+      }
+
+      .modal-box {
+        padding: 20px 18px 22px;
+        border-radius: 22px;
+      }
+
+      .result-head,
+      .result-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .nav-back-text,
+      .brand-divider {
+        display: none;
+      }
+
+      .nav-back-btn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      #themeText {
+        display: none;
+      }
+
+      .choice-grid,
+      .choice-grid.compact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS NAVBAR (MATCHING AiBA CONNECT)
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="เมนูหลัก สร้างภาพด้วย AI">
+      <div class="nav-left">
+        <a href="index.html" class="nav-back-btn" aria-label="กลับหน้าหลัก">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          <span class="nav-back-text">กลับหน้าหลัก</span>
+        </a>
+        <a href="index.html" class="nav-brand" aria-label="สร้างภาพด้วย AI — AiBA Connect">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">สร้างภาพด้วย AI</span>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับโหมดสีหน้าจอ" aria-label="สลับโหมดสีหน้าจอ">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN CONTENT
+       ======================================================================== -->
+  <main class="page-wrap">
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          <span>AiBA Connect · เครื่องมือสร้างสรรค์ภาพ</span>
+        </div>
+        <h1><span class="accent-word">สร้างภาพด้วย AI</span> ทีละขั้นตอน</h1>
+        <p class="hero-lead">ตอบคำถามง่าย ๆ ทีละข้อ แล้วรับ Prompt สำเร็จรูปสำหรับให้ AI สร้างภาพ พร้อมคลังคำสั่งพิเศษและภาพตัวอย่างให้เลือกใช้ทันที</p>
+      </div>
+      <nav class="hero-jump-nav" aria-label="ทางลัดภายในหน้า">
+        <a href="#builder" class="jump-pill">
+          <span>ตัวช่วยสร้าง Prompt</span>
+          <span class="jump-pill-badge">6 ขั้นตอน</span>
+        </a>
+        <a href="#library" class="jump-pill">
+          <span>คลังคำสั่งพิเศษ</span>
+          <span class="jump-pill-badge" id="heroLibraryCount">21 แบบ</span>
+        </a>
+      </nav>
+    </section>
+
+    <!-- Resume Draft Banner -->
+    <div id="resumeBanner" class="resume-banner" role="region" aria-label="กู้คืนงานที่ทำค้างไว้">
+      <div class="resume-left">
+        <div class="resume-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+        </div>
+        <div class="resume-text">
+          <strong>พบงานที่ทำค้างไว้ในหน้านี้</strong>
+          <span id="resumeInfo"></span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button type="button" class="primary-btn btn-sm" onclick="restoreWork()">ทำต่อจากเดิม</button>
+        <button type="button" class="danger-btn btn-sm" onclick="discardWork()">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         SECTION 1: PROMPT BUILDER (STEPS 1-6)
+         ====================================================================== -->
+    <section id="builder" class="glass-panel builder active" aria-labelledby="builderHeading">
+      <div class="panel-head">
+        <div class="panel-title-group">
+          <div class="panel-icon-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </div>
+          <div>
+            <h2 id="builderHeading">ตัวช่วยสร้าง Prompt สำหรับภาพ</h2>
+            <p class="section-description">ตอบคำถามง่าย ๆ แล้วระบบจะช่วยจัด Prompt ให้คุณโดยอัตโนมัติ</p>
+          </div>
+        </div>
+        <div class="builder-progress-pill" id="builderSummaryPill">เลือกแล้ว 0 / 6 ข้อ</div>
+      </div>
+
+      <div class="steps-stack">
+        <!-- STEP 1 -->
+        <div class="step" data-step="1">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">1</span>
+              <span class="step-title">คุณอยากสร้างภาพอะไร?</span>
+            </div>
+            <span class="step-optional-tag">แนะนำให้กรอก</span>
+          </div>
+          <p class="step-help">ตัวอย่างเช่น บ้าน รถ อาหาร คน สัตว์ หรือสินค้า</p>
+          <textarea
+            id="subject"
+            class="large-textarea"
+            placeholder="พิมพ์สิ่งที่คุณอยากสร้าง เช่น รถยนต์ไฟฟ้าสีขาว"
+            oninput="refreshPrompt()"
+          ></textarea>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step" data-step="2">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">2</span>
+              <span class="step-title">อยากให้ภาพเป็นแบบไหน?</span>
+            </div>
+            <span class="step-selected-tag" id="tag-style"></span>
+          </div>
+          <p class="step-help">เลือกแบบที่คุณชอบ (กดซ้ำเพื่อยกเลิก)</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-group="style" data-value="ภาพถ่ายเหมือนจริง" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span><span class="choice-label">ภาพเหมือนจริง</span>
+            </button>
+            <button type="button" class="choice" data-group="style" data-value="ภาพ 3 มิติ" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="choice-label">ภาพ 3 มิติ</span>
+            </button>
+            <button type="button" class="choice" data-group="style" data-value="ภาพวาด" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/><path d="M14.5 17.5 4.5 15"/></svg></span><span class="choice-label">ภาพวาด</span>
+            </button>
+            <button type="button" class="choice" data-group="style" data-value="ภาพการ์ตูน" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span><span class="choice-label">ภาพการ์ตูน</span>
+            </button>
+            <button type="button" class="choice" data-group="style" data-value="ภาพโฆษณาสินค้า" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span><span class="choice-label">ภาพโฆษณา</span>
+            </button>
+            <button type="button" class="choice" data-group="style" data-value="ภาพทางการ" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg></span><span class="choice-label">ภาพทางการ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step" data-step="3">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">3</span>
+              <span class="step-title">อยากมองภาพแบบไหน?</span>
+            </div>
+            <span class="step-selected-tag" id="tag-view"></span>
+          </div>
+          <p class="step-help">เลือกมุมมองของภาพ (กดซ้ำเพื่อยกเลิก)</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-group="view" data-value="มองด้านหน้า" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span><span class="choice-label">ด้านหน้า</span>
+            </button>
+            <button type="button" class="choice" data-group="view" data-value="มองจากด้านบน" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span><span class="choice-label">มองจากด้านบน</span>
+            </button>
+            <button type="button" class="choice" data-group="view" data-value="มุมมองรอบด้าน" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span><span class="choice-label">รอบด้าน</span>
+            </button>
+            <button type="button" class="choice" data-group="view" data-value="ภาพระยะใกล้ เห็นรายละเอียดชัดเจน" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg></span><span class="choice-label">เห็นรายละเอียด</span>
+            </button>
+            <button type="button" class="choice" data-group="view" data-value="เห็นโครงสร้างภายใน" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"/></svg></span><span class="choice-label">เห็นด้านใน</span>
+            </button>
+            <button type="button" class="choice" data-group="view" data-value="แยกชิ้นส่วนออกจากกัน" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/></svg></span><span class="choice-label">แยกชิ้นส่วน</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step" data-step="4">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">4</span>
+              <span class="step-title">อยากให้แสงเป็นแบบไหน?</span>
+            </div>
+            <span class="step-selected-tag" id="tag-light"></span>
+          </div>
+          <p class="step-help">ถ้าไม่แน่ใจ สามารถข้ามได้</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-group="light" data-value="แสงธรรมชาติ" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span><span class="choice-label">แสงธรรมชาติ</span>
+            </button>
+            <button type="button" class="choice" data-group="light" data-value="แสงสตูดิโอ" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><span class="choice-label">แสงสตูดิโอ</span>
+            </button>
+            <button type="button" class="choice" data-group="light" data-value="แสงนุ่ม ดูอบอุ่น" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></span><span class="choice-label">แสงนุ่ม</span>
+            </button>
+            <button type="button" class="choice" data-group="light" data-value="แสงแบบภาพยนตร์" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span><span class="choice-label">แสงภาพยนตร์</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step" data-step="5">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">5</span>
+              <span class="step-title">อยากให้พื้นหลังเป็นแบบไหน?</span>
+            </div>
+            <span class="step-selected-tag" id="tag-background"></span>
+          </div>
+          <p class="step-help">เลือกตามลักษณะภาพที่ต้องการ</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-group="background" data-value="พื้นหลังสีขาวสะอาด" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="3"/></svg></span><span class="choice-label">สีขาว</span>
+            </button>
+            <button type="button" class="choice" data-group="background" data-value="พื้นหลังเรียบง่าย" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="3"/><rect width="8" height="8" x="8" y="8" rx="1.5"/></svg></span><span class="choice-label">เรียบง่าย</span>
+            </button>
+            <button type="button" class="choice" data-group="background" data-value="อยู่ในสถานที่จริงตามบริบท" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="choice-label">สถานที่จริง</span>
+            </button>
+            <button type="button" class="choice" data-group="background" data-value="พื้นหลังแบบโปร่งใส" aria-pressed="false" onclick="selectChoice(this)">
+              <span class="choice-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M21 19a2 2 0 0 1-2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h1"/><path d="M14 3h1"/><path d="M14 21h1"/><path d="M3 9v1"/><path d="M21 9v1"/><path d="M3 14v1"/><path d="M21 14v1"/></svg></span><span class="choice-label">โปร่งใส</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 6 : SPECIAL COMMAND -->
+        <div class="step" id="step6" data-step="6">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">6</span>
+              <span class="step-title">อยากใช้คำสั่งพิเศษไหม?</span>
+            </div>
+            <span class="step-selected-tag" id="tag-command"></span>
+          </div>
+          <p class="step-help">ส่วนนี้ไม่จำเป็นสำหรับมือใหม่ หรือดูภาพตัวอย่างก่อนได้ในคลังคำสั่งพิเศษด้านล่าง</p>
+          <div id="commandChoices" class="choice-grid compact-grid"></div>
+          <div class="step6-footer-row">
+            <a href="#library" class="step6-hint-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span>ดูภาพตัวอย่างคำสั่งพิเศษทั้งหมดด้านล่าง</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERATE BUTTONS -->
+      <div class="button-row gen-row">
+        <button type="button" class="primary-btn" onclick="generatePrompt()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <span>สร้าง Prompt ให้ฉัน</span>
+        </button>
+        <button type="button" class="secondary-btn" onclick="randomExample()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" x2="21" y1="20" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" x2="21" y1="15" y2="21"/><line x1="4" x2="9" y1="4" y2="9"/></svg>
+          <span>ลองตัวอย่าง</span>
+        </button>
+        <button type="button" class="danger-btn" onclick="clearBuilder()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+
+      <!-- RESULT PROMPT SHEET -->
+      <div id="result" class="result" style="display:none;" aria-live="polite">
+        <div class="result-head">
+          <div class="result-head-title">
+            <span class="result-dot" aria-hidden="true"></span>
+            <h3>Prompt ของคุณพร้อมแล้ว</h3>
+          </div>
+          <span class="result-live-badge">อัปเดตอัตโนมัติ</span>
+        </div>
+        <div class="result-body">
+          <p class="result-sub">นำข้อความนี้ไปใช้กับ AI สร้างภาพที่คุณต้องการได้เลย (เปลี่ยนตัวเลือกด้านบนได้ตลอด Prompt จะอัปเดตให้เอง)</p>
+          <div id="promptOutput" class="prompt-box"></div>
+          <div class="button-row">
+            <button type="button" class="primary-btn" onclick="copyPrompt()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>คัดลอก Prompt</span>
+            </button>
+            <button type="button" class="secondary-btn" id="speakBtn" onclick="speakPrompt()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+              <span id="speakBtnText">อ่านให้ฟัง</span>
+            </button>
+          </div>
+          <p id="copyMessage" class="copy-message"></p>
+
+          <div class="open-app-row">
+            <p>ขั้นต่อไป: กดเปิดแอปที่ต้องการ (ระบบจะคัดลอก Prompt ให้อัตโนมัติ แล้วไปวางในช่องแชทได้เลย) — บนมือถือจะเปิดแอป ChatGPT / Gemini โดยตรงถ้าติดตั้งไว้</p>
+            <div class="button-row">
+              <a class="app-btn gpt" href="https://chatgpt.com" target="_blank" rel="noopener" onclick="return copyForApp('promptOutput', 'copyMessage')">
+                <span class="app-logo">G</span>
+                <span>เปิด ChatGPT</span>
+              </a>
+              <a class="app-btn gemini" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="return copyForApp('promptOutput', 'copyMessage')">
+                <span class="app-logo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span>
+                <span>เปิด Gemini</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: SPECIAL COMMAND LIBRARY (WITH PREVIEW IMAGES)
+         ====================================================================== -->
+    <section id="library" class="glass-panel library" aria-labelledby="libraryHeading">
+      <div class="panel-head">
+        <div class="panel-title-group">
+          <div class="panel-icon-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+          </div>
+          <div>
+            <h2 id="libraryHeading" class="section-title">คลังคำสั่งพิเศษ (สำหรับสร้างภาพ)</h2>
+            <p class="section-description">ไม่ต้องจำ เพียงดูภาพตัวอย่างว่าต้องการภาพแบบไหน แล้วกดดูรายละเอียดหรือกดใช้งานได้ทันที</p>
+          </div>
+        </div>
+        <div class="builder-progress-pill" id="libraryCountBadge">แสดง 21 รายการ</div>
+      </div>
+
+      <div class="library-controls">
+        <div class="search-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input
+            id="searchInput"
+            class="large-input"
+            type="text"
+            placeholder="ค้นหา เช่น แยกชิ้นส่วน, ด้านใน, 360 องศา, พิมพ์เขียว..."
+            oninput="renderCommands()"
+            aria-label="ค้นหาคำสั่งพิเศษ"
+          />
+          <button type="button" id="clearSearchBtn" class="search-clear-btn" onclick="clearSearch()" aria-label="ล้างคำค้นหา">×</button>
+        </div>
+
+        <div class="category-row" id="categoryRow" role="tablist" aria-label="กรองตามหมวดหมู่คำสั่งพิเศษ">
+          <button type="button" class="category-btn active" data-cat="ทั้งหมด" onclick="filterCategory('ทั้งหมด', this)">
+            <span>ทั้งหมด</span><span class="category-count" data-count-for="ทั้งหมด">21</span>
+          </button>
+          <button type="button" class="category-btn" data-cat="โครงสร้าง" onclick="filterCategory('โครงสร้าง', this)">
+            <span>โครงสร้าง</span><span class="category-count" data-count-for="โครงสร้าง">5</span>
+          </button>
+          <button type="button" class="category-btn" data-cat="มุมมอง" onclick="filterCategory('มุมมอง', this)">
+            <span>มุมมอง</span><span class="category-count" data-count-for="มุมมอง">5</span>
+          </button>
+          <button type="button" class="category-btn" data-cat="เทคนิค" onclick="filterCategory('เทคนิค', this)">
+            <span>เทคนิค</span><span class="category-count" data-count-for="เทคนิค">7</span>
+          </button>
+          <button type="button" class="category-btn" data-cat="สไตล์" onclick="filterCategory('สไตล์', this)">
+            <span>สไตล์</span><span class="category-count" data-count-for="สไตล์">4</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="commandGrid" class="command-grid"></div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: RELATED TOOLS
+         ====================================================================== -->
+    <aside class="related" aria-label="เครื่องมือที่เกี่ยวข้อง">
+      <h3 class="related-title">ไปต่อที่เกี่ยวข้อง</h3>
+      <div class="related-grid">
+        <a class="rel-card" href="page-poster.html">
+          <div class="ic cat-create" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+          </div>
+          <div>
+            <b>สไตล์โปสเตอร์โฆษณาสินค้า</b>
+            <span>เลือกสไตล์จากภาพตัวอย่าง 10 แบบ รับ Prompt สำเร็จรูปสำหรับรูปสินค้าของคุณ</span>
+          </div>
+        </a>
+        <a class="rel-card" href="page-greeting.html">
+          <div class="ic cat-create" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div>
+            <b>ภาพอวยพร</b>
+            <span>เลือกสไตล์ เปลี่ยนวัน คำอวยพร ชื่อ แล้วรับ Prompt สำเร็จรูป ส่งใน LINE</span>
+          </div>
+        </a>
+        <a class="rel-card" href="page-flow.html">
+          <div class="ic cat-video" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>
+          </div>
+          <div>
+            <b>ภาพนิ่ง → วิดีโอ 3 ช็อต</b>
+            <span>กำหนดการเคลื่อนกล้องและการเคลื่อนไหวทีละช็อต สำหรับ Google Flow</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ========================================================================
+       STANDARD FOOTER (AiBA & PIM — MATCHING index.html)
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logos">
+            <span class="logo-slot">
+              <img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" />
+            </span>
+            <span class="logo-slot">
+              <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+            </span>
+          </div>
+          <h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>
+          <p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>
+        </div>
+
+        <div>
+          <h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>
+          <p class="footer-text">
+            85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />
+            โทร 0 2855 0000
+          </p>
+          <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">
+            <span>www.pim.ac.th</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+
+        <div>
+          <h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>
+          <p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>
+          <div class="footer-socials" aria-label="โซเชียลมีเดีย">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+            <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      © 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       COMMAND DETAIL MODAL
+       ======================================================================== -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="ปิดหน้าต่าง">×</button>
+
+      <div id="modalPreviewWrap" class="modal-preview-wrap" onclick="openModalImageLightbox()">
+        <img id="modalImg" src="" alt="" />
+        <div class="cmd-thumb-fallback" aria-hidden="true">
+          <span class="cmd-fallback-circle" id="modalFallbackIcon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </span>
+          <span class="cmd-fallback-label">ไม่มีภาพตัวอย่าง</span>
+        </div>
+        <span class="modal-zoom-hint">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+          <span>กดเพื่อขยายรูป</span>
+        </span>
+      </div>
+
+      <div class="modal-meta">
+        <span id="modalCategory" class="modal-cat-badge"></span>
+        <span id="modalEnglish" class="modal-en-badge"></span>
+      </div>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription" class="modal-desc"></p>
+      <hr />
+      <h3>ใช้เมื่อไหร่?</h3>
+      <p id="modalUse" class="modal-use"></p>
+      <h3>ตัวอย่าง Prompt</h3>
+      <div id="modalExample" class="modal-example-box"></div>
+      <div class="button-row">
+        <button type="button" class="primary-btn" onclick="useCommand()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>ใช้คำสั่งนี้</span>
+        </button>
+        <button type="button" class="secondary-btn" onclick="copyModalExample()">คัดลอกตัวอย่าง</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FULLSCREEN IMAGE LIGHTBOX
+       ======================================================================== -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="ภาพตัวอย่างขนาดใหญ่" onclick="closeLightbox()">
+    <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="ปิดภาพขยาย">×</button>
+    <img id="lightboxImg" alt="ภาพขยาย" onclick="event.stopPropagation()" />
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       JAVASCRIPT — THEME, FONT SIZE, BUILDER, LIBRARY & DRAFT
+       ======================================================================== -->
+  <script>
+    /* ========================================================================
+       1. THEME & FONT SIZE (SYNCED WITH AiBA CONNECT)
+       ======================================================================== */
+    const FONT_SIZES = [16, 18, 20];
+    let currentFontIndex = 0;
+
+    function applyTheme(theme) {
+      const t = theme === 'dark' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('aiba:theme', t); } catch (e) {}
+      const themeText = document.getElementById('themeText');
+      const themeIcon = document.getElementById('themeIcon');
+      if (themeText && themeIcon) {
+        if (t === 'dark') {
+          themeText.textContent = 'สว่าง';
+          themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+        } else {
+          themeText.textContent = 'มืด';
+          themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    function applyFontSize(idx) {
+      const clamped = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+      currentFontIndex = clamped;
+      document.documentElement.style.fontSize = FONT_SIZES[clamped] + 'px';
+      try { localStorage.setItem('aiba:fontIdx', String(clamped)); } catch (e) {}
+    }
+
+    function changeFontSize(delta) {
+      const next = currentFontIndex + (delta > 0 ? 1 : -1);
+      if (next !== currentFontIndex && next >= 0 && next < FONT_SIZES.length) {
+        applyFontSize(next);
+        showToast(delta > 0 ? 'เพิ่มขนาดตัวอักษรแล้ว' : 'ลดขนาดตัวอักษรแล้ว');
+      }
+    }
+
+    /* ========================================================================
+       2. LINE SVG ICON REGISTRY & SPECIAL COMMANDS DATA
+       ======================================================================== */
+    const LINE_ICONS = {
+      'exploded': '<path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/>',
+      'scissors': '<circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/>',
+      'layers-cut': '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>',
+      'scan-eye': '<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"/>',
+      'structure': '<path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-8h6v8"/><path d="M9 9h6"/>',
+      'top-down': '<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/>',
+      'rotate-360': '<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>',
+      'zoom-in': '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/>',
+      'microscope': '<path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/>',
+      'isometric': '<path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="m3 7 9 5 9-5"/><path d="M12 12v10"/><path d="m7.5 4.5 9 5"/>',
+      'blueprint': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/><path d="M12 13v4"/>',
+      'ruler': '<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/>',
+      'cog': '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+      'diagram': '<rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
+      'bar-chart': '<path d="M3 3v18h18"/><path d="M7 16v-5"/><path d="M12 16V8"/><path d="M17 16v-8"/>',
+      'storyboard': '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 12h18"/><path d="M12 3v18"/>',
+      'character': '<rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7 21v-2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>',
+      'camera': '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+      'box': '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+      'clapperboard': '<path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
+      'sparkles': '<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>'
+    };
+
+    function renderIcon(name, size) {
+      const s = size || 17;
+      const body = LINE_ICONS[name] || LINE_ICONS.sparkles;
+      return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+    }
+
+    const IMG_DIR = 'AiBaPicture/สร้างภาพด้วย AI/';
+
+    const SPECIAL_COMMANDS = [
+      // หมวด: โครงสร้าง (5)
+      {
+        id: 'exploded-view',
+        title: 'แยกชิ้นส่วน',
+        en: 'Exploded View',
+        category: 'โครงสร้าง',
+        icon: 'exploded',
+        image: IMG_DIR + 'แยกชิ้นส่วน.JPG',
+        description: 'แยกส่วนประกอบทั้งหมดของวัตถุออกให้ลอยเรียงกัน เห็นทุกชิ้นส่วนอย่างชัดเจนและเป็นระเบียบ',
+        use: 'เหมาะเมื่อต้องการอธิบายส่วนประกอบของสินค้า เครื่องใช้ไฟฟ้า รถยนต์ อุปกรณ์ หรือวัตถุดิบในอาหารทีละชิ้น',
+        promptPhrase: 'แยกชิ้นส่วนออกจากกันแบบ Exploded view เห็นส่วนประกอบทุกชิ้นลอยเรียงอย่างเป็นระเบียบ',
+        example: 'สร้างภาพแยกชิ้นส่วน (Exploded view) ของรถยนต์ไฟฟ้าสีขาว เห็นแบตเตอรี่ มอเตอร์ ล้อ และชิ้นส่วนภายในเรียงเป็นระเบียบ แสงสตูดิโอ พื้นหลังสีขาวสะอาด'
+      },
+      {
+        id: 'cutaway',
+        title: 'ภาพตัด',
+        en: 'Cutaway',
+        category: 'โครงสร้าง',
+        icon: 'scissors',
+        image: IMG_DIR + 'ภาพตัด.JPG',
+        description: 'เปิดผ่าเปลือกนอกบางส่วนออก เพื่อเผยให้เห็นระบบและกลไกภายในไปพร้อมกับรูปลักษณ์ภายนอก',
+        use: 'เหมาะเมื่ออยากโชว์ทั้งดีไซน์ภายนอกที่สวยงามและกลไกการทำงานด้านในพร้อมกันในภาพเดียว',
+        promptPhrase: 'ภาพตัดเปิดเปลือกนอกแบบ Cutaway เผยให้เห็นโครงสร้างและกลไกด้านในอย่างละเอียด',
+        example: 'สร้างภาพตัด (Cutaway) ของเครื่องชงกาแฟเอสเปรสโซ่ เห็นทั้งตัวเครื่องด้านนอกและระบบท่อน้ำกับหม้อต้มด้านในชัดเจน แสงสตูดิโอ พื้นหลังเรียบง่าย'
+      },
+      {
+        id: 'cross-section',
+        title: 'ภาพหน้าตัด',
+        en: 'Cross-Section',
+        category: 'โครงสร้าง',
+        icon: 'layers-cut',
+        image: IMG_DIR + 'ภาพหน้าตัด.JPG',
+        description: 'ผ่าครึ่งในแนวระนาบตรงกลาง เพื่อแสดงชั้นต่าง ๆ ภายในวัตถุอย่างแม่นยำ',
+        use: 'เหมาะกับอาหารที่มีหลายชั้น ชั้นดิน โครงสร้างอาคาร หรือผลิตภัณฑ์ที่มีหลายเลเยอร์',
+        promptPhrase: 'ภาพหน้าตัดแนวตรง (Cross-section) แสดงชั้นต่าง ๆ ภายในคมชัดทุกเลเยอร์',
+        example: 'สร้างภาพหน้าตัด (Cross-section) ของเค้กช็อกโกแลตลาวา เห็นชั้นเนื้อเค้ก ครีม และไส้ช็อกโกแลตไหลเยิ้มชัดเจน แสงนุ่ม ดูอบอุ่น พื้นหลังเรียบง่าย'
+      },
+      {
+        id: 'translucent-inside',
+        title: 'มองเห็นด้านใน',
+        en: 'Translucent / X-Ray',
+        category: 'โครงสร้าง',
+        icon: 'scan-eye',
+        image: IMG_DIR + 'มองเห็นด้านใน.JPG',
+        description: 'ทำให้เปลือกนอกโปร่งใสหรือกึ่งโปร่งแสง เพื่อมองทะลุเข้าไปเห็นโครงสร้างภายใน',
+        use: 'เหมาะเมื่ออยากเห็นระบบด้านในโดยยังคงรูปทรงภายนอกครบถ้วน ไม่ต้องผ่าตัดเปลือกออก',
+        promptPhrase: 'มองทะลุเห็นด้านในแบบเปลือกโปร่งใส (Translucent view) เผยรายละเอียดภายในชัดเจน',
+        example: 'สร้างภาพมองเห็นด้านใน (Translucent view) ของนาฬิกาข้อมือกลไก เปลือกนอกโปร่งใสเห็นเฟืองและชิ้นส่วนภายในละเอียด แสงสตูดิโอ พื้นหลังสีขาวสะอาด'
+      },
+      {
+        id: 'structure-view',
+        title: 'ดูโครงสร้าง',
+        en: 'Structural Anatomy',
+        category: 'โครงสร้าง',
+        icon: 'structure',
+        image: IMG_DIR + 'ดูโครงสร้าง.JPG',
+        description: 'แสดงโครงร่างหลัก แกนรับน้ำหนัก และจุดเชื่อมต่อสำคัญของวัตถุหรืออาคาร',
+        use: 'เหมาะสำหรับงานอธิบายโครงสร้างบ้าน สิ่งปลูกสร้าง เครื่องจักร หรือการเรียนรู้ทางวิทยาศาสตร์',
+        promptPhrase: 'ภาพแสดงโครงสร้างหลัก (Structural anatomy) เห็นโครงร่างและจุดเชื่อมสำคัญชัดเจน',
+        example: 'สร้างภาพดูโครงสร้าง (Structural view) ของบ้านสองชั้นสมัยใหม่ เห็นคาน เสา หลังคา และโครงสร้างรับน้ำหนักชัดเจน แสงธรรมชาติ พื้นหลังสีขาวสะอาด'
+      },
+
+      // หมวด: มุมมอง (5)
+      {
+        id: 'top-down',
+        title: 'มองจากด้านบน',
+        en: 'Top-Down / Flat Lay',
+        category: 'มุมมอง',
+        icon: 'top-down',
+        image: IMG_DIR + 'มองจากด้านบน.JPG',
+        description: 'ถ่ายจากมุมสูงตรงดิ่งลงมา 90 องศา จัดวางองค์ประกอบทุกอย่างให้สวยงามเป็นระเบียบ',
+        use: 'เหมาะกับภาพอาหาร โต๊ะทำงาน ชุดของขวัญ หรือคอลเลกชันสินค้าที่ต้องการโชว์ครบทุกชิ้น',
+        promptPhrase: 'มุมมองจากด้านบนตรงลงมา 90 องศา (Top-down flat lay) จัดวางองค์ประกอบสวยงามเป็นระเบียบ',
+        example: 'สร้างภาพมองจากด้านบน (Top-down flat lay) ของชุดอาหารเช้าสไตล์ไทย กาแฟโบราณ ปาท่องโก๋ และสังขยา จัดวางสวยงามบนโต๊ะไม้ แสงธรรมชาติ'
+      },
+      {
+        id: 'view-360',
+        title: 'มุมมองรอบ 360 องศา',
+        en: '360° Turnaround',
+        category: 'มุมมอง',
+        icon: 'rotate-360',
+        image: IMG_DIR + 'มุมมองรอบ 360 องศา.JPG',
+        description: 'แสดงวัตถุชิ้นเดียวกันในหลายมุมรอบด้าน ทั้งด้านหน้า ด้านข้าง ด้านหลัง และมุมเฉียง',
+        use: 'เหมาะสำหรับออกแบบสินค้า โมเดล 3 มิติ หรือการนำเสนอผลิตภัณฑ์ให้เห็นครบทุกมุมมอง',
+        promptPhrase: 'มุมมองรอบ 360 องศา (360-degree turnaround) แสดงด้านหน้า ด้านข้าง และด้านหลังครบถ้วนในภาพเดียว',
+        example: 'สร้างภาพมุมมองรอบ 360 องศา (Turnaround view) ของกระเป๋าเป้เดินทางดีไซน์มินิมอล แสดงด้านหน้า ด้านข้าง และด้านหลังเรียงกัน แสงสตูดิโอ พื้นหลังสีขาวสะอาด'
+      },
+      {
+        id: 'close-up',
+        title: 'ภาพระยะใกล้',
+        en: 'Close-Up Shot',
+        category: 'มุมมอง',
+        icon: 'zoom-in',
+        image: IMG_DIR + 'ภาพระยะใกล้.JPG',
+        description: 'ซูมเข้าใกล้ตัวแบบเพื่อเน้นพื้นผิว รายละเอียดเด่น และอารมณ์ของภาพ พร้อมละลายฉากหลัง',
+        use: 'เหมาะเมื่อต้องการเน้นความน่ากินของอาหาร ลวดลายสินค้า หรือสีหน้าแววตาของตัวแบบ',
+        promptPhrase: 'ภาพระยะใกล้ (Close-up shot) โฟกัสตัวแบบคมชัดและละลายฉากหลังอย่างเป็นธรรมชาติ',
+        example: 'สร้างภาพระยะใกล้ (Close-up) ของถ้วยกาแฟลาเต้อาร์ตที่มีไอน้ำลอยอ่อน ๆ โฟกัสฟองนมคมชัด ฉากหลังละลายนุ่ม แสงนุ่ม ดูอบอุ่น'
+      },
+      {
+        id: 'macro',
+        title: 'ภาพมาโคร',
+        en: 'Macro Photography',
+        category: 'มุมมอง',
+        icon: 'microscope',
+        image: IMG_DIR + 'ภาพมาโคร.JPG',
+        description: 'ถ่ายใกล้พิเศษระดับจุลภาค เผยพื้นผิวและรายละเอียดเล็กจิ๋วที่ตาเปล่ามองแทบไม่เห็น',
+        use: 'เหมาะกับหยดน้ำ เกสรดอกไม้ แมลง เครื่องประดับ ลายผ้า หรือวัตถุขนาดเล็กที่ต้องการความคมชัดสูง',
+        promptPhrase: 'ภาพมาโครระยะใกล้พิเศษ (Macro photography) เห็นพื้นผิวและรายละเอียดเล็กจิ๋วคมชัดระดับสูง',
+        example: 'สร้างภาพมาโคร (Macro photography) ของหยดน้ำค้างบนกลีบดอกบัวสีชมพู เห็นประกายแสงสะท้อนและเส้นใยกลีบดอกคมชัด แสงธรรมชาติ'
+      },
+      {
+        id: 'isometric-3d',
+        title: 'ภาพสามมิติแบบไอโซเมตริก',
+        en: 'Isometric 3D',
+        category: 'มุมมอง',
+        icon: 'isometric',
+        image: IMG_DIR + 'ภาพสามมิติแบบไอโซเมตริก.JPG',
+        description: 'มุมมองเฉียง 3 มิติแบบสมมาตรทุกแกน คล้ายแบบจำลองย่อส่วนที่น่ารักและดูเป็นระเบียบ',
+        use: 'เหมาะสำหรับออกแบบห้องจำลอง ร้านค้า แผนที่เมือง สื่อการสอน และภาพประกอบธุรกิจสมัยใหม่',
+        promptPhrase: 'ภาพสามมิติแบบไอโซเมตริก (Isometric 3D view) มุมเฉียงสมมาตรคล้ายแบบจำลองย่อส่วน',
+        example: 'สร้างภาพสามมิติแบบไอโซเมตริก (Isometric 3D) ของร้านกาแฟเล็ก ๆ อบอุ่น มีเคาน์เตอร์ โต๊ะนั่ง และต้นไม้ประดับ รายละเอียดคมชัด แสงนุ่ม พื้นหลังเรียบง่าย'
+      },
+
+      // หมวด: เทคนิค (7)
+      {
+        id: 'blueprint',
+        title: 'พิมพ์เขียว',
+        en: 'Blueprint',
+        category: 'เทคนิค',
+        icon: 'blueprint',
+        image: IMG_DIR + 'พิมพ์เขียว.JPG',
+        description: 'แบบแปลนลายเส้นสีขาวคมชัดบนพื้นหลังสีน้ำเงินเข้ม สไตล์สถาปัตยกรรมและวิศวกรรม',
+        use: 'เหมาะสำหรับทำภาพแนวออกแบบนวัตกรรม แบบบ้าน แผนผังเครื่องจักร หรือโปสเตอร์เชิงเทคโนโลยี',
+        promptPhrase: 'สไตล์พิมพ์เขียว (Blueprint) ลายเส้นสีขาวคมชัดบนพื้นหลังสีน้ำเงินเข้มพร้อมเส้นบอกระยะ',
+        example: 'สร้างภาพพิมพ์เขียว (Blueprint) ของโดรนส่งของอัตโนมัติ ลายเส้นสีขาวบนพื้นหลังสีน้ำเงินเข้ม แสดงมุมบนและมุมข้างพร้อมเส้นบอกสัดส่วน'
+      },
+      {
+        id: 'technical-drawing',
+        title: 'ภาพวาดทางเทคนิค',
+        en: 'Technical Drawing',
+        category: 'เทคนิค',
+        icon: 'ruler',
+        image: IMG_DIR + 'ภาพวาดทางเทคนิค.JPG',
+        description: 'ภาพวาดลายเส้นคมกริบแม่นยำ แสดงสัดส่วนและเส้นชี้ตำแหน่งคล้ายคู่มือมาตรฐาน',
+        use: 'เหมาะสำหรับทำคู่มือการใช้งาน เอกสารประกอบการสอน หรือแบบร่างผลิตภัณฑ์',
+        promptPhrase: 'ภาพวาดทางเทคนิค (Technical drawing) ลายเส้นสีดำคมชัดแม่นยำ แสดงสัดส่วนชัดเจน',
+        example: 'สร้างภาพวาดทางเทคนิค (Technical drawing) ของจักรยานเสือหมอบ ลายเส้นสีดำคมชัดบนพื้นหลังสีขาวสะอาด แสดงโครงเฟรมและชิ้นส่วนสำคัญ'
+      },
+      {
+        id: 'engineering-drawing',
+        title: 'ภาพแบบทางวิศวกรรม',
+        en: 'Engineering CAD',
+        category: 'เทคนิค',
+        icon: 'cog',
+        image: IMG_DIR + 'ภาพแบบทางวิศวกรรม.JPG',
+        description: 'แบบวิศวกรรมระดับมืออาชีพสไตล์ CAD พร้อมเส้นระบุขนาดและมุมมองฉายหลายด้าน',
+        use: 'เหมาะสำหรับนำเสนอโปรเจกต์วิศวกรรม เครื่องกล ชิ้นส่วนอุตสาหกรรม หรืองานออกแบบเชิงลึก',
+        promptPhrase: 'ภาพแบบทางวิศวกรรม (Engineering CAD schematic) แสดงมุมมองฉายและเส้นกำหนดขนาดอย่างแม่นยำ',
+        example: 'สร้างภาพแบบทางวิศวกรรม (Engineering drawing) ของมอเตอร์ไฟฟ้า มีเส้นกำหนดขนาดและสัญลักษณ์ทางเทคนิคคมชัด พื้นหลังสีขาวสะอาด'
+      },
+      {
+        id: 'diagram',
+        title: 'แผนภาพ',
+        en: 'Diagram',
+        category: 'เทคนิค',
+        icon: 'diagram',
+        image: IMG_DIR + 'แผนภาพ.png',
+        description: 'ภาพอธิบายความสัมพันธ์ ขั้นตอน หรือส่วนประกอบ พร้อมลูกศรเชื่อมโยงและป้ายกำกับอ่านง่าย',
+        use: 'เหมาะสำหรับสื่อการสอน สไลด์นำเสนอ สรุปกระบวนการทำงาน หรืออธิบายเรื่องซับซ้อนให้เข้าใจง่าย',
+        promptPhrase: 'ภาพแผนภาพอธิบาย (Labeled diagram) จัดวางชัดเจน มีลูกศรเชื่อมโยงและป้ายกำกับอ่านง่าย',
+        example: 'สร้างแผนภาพ (Diagram) แสดงวัฏจักรของน้ำในธรรมชาติ มีลูกศรชี้ลำดับขั้นตอนชัดเจน สีสันสบายตา อ่านง่าย พื้นหลังสีขาวสะอาด'
+      },
+      {
+        id: 'infographic',
+        title: 'อินโฟกราฟิก',
+        en: 'Infographic',
+        category: 'เทคนิค',
+        icon: 'bar-chart',
+        image: IMG_DIR + 'อินโฟกราฟิก.JPG',
+        description: 'จัดเรียงข้อมูล สถิติ หรือลำดับขั้นตอนเป็นภาพกราฟิกสวยงาม เข้าใจได้ทันทีในพริบตา',
+        use: 'เหมาะสำหรับทำโพสต์ให้ความรู้บนโซเชียล สรุปบทเรียน หรือสรุปขั้นตอนการทำงานเป็นข้อ ๆ',
+        promptPhrase: 'ภาพอินโฟกราฟิก (Infographic) จัดเลย์เอาต์เป็นสัดส่วน สวยงาม สื่อสารข้อมูลชัดเจนอ่านง่าย',
+        example: 'สร้างภาพอินโฟกราฟิก (Infographic) เรื่อง 5 วิธีดูแลสุขภาพผู้สูงอายุ แบ่งเป็น 5 หัวข้อพร้อมไอคอนน่ารัก โทนสีพาสเทลสดใส อ่านง่าย'
+      },
+      {
+        id: 'storyboard',
+        title: 'สตอรี่บอร์ด',
+        en: 'Storyboard',
+        category: 'เทคนิค',
+        icon: 'storyboard',
+        image: IMG_DIR + 'สตอรี่บอร์ด.png',
+        description: 'แบ่งภาพเป็นช่องลำดับเหตุการณ์ต่อเนื่อง (4-6 ช่อง) เพื่อวางแผนมุมกล้องและการเล่าเรื่อง',
+        use: 'เหมาะสำหรับวางแผนก่อนถ่ายวิดีโอ ทำโฆษณาสั้น นิทานภาพ หรือเล่าขั้นตอนการใช้งานเป็นฉาก ๆ',
+        promptPhrase: 'ภาพสตอรี่บอร์ด (Storyboard) แบ่งช่องลำดับเหตุการณ์ต่อเนื่อง 4-6 ช่อง เห็นการเล่าเรื่องชัดเจน',
+        example: 'สร้างภาพสตอรี่บอร์ด (Storyboard) 4 ช่อง เล่าเรื่องคุณตาปลูกต้นไม้ตั้งแต่หยอดเมล็ด รดน้ำ จนต้นไม้เติบโตออกดอก ลายเส้นสะอาด อ่านเรื่องราวได้ทันที'
+      },
+      {
+        id: 'character-sheet',
+        title: 'แผ่นตัวละคร',
+        en: 'Character Sheet',
+        category: 'เทคนิค',
+        icon: 'character',
+        image: IMG_DIR + 'แผ่นตัวละคร.png',
+        description: 'แสดงตัวละครเดิมในหลายมุม (หน้า ข้าง หลัง) พร้อมสีหน้าและท่าทางต่าง ๆ ในแผ่นเดียว',
+        use: 'เหมาะเมื่อต้องการออกแบบมาสคอต ตัวละครนิทาน หรือคุมหน้าตาตัวละครให้สม่ำเสมอทุกฉาก',
+        promptPhrase: 'แผ่นออกแบบตัวละคร (Character reference sheet) แสดงมุมหน้า ข้าง หลัง และสีหน้าหลากหลายในแผ่นเดียว',
+        example: 'สร้างแผ่นตัวละคร (Character sheet) ของน้องแมวส้มใส่แว่นตาสุดน่ารัก แสดงมุมด้านหน้า ด้านข้าง ด้านหลัง และสีหน้ายิ้ม-ตกใจ พื้นหลังสีขาวสะอาด'
+      },
+
+      // หมวด: สไตล์ (4)
+      {
+        id: 'photorealistic',
+        title: 'เหมือนภาพถ่ายจริง',
+        en: 'Photorealistic',
+        category: 'สไตล์',
+        icon: 'camera',
+        image: IMG_DIR + 'เหมือนภาพถ่ายจริง.JPG',
+        description: 'สมจริงระดับกล้องถ่ายภาพมืออาชีพ ทั้งแสงเงา พื้นผิว และความลึกตื้นเหมือนถ่ายจากสถานที่จริง',
+        use: 'เหมาะกับภาพอาหาร ภาพสินค้า ภาพบุคคล หรือภาพทิวทัศน์ที่ต้องการความสมจริงสูงสุด',
+        promptPhrase: 'สมจริงเหมือนภาพถ่ายจริง (Photorealistic) แสงเงาและพื้นผิวเป็นธรรมชาติ คมชัดระดับกล้องโปร',
+        example: 'สร้างภาพเหมือนภาพถ่ายจริง (Photorealistic) ของชามต้มยำกุ้งแม่น้ำร้อน ๆ บนโต๊ะอาหารไม้ มีแสงแดดอ่อนส่องจากด้านข้าง คมชัดน่ากิน'
+      },
+      {
+        id: 'render-3d',
+        title: 'ภาพ 3 มิติ',
+        en: '3D Render',
+        category: 'สไตล์',
+        icon: 'box',
+        image: IMG_DIR + 'ภาพ 3 มิติ.JPG',
+        description: 'ภาพเรนเดอร์ 3 มิติที่มีความลึก พื้นผิวเนียนตา และแสงเงานุ่มละมุนแบบแอนิเมชันสมัยใหม่',
+        use: 'เหมาะสำหรับสร้างไอคอน มาสคอต โมเดลสินค้า หรือภาพประกอบสไลด์และเว็บไซต์ที่ดูทันสมัย',
+        promptPhrase: 'ภาพเรนเดอร์ 3 มิติ (3D render) พื้นผิวเนียนสวย มีมิติแสงเงาและวัสดุสมจริง',
+        example: 'สร้างภาพ 3 มิติ (3D render) ของหุ่นยนต์ผู้ช่วยตัวเล็กสีขาว-ม่วง ยิ้มอย่างเป็นมิตร พื้นผิวเงาเนียน แสงสตูดิโอนุ่ม พื้นหลังเรียบง่าย'
+      },
+      {
+        id: 'cinematic',
+        title: 'ภาพแบบภาพยนตร์',
+        en: 'Cinematic',
+        category: 'สไตล์',
+        icon: 'clapperboard',
+        image: IMG_DIR + 'ภาพแบบภาพยนตร์.JPG',
+        description: 'อารมณ์ภาพเหมือนฉากในภาพยนตร์ใหญ่ จัดแสงเงามีมิติ โทนสีดึงดูด และมุมกล้องทรงพลัง',
+        use: 'เหมาะสำหรับสร้างภาพเล่าเรื่อง ปกคลิปวิดีโอ ฉากแฟนตาซี หรือภาพที่ต้องการอารมณ์เข้มข้นน่าติดตาม',
+        promptPhrase: 'สไตล์ภาพแบบภาพยนตร์ (Cinematic) จัดแสงเงามีมิติ โทนสีภาพยนตร์ มุมกล้องทรงพลัง',
+        example: 'สร้างภาพแบบภาพยนตร์ (Cinematic) ของนักเดินทางยืนมองเมืองอนาคตยามค่ำคืนใต้แสงไฟนีออน ท้องฟ้ามีเมฆลอยต่ำ แสงเงาสมจริงระดับหนังใหญ่'
+      },
+      {
+        id: 'minimalist',
+        title: 'เรียบง่าย',
+        en: 'Minimalist',
+        category: 'สไตล์',
+        icon: 'sparkles',
+        image: IMG_DIR + 'เรียบง่าย.JPG',
+        description: 'สไตล์น้อยแต่มาก เน้นพื้นที่ว่างสะอาดตา เส้นสายเรียบง่าย และโทนสีกลมกลืนดูสบายตา',
+        use: 'เหมาะสำหรับภาพสินค้าพรีเมียม ภาพพื้นหลัง สไลด์นำเสนอ หรือโปสเตอร์ที่ต้องการความโปร่งสบาย',
+        promptPhrase: 'สไตล์เรียบง่ายมินิมอล (Minimalist) องค์ประกอบน้อยแต่ลงตัว พื้นที่ว่างโปร่งสะอาดตา',
+        example: 'สร้างภาพสไตล์เรียบง่าย (Minimalist) ของแจกันเซรามิกสีขาววางกิ่งไม้แห้งหนึ่งกิ่งบนโต๊ะหินอ่อน แสงแดดอ่อนทอดเงาเรียบหรู พื้นหลังเรียบง่าย'
+      }
+    ];
+
+    const RANDOM_EXAMPLES = [
+      {
+        subject: 'รถยนต์ไฟฟ้าสีขาวดีไซน์ล้ำสมัย',
+        style: 'ภาพ 3 มิติ',
+        view: 'แยกชิ้นส่วนออกจากกัน',
+        light: 'แสงสตูดิโอ',
+        background: 'พื้นหลังสีขาวสะอาด',
+        commandId: 'exploded-view'
+      },
+      {
+        subject: 'ร้านกาแฟเล็ก ๆ อบอุ่นกลางสวนดอกไม้ มีโต๊ะไม้และเคาน์เตอร์ชงกาแฟ',
+        style: 'ภาพ 3 มิติ',
+        view: 'มองจากด้านบน',
+        light: 'แสงนุ่ม ดูอบอุ่น',
+        background: 'พื้นหลังเรียบง่าย',
+        commandId: 'isometric-3d'
+      },
+      {
+        subject: 'ชามต้มยำกุ้งแม่น้ำตัวใหญ่สีสันจัดจ้าน มีสมุนไพรสดและไอร้อนลอยขึ้น',
+        style: 'ภาพถ่ายเหมือนจริง',
+        view: 'ภาพระยะใกล้ เห็นรายละเอียดชัดเจน',
+        light: 'แสงธรรมชาติ',
+        background: 'อยู่ในสถานที่จริงตามบริบท',
+        commandId: 'photorealistic'
+      },
+      {
+        subject: 'เครื่องชงกาแฟเอสเปรสโซ่สเตนเลสระดับมืออาชีพ',
+        style: 'ภาพโฆษณาสินค้า',
+        view: 'เห็นโครงสร้างภายใน',
+        light: 'แสงสตูดิโอ',
+        background: 'พื้นหลังเรียบง่าย',
+        commandId: 'cutaway'
+      },
+      {
+        subject: 'น้องแมวส้มใส่แว่นตากลมและผ้าพันคอสีฟ้า สไตล์มาสคอตใจดี',
+        style: 'ภาพการ์ตูน',
+        view: 'มุมมองรอบด้าน',
+        light: 'แสงนุ่ม ดูอบอุ่น',
+        background: 'พื้นหลังสีขาวสะอาด',
+        commandId: 'character-sheet'
+      },
+      {
+        subject: 'บ้านพักตากอากาศไม้และกระจกสองชั้นริมภูเขา',
+        style: 'ภาพทางการ',
+        view: 'มองด้านหน้า',
+        light: 'แสงแบบภาพยนตร์',
+        background: 'อยู่ในสถานที่จริงตามบริบท',
+        commandId: 'blueprint'
+      }
+    ];
+
+    /* ========================================================================
+       3. STATE & STORAGE KEYS
+       ======================================================================== */
+    const DRAFT_KEY = 'aiba:image:draft';
+    const state = {
+      style: '',
+      view: '',
+      light: '',
+      background: '',
+      commandId: '',
+      activeCategory: 'ทั้งหมด',
+      modalCommandId: null,
+      resultVisible: false
+    };
+
+    /* ========================================================================
+       4. HELPER UTILITIES
+       ======================================================================== */
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getCommandById(id) {
+      return SPECIAL_COMMANDS.find(c => c.id === id) || null;
+    }
+
+    function handleThumbError(imgEl) {
+      const wrap = imgEl.closest('.cmd-thumb, .modal-preview-wrap');
+      if (wrap) {
+        wrap.classList.add('is-fallback');
+      }
+    }
+
+    /* ========================================================================
+       5. BUILDER LOGIC (STEPS 1-6)
+       ======================================================================== */
+    function renderStep6Choices() {
+      const container = document.getElementById('commandChoices');
+      if (!container) return;
+      container.innerHTML = SPECIAL_COMMANDS.map(cmd => `
+        <button
+          type="button"
+          class="choice${state.commandId === cmd.id ? ' selected' : ''}"
+          data-group="command"
+          data-id="${cmd.id}"
+          data-cat="${escapeHtml(cmd.category)}"
+          data-value="${escapeHtml(cmd.title)}"
+          aria-pressed="${state.commandId === cmd.id ? 'true' : 'false'}"
+          onclick="selectChoice(this)"
+        >
+          <span class="choice-icon">${renderIcon(cmd.icon, 17)}</span>
+          <span class="choice-label">${escapeHtml(cmd.title)}</span>
+        </button>
+      `).join('');
+    }
+
+    function updateStepIndicators() {
+      const subjectVal = (document.getElementById('subject').value || '').trim();
+      const selectedCmd = getCommandById(state.commandId);
+
+      const tags = {
+        style: state.style,
+        view: state.view,
+        light: state.light,
+        background: state.background,
+        command: selectedCmd ? selectedCmd.title : ''
+      };
+
+      Object.keys(tags).forEach(key => {
+        const tagEl = document.getElementById('tag-' + key);
+        if (!tagEl) return;
+        if (tags[key]) {
+          tagEl.textContent = '✓ ' + tags[key];
+          tagEl.classList.add('show');
+          if (key === 'command' && selectedCmd) {
+            tagEl.setAttribute('data-cat', selectedCmd.category);
+          }
+        } else {
+          tagEl.textContent = '';
+          tagEl.classList.remove('show');
+          if (key === 'command') {
+            tagEl.removeAttribute('data-cat');
+          }
+        }
+      });
+
+      const filledCount =
+        (subjectVal ? 1 : 0) +
+        (state.style ? 1 : 0) +
+        (state.view ? 1 : 0) +
+        (state.light ? 1 : 0) +
+        (state.background ? 1 : 0) +
+        (state.commandId ? 1 : 0);
+
+      const pill = document.getElementById('builderSummaryPill');
+      if (pill) {
+        pill.textContent = `เลือกแล้ว ${filledCount} / 6 ข้อ`;
+      }
+    }
+
+    function syncChoiceButtons() {
+      ['style', 'view', 'light', 'background'].forEach(group => {
+        document.querySelectorAll(`.choice[data-group="${group}"]`).forEach(btn => {
+          const isSelected = btn.dataset.value === state[group];
+          btn.classList.toggle('selected', isSelected);
+          btn.setAttribute('aria-pressed', String(isSelected));
+        });
+      });
+
+      document.querySelectorAll('.choice[data-group="command"]').forEach(btn => {
+        const isSelected = btn.dataset.id === state.commandId;
+        btn.classList.toggle('selected', isSelected);
+        btn.setAttribute('aria-pressed', String(isSelected));
+      });
+
+      updateStepIndicators();
+      syncLibrarySelectedCards();
+    }
+
+    function selectChoice(btn) {
+      const group = btn.dataset.group;
+      if (group === 'command') {
+        const id = btn.dataset.id || '';
+        state.commandId = state.commandId === id ? '' : id;
+      } else if (group in state) {
+        const val = btn.dataset.value || '';
+        state[group] = state[group] === val ? '' : val;
+      }
+      syncChoiceButtons();
+      refreshPrompt();
+    }
+
+    function buildPromptText() {
+      const subject = (document.getElementById('subject').value || '').trim();
+      const cmd = getCommandById(state.commandId);
+      const parts = [];
+
+      if (subject) {
+        parts.push(`สร้างภาพของ: ${subject}`);
+      } else {
+        parts.push('สร้างภาพของ: [ระบุสิ่งที่ต้องการสร้าง]');
+      }
+
+      if (state.style) parts.push(`รูปแบบภาพ: ${state.style}`);
+      if (state.view) parts.push(`มุมมอง: ${state.view}`);
+      if (state.light) parts.push(`การจัดแสง: ${state.light}`);
+      if (state.background) parts.push(`พื้นหลัง: ${state.background}`);
+      if (cmd) parts.push(`คำสั่งพิเศษ: ${cmd.title} (${cmd.en}) — ${cmd.promptPhrase}`);
+
+      parts.push('คุณภาพภาพ: รายละเอียดคมชัด สมดุลองค์ประกอบสวยงาม คุณภาพระดับสูง');
+      return parts.join('\n');
+    }
+
+    function refreshPrompt() {
+      hideResumeBanner();
+      updateStepIndicators();
+      saveDraft();
+      const resultEl = document.getElementById('result');
+      const outputEl = document.getElementById('promptOutput');
+      if (state.resultVisible && resultEl && outputEl) {
+        outputEl.textContent = buildPromptText();
+      }
+    }
+
+    function generatePrompt() {
+      const subjectEl = document.getElementById('subject');
+      const subject = (subjectEl.value || '').trim();
+      const hasAnySelection = Boolean(
+        subject || state.style || state.view || state.light || state.background || state.commandId
+      );
+
+      if (!hasAnySelection) {
+        subjectEl.focus();
+        showToast('กรุณาพิมพ์สิ่งที่อยากสร้าง หรือเลือกตัวเลือกอย่างน้อย 1 ข้อ');
+        return;
+      }
+
+      state.resultVisible = true;
+      const resultEl = document.getElementById('result');
+      const outputEl = document.getElementById('promptOutput');
+      const copyMsg = document.getElementById('copyMessage');
+
+      outputEl.textContent = buildPromptText();
+      if (copyMsg) copyMsg.textContent = '';
+      resultEl.style.display = 'block';
+      saveDraft();
+
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      showToast('สร้าง Prompt เรียบร้อยแล้ว');
+    }
+
+    let lastExampleIdx = -1;
+    function randomExample() {
+      let idx = Math.floor(Math.random() * RANDOM_EXAMPLES.length);
+      if (idx === lastExampleIdx && RANDOM_EXAMPLES.length > 1) {
+        idx = (idx + 1) % RANDOM_EXAMPLES.length;
+      }
+      lastExampleIdx = idx;
+      const ex = RANDOM_EXAMPLES[idx];
+
+      document.getElementById('subject').value = ex.subject;
+      state.style = ex.style;
+      state.view = ex.view;
+      state.light = ex.light;
+      state.background = ex.background;
+      state.commandId = ex.commandId;
+
+      syncChoiceButtons();
+      generatePrompt();
+      showToast('โหลดตัวอย่างเรียบร้อยแล้ว ปรับแก้ได้ตามต้องการ');
+    }
+
+    function clearBuilder(silent) {
+      if (window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      updateSpeakButton(false);
+
+      document.getElementById('subject').value = '';
+      state.style = '';
+      state.view = '';
+      state.light = '';
+      state.background = '';
+      state.commandId = '';
+      state.resultVisible = false;
+
+      const resultEl = document.getElementById('result');
+      const copyMsg = document.getElementById('copyMessage');
+      if (resultEl) resultEl.style.display = 'none';
+      if (copyMsg) copyMsg.textContent = '';
+
+      syncChoiceButtons();
+      clearDraftStorage();
+      hideResumeBanner();
+      if (!silent) {
+        showToast('ล้างข้อมูลเริ่มใหม่เรียบร้อยแล้ว');
+      }
+    }
+
+    /* ========================================================================
+       6. COPY, SPEECH & OPEN EXTERNAL AI APP
+       ======================================================================== */
+    function copyTextFallback(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (e) {
+          copyTextFallback(text);
+          return true;
+        }
+      }
+      copyTextFallback(text);
+      return true;
+    }
+
+    async function copyPrompt() {
+      const text = (document.getElementById('promptOutput').textContent || '').trim();
+      if (!text) return;
+      await copyToClipboard(text);
+      const copyMsg = document.getElementById('copyMessage');
+      if (copyMsg) copyMsg.textContent = '✓ คัดลอก Prompt แล้ว! นำไปวางใน AI สร้างภาพได้เลย';
+      showToast('คัดลอก Prompt แล้ว');
+    }
+
+    function copyForApp(outputId, msgId) {
+      const el = document.getElementById(outputId);
+      const msgEl = document.getElementById(msgId);
+      const text = el ? (el.textContent || '').trim() : '';
+      if (text) {
+        copyToClipboard(text);
+        if (msgEl) msgEl.textContent = '✓ คัดลอก Prompt ให้อัตโนมัติแล้ว วางในช่องแชทได้เลย';
+        showToast('คัดลอก Prompt แล้ว กำลังเปิดแอป...');
+      }
+      return true;
+    }
+
+    function updateSpeakButton(isSpeaking) {
+      const btnText = document.getElementById('speakBtnText');
+      if (btnText) {
+        btnText.textContent = isSpeaking ? 'หยุดอ่าน' : 'อ่านให้ฟัง';
+      }
+    }
+
+    function speakPrompt() {
+      if (!('speechSynthesis' in window)) {
+        showToast('เบราว์เซอร์นี้ไม่รองรับการอ่านออกเสียง');
+        return;
+      }
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        updateSpeakButton(false);
+        return;
+      }
+      const text = (document.getElementById('promptOutput').textContent || '').trim();
+      if (!text) return;
+
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'th-TH';
+      utter.rate = 0.96;
+      utter.onstart = () => updateSpeakButton(true);
+      utter.onend = () => updateSpeakButton(false);
+      utter.onerror = () => updateSpeakButton(false);
+      window.speechSynthesis.speak(utter);
+    }
+
+    /* ========================================================================
+       7. DRAFT PERSISTENCE & RESUME WORK BANNER
+       ======================================================================== */
+    function isDraftEmpty(d) {
+      if (!d) return true;
+      return !(
+        (d.subject && d.subject.trim()) ||
+        d.style ||
+        d.view ||
+        d.light ||
+        d.background ||
+        d.commandId
+      );
+    }
+
+    function saveDraft() {
+      const draft = {
+        subject: document.getElementById('subject').value || '',
+        style: state.style,
+        view: state.view,
+        light: state.light,
+        background: state.background,
+        commandId: state.commandId,
+        resultVisible: state.resultVisible,
+        updatedAt: Date.now()
+      };
+      if (isDraftEmpty(draft)) {
+        clearDraftStorage();
+        return;
+      }
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      } catch (e) {}
+    }
+
+    function clearDraftStorage() {
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    }
+
+    function hideResumeBanner() {
+      const banner = document.getElementById('resumeBanner');
+      if (banner) banner.classList.remove('show');
+    }
+
+    function checkSavedDraft() {
+      try {
+        const raw = localStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        if (isDraftEmpty(draft)) return;
+
+        const parts = [];
+        if (draft.subject && draft.subject.trim()) {
+          const shortSub = draft.subject.trim().slice(0, 42);
+          parts.push(`"${shortSub}${draft.subject.trim().length > 42 ? '…' : ''}"`);
+        }
+        if (draft.commandId) {
+          const c = getCommandById(draft.commandId);
+          if (c) parts.push(`คำสั่งพิเศษ: ${c.title}`);
+        }
+        if (draft.updatedAt) {
+          const dt = new Date(draft.updatedAt);
+          const timeStr = dt.toLocaleString('th-TH', {
+            day: 'numeric',
+            month: 'short',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          parts.push(`บันทึกล่าสุด ${timeStr}`);
+        }
+
+        const infoEl = document.getElementById('resumeInfo');
+        const banner = document.getElementById('resumeBanner');
+        if (infoEl) infoEl.textContent = parts.join(' · ') || 'ข้อมูลที่เลือกไว้ครั้งก่อนพร้อมทำต่อ';
+        if (banner) banner.classList.add('show');
+      } catch (e) {}
+    }
+
+    function restoreWork() {
+      try {
+        const raw = localStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        document.getElementById('subject').value = draft.subject || '';
+        state.style = draft.style || '';
+        state.view = draft.view || '';
+        state.light = draft.light || '';
+        state.background = draft.background || '';
+        state.commandId = draft.commandId || '';
+        state.resultVisible = Boolean(draft.resultVisible);
+
+        syncChoiceButtons();
+        if (state.resultVisible) {
+          const resultEl = document.getElementById('result');
+          document.getElementById('promptOutput').textContent = buildPromptText();
+          resultEl.style.display = 'block';
+        }
+        hideResumeBanner();
+        showToast('กู้คืนงานที่ทำค้างไว้เรียบร้อยแล้ว');
+      } catch (e) {
+        hideResumeBanner();
+      }
+    }
+
+    function discardWork() {
+      clearBuilder(true);
+      showToast('ล้างงานเดิมแล้ว พร้อมเริ่มสร้างใหม่');
+    }
+
+    /* ========================================================================
+       8. SPECIAL COMMAND LIBRARY (SEARCH, FILTER, IMAGE CARDS)
+       ======================================================================== */
+    function updateCategoryCounts() {
+      const counts = { 'ทั้งหมด': SPECIAL_COMMANDS.length };
+      SPECIAL_COMMANDS.forEach(c => {
+        counts[c.category] = (counts[c.category] || 0) + 1;
+      });
+      document.querySelectorAll('[data-count-for]').forEach(el => {
+        const cat = el.getAttribute('data-count-for');
+        el.textContent = String(counts[cat] || 0);
+      });
+      const heroCount = document.getElementById('heroLibraryCount');
+      if (heroCount) heroCount.textContent = `${SPECIAL_COMMANDS.length} แบบ`;
+    }
+
+    function filterCategory(category, btnEl) {
+      state.activeCategory = category || 'ทั้งหมด';
+      document.querySelectorAll('#categoryRow .category-btn').forEach(btn => {
+        btn.classList.toggle('active', btn === btnEl || btn.dataset.cat === state.activeCategory);
+      });
+      renderCommands();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      renderCommands();
+    }
+
+    function resetLibraryFilters() {
+      const input = document.getElementById('searchInput');
+      if (input) input.value = '';
+      const allBtn = document.querySelector('#categoryRow .category-btn[data-cat="ทั้งหมด"]');
+      filterCategory('ทั้งหมด', allBtn);
+    }
+
+    function syncLibrarySelectedCards() {
+      document.querySelectorAll('#commandGrid .command-card').forEach(card => {
+        const isSelected = card.dataset.id === state.commandId;
+        card.classList.toggle('is-selected', isSelected);
+        const useBtn = card.querySelector('.cmd-use-btn');
+        if (useBtn) {
+          useBtn.textContent = isSelected ? '✓ กำลังใช้งาน' : 'ใช้คำสั่งนี้';
+        }
+      });
+    }
+
+    function renderCommands() {
+      const grid = document.getElementById('commandGrid');
+      const searchEl = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const countBadge = document.getElementById('libraryCountBadge');
+      if (!grid) return;
+
+      const query = (searchEl ? searchEl.value : '').trim().toLowerCase();
+      if (clearBtn) clearBtn.classList.toggle('show', query.length > 0);
+
+      const filtered = SPECIAL_COMMANDS.filter(cmd => {
+        const catMatch = state.activeCategory === 'ทั้งหมด' || cmd.category === state.activeCategory;
+        if (!catMatch) return false;
+        if (!query) return true;
+        const haystack = [cmd.title, cmd.en, cmd.category, cmd.description, cmd.use, cmd.promptPhrase, cmd.example]
+          .join(' ')
+          .toLowerCase();
+        return haystack.includes(query);
+      });
+
+      if (countBadge) {
+        countBadge.textContent = `แสดง ${filtered.length} / ${SPECIAL_COMMANDS.length} รายการ`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-library">
+            <h3>ไม่พบคำสั่งที่ตรงกับ "${escapeHtml(query)}"</h3>
+            <p>ลองค้นหาด้วยคำอื่น เช่น แยกชิ้นส่วน, ด้านใน, 360 องศา, พิมพ์เขียว หรือดูทั้งหมด</p>
+            <button type="button" class="primary-btn btn-sm" onclick="resetLibraryFilters()">แสดงคำสั่งทั้งหมด</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(cmd => {
+        const isSelected = state.commandId === cmd.id;
+        const hasImage = Boolean(cmd.image);
+        return `
+          <article
+            class="command-card${isSelected ? ' is-selected' : ''}"
+            data-id="${cmd.id}"
+            data-cat="${escapeHtml(cmd.category)}"
+            tabindex="0"
+            role="button"
+            aria-label="ดูรายละเอียดคำสั่งพิเศษ ${escapeHtml(cmd.title)}"
+            onclick="openCommandModal('${cmd.id}')"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCommandModal('${cmd.id}')}"
+          >
+            <div class="cmd-thumb${hasImage ? '' : ' is-fallback'}">
+              ${hasImage ? `<img src="${escapeHtml(cmd.image)}" alt="ภาพตัวอย่าง ${escapeHtml(cmd.title)}" loading="lazy" onerror="handleThumbError(this)" />` : ''}
+              <div class="cmd-thumb-fallback" aria-hidden="true">
+                <span class="cmd-fallback-circle">${renderIcon(cmd.icon, 30)}</span>
+                <span class="cmd-fallback-label">${escapeHtml(cmd.category)}</span>
+              </div>
+              <span class="cmd-cat-overlay">${escapeHtml(cmd.category)}</span>
+              <span class="cmd-selected-pill">✓ เลือกใช้อยู่</span>
+              ${hasImage ? `
+                <button
+                  type="button"
+                  class="cmd-zoom-btn"
+                  title="ขยายดูภาพตัวอย่าง"
+                  aria-label="ขยายดูภาพตัวอย่าง ${escapeHtml(cmd.title)}"
+                  onclick="event.stopPropagation(); openCommandLightbox('${cmd.id}')"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+                </button>
+              ` : ''}
+            </div>
+
+            <div class="cmd-card-body">
+              <div class="cmd-title-row">
+                <h3 class="cmd-title">${escapeHtml(cmd.title)}</h3>
+                <span class="cmd-en">${escapeHtml(cmd.en)}</span>
+              </div>
+              <p class="cmd-desc">${escapeHtml(cmd.description)}</p>
+              <div class="cmd-card-actions">
+                <button type="button" class="cmd-detail-btn" onclick="event.stopPropagation(); openCommandModal('${cmd.id}')">รายละเอียด</button>
+                <button type="button" class="cmd-use-btn" onclick="event.stopPropagation(); applyCommandToBuilder('${cmd.id}')">${isSelected ? '✓ กำลังใช้งาน' : 'ใช้คำสั่งนี้'}</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function applyCommandToBuilder(cmdId) {
+      const cmd = getCommandById(cmdId);
+      if (!cmd) return;
+      state.commandId = cmd.id;
+      syncChoiceButtons();
+      refreshPrompt();
+      showToast(`เลือกใช้คำสั่งพิเศษ "${cmd.title}" แล้ว`);
+
+      const targetEl = state.resultVisible
+        ? document.getElementById('result')
+        : document.getElementById('step6');
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    /* ========================================================================
+       9. MODAL & LIGHTBOX CONTROLLERS
+       ======================================================================== */
+    function openCommandModal(cmdId) {
+      const cmd = getCommandById(cmdId);
+      if (!cmd) return;
+      state.modalCommandId = cmd.id;
+
+      const previewWrap = document.getElementById('modalPreviewWrap');
+      const modalImg = document.getElementById('modalImg');
+      const fallbackIcon = document.getElementById('modalFallbackIcon');
+      const modalBox = document.querySelector('#modal .modal-box');
+      if (modalBox) {
+        modalBox.setAttribute('data-cat', cmd.category);
+      }
+
+      fallbackIcon.innerHTML = renderIcon(cmd.icon, 30);
+      if (cmd.image) {
+        previewWrap.classList.remove('is-fallback');
+        modalImg.onerror = () => previewWrap.classList.add('is-fallback');
+        modalImg.src = cmd.image;
+        modalImg.alt = `ภาพตัวอย่าง ${cmd.title}`;
+      } else {
+        modalImg.removeAttribute('src');
+        previewWrap.classList.add('is-fallback');
+      }
+
+      document.getElementById('modalCategory').textContent = cmd.category;
+      document.getElementById('modalEnglish').textContent = cmd.en;
+      document.getElementById('modalTitle').innerHTML = `<span class="modal-title-icon">${renderIcon(cmd.icon, 20)}</span><span>${escapeHtml(cmd.title)}</span>`;
+      document.getElementById('modalDescription').textContent = cmd.description;
+      document.getElementById('modalUse').textContent = cmd.use;
+      document.getElementById('modalExample').textContent = cmd.example;
+
+      const modal = document.getElementById('modal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(event) {
+      if (event && event.target && event.target.id !== 'modal') return;
+      const modal = document.getElementById('modal');
+      modal.classList.remove('open');
+      if (!document.getElementById('lightbox').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function useCommand() {
+      const cmdId = state.modalCommandId;
+      closeModal();
+      if (cmdId) {
+        applyCommandToBuilder(cmdId);
+      }
+    }
+
+    async function copyModalExample() {
+      const text = (document.getElementById('modalExample').textContent || '').trim();
+      if (!text) return;
+      await copyToClipboard(text);
+      showToast('คัดลอกตัวอย่าง Prompt แล้ว');
+    }
+
+    function openCommandLightbox(cmdId) {
+      const cmd = getCommandById(cmdId);
+      if (!cmd || !cmd.image) return;
+      openLightbox(cmd.image, `${cmd.title} (${cmd.en})`, cmd.icon);
+    }
+
+    function openModalImageLightbox() {
+      const previewWrap = document.getElementById('modalPreviewWrap');
+      if (previewWrap.classList.contains('is-fallback')) return;
+      openCommandLightbox(state.modalCommandId);
+    }
+
+    function openLightbox(src, caption, iconName) {
+      if (!src) return;
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      const cap = document.getElementById('lightboxCaption');
+
+      img.onerror = () => {
+        closeLightbox();
+        showToast('ไม่สามารถโหลดภาพขนาดใหญ่ได้');
+      };
+      img.src = src;
+      img.alt = caption || 'ภาพขยาย';
+      if (caption) {
+        cap.innerHTML = (iconName ? renderIcon(iconName, 16) : '') + `<span>${escapeHtml(caption)}</span>`;
+        cap.style.display = 'inline-flex';
+      } else {
+        cap.textContent = '';
+        cap.style.display = 'none';
+      }
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('open');
+      if (!document.getElementById('modal').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    /* ========================================================================
+       10. INITIALIZATION
+       ======================================================================== */
+    (function init() {
+      // Restore Theme
+      let savedTheme = 'light';
+      try { savedTheme = localStorage.getItem('aiba:theme') || 'light'; } catch (e) {}
+      applyTheme(savedTheme);
+
+      // Restore Font Size
+      let savedFontIdx = 0;
+      try { savedFontIdx = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10); } catch (e) {}
+      if (isNaN(savedFontIdx)) savedFontIdx = 0;
+      applyFontSize(savedFontIdx);
+
+      // Keyboard Escape for Lightbox & Modal
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const lightbox = document.getElementById('lightbox');
+          const modal = document.getElementById('modal');
+          if (lightbox.classList.contains('open')) {
+            closeLightbox();
+          } else if (modal.classList.contains('open')) {
+            closeModal();
+          }
+        }
+      });
+
+      // Render Builder Step 6 & Special Command Library
+      renderStep6Choices();
+      updateCategoryCounts();
+      renderCommands();
+      updateStepIndicators();
+      checkSavedDraft();
+    })();
+  </script>
+</body>
+</html>

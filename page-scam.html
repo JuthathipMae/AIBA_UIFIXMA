@@ -1,0 +1,3534 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>รู้ทันหลอกลวง — AiBA Connect</title>
+  <meta name="theme-color" content="#F43F5E" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — AiBA CONNECT LIQUID GLASS TOKENS (LIGHT & DARK)
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode (Matching index.html) */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --muted: #64748B;
+      --green: #10B981;
+
+      /* Brand & Safety Category Theme (--cat-safe-grad) */
+      --brand-coral: #FF6B6B;
+      --brand-violet: #7C3AED;
+      --brand-blue: #38BDF8;
+      --brand-mint: #10B981;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+
+      --cat-safe-solid: #BE123C;
+      --cat-safe-soft: rgba(225, 29, 72, 0.12);
+      --cat-safe-grad: linear-gradient(135deg, #F43F5E, #EAB308);
+      --cat-ai-grad: linear-gradient(135deg, #10B981, #0EA5E9);
+
+      --safe-solid: #E11D48;
+      --safe-text: #BE123C;
+      --safe-soft: rgba(244, 63, 94, 0.12);
+      --safe-border: rgba(244, 63, 94, 0.34);
+      --safe-glow: rgba(244, 63, 94, 0.28);
+
+      /* Liquid Glass System — Light Mode */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(225, 29, 72, 0.13);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+
+      /* Surfaces */
+      --surface-input: rgba(255, 255, 255, 0.95);
+      --surface-subtle: rgba(241, 239, 251, 0.64);
+      --border-subtle: rgba(19, 24, 54, 0.10);
+
+      /* Status Colors */
+      --ok-solid: #10B981;
+      --ok-text: #047857;
+      --ok-bg: rgba(16, 185, 129, 0.13);
+      --ok-border: rgba(16, 185, 129, 0.36);
+
+      --err-solid: #EF4444;
+      --err-text: #DC2626;
+      --err-bg: rgba(239, 68, 68, 0.10);
+      --err-border: rgba(239, 68, 68, 0.34);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --shadow-lg: 0 20px 48px rgba(225, 29, 72, 0.14);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 30px;
+      --radius-pill: 9999px;
+      --container-max: 1180px;
+
+      /* ========================================================================
+         TOPIC COLOR SYSTEM — LIGHT MODE
+         Signs (#scamSigns): Red-Orange-Amber
+         Step 1: Sky Blue (#0284C7)
+         Step 2: Rose Red (#E11D48)
+         Step 3: Violet (#7C3AED)
+         Result (#scamResult): Emerald / Teal (#0D9488 -> #10B981 / #06B6D4)
+         Hotline (.hotline): Alert Red-Orange (#DC2626 -> #EA580C)
+         ======================================================================== */
+      /* Warning Signs (#scamSigns) — Red / Orange / Amber */
+      --sign-grad: linear-gradient(135deg, #EF4444 0%, #F97316 52%, #D97706 100%);
+      --sign-solid: #EA580C;
+      --sign-text: #B45309;
+      --sign-heading: #9A3412;
+      --sign-soft: rgba(249, 115, 22, 0.12);
+      --sign-bg: linear-gradient(150deg, rgba(255, 241, 242, 0.92) 0%, rgba(255, 247, 237, 0.92) 55%, rgba(255, 251, 235, 0.92) 100%);
+      --sign-card-bg: rgba(255, 255, 255, 0.88);
+      --sign-border: rgba(234, 88, 12, 0.34);
+      --sign-glow: rgba(239, 68, 68, 0.22);
+
+      /* Step 1 — Sky Blue (#0284C7) */
+      --s1-grad: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+      --s1-solid: #0284C7;
+      --s1-text: #0369A1;
+      --s1-soft: rgba(2, 132, 199, 0.11);
+      --s1-bg: linear-gradient(155deg, rgba(240, 249, 255, 0.92), rgba(255, 255, 255, 0.86));
+      --s1-border: rgba(2, 132, 199, 0.34);
+      --s1-glow: rgba(2, 132, 199, 0.26);
+
+      /* Step 2 — Rose Red (#E11D48) */
+      --s2-grad: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+      --s2-solid: #E11D48;
+      --s2-text: #BE123C;
+      --s2-soft: rgba(225, 29, 72, 0.11);
+      --s2-bg: linear-gradient(155deg, rgba(255, 241, 242, 0.92), rgba(255, 255, 255, 0.86));
+      --s2-border: rgba(225, 29, 72, 0.34);
+      --s2-glow: rgba(225, 29, 72, 0.26);
+
+      /* Step 3 — Violet (#7C3AED) */
+      --s3-grad: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+      --s3-solid: #7C3AED;
+      --s3-text: #5B21B6;
+      --s3-soft: rgba(124, 58, 237, 0.11);
+      --s3-bg: linear-gradient(155deg, rgba(245, 243, 255, 0.92), rgba(255, 255, 255, 0.86));
+      --s3-border: rgba(124, 58, 237, 0.34);
+      --s3-glow: rgba(124, 58, 237, 0.26);
+
+      /* Result Box (#scamResult) — Emerald / Teal */
+      --res-grad: linear-gradient(135deg, #10B981 0%, #0D9488 52%, #06B6D4 100%);
+      --res-solid: #0D9488;
+      --res-text: #0F766E;
+      --res-soft: rgba(16, 185, 129, 0.13);
+      --res-bg: linear-gradient(155deg, #062825 0%, #0A343B 54%, #0A2738 100%);
+      --res-border: rgba(45, 212, 191, 0.36);
+      --res-ink: #ECFDF5;
+      --res-dim: #A7D7D2;
+      --res-key: #5EEAD4;
+      --res-shadow: 0 22px 48px rgba(6, 78, 59, 0.28);
+
+      /* Hotline (.hotline) — Alert Red-Orange */
+      --hot-grad: linear-gradient(135deg, #EF4444 0%, #EA580C 100%);
+      --hot-solid: #EF4444;
+      --hot-bg: linear-gradient(145deg, rgba(220, 38, 38, 0.28), rgba(234, 88, 12, 0.22));
+      --hot-border: rgba(248, 113, 113, 0.56);
+      --hot-ink: #FFF5F5;
+      --hot-accent: #FDBA74;
+      --hot-chip-bg: rgba(24, 14, 24, 0.50);
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --muted: #94A3B8;
+      --green: #34D399;
+
+      --cat-safe-solid: #FDA4AF;
+      --safe-solid: #FB7185;
+      --safe-text: #FECDD3;
+      --safe-soft: rgba(251, 113, 133, 0.20);
+      --safe-border: rgba(251, 113, 133, 0.44);
+      --safe-glow: rgba(244, 63, 94, 0.38);
+
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(251, 113, 133, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+      --surface-input: rgba(13, 17, 36, 0.86);
+      --surface-subtle: rgba(15, 18, 37, 0.62);
+      --border-subtle: rgba(255, 255, 255, 0.12);
+
+      --ok-text: #34D399;
+      --ok-bg: rgba(16, 185, 129, 0.18);
+      --ok-border: rgba(52, 211, 153, 0.44);
+
+      --err-solid: #F87171;
+      --err-text: #FCA5A5;
+      --err-bg: rgba(239, 68, 68, 0.16);
+      --err-border: rgba(248, 113, 113, 0.40);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+
+      /* Warning Signs (#scamSigns) — Dark Red / Orange / Amber */
+      --sign-solid: #FB923C;
+      --sign-text: #FDE68A;
+      --sign-heading: #FDBA74;
+      --sign-soft: rgba(251, 146, 60, 0.20);
+      --sign-bg: linear-gradient(150deg, rgba(72, 22, 30, 0.62) 0%, rgba(68, 30, 18, 0.62) 55%, rgba(56, 36, 18, 0.62) 100%);
+      --sign-card-bg: rgba(23, 27, 54, 0.78);
+      --sign-border: rgba(251, 146, 60, 0.46);
+      --sign-glow: rgba(249, 115, 22, 0.34);
+
+      /* Step 1 — Sky Blue Dark */
+      --s1-solid: #38BDF8;
+      --s1-text: #BAE6FD;
+      --s1-soft: rgba(56, 189, 248, 0.20);
+      --s1-bg: linear-gradient(155deg, rgba(14, 42, 74, 0.60), rgba(22, 28, 56, 0.82));
+      --s1-border: rgba(56, 189, 248, 0.45);
+      --s1-glow: rgba(14, 165, 233, 0.36);
+
+      /* Step 2 — Rose Red Dark */
+      --s2-solid: #FB7185;
+      --s2-text: #FECDD3;
+      --s2-soft: rgba(251, 113, 133, 0.20);
+      --s2-bg: linear-gradient(155deg, rgba(74, 20, 40, 0.60), rgba(22, 28, 56, 0.82));
+      --s2-border: rgba(251, 113, 133, 0.46);
+      --s2-glow: rgba(225, 29, 72, 0.38);
+
+      /* Step 3 — Violet Dark */
+      --s3-solid: #A78BFA;
+      --s3-text: #DDD6FE;
+      --s3-soft: rgba(167, 139, 250, 0.20);
+      --s3-bg: linear-gradient(155deg, rgba(46, 26, 82, 0.60), rgba(22, 28, 56, 0.82));
+      --s3-border: rgba(167, 139, 250, 0.45);
+      --s3-glow: rgba(139, 92, 246, 0.38);
+
+      /* Result Box (#scamResult) — Deep Emerald / Teal Dark */
+      --res-solid: #2DD4BF;
+      --res-text: #99F6E4;
+      --res-soft: rgba(45, 212, 191, 0.20);
+      --res-bg: linear-gradient(155deg, #041918 0%, #07262A 54%, #071D2A 100%);
+      --res-border: rgba(45, 212, 191, 0.38);
+      --res-ink: #F0FDF9;
+      --res-dim: #99C7C4;
+      --res-key: #5EEAD4;
+      --res-shadow: 0 24px 56px rgba(0, 0, 0, 0.56);
+
+      /* Hotline (.hotline) — Alert Red-Orange Dark */
+      --hot-bg: linear-gradient(145deg, rgba(185, 28, 28, 0.34), rgba(194, 65, 12, 0.28));
+      --hot-border: rgba(251, 113, 133, 0.52);
+      --hot-ink: #FFF5F5;
+      --hot-accent: #FDBA74;
+      --hot-chip-bg: rgba(15, 12, 24, 0.60);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(920px 520px at 8% -4%, rgba(244, 63, 94, 0.14), transparent 60%),
+        radial-gradient(920px 560px at 94% 4%, rgba(234, 179, 8, 0.13), transparent 60%),
+        radial-gradient(760px 520px at 50% 48%, rgba(124, 58, 237, 0.08), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--safe-solid);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       3. FLOATING GLASS NAVBAR (MATCHING index.html)
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 40px;
+      padding: 0 15px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--safe-solid);
+      color: var(--safe-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      background: var(--cat-safe-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--safe-solid);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       4. MAIN PAGE WRAPPER & SAFETY HERO CARD (--cat-safe-grad)
+       ========================================================================== */
+    .page {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 26px 24px 48px;
+      flex: 1;
+    }
+
+    .page-hero {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: var(--cat-safe-grad);
+      color: #FFFFFF;
+      padding: 32px 34px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 44px var(--safe-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 290px;
+      height: 290px;
+      top: -115px;
+      right: -55px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.30), transparent 70%);
+    }
+
+    .hero-orb-2 {
+      width: 250px;
+      height: 250px;
+      bottom: -115px;
+      left: 26%;
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.36), transparent 70%);
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-main-col {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1 1 420px;
+      min-width: 0;
+    }
+
+    .hero-icon-box {
+      width: 74px;
+      height: 74px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.20);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.38);
+      box-shadow: 0 12px 28px rgba(136, 19, 55, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.48);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.30);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+      color: #FFFFFF;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 14px rgba(136, 19, 55, 0.24);
+    }
+
+    .page-hero p {
+      font-size: 1.04rem;
+      color: rgba(255, 255, 255, 0.96);
+      max-width: 60ch;
+      text-shadow: 0 1px 8px rgba(136, 19, 55, 0.18);
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.24);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       5. RESUME BANNER (SAVED WORK RECOVERY)
+       ========================================================================== */
+    .resume-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--safe-border);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--safe-soft);
+      animation: fadeSlideUp 0.25s ease;
+    }
+
+    .resume-banner.show {
+      display: flex;
+    }
+
+    .resume-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .resume-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--cat-safe-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--safe-glow);
+    }
+
+    .resume-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-text span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       6. BUILDER SHELL & INTRO CALLOUT
+       ========================================================================== */
+    .builder-panel {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .builder-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--cat-safe-grad);
+    }
+
+    .section-description {
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      color: var(--text-secondary);
+      font-size: 0.99rem;
+      line-height: 1.7;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-description strong {
+      color: var(--text-primary);
+    }
+
+    .desc-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .flow-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.83rem;
+      font-weight: 600;
+    }
+
+    .flow-chip.c-sign {
+      background: var(--sign-soft);
+      color: var(--sign-text);
+      border: 1px solid var(--sign-border);
+    }
+
+    .flow-chip.c-step1 {
+      background: var(--s1-soft);
+      color: var(--s1-text);
+      border: 1px solid var(--s1-border);
+    }
+
+    .flow-chip.c-step2 {
+      background: var(--s2-soft);
+      color: var(--s2-text);
+      border: 1px solid var(--s2-border);
+    }
+
+    .flow-chip.c-step3 {
+      background: var(--s3-soft);
+      color: var(--s3-text);
+      border: 1px solid var(--s3-border);
+    }
+
+    .flow-chip.c-res {
+      background: var(--res-soft);
+      color: var(--res-text);
+      border: 1px solid var(--res-border);
+    }
+
+    .flow-arrow {
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       7. FIVE WARNING SIGNS PANEL (#scamSigns — RED / ORANGE / AMBER)
+       ========================================================================== */
+    .signs-panel {
+      position: relative;
+      border-radius: var(--radius-lg);
+      background: var(--sign-bg);
+      border: 1.5px solid var(--sign-border);
+      border-left: 5px solid var(--sign-solid);
+      padding: 20px 22px 22px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .signs-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .signs-panel-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .signs-panel-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--sign-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--sign-glow);
+    }
+
+    .signs-panel-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--sign-heading);
+    }
+
+    .signs-panel-sub {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    .signs-panel-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--sign-soft);
+      border: 1px solid var(--sign-border);
+      color: var(--sign-heading);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .signs-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    /* Styles any card injected by app.js or fallback inside #scamSigns */
+    .signs-grid > * {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px 14px 15px;
+      border-radius: var(--radius-md);
+      background: var(--sign-card-bg);
+      border: 1.5px solid var(--sign-border);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-primary);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .signs-grid > *:hover {
+      transform: translateY(-3px);
+      border-color: var(--sign-solid);
+      box-shadow: 0 10px 22px var(--sign-glow);
+    }
+
+    .signs-grid .sign-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .signs-grid .sign-icon,
+    .signs-grid .ic {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--sign-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px var(--sign-glow);
+    }
+
+    .signs-grid .sign-num,
+    .signs-grid .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: var(--radius-pill);
+      background: var(--sign-soft);
+      border: 1px solid var(--sign-border);
+      color: var(--sign-heading);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .signs-grid b,
+    .signs-grid strong,
+    .signs-grid h4,
+    .signs-grid .sign-title {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--sign-heading);
+      line-height: 1.35;
+    }
+
+    .signs-grid p,
+    .signs-grid span:not(.sign-icon):not(.sign-num):not(.num),
+    .signs-grid small,
+    .signs-grid .sign-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       8. COLOR-CODED STEP BLOCKS
+          STEP 1: SKY BLUE (#0284C7) | STEP 2: ROSE RED (#E11D48) | STEP 3: VIOLET (#7C3AED)
+       ========================================================================== */
+    .steps-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .step {
+      position: relative;
+      background: var(--step-bg, var(--surface-subtle));
+      border: 1.5px solid var(--step-border, var(--border-subtle));
+      border-left: 5px solid var(--step-solid, var(--safe-solid));
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .step:focus-within {
+      border-color: var(--step-solid, var(--safe-solid));
+      box-shadow: 0 10px 28px var(--step-soft, var(--safe-soft));
+    }
+
+    /* Step 1 — Sky Blue (#0284C7) */
+    .step[data-step="1"] {
+      --step-grad: var(--s1-grad);
+      --step-solid: var(--s1-solid);
+      --step-text: var(--s1-text);
+      --step-soft: var(--s1-soft);
+      --step-bg: var(--s1-bg);
+      --step-border: var(--s1-border);
+      --step-glow: var(--s1-glow);
+    }
+
+    /* Step 2 — Rose Red (#E11D48) */
+    .step[data-step="2"] {
+      --step-grad: var(--s2-grad);
+      --step-solid: var(--s2-solid);
+      --step-text: var(--s2-text);
+      --step-soft: var(--s2-soft);
+      --step-bg: var(--s2-bg);
+      --step-border: var(--s2-border);
+      --step-glow: var(--s2-glow);
+    }
+
+    /* Step 3 — Violet (#7C3AED) */
+    .step[data-step="3"] {
+      --step-grad: var(--s3-grad);
+      --step-solid: var(--s3-solid);
+      --step-text: var(--s3-text);
+      --step-soft: var(--s3-soft);
+      --step-bg: var(--s3-bg);
+      --step-border: var(--s3-border);
+      --step-glow: var(--s3-glow);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--step-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--step-glow);
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .multi-hint,
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .step-help {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.55;
+    }
+
+    .step-help-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .inline-mic-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 1px 9px 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.9rem;
+      vertical-align: baseline;
+      margin-right: 4px;
+    }
+
+    .inline-mic-cue svg {
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       9. CHOICE GRIDS & CARDS (STEP 1 CHANNEL CARDS + STEP 2 10 ACTION CHIPS)
+       ========================================================================== */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step[data-step="2"] .choice-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 56px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 500;
+      text-align: left;
+      line-height: 1.35;
+      position: relative;
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    .choice:hover {
+      border-color: var(--step-solid);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Step 1 Channel Cards (.choice-img) */
+    .choice.choice-img {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      gap: 10px;
+      padding: 14px 12px;
+      min-height: 120px;
+    }
+
+    .choice.choice-img .preview {
+      width: 100%;
+      height: 58px;
+      border-radius: 12px;
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .choice.choice-img .preview svg {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+    }
+
+    .choice.choice-img .preview .fallback-channel-svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .choice.choice-img:hover .preview {
+      transform: scale(1.03);
+    }
+
+    /* Step 2 Action Icons (.choice-icon) */
+    .choice-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--step-soft);
+      color: var(--step-text);
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .choice-icon svg {
+      width: 19px;
+      height: 19px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .choice:hover .choice-icon {
+      transform: scale(1.06);
+    }
+
+    .choice-label {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .choice.choice-img .choice-label {
+      flex: 0 0 auto;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* Selected / Active Choice State (Supports both .selected and .active for app.js) */
+    .choice.selected,
+    .choice.active,
+    .choice[aria-pressed="true"] {
+      background: var(--step-grad);
+      border-color: transparent;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 10px 24px var(--step-glow);
+      transform: translateY(-2px);
+    }
+
+    .choice.selected .choice-icon,
+    .choice.active .choice-icon,
+    .choice[aria-pressed="true"] .choice-icon {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+    }
+
+    .choice.choice-img.selected .preview,
+    .choice.choice-img.active .preview,
+    .choice.choice-img[aria-pressed="true"] .preview {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.36);
+      color: #FFFFFF;
+    }
+
+    .choice.selected:hover,
+    .choice.active:hover,
+    .choice[aria-pressed="true"]:hover {
+      filter: brightness(1.06);
+      color: #FFFFFF;
+    }
+
+    /* Multi-select Checkbox Indicator on Step 2 */
+    .choice[data-multi="1"]::after {
+      content: "";
+      width: 19px;
+      height: 19px;
+      border-radius: 6px;
+      border: 1.5px solid var(--step-border);
+      background: transparent;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .choice[data-multi="1"].selected::after,
+    .choice[data-multi="1"].active::after,
+    .choice[data-multi="1"][aria-pressed="true"]::after {
+      border-color: rgba(255, 255, 255, 0.90);
+      background: rgba(255, 255, 255, 0.24) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+    }
+
+    /* ==========================================================================
+       10. STEP 3 TEXTAREA (VIOLET #7C3AED)
+       ========================================================================== */
+    .large-textarea {
+      width: 100%;
+      min-height: 136px;
+      resize: vertical;
+      background: var(--surface-input);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-family: var(--font-body);
+      font-size: 1.04rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .large-textarea:hover {
+      border-color: var(--step-border);
+    }
+
+    .large-textarea:focus {
+      outline: none;
+      border-color: var(--step-solid);
+      box-shadow: 0 0 0 4px var(--step-soft);
+    }
+
+    .large-textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.86;
+    }
+
+    /* ==========================================================================
+       11. ACTION BUTTONS & RESULT PANEL (#scamResult — EMERALD / TEAL)
+       ========================================================================== */
+    .button-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .gen-row {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 24px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--cat-safe-grad);
+      color: #FFFFFF;
+      border: 1.5px solid transparent;
+      box-shadow: 0 10px 24px var(--safe-glow);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px var(--safe-glow);
+    }
+
+    .secondary-btn {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--safe-solid);
+      color: var(--safe-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .danger-btn {
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1.5px solid var(--err-border);
+    }
+
+    .danger-btn:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: var(--err-solid);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 9px 17px;
+      font-size: 0.92rem;
+    }
+
+    /* Result Sheet (#scamResult — Emerald / Teal Theme) */
+    .result {
+      --green: #34D399;
+      --muted: #A7D7D2;
+      margin-top: 28px;
+      border-radius: var(--radius-lg);
+      background: var(--res-bg);
+      color: var(--res-ink);
+      border: 1.5px solid var(--res-border);
+      box-shadow: var(--res-shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 26px;
+      animation: fadeSlideUp 0.28s ease;
+    }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--res-grad);
+    }
+
+    .result-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .result h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .result-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--res-grad);
+      box-shadow: 0 0 12px var(--res-key);
+      flex-shrink: 0;
+    }
+
+    .result-live-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(94, 234, 212, 0.36);
+      color: var(--res-key);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .result-desc {
+      font-size: 0.96rem;
+      color: var(--res-dim);
+      margin-bottom: 16px;
+      line-height: 1.65;
+    }
+
+    .result-desc strong {
+      color: #FEF08A;
+    }
+
+    .result-desc .live-hint {
+      color: var(--res-key);
+      font-size: 0.88rem;
+    }
+
+    /* Risk Box (#scamRisk) */
+    .risk-box {
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1.5px solid rgba(52, 211, 153, 0.42);
+      border-left: 5px solid #10B981;
+      color: #ECFDF5;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .risk-box:empty {
+      display: none;
+    }
+
+    .risk-box.risk-high,
+    .risk-box.high,
+    .risk-box.danger {
+      background: rgba(225, 29, 72, 0.24);
+      border-color: rgba(251, 113, 133, 0.56);
+      border-left-color: #F43F5E;
+      color: #FFF1F2;
+    }
+
+    .risk-box.risk-med,
+    .risk-box.risk-medium,
+    .risk-box.med,
+    .risk-box.warn {
+      background: rgba(217, 119, 6, 0.24);
+      border-color: rgba(251, 191, 36, 0.54);
+      border-left-color: #F59E0B;
+      color: #FFFBEB;
+    }
+
+    .risk-box.risk-low,
+    .risk-box.low,
+    .risk-box.ok {
+      background: rgba(16, 185, 129, 0.20);
+      border-color: rgba(52, 211, 153, 0.48);
+      border-left-color: #10B981;
+      color: #ECFDF5;
+    }
+
+    .risk-box-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.16);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .risk-box strong,
+    .risk-box b {
+      font-family: var(--font-heading);
+      color: #FFFFFF;
+    }
+
+    .result .prompt-box {
+      background: rgba(4, 18, 22, 0.68);
+      border: 1px solid rgba(94, 234, 212, 0.24);
+      border-left: 4px solid #10B981;
+      border-radius: 14px;
+      padding: 18px 20px;
+      min-height: 120px;
+      font-family: var(--font-body);
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: var(--res-ink);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 18px;
+    }
+
+    .result .primary-btn {
+      background: var(--res-grad);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.34);
+    }
+
+    .result .primary-btn:hover {
+      box-shadow: 0 14px 30px rgba(6, 182, 212, 0.42);
+    }
+
+    .result .secondary-btn {
+      background: rgba(255, 255, 255, 0.11);
+      border: 1.5px solid rgba(94, 234, 212, 0.30);
+      color: #F0FDF9;
+      padding: 12px 20px;
+      font-size: 0.96rem;
+    }
+
+    .result .secondary-btn:hover {
+      background: rgba(16, 185, 129, 0.22);
+      border-color: var(--res-key);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    #scamCopyMessage {
+      color: #34D399;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      min-height: 1.4em;
+      margin-top: 12px;
+    }
+
+    .open-app-row {
+      margin-top: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(94, 234, 212, 0.18);
+    }
+
+    .open-app-row p {
+      font-size: 0.94rem;
+      color: var(--res-dim);
+      margin-bottom: 14px;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 22px 10px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .app-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .app-btn.gpt {
+      background: linear-gradient(135deg, #0F172A 0%, #0F766E 55%, #10B981 100%);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.30);
+    }
+
+    .app-btn.gemini {
+      background: linear-gradient(135deg, #1D4ED8 0%, #4F46E5 52%, #0EA5E9 100%);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.34);
+    }
+
+    /* Real Brand Images inside .app-logo (object-fit: cover) */
+    .app-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .app-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .app-btn .app-logo {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.76);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    }
+
+    /* ==========================================================================
+       12. EMERGENCY HOTLINE BAR (.hotline — ALERT RED-ORANGE)
+       ========================================================================== */
+    .hotline {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      background: var(--hot-bg);
+      border: 1.5px solid var(--hot-border);
+      border-left: 5px solid var(--hot-solid);
+      color: var(--hot-ink);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 12px 26px rgba(220, 38, 38, 0.22);
+    }
+
+    .hotline-lead {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .hotline-lead-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--hot-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 5px 14px rgba(239, 68, 68, 0.42);
+    }
+
+    .hotline-lead strong {
+      font-family: var(--font-heading);
+      color: #FECACA;
+      font-size: 1.02rem;
+      font-weight: 700;
+    }
+
+    .hotline-numbers {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hotline-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+      border-radius: var(--radius-pill);
+      background: var(--hot-chip-bg);
+      border: 1px solid var(--hot-border);
+      color: var(--hot-ink);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    a.hotline-chip:hover {
+      background: rgba(239, 68, 68, 0.38);
+      border-color: #FCA5A5;
+      transform: translateY(-1px);
+    }
+
+    .hotline-chip svg {
+      color: var(--hot-accent);
+      flex-shrink: 0;
+    }
+
+    .hotline-chip b {
+      color: var(--hot-accent);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    /* Standalone Hotline Strip visible before generating prompt */
+    .hotline-strip {
+      margin-top: 22px;
+      padding: 16px 20px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(254, 242, 242, 0.94), rgba(255, 247, 237, 0.92));
+      border: 1.5px solid rgba(239, 68, 68, 0.36);
+      border-left: 5px solid #EF4444;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+    }
+
+    [data-theme="dark"] .hotline-strip {
+      background: linear-gradient(145deg, rgba(84, 20, 28, 0.64), rgba(68, 28, 18, 0.62));
+      border-color: rgba(248, 113, 113, 0.48);
+    }
+
+    .hotline-strip-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1 1 280px;
+      min-width: 0;
+    }
+
+    .hotline-strip-title {
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #B91C1C;
+    }
+
+    [data-theme="dark"] .hotline-strip-title {
+      color: #FCA5A5;
+    }
+
+    .hotline-strip-sub {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .hotline-strip-pills {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hotline-strip-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid rgba(239, 68, 68, 0.36);
+      color: #991B1B;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    [data-theme="dark"] .hotline-strip-pill {
+      color: #FECACA;
+      border-color: rgba(248, 113, 113, 0.48);
+    }
+
+    .hotline-strip-pill b {
+      color: #DC2626;
+      font-size: 0.98rem;
+    }
+
+    [data-theme="dark"] .hotline-strip-pill b {
+      color: #FDBA74;
+    }
+
+    a.hotline-strip-pill:hover {
+      border-color: #EF4444;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.18);
+    }
+
+    /* ==========================================================================
+       13. RELATED TOOLS SECTION ("ไปต่อที่เกี่ยวข้อง")
+       ========================================================================== */
+    .related {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .related-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .related-head-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--safe-soft);
+      border: 1px solid var(--safe-border);
+      color: var(--safe-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .related h3 {
+      font-size: 1.24rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .rel-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .rel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--safe-solid);
+    }
+
+    .rel-card .ic {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .rel-card .ic.cat-safe { background: var(--cat-safe-grad); }
+    .rel-card .ic.cat-ai { background: var(--cat-ai-grad); }
+
+    .rel-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rel-card span {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       14. MODAL, LIGHTBOX & TOAST
+       ========================================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      background: rgba(10, 13, 30, 0.64);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.open,
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--safe-solid);
+      color: #FFFFFF;
+      transform: rotate(90deg);
+    }
+
+    .modal-box hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 16px 0;
+    }
+
+    .modal-box h3 {
+      font-size: 1.02rem;
+      margin: 12px 0 6px;
+    }
+
+    .modal-box .prompt-box {
+      background: var(--res-bg);
+      color: var(--res-ink);
+      border: 1px solid var(--res-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 8px 0 18px;
+      white-space: pre-wrap;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1600;
+      background: rgba(7, 10, 24, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open,
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: min(94vw, 960px);
+      max-height: 86vh;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      object-fit: contain;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      transform: translate(-50%, 18px);
+      background: var(--res-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 14px 34px rgba(13, 148, 136, 0.36);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1700;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       15. FOOTER (MATCHING index.html & STYLING footer.js OUTPUT)
+       ========================================================================== */
+    .site-footer,
+    footer.footer,
+    body > footer {
+      background: linear-gradient(135deg, #161936 0%, #24193E 55%, #2D1838 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 44px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #FDE047;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--cat-safe-grad);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(244, 63, 94, 0.24), rgba(234, 179, 8, 0.22));
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       16. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1060px) {
+      .signs-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 960px) {
+      .choice-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.84rem;
+      }
+
+      .logo-slot {
+        height: 30px;
+      }
+
+      .logo-slot img {
+        height: 32px;
+      }
+
+      .topbar-title {
+        font-size: 1rem;
+      }
+
+      .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+
+      .page {
+        padding: 18px 14px 36px;
+      }
+
+      .page-hero {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .hero-icon-box {
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+      }
+
+      .builder-panel {
+        padding: 18px 14px;
+        border-radius: 24px;
+      }
+
+      .signs-panel {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .signs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .step {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .step[data-step="2"] .choice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .choice.choice-img {
+        min-height: 108px;
+        padding: 12px 10px;
+      }
+
+      .choice.choice-img .preview {
+        height: 50px;
+      }
+
+      .gen-row .primary-btn {
+        flex: 1 1 100%;
+      }
+
+      .gen-row .secondary-btn,
+      .gen-row .danger-btn {
+        flex: 1 1 auto;
+      }
+
+      .result {
+        padding: 18px 14px;
+      }
+
+      .app-btn {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .related {
+        padding: 0 14px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-back-text,
+      .logo-slot,
+      .brand-divider,
+      #themeText {
+        display: none;
+      }
+
+      .nav-back-btn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .signs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .choice-grid {
+        gap: 9px;
+      }
+
+      .choice {
+        padding: 10px 11px;
+        font-size: 0.92rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS TOPBAR (MATCHING index.html)
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="แถบนำทาง รู้ทันหลอกลวง">
+      <div class="nav-left">
+        <a class="nav-back-btn back-home" href="index.html" aria-label="กลับหน้าหลัก">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
+          <span class="nav-back-text">หน้าหลัก</span>
+        </a>
+
+        <div class="nav-brand">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display='none'" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="topbar-title">รู้ทันหลอกลวง</div>
+        </div>
+      </div>
+
+      <div class="nav-actions topbar-tools">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับธีมสว่าง/มืด" aria-label="สลับธีมสว่าง/มืด">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN CONTENT
+       ======================================================================== -->
+  <main class="page">
+
+    <!-- Page Hero (Safety Category Gradient --cat-safe-grad) -->
+    <section class="page-hero">
+      <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+      <div class="page-hero-inner cat-safe">
+        <div class="hero-main-col">
+          <div class="hero-icon-box" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              <path d="M12 8v4"/>
+              <path d="M12 16h.01"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-kicker">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              </svg>
+              <span>AiBA Connect · หมวดปลอดภัย</span>
+            </div>
+            <h1>รู้ทันหลอกลวง</h1>
+            <p>ตรวจข้อความหรือสายแปลก ๆ กับ AI ก่อนทำอะไร พร้อมสัญญาณเตือน 5 ข้อ</p>
+          </div>
+        </div>
+
+        <div class="hero-pills" aria-hidden="true">
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <path d="M12 9v4"/>
+              <path d="M12 17h.01"/>
+            </svg>
+            <span>ไม่กดลิงก์ ไม่บอก OTP</span>
+          </span>
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span>สายด่วน AOC 1441</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Banner (#resumeBanner) -->
+    <div id="resumeBanner" class="resume-banner" role="region" aria-label="กู้คืนงานที่ทำค้างไว้">
+      <div class="resume-left">
+        <div class="resume-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+        </div>
+        <div class="resume-text">
+          <strong>พบงานที่ทำค้างไว้ในหน้านี้</strong>
+          <span id="resumeInfo"></span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button type="button" class="primary-btn btn-sm" onclick="restoreWork()">ทำต่อจากเดิม</button>
+        <button type="button" class="danger-btn btn-sm" onclick="discardWork()">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <!-- Scam Guard Builder Section (#scamGuard) -->
+    <section id="scamGuard" class="builder-panel builder active">
+      <div class="section-description">
+        ได้ข้อความ สาย หรือลิงก์แปลก ๆ มา <strong>ยังไม่ต้องทำอะไรทั้งนั้น เอามาตรวจกับ AI ก่อน</strong>
+        ระบบจะสร้างคำถามที่ทำให้ AI ตอบเป็นภาษาง่าย ๆ ว่าเสี่ยงแค่ไหน และควรทำอย่างไร
+        <div class="desc-flow" aria-hidden="true">
+          <span class="flow-chip c-sign">เช็ก 5 สัญญาณเตือน</span>
+          <span class="flow-arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+          <span class="flow-chip c-step1">1. ช่องทางที่ได้รับ</span>
+          <span class="flow-arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+          <span class="flow-chip c-step2">2. สิ่งที่เขาให้ทำ</span>
+          <span class="flow-arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+          <span class="flow-chip c-step3">3. วางข้อความ / เล่าเรื่อง</span>
+          <span class="flow-arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+          <span class="flow-chip c-res">รับคำถามส่งให้ AI ตรวจ</span>
+        </div>
+      </div>
+
+      <!-- 5 Warning Signs Panel (#scamSigns — Red / Orange / Amber Theme) -->
+      <div class="signs-panel" role="region" aria-label="สัญญาณเตือน 5 ข้อ รู้ทันมิจฉาชีพ">
+        <div class="signs-panel-head">
+          <div class="signs-panel-title-wrap">
+            <span class="signs-panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                <path d="M12 9v4"/>
+                <path d="M12 17h.01"/>
+              </svg>
+            </span>
+            <div>
+              <h2 class="signs-panel-title">สัญญาณเตือน 5 ข้อ ถ้าเจอให้หยุดทันที</h2>
+              <p class="signs-panel-sub">ตั้งสติ วางสาย และตรวจสอบก่อนทุกครั้ง</p>
+            </div>
+          </div>
+          <span class="signs-panel-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" x2="12" y1="8" y2="12"/>
+              <line x1="12" x2="12.01" y1="16" y2="16"/>
+            </svg>
+            <span>เตือนภัย 5 ข้อ</span>
+          </span>
+        </div>
+        <div class="signs-grid" id="scamSigns"></div>
+      </div>
+
+      <div class="steps-stack">
+
+        <!-- ================================================================
+             STEP 1: ได้รับมาทางไหน? (Sky Blue #0284C7)
+             ================================================================ -->
+        <div class="step" data-step="1">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">1</span>
+              <span class="step-title">ได้รับมาทางไหน?</span>
+            </div>
+            <span class="step-badge">เลือก 1 อย่าง</span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/>
+                <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/>
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/>
+                <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/>
+              </svg>
+            </span>
+            <span>เลือกช่องทางที่ได้รับข้อความ สายโทรศัพท์ หรือการติดต่อ</span>
+          </p>
+          <div class="choice-grid">
+            <button type="button" class="choice choice-img" data-cgroup="channel" data-value="สายโทรศัพท์" data-svg="ch_call" onclick="pickChoice(this)">
+              <span class="preview">
+                <svg class="fallback-channel-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+              <span class="choice-label">สายโทรศัพท์</span>
+            </button>
+
+            <button type="button" class="choice choice-img" data-cgroup="channel" data-value="ข้อความ SMS" data-svg="ch_sms" onclick="pickChoice(this)">
+              <span class="preview">
+                <svg class="fallback-channel-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  <path d="M8 9h8"/>
+                  <path d="M8 13h5"/>
+                </svg>
+              </span>
+              <span class="choice-label">SMS</span>
+            </button>
+
+            <button type="button" class="choice choice-img" data-cgroup="channel" data-value="ข้อความทาง LINE" data-svg="ch_line" onclick="pickChoice(this)">
+              <span class="preview">
+                <svg class="fallback-channel-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                  <path d="M8 12h.01"/>
+                  <path d="M12 12h.01"/>
+                  <path d="M16 12h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">LINE</span>
+            </button>
+
+            <button type="button" class="choice choice-img" data-cgroup="channel" data-value="Facebook หรือ Messenger" data-svg="ch_fb" onclick="pickChoice(this)">
+              <span class="preview">
+                <svg class="fallback-channel-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </span>
+              <span class="choice-label">Facebook</span>
+            </button>
+
+            <button type="button" class="choice choice-img" data-cgroup="channel" data-value="อีเมล" data-svg="ch_mail" onclick="pickChoice(this)">
+              <span class="preview">
+                <svg class="fallback-channel-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="20" height="16" x="2" y="4" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </span>
+              <span class="choice-label">อีเมล</span>
+            </button>
+
+            <button type="button" class="choice choice-img" data-cgroup="channel" data-value="มีคนมาที่บ้าน" data-svg="ch_home" onclick="pickChoice(this)">
+              <span class="preview">
+                <svg class="fallback-channel-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                </svg>
+              </span>
+              <span class="choice-label">มาที่บ้าน</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 2: เขาให้คุณทำอะไร? (Rose Red #E11D48) — 10 SVG CHOICES
+             ================================================================ -->
+        <div class="step" data-step="2">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">2</span>
+              <span class="step-title">เขาให้คุณทำอะไร?</span>
+            </div>
+            <span class="multi-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m3 17 2 2 4-4"/>
+                <path d="m3 7 2 2 4-4"/>
+                <path d="M13 6h8"/>
+                <path d="M13 12h8"/>
+                <path d="M13 18h8"/>
+              </svg>
+              <span>เลือกได้หลายข้อ</span>
+            </span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                <path d="M12 8v4"/>
+                <path d="M12 16h.01"/>
+              </svg>
+            </span>
+            <span>ยิ่งตรงกับข้อเหล่านี้ ยิ่งต้องระวัง</span>
+          </p>
+          <div class="choice-grid">
+            <!-- 1. โอนเงิน -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="โอนเงินหรือจ่ายเงิน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="12" x="2" y="6" rx="2"/>
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M6 12h.01M18 12h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">โอนเงิน</span>
+            </button>
+
+            <!-- 2. กดลิงก์ -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="กดลิงก์" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+              </span>
+              <span class="choice-label">กดลิงก์</span>
+            </button>
+
+            <!-- 3. บอกรหัส OTP -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="บอกรหัส OTP หรือรหัสผ่าน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/>
+                  <path d="m21 2-9.6 9.6"/>
+                  <circle cx="7.5" cy="15.5" r="5.5"/>
+                </svg>
+              </span>
+              <span class="choice-label">บอกรหัส OTP</span>
+            </button>
+
+            <!-- 4. ติดตั้งแอป -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="ติดตั้งแอปหรือโปรแกรม" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                  <path d="M12 7v6"/>
+                  <path d="m9.5 10.5 2.5 2.5 2.5-2.5"/>
+                  <path d="M12 18h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">ติดตั้งแอป</span>
+            </button>
+
+            <!-- 5. ชวนลงทุน -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="ลงทุนที่ได้กำไรสูงและเร็ว" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                  <polyline points="16 7 22 7 22 13"/>
+                </svg>
+              </span>
+              <span class="choice-label">ชวนลงทุน</span>
+            </button>
+
+            <!-- 6. ญาติเดือดร้อนด่วน -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="ช่วยญาติหรือคนรู้จักที่กำลังเดือดร้อนด่วน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M19 8v4"/>
+                  <path d="M19 16h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">ญาติเดือดร้อนด่วน</span>
+            </button>
+
+            <!-- 7. รับรางวัล/ของฟรี -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="รับรางวัลหรือของฟรี โดยต้องให้ข้อมูลส่วนตัว" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="8" width="18" height="4" rx="1"/>
+                  <path d="M12 8v13"/>
+                  <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+                  <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+                </svg>
+              </span>
+              <span class="choice-label">รับรางวัล/ของฟรี</span>
+            </button>
+
+            <!-- 8. เจ้าหน้าที่ขอความร่วมมือ -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="เปิดวิดีโอคอลหรือให้ความร่วมมือกับเจ้าหน้าที่ทางโทรศัพท์" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m22 8-6 4 6 4V8Z"/>
+                  <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+                </svg>
+              </span>
+              <span class="choice-label">เจ้าหน้าที่ขอความร่วมมือ</span>
+            </button>
+
+            <!-- 9. ขอข้อมูลบัตร/บัญชี -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="ให้ข้อมูลบัตรประชาชน เลขบัญชี หรือรูปถ่ายบัตร" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="14" x="2" y="5" rx="2"/>
+                  <line x1="2" x2="22" y1="10" y2="10"/>
+                  <line x1="6" x2="10" y1="15" y2="15"/>
+                </svg>
+              </span>
+              <span class="choice-label">ขอข้อมูลบัตร/บัญชี</span>
+            </button>
+
+            <!-- 10. แค่รู้สึกแปลก -->
+            <button type="button" class="choice" data-cgroup="ask" data-multi="1" data-value="ไม่ได้ขออะไร แค่รู้สึกแปลก" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <path d="M12 17h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">แค่รู้สึกแปลก</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 3: ข้อความที่ได้รับ หรือสิ่งที่เขาพูด (Violet #7C3AED)
+             ================================================================ -->
+        <div class="step" data-step="3">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">3</span>
+              <span class="step-title">ข้อความที่ได้รับ หรือสิ่งที่เขาพูด</span>
+            </div>
+            <span class="step-badge">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" x2="12" y1="19" y2="22"/>
+              </svg>
+              <span>พิมพ์หรือกดไมค์เล่าได้</span>
+            </span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" x2="12" y1="19" y2="22"/>
+              </svg>
+            </span>
+            <span>
+              <span class="inline-mic-cue">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" x2="12" y1="19" y2="22"/>
+                </svg>
+                <span>พิมพ์หรือกดไมค์แล้วเล่า</span>
+              </span>
+              ถ้าเป็นข้อความ ให้คัดลอกมาวางทั้งหมด ไม่ต้องกดลิงก์ในนั้น
+            </span>
+          </p>
+          <textarea id="scamText" class="large-textarea" placeholder="เช่น พัสดุของคุณค้างชำระภาษี 38 บาท กรุณาชำระภายในวันนี้ที่ลิงก์ ..." oninput="refreshScamPrompt()"></textarea>
+        </div>
+
+      </div>
+
+      <!-- Compact Emergency Hotline Strip (Visible Immediately in Light & Dark Mode) -->
+      <div class="hotline-strip" role="note" aria-label="สายด่วนแจ้งเหตุภัยไซเบอร์">
+        <div class="hotline-strip-left">
+          <span class="hotline-lead-icon" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          <div>
+            <div class="hotline-strip-title">ถ้าเผลอโอนเงินหรือบอกรหัสไปแล้ว โทรอายัดทันที</div>
+            <div class="hotline-strip-sub">อย่ารอช้า ยิ่งแจ้งเร็ว ยิ่งมีโอกาสระงับบัญชีปลายทางได้ทัน</div>
+          </div>
+        </div>
+        <div class="hotline-strip-pills">
+          <a class="hotline-strip-pill" href="tel:1441">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span><b>1441</b> ศูนย์ AOC</span>
+          </a>
+          <a class="hotline-strip-pill" href="tel:1599">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span><b>1599</b> ตำรวจไซเบอร์</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="button-row gen-row">
+        <button type="button" class="primary-btn" onclick="generateScamPrompt()">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          <span>สร้างคำถามให้ AI ตรวจ</span>
+        </button>
+
+        <button type="button" class="secondary-btn" onclick="scamExample()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+          </svg>
+          <span>ลองตัวอย่าง</span>
+        </button>
+
+        <button type="button" class="danger-btn" onclick="clearScam()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+
+      <!-- Result Box (#scamResult — Emerald / Teal Theme) -->
+      <div id="scamResult" class="result" style="display:none;">
+        <div class="result-head-row">
+          <h3>
+            <span class="result-dot" aria-hidden="true"></span>
+            <span>คำถามพร้อมส่งให้ AI ตรวจ</span>
+          </h3>
+          <span class="result-live-badge">อัปเดตอัตโนมัติ</span>
+        </div>
+
+        <p class="result-desc">
+          วางใน ChatGPT หรือ Gemini แล้วอ่านคำตอบ <strong>อย่าเพิ่งโอน กด หรือบอกรหัสใด ๆ จนกว่าจะแน่ใจ</strong>
+          <span class="live-hint">(เปลี่ยนตัวเลือกด้านบนได้ตลอด ข้อความจะอัปเดตให้เอง)</span>
+        </p>
+
+        <div id="scamRisk" class="risk-box"></div>
+        <div id="scamPromptOutput" class="prompt-box"></div>
+
+        <div class="button-row">
+          <button type="button" class="primary-btn" onclick="copyText('scamPromptOutput','scamCopyMessage','คัดลอกคำถามเรียบร้อยแล้ว')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span>คัดลอกคำถาม</span>
+          </button>
+
+          <button type="button" class="secondary-btn" onclick="speakText(document.getElementById('scamPromptOutput').textContent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
+            </svg>
+            <span>อ่านให้ฟัง</span>
+          </button>
+        </div>
+
+        <p id="scamCopyMessage"></p>
+
+        <div class="open-app-row">
+          <p>ขั้นต่อไป: เปิดแอปแล้ววางคำถาม (ระบบคัดลอกให้อัตโนมัติ)</p>
+          <div class="button-row">
+            <a class="app-btn gpt" href="https://chatgpt.com" target="_blank" rel="noopener" onclick="return copyForApp('scamPromptOutput', 'scamCopyMessage')">
+              <span class="app-logo">
+                <img src="ChatGPT.png" alt="ChatGPT" onerror="this.style.display='none'" />
+              </span>
+              <span>เปิด ChatGPT</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+
+            <a class="app-btn gemini" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="return copyForApp('scamPromptOutput', 'scamCopyMessage')">
+              <span class="app-logo">
+                <img src="Gemini.jpg" alt="Gemini" onerror="this.style.display='none'" />
+              </span>
+              <span>เปิด Gemini</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Emergency Hotline Bar (.hotline — Alert Red-Orange Theme) -->
+        <div class="hotline">
+          <div class="hotline-lead">
+            <span class="hotline-lead-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                <path d="M12 9v4"/>
+                <path d="M12 17h.01"/>
+              </svg>
+            </span>
+            <strong>ถ้าสงสัยว่าโดนหลอกแล้ว โทรทันที:</strong>
+          </div>
+          <div class="hotline-numbers">
+            <a class="hotline-chip" href="tel:1441">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span><b>1441</b> ศูนย์ AOC แจ้งอายัดบัญชี 24 ชม.</span>
+            </a>
+
+            <a class="hotline-chip" href="tel:1599">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span><b>1599</b> ตำรวจไซเบอร์</span>
+            </a>
+
+            <span class="hotline-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                <line x1="2" x2="22" y1="10" y2="10"/>
+              </svg>
+              <span><b>เบอร์หลังบัตร</b> ธนาคารของคุณ</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       RELATED TOOLS ("ไปต่อที่เกี่ยวข้อง")
+       ======================================================================== -->
+  <aside class="related" aria-label="เครื่องมือที่เกี่ยวข้อง">
+    <div class="related-head">
+      <span class="related-head-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="m12 5 7 7-7 7"/>
+        </svg>
+      </span>
+      <h3>ไปต่อที่เกี่ยวข้อง</h3>
+    </div>
+
+    <div class="related-grid">
+      <a class="rel-card" href="page-scam-game.html">
+        <div class="ic cat-safe" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="6" x2="10" y1="12" y2="12"/>
+            <line x1="8" x2="8" y1="10" y2="14"/>
+            <line x1="15" x2="15.01" y1="13" y2="13"/>
+            <line x1="18" x2="18.01" y1="11" y2="11"/>
+            <rect width="20" height="12" x="2" y="6" rx="2"/>
+          </svg>
+        </div>
+        <div>
+          <b>เกม วัยเก๋ารู้ทัน</b>
+          <span>จำลอง 10 สถานการณ์จริง เลือกว่าจะทำอย่างไร กับน้องแมวจิ๋ว</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-ask.html">
+        <div class="ic cat-ai" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+          </svg>
+        </div>
+        <div>
+          <b>ถาม AI เรื่องใกล้ตัว</b>
+          <span>ยา ผลตรวจ จดหมายธนาคาร สิทธิรักษา ให้ AI อธิบายง่าย ๆ อย่างปลอดภัย</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-gem.html">
+        <div class="ic cat-ai" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3h12l4 6-10 13L2 9Z"/>
+            <path d="M11 3 8 9l4 13 4-13-3-6"/>
+            <path d="M2 9h20"/>
+          </svg>
+        </div>
+        <div>
+          <b>สร้าง GEM</b>
+          <span>สร้างผู้ช่วย AI ส่วนตัวใน Gemini พร้อมกฎความปลอดภัย</span>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       MODAL, LIGHTBOX & TOAST
+       ======================================================================== -->
+  <div id="modal" class="modal" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="ปิดหน้าต่าง">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      </button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <hr />
+      <h3>ใช้เมื่อไหร่?</h3>
+      <p id="modalUse"></p>
+      <h3>ตัวอย่าง</h3>
+      <div id="modalExample" class="prompt-box"></div>
+      <div class="button-row">
+        <button type="button" class="primary-btn" onclick="useCommand()">ใช้คำสั่งนี้</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()" role="dialog" aria-modal="true" aria-label="ภาพขยาย">
+    <img id="lightboxImg" alt="ภาพขยาย" />
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- External Shared Scripts -->
+  <script src="app.js?v=20260926"></script>
+  <script src="footer.js?v=20260926"></script>
+
+  <!-- Liquid Glass Theme/Font Controller + Standalone Fallback Engine -->
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const MOON_SVG = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+      const SUN_SVG = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+
+      /* ======================================================================
+         1. THEME & FONT SIZE CONTROLLER (MATCHING index.html, ZERO EMOJIS)
+         ====================================================================== */
+      function renderThemeButton(theme) {
+        const btn = document.getElementById('themeBtn');
+        if (!btn) return;
+        const isDark = theme === 'dark';
+        btn.innerHTML =
+          '<svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          (isDark ? SUN_SVG : MOON_SVG) +
+          '</svg><span id="themeText">' + (isDark ? 'สว่าง' : 'มืด') + '</span>';
+      }
+
+      function applyTheme(theme) {
+        const safeTheme = theme === 'dark' ? 'dark' : 'light';
+        htmlEl.setAttribute('data-theme', safeTheme);
+        document.body.classList.toggle('dark', safeTheme === 'dark');
+        try {
+          localStorage.setItem('aiba:theme', safeTheme);
+          localStorage.setItem('theme', safeTheme);
+        } catch (e) {}
+        renderThemeButton(safeTheme);
+      }
+
+      const FONT_SIZES = [16, 18, 20];
+      let currentFontIdx = 0;
+      try {
+        const storedIdx = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+        if (!isNaN(storedIdx) && storedIdx >= 0 && storedIdx < FONT_SIZES.length) {
+          currentFontIdx = storedIdx;
+        }
+      } catch (e) {}
+
+      function applyFontSize(idx) {
+        currentFontIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+        htmlEl.style.fontSize = FONT_SIZES[currentFontIdx] + 'px';
+        try { localStorage.setItem('aiba:fontIdx', String(currentFontIdx)); } catch (e) {}
+      }
+
+      window.toggleTheme = function () {
+        const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      };
+
+      window.changeFontSize = function (delta) {
+        applyFontSize(currentFontIdx + (delta > 0 ? 1 : -1));
+      };
+
+      let initialTheme = 'light';
+      try {
+        initialTheme = localStorage.getItem('aiba:theme') || localStorage.getItem('theme') || 'light';
+      } catch (e) {}
+      applyTheme(initialTheme);
+      applyFontSize(currentFontIdx);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const t = htmlEl.getAttribute('data-theme') || initialTheme;
+        applyTheme(t);
+        applyFontSize(currentFontIdx);
+      });
+
+      /* ======================================================================
+         2. TOAST HELPER
+         ====================================================================== */
+      let toastTimer = null;
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        if (!toast || !message) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2600);
+      }
+
+      /* ======================================================================
+         3. STANDALONE SCAM GUARD FALLBACK (ONLY IF app.js NOT LOADED)
+         ====================================================================== */
+      const hasExternalApp = typeof window.generateScamPrompt === 'function' && typeof window.pickChoice === 'function';
+
+      const FALLBACK_SIGNS = [
+        {
+          num: '01',
+          title: 'เร่งรัด ขู่ให้กลัว',
+          desc: 'ขู่ว่ามีคดีความ บัญชีจะถูกอายัด หรือต้องทำทันทีภายในไม่กี่นาที',
+          icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+        },
+        {
+          num: '02',
+          title: 'ขอ OTP หรือข้อมูลลับ',
+          desc: 'ถามรหัส OTP รหัสผ่าน เลขหลังบัตร หรือให้ถ่ายรูปบัตรประชาชนส่งให้',
+          icon: '<path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/>'
+        },
+        {
+          num: '03',
+          title: 'ให้กดลิงก์ / โหลดแอป',
+          desc: 'ส่งลิงก์แปลกทาง SMS หรือ LINE หรือบอกให้ติดตั้งแอปนอก Store',
+          icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'
+        },
+        {
+          num: '04',
+          title: 'โอนก่อน / กำไรสูงเกินจริง',
+          desc: 'ชวนลงทุนได้ผลตอบแทนเร็ว หรืออ้างได้รางวัลแต่ต้องโอนค่าธรรมเนียมก่อน',
+          icon: '<rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>'
+        },
+        {
+          num: '05',
+          title: 'อ้างเจ้าหน้าที่ / ญาติด่วน',
+          desc: 'วิดีโอคอลใส่ชุดเครื่องแบบ หรืออ้างเป็นคนรู้จักเดือดร้อนขอยืมเงินด่วน',
+          icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/>'
+        }
+      ];
+
+      function renderFallbackSigns() {
+        const container = document.getElementById('scamSigns');
+        if (!container || container.children.length > 0) return;
+        container.innerHTML = FALLBACK_SIGNS.map(function (item) {
+          return (
+            '<div class="sign-card">' +
+              '<div class="sign-top">' +
+                '<span class="sign-icon" aria-hidden="true">' +
+                  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + item.icon + '</svg>' +
+                '</span>' +
+                '<span class="sign-num">' + item.num + '</span>' +
+              '</div>' +
+              '<strong class="sign-title">' + item.title + '</strong>' +
+              '<p class="sign-desc">' + item.desc + '</p>' +
+            '</div>'
+          );
+        }).join('');
+      }
+
+      if (!hasExternalApp) {
+        const DRAFT_KEY = 'aiba:scamDraft:v1';
+        renderFallbackSigns();
+
+        function fallbackCopy(text) {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        async function copyString(text) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+              await navigator.clipboard.writeText(text);
+              return true;
+            } catch (e) {
+              fallbackCopy(text);
+              return true;
+            }
+          }
+          fallbackCopy(text);
+          return true;
+        }
+
+        function setChoiceState(btn, on) {
+          if (!btn) return;
+          btn.classList.toggle('selected', on);
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+
+        function getSelectedChannelBtn() {
+          return document.querySelector('#scamGuard .choice.selected[data-cgroup="channel"], #scamGuard .choice.active[data-cgroup="channel"]');
+        }
+
+        function getSelectedAskBtns() {
+          return Array.from(document.querySelectorAll('#scamGuard .choice.selected[data-cgroup="ask"], #scamGuard .choice.active[data-cgroup="ask"]'));
+        }
+
+        function collectState() {
+          const chBtn = getSelectedChannelBtn();
+          const askBtns = getSelectedAskBtns();
+          const txtEl = document.getElementById('scamText');
+          return {
+            channel: chBtn ? chBtn.getAttribute('data-value') || '' : '',
+            asks: askBtns.map(function (b) { return b.getAttribute('data-value') || ''; }).filter(Boolean),
+            text: txtEl ? txtEl.value.trim() : ''
+          };
+        }
+
+        function isStateEmpty(st) {
+          return !(st.channel || st.asks.length > 0 || st.text);
+        }
+
+        function hideResumeBanner() {
+          const banner = document.getElementById('resumeBanner');
+          if (banner) {
+            banner.classList.remove('show');
+            banner.style.display = '';
+          }
+        }
+
+        function saveDraft() {
+          const st = collectState();
+          const resultEl = document.getElementById('scamResult');
+          if (isStateEmpty(st)) {
+            try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+            return;
+          }
+          const payload = {
+            channel: st.channel,
+            asks: st.asks,
+            text: st.text,
+            resultVisible: resultEl ? resultEl.style.display !== 'none' : false,
+            updatedAt: Date.now()
+          };
+          try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch (e) {}
+        }
+
+        const HIGH_RISK_VALUES = [
+          'โอนเงินหรือจ่ายเงิน',
+          'กดลิงก์',
+          'บอกรหัส OTP หรือรหัสผ่าน',
+          'ติดตั้งแอปหรือโปรแกรม',
+          'เปิดวิดีโอคอลหรือให้ความร่วมมือกับเจ้าหน้าที่ทางโทรศัพท์',
+          'ให้ข้อมูลบัตรประชาชน เลขบัญชี หรือรูปถ่ายบัตร'
+        ];
+
+        function evaluateRisk(st) {
+          const highHits = st.asks.filter(function (v) { return HIGH_RISK_VALUES.indexOf(v) !== -1; });
+          const textLower = st.text.toLowerCase();
+          const hasLinkOrUrgent = /(http|www\.|bit\.ly|line\.me|otp|โอน|อายัด|ด่วน|ภาษี|พัสดุ|บัญชี)/.test(textLower);
+
+          if (highHits.length >= 2 || (highHits.length >= 1 && hasLinkOrUrgent)) {
+            return {
+              cls: 'risk-high',
+              title: 'ความเสี่ยงสูงมาก — หยุดทุกอย่างก่อน',
+              detail: 'มีสัญญาณอันตรายชัดเจน (' + (highHits.slice(0, 3).join(', ') || 'ข้อความเร่งรัด/มีลิงก์') + ') ห้ามกดลิงก์ ห้ามโอนเงิน และห้ามบอกรหัส OTP เด็ดขาด',
+              icon: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>'
+            };
+          }
+          if (highHits.length === 1 || st.asks.length >= 1 || hasLinkOrUrgent) {
+            return {
+              cls: 'risk-med',
+              title: 'น่าสงสัย — ควรตรวจสอบให้แน่ใจก่อน',
+              detail: 'อย่าเพิ่งทำตามคำขอ ลองส่งข้อความด้านล่างให้ AI ช่วยวิเคราะห์ และโทรตรวจสอบกับหน่วยงานหรือญาติด้วยเบอร์ที่คุณรู้จักเอง',
+              icon: '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>'
+            };
+          }
+          return {
+            cls: 'risk-low',
+            title: 'พร้อมตรวจเบื้องต้นกับ AI',
+            detail: 'วางคำถามด้านล่างใน ChatGPT หรือ Gemini เพื่อให้ AI ช่วยดูจุดผิดสังเกต หากไม่แน่ใจให้ปรึกษาคนในครอบครัวหรือโทร 1441',
+            icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>'
+          };
+        }
+
+        function composeScamPrompt(st) {
+          const lines = [];
+          lines.push('ช่วยตรวจสอบข้อความหรือเหตุการณ์นี้ให้หน่อยว่ามีโอกาสเป็นมิจฉาชีพหรือไม่');
+          lines.push('ช่องทางที่ได้รับ: ' + (st.channel || 'ยังไม่ระบุ'));
+          lines.push('สิ่งที่อีกฝ่ายให้ทำ: ' + (st.asks.length > 0 ? st.asks.join(', ') : 'ยังไม่ระบุ'));
+          lines.push('รายละเอียดข้อความหรือสิ่งที่เขาพูด:');
+          lines.push('"""');
+          lines.push(st.text || '[วางข้อความหรือเล่าสิ่งที่ได้รับที่นี่ โดยไม่ต้องกดลิงก์]');
+          lines.push('"""');
+          lines.push('');
+          lines.push('กรุณาตอบเป็นภาษาไทยง่าย ๆ สำหรับผู้ใหญ่ อ่านสบายตา ตามหัวข้อนี้:');
+          lines.push('1. ระดับความเสี่ยง: สูง / กลาง / ต่ำ (บอกชัด ๆ ในบรรทัดแรก)');
+          lines.push('2. จุดน่าสงสัยที่พบ (อธิบายเป็นข้อสั้น ๆ)');
+          lines.push('3. สิ่งที่ควรทำทันที และสิ่งที่ไม่ควรทำเด็ดขาด');
+          lines.push('4. วิธีตรวจสอบกับหน่วยงานหรือคนรู้จักตัวจริงอย่างปลอดภัย');
+          return lines.join('\n');
+        }
+
+        function renderScamOutput(shouldScroll) {
+          const st = collectState();
+          const riskEl = document.getElementById('scamRisk');
+          const outEl = document.getElementById('scamPromptOutput');
+          const resultEl = document.getElementById('scamResult');
+          const copyMsg = document.getElementById('scamCopyMessage');
+          if (!outEl || !resultEl) return;
+
+          if (riskEl) {
+            const risk = evaluateRisk(st);
+            riskEl.className = 'risk-box ' + risk.cls;
+            riskEl.innerHTML =
+              '<span class="risk-box-icon" aria-hidden="true">' +
+                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + risk.icon + '</svg>' +
+              '</span>' +
+              '<div><strong>' + risk.title + '</strong><div>' + risk.detail + '</div></div>';
+          }
+
+          outEl.textContent = composeScamPrompt(st);
+          resultEl.style.display = 'block';
+          if (copyMsg) copyMsg.textContent = '';
+
+          if (shouldScroll) {
+            resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        window.pickChoice = function (btn) {
+          if (!btn) return;
+          hideResumeBanner();
+          const group = btn.getAttribute('data-cgroup');
+          const isMulti = btn.getAttribute('data-multi') === '1';
+
+          if (isMulti) {
+            const isOn = btn.classList.contains('selected') || btn.classList.contains('active');
+            setChoiceState(btn, !isOn);
+          } else if (group) {
+            const alreadyOn = btn.classList.contains('selected') || btn.classList.contains('active');
+            document.querySelectorAll('#scamGuard .choice[data-cgroup="' + group + '"]').forEach(function (el) {
+              setChoiceState(el, false);
+            });
+            setChoiceState(btn, !alreadyOn);
+          }
+
+          window.refreshScamPrompt();
+        };
+
+        window.refreshScamPrompt = function () {
+          hideResumeBanner();
+          const resultEl = document.getElementById('scamResult');
+          if (resultEl && resultEl.style.display !== 'none') {
+            renderScamOutput(false);
+          }
+          saveDraft();
+        };
+
+        window.generateScamPrompt = function () {
+          hideResumeBanner();
+          renderScamOutput(true);
+          saveDraft();
+          showToast('สร้างคำถามให้ AI ตรวจเรียบร้อยแล้ว');
+        };
+
+        window.scamExample = function () {
+          hideResumeBanner();
+          document.querySelectorAll('#scamGuard .choice').forEach(function (el) {
+            setChoiceState(el, false);
+          });
+
+          const chBtn = document.querySelector('#scamGuard .choice[data-cgroup="channel"][data-svg="ch_sms"]');
+          if (chBtn) setChoiceState(chBtn, true);
+
+          const sampleAsks = ['โอนเงินหรือจ่ายเงิน', 'กดลิงก์'];
+          document.querySelectorAll('#scamGuard .choice[data-cgroup="ask"]').forEach(function (el) {
+            if (sampleAsks.indexOf(el.getAttribute('data-value')) !== -1) {
+              setChoiceState(el, true);
+            }
+          });
+
+          const txtEl = document.getElementById('scamText');
+          if (txtEl) {
+            txtEl.value = 'พัสดุของคุณค้างชำระภาษีศุลกากร 38 บาท หากไม่ชำระภายในวันนี้เวลา 18.00 น. พัสดุจะถูกตีกลับ กรุณากดลิงก์เพื่อยืนยันและชำระเงินทันที';
+          }
+
+          renderScamOutput(true);
+          saveDraft();
+          showToast('โหลดตัวอย่างข้อความน่าสงสัยเรียบร้อยแล้ว');
+        };
+
+        window.clearScam = function (silent) {
+          document.querySelectorAll('#scamGuard .choice').forEach(function (el) {
+            setChoiceState(el, false);
+          });
+          const txtEl = document.getElementById('scamText');
+          const riskEl = document.getElementById('scamRisk');
+          const resultEl = document.getElementById('scamResult');
+          const copyMsg = document.getElementById('scamCopyMessage');
+          if (txtEl) txtEl.value = '';
+          if (riskEl) { riskEl.innerHTML = ''; riskEl.className = 'risk-box'; }
+          if (resultEl) resultEl.style.display = 'none';
+          if (copyMsg) copyMsg.textContent = '';
+          try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+          hideResumeBanner();
+          if (!silent) showToast('ล้างข้อมูลเริ่มใหม่เรียบร้อยแล้ว');
+        };
+
+        window.copyText = async function (outputId, msgId, successMsg) {
+          const outEl = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = outEl ? (outEl.textContent || '').trim() : '';
+          if (!text) return;
+          await copyString(text);
+          const msg = successMsg || 'คัดลอกข้อความเรียบร้อยแล้ว';
+          if (msgEl) msgEl.textContent = msg;
+          showToast(msg);
+        };
+
+        window.copyForApp = function (outputId, msgId) {
+          const el = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = el ? (el.textContent || '').trim() : '';
+          if (text) {
+            copyString(text);
+            if (msgEl) msgEl.textContent = 'คัดลอกคำถามแล้ว กำลังเปิดแอป AI...';
+            showToast('คัดลอกคำถามแล้ว กำลังเปิดแอป AI');
+          }
+          return true;
+        };
+
+        window.speakText = function (text) {
+          const clean = String(text || '').trim();
+          if (!clean) return;
+          if (!('speechSynthesis' in window)) {
+            showToast('เบราว์เซอร์นี้ไม่รองรับการอ่านออกเสียง');
+            return;
+          }
+          try {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(clean);
+            const hasThai = /[\u0E00-\u0E7F]/.test(clean);
+            utter.lang = hasThai ? 'th-TH' : 'en-US';
+            utter.rate = 0.96;
+            window.speechSynthesis.speak(utter);
+            showToast('กำลังอ่านคำถามให้ฟัง...');
+          } catch (e) {
+            showToast('ไม่สามารถเริ่มการอ่านออกเสียงได้');
+          }
+        };
+
+        window.restoreWork = function () {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            document.querySelectorAll('#scamGuard .choice').forEach(function (el) {
+              setChoiceState(el, false);
+            });
+            if (data.channel) {
+              document.querySelectorAll('#scamGuard .choice[data-cgroup="channel"]').forEach(function (el) {
+                if (el.getAttribute('data-value') === data.channel) setChoiceState(el, true);
+              });
+            }
+            if (Array.isArray(data.asks)) {
+              document.querySelectorAll('#scamGuard .choice[data-cgroup="ask"]').forEach(function (el) {
+                if (data.asks.indexOf(el.getAttribute('data-value')) !== -1) setChoiceState(el, true);
+              });
+            }
+            const txtEl = document.getElementById('scamText');
+            if (txtEl) txtEl.value = data.text || '';
+            if (data.resultVisible) {
+              renderScamOutput(false);
+            }
+            hideResumeBanner();
+            showToast('กู้คืนงานที่ทำค้างไว้เรียบร้อยแล้ว');
+          } catch (e) {
+            hideResumeBanner();
+          }
+        };
+
+        window.discardWork = function () {
+          window.clearScam(true);
+          showToast('ล้างงานเดิมแล้ว พร้อมเริ่มใหม่');
+        };
+
+        window.closeModal = function (ev) {
+          if (ev && ev.target && ev.target.id !== 'modal') return;
+          const modal = document.getElementById('modal');
+          if (modal) modal.classList.remove('open', 'show');
+        };
+
+        window.useCommand = function () {
+          window.closeModal();
+        };
+
+        window.closeLightbox = function () {
+          const lb = document.getElementById('lightbox');
+          if (lb) lb.classList.remove('open', 'show');
+        };
+
+        (function checkDraft() {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            const parts = [];
+            if (data.channel) parts.push('ช่องทาง: ' + data.channel);
+            if (data.text) parts.push('"' + data.text.slice(0, 32) + (data.text.length > 32 ? '...' : '') + '"');
+            if (data.updatedAt) {
+              const dt = new Date(data.updatedAt);
+              parts.push('บันทึกล่าสุด ' + dt.toLocaleString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
+            }
+            const infoEl = document.getElementById('resumeInfo');
+            const banner = document.getElementById('resumeBanner');
+            if (infoEl) infoEl.textContent = parts.join(' · ') || 'ข้อมูลที่ทำค้างไว้พร้อมทำต่อ';
+            if (banner) banner.classList.add('show');
+          } catch (e) {}
+        })();
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          renderFallbackSigns();
+        });
+      }
+
+      /* ======================================================================
+         4. STANDARD FOOTER FALLBACK (ONLY IF footer.js DID NOT INJECT ONE)
+         ====================================================================== */
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.querySelector('footer')) {
+          const footerHtml =
+            '<footer class="site-footer">' +
+              '<div class="container">' +
+                '<div class="footer-grid">' +
+                  '<div>' +
+                    '<div class="footer-logos">' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                    '</div>' +
+                    '<h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>' +
+                    '<p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>' +
+                    '<p class="footer-text">85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />โทร 0 2855 0000</p>' +
+                    '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">' +
+                      '<span>www.pim.ac.th</span>' +
+                      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>' +
+                    '</a>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>' +
+                    '<p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>' +
+                    '<div class="footer-socials" aria-label="โซเชียลมีเดีย">' +
+                      '<a href="#" class="social-btn" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>' +
+                      '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="footer-bottom-bar">© 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED</div>' +
+            '</footer>';
+          document.body.insertAdjacentHTML('beforeend', footerHtml);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

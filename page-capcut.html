@@ -1,0 +1,3024 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>สั่งตัดวิดีโอใน CapCut — AiBA Connect</title>
+  <meta name="theme-color" content="#8B5CF6" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — AiBA CONNECT LIQUID GLASS TOKENS (LIGHT & DARK)
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --muted: #64748B;
+      --green: #10B981;
+
+      /* Brand & Video Category Theme (#8B5CF6 -> #06B6D4) */
+      --brand-coral: #FF6B6B;
+      --brand-violet: #7C3AED;
+      --brand-cyan: #06B6D4;
+      --brand-mint: #10B981;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+      --video-grad: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+      --video-solid: #7C3AED;
+      --video-text: #5B21B6;
+      --video-soft: rgba(139, 92, 246, 0.12);
+      --video-border: rgba(139, 92, 246, 0.34);
+      --video-glow: rgba(139, 92, 246, 0.28);
+
+      /* Liquid Glass System — Light Mode */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(124, 58, 237, 0.12);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+      /* Surfaces */
+      --surface-input: rgba(248, 249, 254, 0.95);
+      --surface-subtle: rgba(241, 239, 251, 0.66);
+      --border-subtle: rgba(19, 24, 54, 0.10);
+
+      /* Prompt Result Sheet — High-Contrast Dark Layer */
+      --sheet-bg: linear-gradient(155deg, #111632 0%, #172146 55%, #112A3E 100%);
+      --sheet-border: rgba(56, 189, 248, 0.24);
+      --sheet-ink: #F0F6FF;
+      --sheet-dim: #9CB2CF;
+      --sheet-key: #67E8F9;
+      --sheet-shadow: 0 22px 48px rgba(19, 24, 54, 0.22);
+
+      /* Status Colors */
+      --ok-solid: #10B981;
+      --ok-text: #047857;
+      --ok-bg: rgba(16, 185, 129, 0.12);
+      --ok-border: rgba(16, 185, 129, 0.34);
+
+      --warn-solid: #F59E0B;
+      --warn-text: #B45309;
+      --warn-bg: rgba(245, 158, 11, 0.14);
+      --warn-border: rgba(245, 158, 11, 0.38);
+
+      --err-solid: #EF4444;
+      --err-text: #DC2626;
+      --err-bg: rgba(239, 68, 68, 0.10);
+      --err-border: rgba(239, 68, 68, 0.32);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --shadow-lg: 0 20px 48px rgba(124, 58, 237, 0.13);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 30px;
+      --radius-pill: 9999px;
+      --container-max: 1180px;
+
+      /* ========================================================================
+         SEMANTIC COLOR GROUPS FOR STEPS 1–9 (LIGHT MODE)
+         1-2: Violet | 3-4: Cyan/Sky | 5-6: Coral/Orange | 7-8: Mint/Green | 9: Orchid/Indigo
+         ======================================================================== */
+      /* Group A (Steps 1–2): Violet / Purple */
+      --grp-violet-grad: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+      --grp-violet-solid: #7C3AED;
+      --grp-violet-text: #5B21B6;
+      --grp-violet-soft: rgba(124, 58, 237, 0.11);
+      --grp-violet-border: rgba(124, 58, 237, 0.34);
+      --grp-violet-glow: rgba(124, 58, 237, 0.26);
+
+      /* Group B (Steps 3–4): Cyan / Sky */
+      --grp-cyan-grad: linear-gradient(135deg, #06B6D4 0%, #0284C7 100%);
+      --grp-cyan-solid: #0284C7;
+      --grp-cyan-text: #0369A1;
+      --grp-cyan-soft: rgba(6, 182, 212, 0.12);
+      --grp-cyan-border: rgba(6, 182, 212, 0.38);
+      --grp-cyan-glow: rgba(2, 132, 199, 0.26);
+
+      /* Group C (Steps 5–6): Coral / Orange */
+      --grp-coral-grad: linear-gradient(135deg, #FF6B6B 0%, #F97316 100%);
+      --grp-coral-solid: #EA580C;
+      --grp-coral-text: #C2410C;
+      --grp-coral-soft: rgba(249, 115, 22, 0.12);
+      --grp-coral-border: rgba(249, 115, 22, 0.36);
+      --grp-coral-glow: rgba(234, 88, 12, 0.26);
+
+      /* Group D (Steps 7–8): Mint / Emerald */
+      --grp-mint-grad: linear-gradient(135deg, #10B981 0%, #0D9488 100%);
+      --grp-mint-solid: #059669;
+      --grp-mint-text: #047857;
+      --grp-mint-soft: rgba(16, 185, 129, 0.12);
+      --grp-mint-border: rgba(16, 185, 129, 0.36);
+      --grp-mint-glow: rgba(16, 185, 129, 0.26);
+
+      /* Group E (Step 9): Indigo / Orchid Pink-Violet */
+      --grp-orchid-grad: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+      --grp-orchid-solid: #9333EA;
+      --grp-orchid-text: #7E22CE;
+      --grp-orchid-soft: rgba(168, 85, 247, 0.12);
+      --grp-orchid-border: rgba(168, 85, 247, 0.36);
+      --grp-orchid-glow: rgba(147, 51, 234, 0.28);
+
+      /* Related Category Gradients */
+      --cat-video-grad: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+      --cat-ai-grad: linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+      --cat-create-grad: linear-gradient(135deg, #FF6B6B 0%, #F59E0B 100%);
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --muted: #94A3B8;
+      --green: #34D399;
+
+      --video-solid: #A78BFA;
+      --video-text: #DDD6FE;
+      --video-soft: rgba(167, 139, 250, 0.18);
+      --video-border: rgba(167, 139, 250, 0.42);
+      --video-glow: rgba(139, 92, 246, 0.42);
+
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(167, 139, 250, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+      --surface-input: rgba(14, 17, 36, 0.84);
+      --surface-subtle: rgba(15, 18, 37, 0.58);
+      --border-subtle: rgba(255, 255, 255, 0.11);
+
+      --sheet-bg: linear-gradient(155deg, #070A18 0%, #0E1530 55%, #0B1F2E 100%);
+      --sheet-border: rgba(56, 189, 248, 0.28);
+      --sheet-ink: #F1F5F9;
+      --sheet-dim: #8DA4C4;
+      --sheet-key: #67E8F9;
+      --sheet-shadow: 0 24px 56px rgba(0, 0, 0, 0.55);
+
+      --ok-text: #34D399;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --ok-border: rgba(52, 211, 153, 0.42);
+
+      --warn-text: #FCD34D;
+      --warn-bg: rgba(245, 158, 11, 0.18);
+      --warn-border: rgba(251, 191, 36, 0.44);
+
+      --err-solid: #F87171;
+      --err-text: #FCA5A5;
+      --err-bg: rgba(239, 68, 68, 0.16);
+      --err-border: rgba(248, 113, 113, 0.38);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+
+      /* Group Colors — Dark Mode */
+      --grp-violet-solid: #A78BFA;
+      --grp-violet-text: #DDD6FE;
+      --grp-violet-soft: rgba(167, 139, 250, 0.20);
+      --grp-violet-border: rgba(167, 139, 250, 0.48);
+      --grp-violet-glow: rgba(139, 92, 246, 0.40);
+
+      --grp-cyan-solid: #38BDF8;
+      --grp-cyan-text: #A5F3FC;
+      --grp-cyan-soft: rgba(56, 189, 248, 0.20);
+      --grp-cyan-border: rgba(56, 189, 248, 0.48);
+      --grp-cyan-glow: rgba(6, 182, 212, 0.38);
+
+      --grp-coral-solid: #FB923C;
+      --grp-coral-text: #FED7AA;
+      --grp-coral-soft: rgba(251, 146, 60, 0.20);
+      --grp-coral-border: rgba(251, 146, 60, 0.48);
+      --grp-coral-glow: rgba(249, 115, 22, 0.38);
+
+      --grp-mint-solid: #34D399;
+      --grp-mint-text: #A7F3D0;
+      --grp-mint-soft: rgba(52, 211, 153, 0.20);
+      --grp-mint-border: rgba(52, 211, 153, 0.48);
+      --grp-mint-glow: rgba(16, 185, 129, 0.38);
+
+      --grp-orchid-solid: #E879F9;
+      --grp-orchid-text: #F5D0FE;
+      --grp-orchid-soft: rgba(232, 121, 249, 0.20);
+      --grp-orchid-border: rgba(232, 121, 249, 0.48);
+      --grp-orchid-glow: rgba(192, 38, 211, 0.40);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(920px 520px at 8% -4%, rgba(139, 92, 246, 0.15), transparent 60%),
+        radial-gradient(920px 560px at 94% 4%, rgba(6, 182, 212, 0.14), transparent 60%),
+        radial-gradient(760px 520px at 50% 48%, rgba(255, 107, 107, 0.08), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--video-solid);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       3. FLOATING GLASS NAVBAR (MATCHING index.html)
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 40px;
+      padding: 0 15px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--video-solid);
+      color: var(--video-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 1.16rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      background: var(--video-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--video-solid);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       4. MAIN PAGE WRAPPER & VIDEO CATEGORY HERO CARD (#8B5CF6 -> #06B6D4)
+       ========================================================================== */
+    .page {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 26px 24px 48px;
+      flex: 1;
+    }
+
+    .page-hero {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: var(--video-grad);
+      color: #FFFFFF;
+      padding: 32px 34px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 44px var(--video-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 280px;
+      height: 280px;
+      top: -110px;
+      right: -60px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.26), transparent 70%);
+    }
+
+    .hero-orb-2 {
+      width: 240px;
+      height: 240px;
+      bottom: -110px;
+      left: 28%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.32), transparent 70%);
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-main-col {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1 1 420px;
+      min-width: 0;
+    }
+
+    /* CapCut Brand Logo Frame (.app-logo) in Hero & Open Button */
+    .app-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .app-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .hero-logo-box.app-logo {
+      width: 74px;
+      height: 74px;
+      padding: 12px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 28px rgba(19, 24, 54, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .page-hero p {
+      font-size: 1.04rem;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 60ch;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.20);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       5. RESUME BANNER (SAVED WORK RECOVERY)
+       ========================================================================== */
+    .resume-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--video-border);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--video-soft);
+      animation: fadeSlideUp 0.25s ease;
+    }
+
+    .resume-banner.show {
+      display: flex;
+    }
+
+    .resume-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .resume-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--video-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--video-glow);
+    }
+
+    .resume-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-text span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       6. BUILDER SHELL & INTRO CALLOUT
+       ========================================================================== */
+    .builder-panel {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .builder-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--video-grad);
+    }
+
+    .section-description {
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .desc-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .legend-chip.c-violet {
+      background: var(--grp-violet-soft);
+      color: var(--grp-violet-text);
+      border: 1px solid var(--grp-violet-border);
+    }
+
+    .legend-chip.c-cyan {
+      background: var(--grp-cyan-soft);
+      color: var(--grp-cyan-text);
+      border: 1px solid var(--grp-cyan-border);
+    }
+
+    .legend-chip.c-coral {
+      background: var(--grp-coral-soft);
+      color: var(--grp-coral-text);
+      border: 1px solid var(--grp-coral-border);
+    }
+
+    .legend-chip.c-mint {
+      background: var(--grp-mint-soft);
+      color: var(--grp-mint-text);
+      border: 1px solid var(--grp-mint-border);
+    }
+
+    .legend-chip.c-orchid {
+      background: var(--grp-orchid-soft);
+      color: var(--grp-orchid-text);
+      border: 1px solid var(--grp-orchid-border);
+    }
+
+    /* ==========================================================================
+       7. STEP BLOCKS (COLOR-CODED BY TOPIC GROUP)
+       ========================================================================== */
+    .steps-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .step {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      border-left: 5px solid var(--step-solid, var(--video-solid));
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .step:focus-within {
+      border-color: var(--step-border, var(--video-border));
+      border-left-color: var(--step-solid, var(--video-solid));
+      box-shadow: 0 8px 24px var(--step-soft, var(--video-soft));
+    }
+
+    /* Group A: Steps 1 & 2 — Violet */
+    .step[data-step="1"],
+    .step[data-step="2"] {
+      --step-grad: var(--grp-violet-grad);
+      --step-solid: var(--grp-violet-solid);
+      --step-text: var(--grp-violet-text);
+      --step-soft: var(--grp-violet-soft);
+      --step-border: var(--grp-violet-border);
+      --step-glow: var(--grp-violet-glow);
+    }
+
+    /* Group B: Steps 3 & 4 — Cyan / Sky */
+    .step[data-step="3"],
+    .step[data-step="4"] {
+      --step-grad: var(--grp-cyan-grad);
+      --step-solid: var(--grp-cyan-solid);
+      --step-text: var(--grp-cyan-text);
+      --step-soft: var(--grp-cyan-soft);
+      --step-border: var(--grp-cyan-border);
+      --step-glow: var(--grp-cyan-glow);
+    }
+
+    /* Group C: Steps 5 & 6 — Coral / Orange */
+    .step[data-step="5"],
+    .step[data-step="6"] {
+      --step-grad: var(--grp-coral-grad);
+      --step-solid: var(--grp-coral-solid);
+      --step-text: var(--grp-coral-text);
+      --step-soft: var(--grp-coral-soft);
+      --step-border: var(--grp-coral-border);
+      --step-glow: var(--grp-coral-glow);
+    }
+
+    /* Group D: Steps 7 & 8 — Mint / Green */
+    .step[data-step="7"],
+    .step[data-step="8"] {
+      --step-grad: var(--grp-mint-grad);
+      --step-solid: var(--grp-mint-solid);
+      --step-text: var(--grp-mint-text);
+      --step-soft: var(--grp-mint-soft);
+      --step-border: var(--grp-mint-border);
+      --step-glow: var(--grp-mint-glow);
+    }
+
+    /* Group E: Step 9 — Indigo / Orchid Pink-Violet */
+    .step[data-step="9"] {
+      --step-grad: var(--grp-orchid-grad);
+      --step-solid: var(--grp-orchid-solid);
+      --step-text: var(--grp-orchid-text);
+      --step-soft: var(--grp-orchid-soft);
+      --step-border: var(--grp-orchid-border);
+      --step-glow: var(--grp-orchid-glow);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      background: var(--step-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 5px 14px var(--step-glow);
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .multi-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .step-help {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 14px;
+    }
+
+    .sub-group-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--step-text);
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      margin: 4px 0 10px;
+    }
+
+    .sub-group-label.spaced {
+      margin-top: 16px;
+    }
+
+    /* Textarea & Input */
+    .large-textarea,
+    .large-input {
+      width: 100%;
+      background: var(--surface-input);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .large-textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .large-textarea:hover,
+    .large-input:hover {
+      border-color: var(--step-border);
+    }
+
+    .large-textarea:focus,
+    .large-input:focus {
+      outline: none;
+      border-color: var(--step-solid);
+      box-shadow: 0 0 0 4px var(--step-soft);
+    }
+
+    .large-textarea::placeholder,
+    .large-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.85;
+    }
+
+    /* ==========================================================================
+       8. CHOICE CHIPS (INHERIT PER-STEP SEMANTIC COLOR IN LIGHT & DARK)
+       ========================================================================== */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 10px;
+    }
+
+    .choice-grid.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .choice-grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 50px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 500;
+      text-align: left;
+      line-height: 1.32;
+      position: relative;
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    .choice:hover {
+      border-color: var(--step-solid, var(--video-solid));
+      background: var(--glass-bg-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .choice-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--step-soft, var(--video-soft));
+      color: var(--step-text, var(--video-text));
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .choice-icon svg {
+      width: 17px;
+      height: 17px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .choice:hover .choice-icon {
+      transform: scale(1.06);
+    }
+
+    .choice-label {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .lang-code-pill {
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft);
+      color: var(--step-text);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* Selected State — Colored by Step Group */
+    .choice.selected,
+    .choice.active,
+    .choice[aria-pressed="true"] {
+      background: var(--step-grad, var(--video-grad));
+      border-color: transparent;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 8px 22px var(--step-glow, var(--video-glow));
+      transform: translateY(-1px);
+    }
+
+    .choice.selected .choice-icon,
+    .choice.active .choice-icon,
+    .choice[aria-pressed="true"] .choice-icon {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+    }
+
+    .choice.selected .lang-code-pill,
+    .choice.active .lang-code-pill,
+    .choice[aria-pressed="true"] .lang-code-pill {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+    }
+
+    .choice.selected:hover,
+    .choice.active:hover,
+    .choice[aria-pressed="true"]:hover {
+      filter: brightness(1.06);
+      color: #FFFFFF;
+    }
+
+    /* Multi-select check box indicator for Step 7 */
+    .choice[data-multi="1"]::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid var(--step-border);
+      background: transparent;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .choice[data-multi="1"].selected::after {
+      border-color: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.24) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+    }
+
+    /* ==========================================================================
+       9. ACTION BUTTONS & RESULT PANEL (#storyResult)
+       ========================================================================== */
+    .button-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .gen-row {
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 24px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--video-grad);
+      color: #FFFFFF;
+      border: 1.5px solid transparent;
+      box-shadow: 0 10px 24px var(--video-glow);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px var(--video-glow);
+    }
+
+    .secondary-btn {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--video-solid);
+      color: var(--video-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .danger-btn {
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1.5px solid var(--err-border);
+    }
+
+    .danger-btn:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: var(--err-solid);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 9px 17px;
+      font-size: 0.92rem;
+    }
+
+    /* Result Sheet (#storyResult) */
+    .result {
+      --green: #34D399;
+      --muted: #9CB2CF;
+      margin-top: 28px;
+      border-radius: var(--radius-lg);
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1.5px solid var(--sheet-border);
+      box-shadow: var(--sheet-shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 24px;
+      animation: fadeSlideUp 0.28s ease;
+    }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--video-grad);
+    }
+
+    .result-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .result h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.26rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .result-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--video-grad);
+      box-shadow: 0 0 12px var(--sheet-key);
+      flex-shrink: 0;
+    }
+
+    .result-live-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--sheet-key);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .result-desc {
+      font-size: 0.96rem;
+      color: var(--sheet-dim);
+      margin-bottom: 16px;
+    }
+
+    .result-desc .live-hint {
+      color: var(--sheet-key);
+      font-size: 0.88rem;
+    }
+
+    .result .prompt-box {
+      background: rgba(6, 10, 24, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-left: 4px solid #38BDF8;
+      border-radius: 14px;
+      padding: 16px 18px;
+      min-height: 96px;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--sheet-ink);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .counter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 18px;
+    }
+
+    #storyCounter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #67E8F9;
+      margin: 0;
+    }
+
+    #storyCounter.counter-ok {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(52, 211, 153, 0.42);
+      color: #6EE7B7;
+    }
+
+    #storyCounter.counter-warn {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: rgba(251, 191, 36, 0.44);
+      color: #FDE68A;
+    }
+
+    #storyCounter.counter-over {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(248, 113, 113, 0.44);
+      color: #FCA5A5;
+    }
+
+    .result .secondary-btn {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #F8FAFC;
+      padding: 11px 20px;
+      font-size: 0.95rem;
+    }
+
+    .result .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: var(--sheet-key);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    #storyCopyMessage {
+      color: #34D399;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      min-height: 1.4em;
+      margin-top: 12px;
+    }
+
+    .open-app-row {
+      margin-top: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .open-app-row p {
+      font-size: 0.93rem;
+      color: var(--sheet-dim);
+      margin-bottom: 14px;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 22px 10px 14px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .app-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .app-btn.capcut {
+      background: linear-gradient(135deg, #111827 0%, #312E81 52%, #0891B2 100%);
+      box-shadow: 0 10px 24px rgba(6, 182, 212, 0.30);
+    }
+
+    .app-btn .app-logo {
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+    }
+
+    /* ==========================================================================
+       10. RELATED TOOLS SECTION ("ไปต่อที่เกี่ยวข้อง")
+       ========================================================================== */
+    .related {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .related-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .related-head-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--video-soft);
+      border: 1px solid var(--video-border);
+      color: var(--video-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .related h3 {
+      font-size: 1.24rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .rel-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .rel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--video-solid);
+    }
+
+    .rel-card .ic {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .rel-card .ic.cat-video { background: var(--cat-video-grad); }
+    .rel-card .ic.cat-ai { background: var(--cat-ai-grad); }
+    .rel-card .ic.cat-create { background: var(--cat-create-grad); }
+
+    .rel-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rel-card span {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       11. MODAL, LIGHTBOX & TOAST
+       ========================================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      background: rgba(10, 13, 30, 0.64);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.open,
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--video-solid);
+      color: #FFFFFF;
+      transform: rotate(90deg);
+    }
+
+    .modal-box hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 16px 0;
+    }
+
+    .modal-box h3 {
+      font-size: 1.02rem;
+      margin: 12px 0 6px;
+    }
+
+    .modal-box .prompt-box {
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1px solid var(--sheet-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 8px 0 18px;
+      white-space: pre-wrap;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1600;
+      background: rgba(7, 10, 24, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open,
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: min(94vw, 960px);
+      max-height: 86vh;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      object-fit: contain;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      transform: translate(-50%, 18px);
+      background: var(--video-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 14px 34px var(--video-glow);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1700;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       12. FOOTER (MATCHING index.html & STYLING footer.js OUTPUT)
+       ========================================================================== */
+    .site-footer,
+    footer.footer,
+    body > footer {
+      background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 44px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--video-grad);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(139, 92, 246, 0.26), rgba(6, 182, 212, 0.24));
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       13. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .choice-grid.cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.84rem;
+      }
+
+      .logo-slot {
+        height: 30px;
+      }
+
+      .logo-slot img {
+        height: 32px;
+      }
+
+      .topbar-title {
+        font-size: 0.98rem;
+      }
+
+      .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+
+      .page {
+        padding: 18px 14px 36px;
+      }
+
+      .page-hero {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .hero-logo-box.app-logo {
+        width: 58px;
+        height: 58px;
+        padding: 9px;
+        border-radius: 16px;
+      }
+
+      .builder-panel {
+        padding: 18px 14px;
+        border-radius: 24px;
+      }
+
+      .step {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .choice-grid,
+      .choice-grid.cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .choice-grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .choice {
+        padding: 9px 10px;
+        font-size: 0.88rem;
+        gap: 8px;
+        min-height: 46px;
+      }
+
+      .choice-icon {
+        width: 28px;
+        height: 28px;
+      }
+
+      .choice-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .gen-row .primary-btn {
+        flex: 1 1 100%;
+      }
+
+      .gen-row .secondary-btn,
+      .gen-row .danger-btn {
+        flex: 1 1 auto;
+      }
+
+      .result {
+        padding: 18px 14px;
+      }
+
+      .related {
+        padding: 0 14px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-back-text,
+      .logo-slot,
+      .brand-divider,
+      #themeText {
+        display: none;
+      }
+
+      .nav-back-btn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS TOPBAR (MATCHING index.html)
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="แถบนำทาง สั่งตัดวิดีโอใน CapCut">
+      <div class="nav-left">
+        <a class="nav-back-btn back-home" href="index.html" aria-label="กลับหน้าหลัก">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
+          <span class="nav-back-text">หน้าหลัก</span>
+        </a>
+
+        <div class="nav-brand">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display='none'" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="topbar-title">สั่งตัดวิดีโอใน CapCut</div>
+        </div>
+      </div>
+
+      <div class="nav-actions topbar-tools">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับธีมสว่าง/มืด" aria-label="สลับธีมสว่าง/มืด">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN CONTENT
+       ======================================================================== -->
+  <main class="page">
+
+    <!-- Page Hero (Video Category Gradient #8B5CF6 -> #06B6D4) -->
+    <section class="page-hero">
+      <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+      <div class="page-hero-inner cat-video">
+        <div class="hero-main-col">
+          <div class="hero-logo-box app-logo">
+            <img src="capcut-logo-.png" alt="CapCut" onerror="this.style.display='none'" />
+          </div>
+          <div>
+            <div class="hero-kicker">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m22 8-6 4 6 4V8Z"/>
+                <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+              </svg>
+              <span>AiBA Connect · หมวดวิดีโอ</span>
+            </div>
+            <h1>สั่งตัดวิดีโอใน CapCut</h1>
+            <p>สร้าง Prompt สั้น ๆ สำหรับฟีเจอร์ตัดอัตโนมัติด้วย AI พร้อมนับตัวอักษร</p>
+          </div>
+        </div>
+
+        <div class="hero-pills" aria-hidden="true">
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+            </svg>
+            <span>AI Auto-Cut Prompt</span>
+          </span>
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7V4h16v3"/>
+              <path d="M9 20h6"/>
+              <path d="M12 4v16"/>
+            </svg>
+            <span>นับตัวอักษรอัตโนมัติ</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Banner -->
+    <div id="resumeBanner" class="resume-banner" role="region" aria-label="กู้คืนงานที่ทำค้างไว้">
+      <div class="resume-left">
+        <div class="resume-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+        </div>
+        <div class="resume-text">
+          <strong>พบงานที่ทำค้างไว้ในหน้านี้</strong>
+          <span id="resumeInfo"></span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button type="button" class="primary-btn btn-sm" onclick="restoreWork()">ทำต่อจากเดิม</button>
+        <button type="button" class="danger-btn btn-sm" onclick="discardWork()">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <!-- CapCut Story Builder Section (#storyBuilder) -->
+    <section id="storyBuilder" class="builder-panel builder active">
+      <div class="section-description">
+        ฟีเจอร์ตัดอัตโนมัติด้วย AI ของ CapCut รับได้แค่ Prompt สั้น ๆ ว่า "อยากให้ตัดออกมาแบบไหน"
+        ตอบคำถามด้านล่าง ระบบจะเรียบเรียงเป็น Prompt กระชับ พร้อมนับตัวอักษรให้ไม่เกินที่กำหนด
+        <div class="desc-legend" aria-hidden="true">
+          <span class="legend-chip c-violet">1–2 เนื้อหาและประเภท</span>
+          <span class="legend-chip c-cyan">3–4 สัดส่วนและจังหวะ</span>
+          <span class="legend-chip c-coral">5–6 อารมณ์และข้อความ</span>
+          <span class="legend-chip c-mint">7–8 ลูกเล่นและรายละเอียด</span>
+          <span class="legend-chip c-orchid">9 ภาษาและความยาว</span>
+        </div>
+      </div>
+
+      <div class="steps-stack">
+
+        <!-- ================================================================
+             STEP 1: วิดีโอนี้เกี่ยวกับอะไร? (Violet)
+             ================================================================ -->
+        <div class="step" data-step="1">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">1</span>
+              <span class="step-title">วิดีโอนี้เกี่ยวกับอะไร?</span>
+            </div>
+          </div>
+          <p class="step-help">บอกสั้น ๆ ว่าเป็นคลิปอะไร และมีฟุตเทจอะไรอยู่บ้าง</p>
+          <textarea id="storyTopic" class="large-textarea"
+            placeholder="เช่น รีวิวร้านก๋วยเตี๋ยวเรืออยุธยา มีคลิปถ่ายหน้าร้าน คุณยายลวกเส้น น้ำซุปเดือด และตอนกิน"
+            oninput="refreshStoryPrompt()"></textarea>
+        </div>
+
+        <!-- ================================================================
+             STEP 2: เป็นวิดีโอประเภทไหน? (Violet)
+             ================================================================ -->
+        <div class="step" data-step="2">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">2</span>
+              <span class="step-title">เป็นวิดีโอประเภทไหน?</span>
+            </div>
+          </div>
+          <p class="step-help">เลือกได้ 1 อย่าง</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโอรีวิว" data-en="product/place review video" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+              <span class="choice-label">รีวิว</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโอโปรโมทร้าน" data-en="promo video for a shop/brand" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2 2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></svg></span>
+              <span class="choice-label">โปรโมทร้าน</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโอสอนวิธีทำทีละขั้น" data-en="step-by-step tutorial video" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+              <span class="choice-label">สอนวิธีทำ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโอเล่าเรื่อง" data-en="storytelling video" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+              <span class="choice-label">เล่าเรื่อง</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="Vlog ท่องเที่ยว" data-en="travel vlog" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
+              <span class="choice-label">Vlog/ท่องเที่ยว</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโอให้ความรู้" data-en="educational explainer video" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+              <span class="choice-label">ให้ความรู้</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโอสร้างแรงบันดาลใจ" data-en="motivational video" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+              <span class="choice-label">แรงบันดาลใจ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="type" data-value="วิดีโออาหาร" data-en="food video" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>
+              <span class="choice-label">อาหาร</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 3: สัดส่วนและความยาว (Cyan / Sky)
+             ================================================================ -->
+        <div class="step" data-step="3">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">3</span>
+              <span class="step-title">สัดส่วนและความยาว</span>
+            </div>
+          </div>
+          <p class="step-help">ตามแพลตฟอร์มที่จะลง</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-sgroup="length" data-value="แนวตั้ง 9:16 ยาว 15 วินาที" data-en="vertical 9:16, 15 seconds" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg></span>
+              <span class="choice-label">9:16 · 15 วิ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="length" data-value="แนวตั้ง 9:16 ยาว 30 วินาที" data-en="vertical 9:16, 30 seconds" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="12" height="20" x="6" y="2" rx="2"/><path d="M12 18h.01"/><polygon points="10 8 15 11 10 14 10 8"/></svg></span>
+              <span class="choice-label">9:16 · 30 วิ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="length" data-value="แนวตั้ง 9:16 ยาว 60 วินาที" data-en="vertical 9:16, 60 seconds" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="12" height="20" x="6" y="2" rx="2"/><path d="M12 18h.01"/><path d="M12 7v4l2 1"/></svg></span>
+              <span class="choice-label">9:16 · 60 วิ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="length" data-value="แนวตั้ง 9:16 ยาว 90 วินาที" data-en="vertical 9:16, 90 seconds" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="12" height="20" x="6" y="2" rx="2"/><path d="M12 18h.01"/><path d="M9 7h6"/><path d="M9 11h6"/></svg></span>
+              <span class="choice-label">9:16 · 90 วิ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="length" data-value="แนวนอน 16:9 ยาว 1 นาที" data-en="horizontal 16:9, 1 minute" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>
+              <span class="choice-label">16:9 · 1 นาที</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="length" data-value="แนวนอน 16:9 ยาว 3 นาที" data-en="horizontal 16:9, 3 minutes" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M17 3v18"/><path d="M3 12h18"/><path d="M3 7.5h4"/><path d="M3 16.5h4"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg></span>
+              <span class="choice-label">16:9 · 3 นาที</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="length" data-value="สี่เหลี่ยม 1:1 ยาว 30 วินาที" data-en="square 1:1, 30 seconds" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="3"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span>
+              <span class="choice-label">1:1 · 30 วิ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 4: อยากให้ตัดจังหวะแบบไหน? (Cyan / Sky)
+             ================================================================ -->
+        <div class="step" data-step="4">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">4</span>
+              <span class="step-title">อยากให้ตัดจังหวะแบบไหน?</span>
+            </div>
+          </div>
+          <p class="step-help">สไตล์การตัดต่อหลัก</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-sgroup="pace" data-value="ตัดเร็ว ตามจังหวะบีตเพลง" data-en="fast cuts synced to the music beat" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+              <span class="choice-label">ตัดเร็วตามบีต</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="ตัดช้า นุ่มนวล ปล่อยช็อตยาว" data-en="slow, smooth pacing with longer shots" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></span>
+              <span class="choice-label">ช้า นุ่มนวล</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="สไตล์ภาพยนตร์ มีสโลว์โมชัน" data-en="cinematic style with slow motion" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span>
+              <span class="choice-label">แบบภาพยนตร์</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="สไตล์ Vlog เป็นธรรมชาติ" data-en="natural vlog-style editing" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg></span>
+              <span class="choice-label">สไตล์ Vlog</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="สไตล์ TikTok เทรนด์ฮิต ซูมเข้าออก" data-en="trendy TikTok style with punch-in zooms" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
+              <span class="choice-label">สไตล์ TikTok</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="เรียบง่าย สะอาด ไม่มีเอฟเฟกต์เยอะ" data-en="clean minimal editing with few effects" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/></svg></span>
+              <span class="choice-label">เรียบง่าย</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="ไดนามิก มีการเคลื่อนกล้องและซูมตลอด" data-en="dynamic editing with constant motion and zooms" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></span>
+              <span class="choice-label">ไดนามิก</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="pace" data-value="แบบไฮไลต์ รวมช็อตเด็ดสั้น ๆ" data-en="highlight-reel style with the best short moments" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span>
+              <span class="choice-label">ไฮไลต์</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 5: อารมณ์และเพลงประกอบ (Coral / Orange)
+             ================================================================ -->
+        <div class="step" data-step="5">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">5</span>
+              <span class="step-title">อารมณ์และเพลงประกอบ</span>
+            </div>
+          </div>
+          <p class="step-help">CapCut จะเลือกเพลงและโทนสีให้ตามนี้</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-sgroup="mood" data-value="สนุก เพลงจังหวะเร็ว" data-en="upbeat and fun with energetic music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+              <span class="choice-label">สนุก</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="ซึ้ง อบอุ่น เพลงเบา ๆ" data-en="warm and emotional with soft music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+              <span class="choice-label">ซึ้ง/อบอุ่น</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="ชิล ผ่อนคลาย เพลง Lo-fi" data-en="chill and relaxed with lo-fi music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+              <span class="choice-label">ชิล</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="ยิ่งใหญ่ เร้าใจ เพลงแบบหนัง" data-en="epic and dramatic with cinematic music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+              <span class="choice-label">ยิ่งใหญ่</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="หรูหรา พรีเมียม เพลงนุ่ม" data-en="luxurious premium feel with elegant music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg></span>
+              <span class="choice-label">หรูหรา</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="น่าเชื่อถือ เพลงเบามาก" data-en="professional and trustworthy with subtle background music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 17v-5"/><path d="M12 17V7"/><path d="M16 17v-3"/></svg></span>
+              <span class="choice-label">น่าเชื่อถือ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="ตลก สดใส เพลงป๊อป" data-en="funny and bright with pop music" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span>
+              <span class="choice-label">ตลก</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="mood" data-value="ไม่ต้องใส่เพลง ใช้เสียงต้นฉบับ" data-en="no music, keep original audio" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg></span>
+              <span class="choice-label">เสียงต้นฉบับ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 6: ข้อความและคำบรรยาย (Coral / Orange)
+             ================================================================ -->
+        <div class="step" data-step="6">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">6</span>
+              <span class="step-title">ข้อความและคำบรรยาย</span>
+            </div>
+          </div>
+          <p class="step-help">เลือกได้ 1 อย่าง</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-sgroup="text" data-value="ใส่คำบรรยายอัตโนมัติ (Auto captions) ตลอดคลิป" data-en="add auto captions throughout" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M13 8H7"/><path d="M17 12H7"/></svg></span>
+              <span class="choice-label">คำบรรยายอัตโนมัติ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="text" data-value="ใส่ข้อความ Hook ตัวใหญ่ใน 3 วินาทีแรก และคำบรรยายอัตโนมัติ" data-en="add a big bold hook text in the first 3 seconds plus auto captions" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg></span>
+              <span class="choice-label">Hook ใหญ่ + คำบรรยาย</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="text" data-value="ใส่ข้อความหัวข้อสั้น ๆ ในแต่ละช่วง" data-en="add short title text for each section" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
+              <span class="choice-label">หัวข้อแต่ละช่วง</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="text" data-value="ไม่ต้องใส่ข้อความ" data-en="no text overlays" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg></span>
+              <span class="choice-label">ไม่ใส่ข้อความ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 7: อยากให้ทำอะไรเพิ่ม? (Mint / Emerald — Multi-select)
+             ================================================================ -->
+        <div class="step" data-step="7">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">7</span>
+              <span class="step-title">อยากให้ทำอะไรเพิ่ม?</span>
+              <span class="multi-hint">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <span>เลือกได้หลายข้อ</span>
+              </span>
+            </div>
+          </div>
+          <p class="step-help">ถ้า Prompt ยาวเกินกำหนด ระบบจะตัดข้อนี้ออกก่อนโดยอัตโนมัติ</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ใส่ทรานสิชันนุ่มนวลระหว่างช็อต" data-en="smooth transitions between shots" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg></span>
+              <span class="choice-label">ทรานสิชัน</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ปรับโทนสีให้อบอุ่น สว่าง" data-en="warm bright color grading" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+              <span class="choice-label">สีอบอุ่น</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ปรับโทนสีให้เข้ม ดูแบบหนัง" data-en="moody cinematic color grading" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>
+              <span class="choice-label">สีเข้มแบบหนัง</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ใส่เสียงพากย์ AI สรุปเนื้อหา" data-en="add an AI voiceover narrating the content" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></span>
+              <span class="choice-label">เสียงพากย์ AI</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ตัดช่วงเงียบและช่วงพูดผิดออก" data-en="remove silences and mistakes" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg></span>
+              <span class="choice-label">ตัดช่วงเงียบ</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ใส่เอฟเฟกต์เสียงประกอบ (Sound effects)" data-en="add sound effects" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+              <span class="choice-label">เอฟเฟกต์เสียง</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="เพิ่มสติกเกอร์หรืออีโมจิเล็กน้อย" data-en="add a few stickers or emojis" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/><path d="M14 3v4a2 2 0 0 0 2 2h4"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M9 17c1 .7 2 .7 3 0"/></svg></span>
+              <span class="choice-label">สติกเกอร์</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="extras" data-multi="1" data-value="ปิดท้ายด้วยข้อความชวนกดติดตาม" data-en="end with a follow/subscribe call to action" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+              <span class="choice-label">CTA ท้ายคลิป</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 8: ช็อตเปิด หรือสิ่งที่ต้องมี (Mint / Emerald)
+             ================================================================ -->
+        <div class="step" data-step="8">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">8</span>
+              <span class="step-title">ช็อตเปิด หรือสิ่งที่ต้องมี (ไม่บังคับ)</span>
+            </div>
+          </div>
+          <p class="step-help">เช่น เปิดด้วยช็อตน้ำซุปเดือด, ต้องมีป้ายราคา 15 บาท, ปิดท้ายด้วยชื่อร้าน</p>
+          <input id="storyExtra" class="large-input" type="text"
+            placeholder="เช่น เปิดด้วยช็อตน้ำซุปเดือด ปิดท้ายด้วยชื่อร้านและแผนที่"
+            oninput="refreshStoryPrompt()" />
+        </div>
+
+        <!-- ================================================================
+             STEP 9: ภาษาและความยาว Prompt (Indigo / Orchid Pink-Violet)
+             ================================================================ -->
+        <div class="step" data-step="9">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">9</span>
+              <span class="step-title">ภาษาและความยาว Prompt</span>
+            </div>
+          </div>
+          <p class="step-help">CapCut แต่ละเวอร์ชันจำกัดความยาวไม่เท่ากัน ดูตัวเลขที่ช่องพิมพ์ใน CapCut แล้วเลือกให้ตรง</p>
+
+          <div class="sub-group-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span>ภาษาของ Prompt</span>
+          </div>
+          <div class="choice-grid cols-2">
+            <button type="button" class="choice" data-sgroup="lang" data-value="th" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+              <span class="choice-label">Prompt ภาษาไทย</span>
+              <span class="lang-code-pill">TH</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="lang" data-value="en" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+              <span class="choice-label">Prompt ภาษาอังกฤษ (แนะนำ AI เข้าใจดีกว่า)</span>
+              <span class="lang-code-pill">EN</span>
+            </button>
+          </div>
+
+          <div class="sub-group-label spaced">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+            <span>จำกัดจำนวนตัวอักษร</span>
+          </div>
+          <div class="choice-grid cols-4">
+            <button type="button" class="choice" data-sgroup="limit" data-value="200" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h8"/><path d="M4 12h6"/><path d="M4 18h4"/></svg></span>
+              <span class="choice-label">ไม่เกิน 200 ตัวอักษร</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="limit" data-value="300" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12"/><path d="M4 12h10"/><path d="M4 18h8"/></svg></span>
+              <span class="choice-label">ไม่เกิน 300 ตัวอักษร</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="limit" data-value="500" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h14"/><path d="M4 18h11"/></svg></span>
+              <span class="choice-label">ไม่เกิน 500 ตัวอักษร</span>
+            </button>
+            <button type="button" class="choice" data-sgroup="limit" data-value="1000" onclick="selectStoryChoice(this)">
+              <span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 10h16"/><path d="M4 14h16"/><path d="M4 18h14"/></svg></span>
+              <span class="choice-label">ไม่เกิน 1000 ตัวอักษร</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="button-row gen-row">
+        <button type="button" class="primary-btn" onclick="generateStoryPrompt()">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+          <span>สร้าง Prompt สั่งตัดให้ฉัน</span>
+        </button>
+
+        <button type="button" class="secondary-btn" onclick="storyExample()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+          </svg>
+          <span>ลองตัวอย่าง</span>
+        </button>
+
+        <button type="button" class="danger-btn" onclick="clearStoryBuilder()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+
+      <!-- Result Box (#storyResult) -->
+      <div id="storyResult" class="result" style="display:none;">
+        <div class="result-head-row">
+          <h3>
+            <span class="result-dot" aria-hidden="true"></span>
+            <span>Prompt สั่งตัดของคุณพร้อมแล้ว</span>
+          </h3>
+          <span class="result-live-badge">อัปเดตอัตโนมัติ</span>
+        </div>
+
+        <p class="result-desc">
+          คัดลอกไปวางในช่อง Prompt ของฟีเจอร์ตัดอัตโนมัติด้วย AI ใน CapCut
+          <span class="live-hint">(เปลี่ยนตัวเลือกด้านบนได้ตลอด ข้อความจะอัปเดตให้เอง)</span>
+        </p>
+
+        <div id="storyPromptOutput" class="prompt-box"></div>
+
+        <div class="counter-row">
+          <p id="storyCounter"></p>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="primary-btn" onclick="copyText('storyPromptOutput','storyCopyMessage','คัดลอก Prompt เรียบร้อยแล้ว')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span>คัดลอก Prompt</span>
+          </button>
+
+          <button type="button" class="secondary-btn" onclick="speakText(document.getElementById('storyPromptOutput').textContent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+            <span>อ่านให้ฟัง</span>
+          </button>
+        </div>
+
+        <p id="storyCopyMessage"></p>
+
+        <div class="open-app-row">
+          <p>ขั้นต่อไป: เปิด CapCut แล้ววาง Prompt ในช่องของฟีเจอร์ตัดอัตโนมัติ (ระบบคัดลอกให้อัตโนมัติ)</p>
+          <div class="button-row">
+            <a class="app-btn capcut" href="https://www.capcut.com" target="_blank" rel="noopener" onclick="return copyForApp('storyPromptOutput', 'storyCopyMessage')">
+              <span class="app-logo">
+                <img src="capcut-logo-.png" alt="CapCut" onerror="this.style.display='none'" />
+              </span>
+              <span>เปิด CapCut</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       RELATED TOOLS ("ไปต่อที่เกี่ยวข้อง")
+       ======================================================================== -->
+  <aside class="related" aria-label="เครื่องมือที่เกี่ยวข้อง">
+    <div class="related-head">
+      <span class="related-head-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="m12 5 7 7-7 7"/>
+        </svg>
+      </span>
+      <h3>ไปต่อที่เกี่ยวข้อง</h3>
+    </div>
+
+    <div class="related-grid">
+      <a class="rel-card" href="page-flow.html">
+        <div class="ic cat-video" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="M7 3v18"/>
+            <path d="M17 3v18"/>
+            <path d="M3 12h18"/>
+            <path d="M3 7.5h4"/>
+            <path d="M3 16.5h4"/>
+            <path d="M17 7.5h4"/>
+            <path d="M17 16.5h4"/>
+          </svg>
+        </div>
+        <div>
+          <b>ภาพนิ่ง → วิดีโอ 3 ช็อต</b>
+          <span>กำหนดการเคลื่อนกล้องและการเคลื่อนไหวทีละช็อต สำหรับ Google Flow</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-post.html">
+        <div class="ic cat-ai" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+            <path d="m15 5 4 4"/>
+          </svg>
+        </div>
+        <div>
+          <b>เขียนโพสต์โซเชียล</b>
+          <span>ขายของ เล่าเรื่อง แจ้งข่าว ให้ AI เขียนโพสต์มาให้เลือก 3 แบบ</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-image.html">
+        <div class="ic cat-create" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+        </div>
+        <div>
+          <b>สร้างภาพด้วย AI</b>
+          <span>ตอบคำถามทีละข้อ แล้วรับ Prompt สำหรับให้ AI สร้างภาพ พร้อมคลังคำสั่งพิเศษ</span>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Modal & Lightbox (Preserved for app.js compatibility) -->
+  <div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="ปิดหน้าต่าง">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      </button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <hr />
+      <h3>ใช้เมื่อไหร่?</h3>
+      <p id="modalUse"></p>
+      <h3>ตัวอย่าง</h3>
+      <div id="modalExample" class="prompt-box"></div>
+      <div class="button-row">
+        <button type="button" class="primary-btn" onclick="useCommand()">ใช้คำสั่งนี้</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" alt="ภาพขยาย" />
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- External Shared Scripts -->
+  <script src="app.js?v=20260926"></script>
+  <script src="footer.js?v=20260926"></script>
+
+  <!-- Liquid Glass Theme/Font Controller + Standalone Fallback Engine -->
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const MOON_SVG = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+      const SUN_SVG = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+
+      /* ======================================================================
+         1. THEME & FONT SIZE CONTROLLER (MATCHING index.html, ZERO EMOJIS)
+         ====================================================================== */
+      function renderThemeButton(theme) {
+        const btn = document.getElementById('themeBtn');
+        if (!btn) return;
+        const isDark = theme === 'dark';
+        btn.innerHTML =
+          '<svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          (isDark ? SUN_SVG : MOON_SVG) +
+          '</svg><span id="themeText">' + (isDark ? 'สว่าง' : 'มืด') + '</span>';
+      }
+
+      function applyTheme(theme) {
+        const safeTheme = theme === 'dark' ? 'dark' : 'light';
+        htmlEl.setAttribute('data-theme', safeTheme);
+        document.body.classList.toggle('dark', safeTheme === 'dark');
+        try {
+          localStorage.setItem('aiba:theme', safeTheme);
+          localStorage.setItem('theme', safeTheme);
+        } catch (e) {}
+        renderThemeButton(safeTheme);
+      }
+
+      const FONT_SIZES = [16, 18, 20];
+      let currentFontIdx = 0;
+      try {
+        const storedIdx = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+        if (!isNaN(storedIdx) && storedIdx >= 0 && storedIdx < FONT_SIZES.length) {
+          currentFontIdx = storedIdx;
+        }
+      } catch (e) {}
+
+      function applyFontSize(idx) {
+        currentFontIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+        htmlEl.style.fontSize = FONT_SIZES[currentFontIdx] + 'px';
+        try { localStorage.setItem('aiba:fontIdx', String(currentFontIdx)); } catch (e) {}
+      }
+
+      window.toggleTheme = function () {
+        const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      };
+
+      window.changeFontSize = function (delta) {
+        applyFontSize(currentFontIdx + (delta > 0 ? 1 : -1));
+      };
+
+      let initialTheme = 'light';
+      try {
+        initialTheme = localStorage.getItem('aiba:theme') || localStorage.getItem('theme') || 'light';
+      } catch (e) {}
+      applyTheme(initialTheme);
+      applyFontSize(currentFontIdx);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const t = htmlEl.getAttribute('data-theme') || initialTheme;
+        applyTheme(t);
+        applyFontSize(currentFontIdx);
+      });
+
+      /* ======================================================================
+         2. TOAST HELPER
+         ====================================================================== */
+      let toastTimer = null;
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        if (!toast || !message) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2600);
+      }
+
+      /* ======================================================================
+         3. STANDALONE CAPCUT STORY BUILDER FALLBACK (ONLY IF app.js NOT LOADED)
+         ====================================================================== */
+      const hasExternalApp = typeof window.generateStoryPrompt === 'function' && typeof window.selectStoryChoice === 'function';
+
+      if (!hasExternalApp) {
+        const DRAFT_KEY = 'aiba:capcutDraft:v1';
+
+        function fallbackCopy(text) {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        async function copyString(text) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+              await navigator.clipboard.writeText(text);
+              return true;
+            } catch (e) {
+              fallbackCopy(text);
+              return true;
+            }
+          }
+          fallbackCopy(text);
+          return true;
+        }
+
+        function getSelectedBtn(group) {
+          return document.querySelector('#storyBuilder .choice.selected[data-sgroup="' + group + '"]');
+        }
+
+        function getSelectedBtns(group) {
+          return Array.from(document.querySelectorAll('#storyBuilder .choice.selected[data-sgroup="' + group + '"]'));
+        }
+
+        function collectState() {
+          const topicEl = document.getElementById('storyTopic');
+          const extraEl = document.getElementById('storyExtra');
+          const typeBtn = getSelectedBtn('type');
+          const lengthBtn = getSelectedBtn('length');
+          const paceBtn = getSelectedBtn('pace');
+          const moodBtn = getSelectedBtn('mood');
+          const textBtn = getSelectedBtn('text');
+          const extrasBtns = getSelectedBtns('extras');
+          const langBtn = getSelectedBtn('lang');
+          const limitBtn = getSelectedBtn('limit');
+
+          return {
+            topic: topicEl ? topicEl.value.trim() : '',
+            extra: extraEl ? extraEl.value.trim() : '',
+            typeTh: typeBtn ? (typeBtn.dataset.value || '') : '',
+            typeEn: typeBtn ? (typeBtn.dataset.en || '') : '',
+            lengthTh: lengthBtn ? (lengthBtn.dataset.value || '') : '',
+            lengthEn: lengthBtn ? (lengthBtn.dataset.en || '') : '',
+            paceTh: paceBtn ? (paceBtn.dataset.value || '') : '',
+            paceEn: paceBtn ? (paceBtn.dataset.en || '') : '',
+            moodTh: moodBtn ? (moodBtn.dataset.value || '') : '',
+            moodEn: moodBtn ? (moodBtn.dataset.en || '') : '',
+            textTh: textBtn ? (textBtn.dataset.value || '') : '',
+            textEn: textBtn ? (textBtn.dataset.en || '') : '',
+            extrasTh: extrasBtns.map(function (b) { return b.dataset.value || ''; }).filter(Boolean),
+            extrasEn: extrasBtns.map(function (b) { return b.dataset.en || ''; }).filter(Boolean),
+            lang: langBtn ? (langBtn.dataset.value || 'th') : 'th',
+            limit: limitBtn ? parseInt(limitBtn.dataset.value || '300', 10) : 300
+          };
+        }
+
+        function isStateEmpty(st) {
+          return !(
+            st.topic ||
+            st.extra ||
+            st.typeTh ||
+            st.lengthTh ||
+            st.paceTh ||
+            st.moodTh ||
+            st.textTh ||
+            st.extrasTh.length > 0
+          );
+        }
+
+        function hideResumeBanner() {
+          const banner = document.getElementById('resumeBanner');
+          if (banner) {
+            banner.classList.remove('show');
+            banner.style.display = '';
+          }
+        }
+
+        function saveDraft() {
+          const st = collectState();
+          const resultEl = document.getElementById('storyResult');
+          if (isStateEmpty(st)) {
+            try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+            return;
+          }
+          const payload = {
+            topic: st.topic,
+            extra: st.extra,
+            selected: Array.from(document.querySelectorAll('#storyBuilder .choice.selected')).map(function (b) {
+              return {
+                sgroup: b.dataset.sgroup || '',
+                value: b.dataset.value || ''
+              };
+            }),
+            resultVisible: resultEl ? resultEl.style.display !== 'none' : false,
+            updatedAt: Date.now()
+          };
+          try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch (e) {}
+        }
+
+        function composePrompt(st) {
+          const isEn = st.lang === 'en';
+          const limit = st.limit || 300;
+          const coreParts = [];
+          const extraItems = isEn ? st.extrasEn.slice() : st.extrasTh.slice();
+
+          if (isEn) {
+            const lead = st.typeEn ? ('Edit a ' + st.typeEn) : 'Edit a video';
+            coreParts.push(st.topic ? (lead + ' about: ' + st.topic + '.') : (lead + '.'));
+            if (st.lengthEn) coreParts.push('Format: ' + st.lengthEn + '.');
+            if (st.paceEn) coreParts.push('Pacing: ' + st.paceEn + '.');
+            if (st.moodEn) coreParts.push('Mood & music: ' + st.moodEn + '.');
+            if (st.textEn) coreParts.push('Text: ' + st.textEn + '.');
+            if (st.extra) coreParts.push('Must include: ' + st.extra + '.');
+          } else {
+            const lead = st.typeTh ? ('ตัดต่อ' + st.typeTh) : 'ตัดต่อวิดีโอ';
+            coreParts.push(st.topic ? (lead + ' เรื่อง: ' + st.topic) : lead);
+            if (st.lengthTh) coreParts.push('สัดส่วน/ความยาว: ' + st.lengthTh);
+            if (st.paceTh) coreParts.push('จังหวะ: ' + st.paceTh);
+            if (st.moodTh) coreParts.push('อารมณ์/เพลง: ' + st.moodTh);
+            if (st.textTh) coreParts.push('ข้อความ: ' + st.textTh);
+            if (st.extra) coreParts.push('ต้องมี: ' + st.extra);
+          }
+
+          const sep = isEn ? ' ' : ' · ';
+          let baseText = coreParts.join(sep);
+          let droppedExtras = 0;
+
+          if (extraItems.length > 0) {
+            let kept = extraItems.slice();
+            const makeWithExtras = function (list) {
+              if (!list.length) return baseText;
+              const prefix = isEn ? 'Extras: ' : 'เพิ่มเติม: ';
+              const suffix = isEn ? '.' : '';
+              return baseText + sep + prefix + list.join(', ') + suffix;
+            };
+            while (kept.length > 0 && makeWithExtras(kept).length > limit) {
+              kept.pop();
+              droppedExtras++;
+            }
+            baseText = makeWithExtras(kept);
+          }
+
+          return {
+            text: baseText,
+            limit: limit,
+            droppedExtras: droppedExtras
+          };
+        }
+
+        function renderStoryOutput(shouldScroll) {
+          const st = collectState();
+          const outEl = document.getElementById('storyPromptOutput');
+          const counterEl = document.getElementById('storyCounter');
+          const resultEl = document.getElementById('storyResult');
+          const copyMsg = document.getElementById('storyCopyMessage');
+
+          if (!outEl || !resultEl) return;
+
+          const built = composePrompt(st);
+          const len = built.text.length;
+          outEl.textContent = built.text;
+
+          if (counterEl) {
+            counterEl.classList.remove('counter-ok', 'counter-warn', 'counter-over');
+            let statusText = 'ความยาว ' + len + ' / ' + built.limit + ' ตัวอักษร';
+            if (len > built.limit) {
+              counterEl.classList.add('counter-over');
+              statusText += ' (เกินกำหนด ' + (len - built.limit) + ' ตัวอักษร ลองย่อหัวข้อให้สั้นลง)';
+            } else if (len >= built.limit * 0.88) {
+              counterEl.classList.add('counter-warn');
+              statusText += ' (ใกล้เต็มขีดจำกัด แต่ใช้งานได้)';
+            } else {
+              counterEl.classList.add('counter-ok');
+              statusText += ' (พอดีสำหรับ CapCut)';
+            }
+            if (built.droppedExtras > 0) {
+              statusText += ' · ตัดข้อเพิ่มเติมออก ' + built.droppedExtras + ' ข้อเพื่อให้ไม่เกินกำหนด';
+            }
+            counterEl.textContent = statusText;
+          }
+
+          resultEl.style.display = 'block';
+          if (copyMsg) copyMsg.textContent = '';
+
+          if (shouldScroll) {
+            resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        window.selectStoryChoice = function (btn) {
+          if (!btn) return;
+          hideResumeBanner();
+          const isMulti = btn.dataset.multi === '1';
+          const group = btn.dataset.sgroup || '';
+
+          if (isMulti) {
+            btn.classList.toggle('selected');
+            btn.setAttribute('aria-pressed', String(btn.classList.contains('selected')));
+          } else {
+            const wasSelected = btn.classList.contains('selected');
+            document.querySelectorAll('#storyBuilder .choice[data-sgroup="' + group + '"]').forEach(function (other) {
+              other.classList.remove('selected');
+              other.setAttribute('aria-pressed', 'false');
+            });
+            if (!wasSelected) {
+              btn.classList.add('selected');
+              btn.setAttribute('aria-pressed', 'true');
+            }
+          }
+          window.refreshStoryPrompt();
+        };
+
+        window.refreshStoryPrompt = function () {
+          hideResumeBanner();
+          const resultEl = document.getElementById('storyResult');
+          if (resultEl && resultEl.style.display !== 'none') {
+            renderStoryOutput(false);
+          }
+          saveDraft();
+        };
+
+        window.generateStoryPrompt = function () {
+          hideResumeBanner();
+          renderStoryOutput(true);
+          saveDraft();
+          showToast('สร้าง Prompt สั่งตัดสำหรับ CapCut เรียบร้อยแล้ว');
+        };
+
+        window.storyExample = function () {
+          window.clearStoryBuilder(true);
+          const topicEl = document.getElementById('storyTopic');
+          const extraEl = document.getElementById('storyExtra');
+          if (topicEl) {
+            topicEl.value = 'รีวิวร้านก๋วยเตี๋ยวเรืออยุธยา มีคลิปถ่ายหน้าร้าน คุณยายลวกเส้น น้ำซุปเดือด และตอนคีบเส้นกิน';
+          }
+          if (extraEl) {
+            extraEl.value = 'เปิดด้วยช็อตน้ำซุปเดือด มีป้ายราคา 15 บาท ปิดท้ายด้วยชื่อร้าน';
+          }
+
+          const presets = [
+            ['type', 'วิดีโออาหาร'],
+            ['length', 'แนวตั้ง 9:16 ยาว 30 วินาที'],
+            ['pace', 'ตัดเร็ว ตามจังหวะบีตเพลง'],
+            ['mood', 'สนุก เพลงจังหวะเร็ว'],
+            ['text', 'ใส่ข้อความ Hook ตัวใหญ่ใน 3 วินาทีแรก และคำบรรยายอัตโนมัติ'],
+            ['extras', 'ใส่ทรานสิชันนุ่มนวลระหว่างช็อต'],
+            ['extras', 'ปรับโทนสีให้อบอุ่น สว่าง'],
+            ['extras', 'ปิดท้ายด้วยข้อความชวนกดติดตาม'],
+            ['lang', 'en'],
+            ['limit', '500']
+          ];
+          presets.forEach(function (pair) {
+            const b = document.querySelector('#storyBuilder .choice[data-sgroup="' + pair[0] + '"][data-value="' + pair[1] + '"]');
+            if (b) {
+              b.classList.add('selected');
+              b.setAttribute('aria-pressed', 'true');
+            }
+          });
+
+          renderStoryOutput(true);
+          saveDraft();
+          showToast('โหลดตัวอย่าง Prompt สั่งตัดวิดีโอแล้ว');
+        };
+
+        window.clearStoryBuilder = function (silent) {
+          const topicEl = document.getElementById('storyTopic');
+          const extraEl = document.getElementById('storyExtra');
+          if (topicEl) topicEl.value = '';
+          if (extraEl) extraEl.value = '';
+
+          document.querySelectorAll('#storyBuilder .choice').forEach(function (b) {
+            b.classList.remove('selected');
+            b.setAttribute('aria-pressed', 'false');
+          });
+
+          const resultEl = document.getElementById('storyResult');
+          const copyMsg = document.getElementById('storyCopyMessage');
+          if (resultEl) resultEl.style.display = 'none';
+          if (copyMsg) copyMsg.textContent = '';
+
+          try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+          hideResumeBanner();
+          if (!silent) showToast('ล้างข้อมูลเริ่มใหม่เรียบร้อยแล้ว');
+        };
+
+        window.copyText = async function (outputId, msgId, successMsg) {
+          const el = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = el ? (el.textContent || '').trim() : '';
+          if (!text) return;
+          await copyString(text);
+          if (msgEl) msgEl.textContent = successMsg || 'คัดลอกเรียบร้อยแล้ว';
+          showToast(successMsg || 'คัดลอกเรียบร้อยแล้ว');
+        };
+
+        window.copyForApp = function (outputId, msgId) {
+          const el = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = el ? (el.textContent || '').trim() : '';
+          if (text) {
+            copyString(text);
+            if (msgEl) msgEl.textContent = 'คัดลอก Prompt แล้ว กำลังเปิด CapCut...';
+            showToast('คัดลอก Prompt แล้ว กำลังเปิด CapCut');
+          }
+          return true;
+        };
+
+        window.speakText = function (text) {
+          const clean = String(text || '').trim();
+          if (!clean) return;
+          if (!('speechSynthesis' in window)) {
+            showToast('เบราว์เซอร์นี้ไม่รองรับการอ่านออกเสียง');
+            return;
+          }
+          try {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(clean);
+            const hasThai = /[\u0E00-\u0E7F]/.test(clean);
+            utter.lang = hasThai ? 'th-TH' : 'en-US';
+            utter.rate = 0.96;
+            window.speechSynthesis.speak(utter);
+            showToast('กำลังอ่าน Prompt ให้ฟัง...');
+          } catch (e) {
+            showToast('ไม่สามารถเริ่มการอ่านออกเสียงได้');
+          }
+        };
+
+        window.restoreWork = function () {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            window.clearStoryBuilder(true);
+            if (document.getElementById('storyTopic')) document.getElementById('storyTopic').value = data.topic || '';
+            if (document.getElementById('storyExtra')) document.getElementById('storyExtra').value = data.extra || '';
+
+            (data.selected || []).forEach(function (item) {
+              const b = document.querySelector('#storyBuilder .choice[data-sgroup="' + item.sgroup + '"][data-value="' + item.value + '"]');
+              if (b) {
+                b.classList.add('selected');
+                b.setAttribute('aria-pressed', 'true');
+              }
+            });
+
+            if (data.resultVisible) {
+              renderStoryOutput(false);
+            }
+            hideResumeBanner();
+            showToast('กู้คืนงานที่ทำค้างไว้เรียบร้อยแล้ว');
+          } catch (e) {
+            hideResumeBanner();
+          }
+        };
+
+        window.discardWork = function () {
+          window.clearStoryBuilder(true);
+          showToast('ล้างงานเดิมแล้ว พร้อมเริ่มใหม่');
+        };
+
+        window.closeModal = function (ev) {
+          if (ev && ev.target && ev.target.id !== 'modal') return;
+          const modal = document.getElementById('modal');
+          if (modal) modal.classList.remove('open', 'show');
+        };
+
+        window.useCommand = function () {
+          window.closeModal();
+        };
+
+        window.closeLightbox = function () {
+          const lb = document.getElementById('lightbox');
+          if (lb) lb.classList.remove('open', 'show');
+        };
+
+        // Check saved draft or Flow-to-CapCut handoff on startup
+        (function initCapcutState() {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (raw) {
+              const data = JSON.parse(raw);
+              const parts = [];
+              if (data.topic) parts.push('หัวข้อ: "' + data.topic.slice(0, 34) + (data.topic.length > 34 ? '...' : '') + '"');
+              if (data.selected && data.selected.length) parts.push('เลือกแล้ว ' + data.selected.length + ' ตัวเลือก');
+              if (data.updatedAt) {
+                const dt = new Date(data.updatedAt);
+                parts.push('บันทึกล่าสุด ' + dt.toLocaleString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
+              }
+              const infoEl = document.getElementById('resumeInfo');
+              const banner = document.getElementById('resumeBanner');
+              if (infoEl) infoEl.textContent = parts.join(' · ') || 'ข้อมูลที่ทำค้างไว้พร้อมทำต่อ';
+              if (banner) banner.classList.add('show');
+              return;
+            }
+
+            const fromFlow = sessionStorage.getItem('flowToCapcut') || localStorage.getItem('aiba:flowToCapcut');
+            if (fromFlow) {
+              const topicEl = document.getElementById('storyTopic');
+              if (topicEl && !topicEl.value.trim()) {
+                topicEl.value = fromFlow.replace(/\s+/g, ' ').trim().slice(0, 220);
+              }
+              sessionStorage.removeItem('flowToCapcut');
+              localStorage.removeItem('aiba:flowToCapcut');
+            }
+          } catch (e) {}
+        })();
+      }
+
+      /* ======================================================================
+         4. STANDARD FOOTER FALLBACK (ONLY IF footer.js DID NOT INJECT ONE)
+         ====================================================================== */
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.querySelector('footer')) {
+          const footerHtml =
+            '<footer class="site-footer">' +
+              '<div class="container">' +
+                '<div class="footer-grid">' +
+                  '<div>' +
+                    '<div class="footer-logos">' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                    '</div>' +
+                    '<h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>' +
+                    '<p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>' +
+                    '<p class="footer-text">85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />โทร 0 2855 0000</p>' +
+                    '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">' +
+                      '<span>www.pim.ac.th</span>' +
+                      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>' +
+                    '</a>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>' +
+                    '<p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>' +
+                    '<div class="footer-socials" aria-label="โซเชียลมีเดีย">' +
+                      '<a href="#" class="social-btn" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>' +
+                      '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="footer-bottom-bar">© 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED</div>' +
+            '</footer>';
+          document.body.insertAdjacentHTML('beforeend', footerHtml);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

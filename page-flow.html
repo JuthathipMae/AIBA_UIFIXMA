@@ -1,0 +1,3241 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ภาพนิ่ง → วิดีโอ 3 ช็อต — AiBA Connect</title>
+  <meta name="theme-color" content="#7C3AED" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — AiBA CONNECT LIQUID GLASS TOKENS (LIGHT & DARK)
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --muted: #64748B;
+      --green: #10B981;
+
+      /* Brand & Video Category Theme (#7C3AED -> #06B6D4) */
+      --brand-coral: #FF6B6B;
+      --brand-violet: #7C3AED;
+      --brand-cyan: #06B6D4;
+      --brand-mint: #10B981;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+      --video-grad: linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%);
+      --video-solid: #7C3AED;
+      --video-text: #5B21B6;
+      --video-soft: rgba(124, 58, 237, 0.11);
+      --video-border: rgba(124, 58, 237, 0.30);
+      --video-glow: rgba(124, 58, 237, 0.28);
+
+      /* Liquid Glass System — Light Mode */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(124, 58, 237, 0.12);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+      /* Surfaces */
+      --surface-input: rgba(248, 249, 254, 0.94);
+      --surface-subtle: rgba(241, 239, 251, 0.66);
+      --surface-shot: rgba(255, 255, 255, 0.84);
+      --border-subtle: rgba(19, 24, 54, 0.10);
+
+      /* Prompt Result Sheet — High-Contrast Dark Layer */
+      --sheet-bg: linear-gradient(155deg, #111632 0%, #172146 55%, #112A3E 100%);
+      --sheet-border: rgba(56, 189, 248, 0.24);
+      --sheet-ink: #F0F6FF;
+      --sheet-dim: #9CB2CF;
+      --sheet-key: #67E8F9;
+      --sheet-shadow: 0 22px 48px rgba(19, 24, 54, 0.22);
+
+      /* Status Colors */
+      --ok-solid: #10B981;
+      --ok-text: #047857;
+      --ok-bg: rgba(16, 185, 129, 0.12);
+      --ok-border: rgba(16, 185, 129, 0.34);
+
+      --err-solid: #EF4444;
+      --err-text: #DC2626;
+      --err-bg: rgba(239, 68, 68, 0.10);
+      --err-border: rgba(239, 68, 68, 0.32);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --shadow-lg: 0 20px 48px rgba(124, 58, 237, 0.13);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 30px;
+      --radius-pill: 9999px;
+      --container-max: 1180px;
+
+      /* ========================================================================
+         SEMANTIC COLOR TOKENS — SHOTS, CHOICE GROUPS & STEPS (LIGHT MODE)
+         ======================================================================== */
+      /* Shot 1: Violet Indigo */
+      --shot1-grad: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+      --shot1-solid: #7C3AED;
+      --shot1-text: #5B21B6;
+      --shot1-soft: rgba(124, 58, 237, 0.10);
+      --shot1-border: rgba(124, 58, 237, 0.34);
+      --shot1-glow: rgba(124, 58, 237, 0.24);
+
+      /* Shot 2: Cyan Sky */
+      --shot2-grad: linear-gradient(135deg, #06B6D4 0%, #0284C7 100%);
+      --shot2-solid: #0284C7;
+      --shot2-text: #0369A1;
+      --shot2-soft: rgba(6, 182, 212, 0.11);
+      --shot2-border: rgba(6, 182, 212, 0.38);
+      --shot2-glow: rgba(6, 182, 212, 0.24);
+
+      /* Shot 3: Coral Rose */
+      --shot3-grad: linear-gradient(135deg, #FF6B6B 0%, #E11D48 100%);
+      --shot3-solid: #E11D48;
+      --shot3-text: #BE123C;
+      --shot3-soft: rgba(244, 63, 94, 0.10);
+      --shot3-border: rgba(244, 63, 94, 0.34);
+      --shot3-glow: rgba(225, 29, 72, 0.24);
+
+      /* Group: Camera Movement — Blue / Violet */
+      --grp-cam-grad: linear-gradient(135deg, #3B82F6 0%, #7C3AED 100%);
+      --grp-cam-solid: #4F46E5;
+      --grp-cam-text: #3730A3;
+      --grp-cam-soft: rgba(79, 70, 229, 0.11);
+      --grp-cam-border: rgba(79, 70, 229, 0.34);
+      --grp-cam-glow: rgba(79, 70, 229, 0.26);
+
+      /* Group: Subject Motion — Coral / Orange */
+      --grp-motion-grad: linear-gradient(135deg, #FF6B6B 0%, #F97316 100%);
+      --grp-motion-solid: #EA580C;
+      --grp-motion-text: #C2410C;
+      --grp-motion-soft: rgba(249, 115, 22, 0.12);
+      --grp-motion-border: rgba(249, 115, 22, 0.36);
+      --grp-motion-glow: rgba(234, 88, 12, 0.26);
+
+      /* Group: Speed & Duration — Mint / Emerald */
+      --grp-mint-grad: linear-gradient(135deg, #10B981 0%, #0D9488 100%);
+      --grp-mint-solid: #059669;
+      --grp-mint-text: #047857;
+      --grp-mint-soft: rgba(16, 185, 129, 0.12);
+      --grp-mint-border: rgba(16, 185, 129, 0.36);
+      --grp-mint-glow: rgba(16, 185, 129, 0.26);
+
+      /* Group: Style & Lighting — Violet / Pink */
+      --grp-style-grad: linear-gradient(135deg, #9333EA 0%, #EC4899 100%);
+      --grp-style-solid: #A21CAF;
+      --grp-style-text: #86198F;
+      --grp-style-soft: rgba(192, 38, 211, 0.11);
+      --grp-style-border: rgba(192, 38, 211, 0.34);
+      --grp-style-glow: rgba(192, 38, 211, 0.26);
+
+      /* Group: Locks (Do Not Change) — Rose Red / Amber */
+      --grp-lock-grad: linear-gradient(135deg, #E11D48 0%, #F59E0B 100%);
+      --grp-lock-solid: #E11D48;
+      --grp-lock-text: #BE123C;
+      --grp-lock-soft: rgba(225, 29, 72, 0.11);
+      --grp-lock-border: rgba(225, 29, 72, 0.34);
+      --grp-lock-glow: rgba(225, 29, 72, 0.26);
+
+      /* Group: Language — Indigo / Cyan */
+      --grp-lang-grad: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
+      --grp-lang-solid: #0284C7;
+      --grp-lang-text: #0369A1;
+      --grp-lang-soft: rgba(14, 165, 233, 0.12);
+      --grp-lang-border: rgba(14, 165, 233, 0.36);
+      --grp-lang-glow: rgba(14, 165, 233, 0.26);
+
+      /* Related Category Gradients */
+      --cat-video-grad: linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%);
+      --cat-create-grad: linear-gradient(135deg, #FF6B6B 0%, #F59E0B 100%);
+      --cat-ai-grad: linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --muted: #94A3B8;
+      --green: #34D399;
+
+      --video-solid: #A78BFA;
+      --video-text: #DDD6FE;
+      --video-soft: rgba(167, 139, 250, 0.18);
+      --video-border: rgba(167, 139, 250, 0.42);
+      --video-glow: rgba(124, 58, 237, 0.42);
+
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(167, 139, 250, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+      --surface-input: rgba(14, 17, 36, 0.82);
+      --surface-subtle: rgba(15, 18, 37, 0.58);
+      --surface-shot: rgba(22, 27, 54, 0.84);
+      --border-subtle: rgba(255, 255, 255, 0.11);
+
+      --sheet-bg: linear-gradient(155deg, #070A18 0%, #0E1530 55%, #0B1F2E 100%);
+      --sheet-border: rgba(56, 189, 248, 0.28);
+      --sheet-ink: #F1F5F9;
+      --sheet-dim: #8DA4C4;
+      --sheet-key: #67E8F9;
+      --sheet-shadow: 0 24px 56px rgba(0, 0, 0, 0.55);
+
+      --ok-text: #34D399;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --ok-border: rgba(52, 211, 153, 0.42);
+
+      --err-solid: #F87171;
+      --err-text: #FCA5A5;
+      --err-bg: rgba(239, 68, 68, 0.16);
+      --err-border: rgba(248, 113, 113, 0.38);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+
+      /* Shot Accents — Dark Mode */
+      --shot1-solid: #A78BFA;
+      --shot1-text: #DDD6FE;
+      --shot1-soft: rgba(167, 139, 250, 0.18);
+      --shot1-border: rgba(167, 139, 250, 0.44);
+      --shot1-glow: rgba(124, 58, 237, 0.38);
+
+      --shot2-solid: #38BDF8;
+      --shot2-text: #A5F3FC;
+      --shot2-soft: rgba(56, 189, 248, 0.18);
+      --shot2-border: rgba(56, 189, 248, 0.44);
+      --shot2-glow: rgba(6, 182, 212, 0.36);
+
+      --shot3-solid: #FB7185;
+      --shot3-text: #FECDD3;
+      --shot3-soft: rgba(251, 113, 133, 0.18);
+      --shot3-border: rgba(251, 113, 133, 0.44);
+      --shot3-glow: rgba(244, 63, 94, 0.36);
+
+      /* Choice Groups — Dark Mode */
+      --grp-cam-solid: #818CF8;
+      --grp-cam-text: #C7D2FE;
+      --grp-cam-soft: rgba(129, 140, 248, 0.20);
+      --grp-cam-border: rgba(129, 140, 248, 0.48);
+      --grp-cam-glow: rgba(99, 102, 241, 0.38);
+
+      --grp-motion-solid: #FB923C;
+      --grp-motion-text: #FED7AA;
+      --grp-motion-soft: rgba(251, 146, 60, 0.20);
+      --grp-motion-border: rgba(251, 146, 60, 0.48);
+      --grp-motion-glow: rgba(249, 115, 22, 0.38);
+
+      --grp-mint-solid: #34D399;
+      --grp-mint-text: #A7F3D0;
+      --grp-mint-soft: rgba(52, 211, 153, 0.20);
+      --grp-mint-border: rgba(52, 211, 153, 0.48);
+      --grp-mint-glow: rgba(16, 185, 129, 0.38);
+
+      --grp-style-solid: #E879F9;
+      --grp-style-text: #F5D0FE;
+      --grp-style-soft: rgba(232, 121, 249, 0.20);
+      --grp-style-border: rgba(232, 121, 249, 0.48);
+      --grp-style-glow: rgba(192, 38, 211, 0.38);
+
+      --grp-lock-solid: #FB7185;
+      --grp-lock-text: #FECDD3;
+      --grp-lock-soft: rgba(251, 113, 133, 0.20);
+      --grp-lock-border: rgba(251, 113, 133, 0.48);
+      --grp-lock-glow: rgba(225, 29, 72, 0.38);
+
+      --grp-lang-solid: #38BDF8;
+      --grp-lang-text: #BAE6FD;
+      --grp-lang-soft: rgba(56, 189, 248, 0.20);
+      --grp-lang-border: rgba(56, 189, 248, 0.48);
+      --grp-lang-glow: rgba(14, 165, 233, 0.38);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(920px 520px at 8% -4%, rgba(124, 58, 237, 0.15), transparent 60%),
+        radial-gradient(920px 560px at 94% 4%, rgba(6, 182, 212, 0.14), transparent 60%),
+        radial-gradient(760px 520px at 50% 48%, rgba(255, 107, 107, 0.08), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--video-solid);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       3. FLOATING GLASS NAVBAR (MATCHING index.html)
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 40px;
+      padding: 0 15px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--video-solid);
+      color: var(--video-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 1.16rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      background: var(--video-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--video-solid);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       4. MAIN PAGE WRAPPER & VIDEO CATEGORY HERO CARD
+       ========================================================================== */
+    .page {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 26px 24px 48px;
+      flex: 1;
+    }
+
+    .page-hero {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: var(--video-grad);
+      color: #FFFFFF;
+      padding: 32px 34px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 44px var(--video-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 280px;
+      height: 280px;
+      top: -110px;
+      right: -60px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.26), transparent 70%);
+    }
+
+    .hero-orb-2 {
+      width: 240px;
+      height: 240px;
+      bottom: -110px;
+      left: 28%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.32), transparent 70%);
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-main-col {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1 1 420px;
+      min-width: 0;
+    }
+
+    .hero-icon-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      box-shadow: 0 12px 26px rgba(19, 24, 54, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .page-hero p {
+      font-size: 1.04rem;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 60ch;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.20);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       5. RESUME BANNER (SAVED WORK RECOVERY)
+       ========================================================================== */
+    .resume-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--video-border);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--video-soft);
+      animation: fadeSlideUp 0.25s ease;
+    }
+
+    .resume-banner.show {
+      display: flex;
+    }
+
+    .resume-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .resume-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--video-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--video-glow);
+    }
+
+    .resume-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-text span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       6. BUILDER SHELL & INTRO CALLOUT
+       ========================================================================== */
+    .builder-panel {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .builder-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--video-grad);
+    }
+
+    .section-description {
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .desc-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pillar-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .pillar-chip.cam {
+      background: var(--grp-cam-soft);
+      color: var(--grp-cam-text);
+      border: 1px solid var(--grp-cam-border);
+    }
+
+    .pillar-chip.motion {
+      background: var(--grp-motion-soft);
+      color: var(--grp-motion-text);
+      border: 1px solid var(--grp-motion-border);
+    }
+
+    .pillar-chip.lock {
+      background: var(--grp-lock-soft);
+      color: var(--grp-lock-text);
+      border: 1px solid var(--grp-lock-border);
+    }
+
+    /* ==========================================================================
+       7. STEP BLOCKS (COLOR-CODED BY STEP)
+       ========================================================================== */
+    .steps-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .step {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      border-left: 5px solid var(--step-solid, var(--video-solid));
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .step:focus-within {
+      border-color: var(--step-border, var(--video-border));
+      border-left-color: var(--step-solid, var(--video-solid));
+      box-shadow: 0 8px 24px var(--step-soft, var(--video-soft));
+    }
+
+    /* Step Semantic Colors */
+    .step[data-step="1"] {
+      --step-grad: var(--video-grad);
+      --step-solid: var(--video-solid);
+      --step-text: var(--video-text);
+      --step-soft: var(--video-soft);
+      --step-border: var(--video-border);
+      --step-glow: var(--video-glow);
+    }
+
+    .step[data-step="2"] {
+      --step-grad: var(--grp-mint-grad);
+      --step-solid: var(--grp-mint-solid);
+      --step-text: var(--grp-mint-text);
+      --step-soft: var(--grp-mint-soft);
+      --step-border: var(--grp-mint-border);
+      --step-glow: var(--grp-mint-glow);
+    }
+
+    .step[data-step="3"] {
+      --step-grad: var(--grp-style-grad);
+      --step-solid: var(--grp-style-solid);
+      --step-text: var(--grp-style-text);
+      --step-soft: var(--grp-style-soft);
+      --step-border: var(--grp-style-border);
+      --step-glow: var(--grp-style-glow);
+    }
+
+    .step[data-step="4"] {
+      --step-grad: var(--grp-lock-grad);
+      --step-solid: var(--grp-lock-solid);
+      --step-text: var(--grp-lock-text);
+      --step-soft: var(--grp-lock-soft);
+      --step-border: var(--grp-lock-border);
+      --step-glow: var(--grp-lock-glow);
+    }
+
+    .step[data-step="5"] {
+      --step-grad: var(--grp-lang-grad);
+      --step-solid: var(--grp-lang-solid);
+      --step-text: var(--grp-lang-text);
+      --step-soft: var(--grp-lang-soft);
+      --step-border: var(--grp-lang-border);
+      --step-glow: var(--grp-lang-glow);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      background: var(--step-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 5px 14px var(--step-glow);
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .multi-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .step-help {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 16px;
+    }
+
+    /* ==========================================================================
+       8. SHOT CARDS (DISTINCT COLORS FOR SHOT 1, SHOT 2, SHOT 3)
+       ========================================================================== */
+    .shots-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .shot-card {
+      position: relative;
+      background: var(--surface-shot);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid var(--shot-border);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px 22px;
+      box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .shot-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--shot-grad);
+    }
+
+    .shot-card[data-shot-card="1"] {
+      --shot-grad: var(--shot1-grad);
+      --shot-solid: var(--shot1-solid);
+      --shot-text: var(--shot1-text);
+      --shot-soft: var(--shot1-soft);
+      --shot-border: var(--shot1-border);
+      --shot-glow: var(--shot1-glow);
+    }
+
+    .shot-card[data-shot-card="2"] {
+      --shot-grad: var(--shot2-grad);
+      --shot-solid: var(--shot2-solid);
+      --shot-text: var(--shot2-text);
+      --shot-soft: var(--shot2-soft);
+      --shot-border: var(--shot2-border);
+      --shot-glow: var(--shot2-glow);
+    }
+
+    .shot-card[data-shot-card="3"] {
+      --shot-grad: var(--shot3-grad);
+      --shot-solid: var(--shot3-solid);
+      --shot-text: var(--shot3-text);
+      --shot-soft: var(--shot3-soft);
+      --shot-border: var(--shot3-border);
+      --shot-glow: var(--shot3-glow);
+    }
+
+    .shot-card:focus-within {
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--shot-soft);
+    }
+
+    .shot-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .shot-card h4 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.14rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .shot-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--shot-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--shot-glow);
+    }
+
+    .shot-role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--shot-soft);
+      border: 1px solid var(--shot-border);
+      color: var(--shot-text);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Text Input */
+    .large-input {
+      width: 100%;
+      background: var(--surface-input);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 13px 16px;
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      color: var(--text-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      margin-bottom: 16px;
+    }
+
+    .large-input:hover {
+      border-color: var(--shot-border, var(--video-border));
+    }
+
+    .large-input:focus {
+      outline: none;
+      border-color: var(--shot-solid, var(--video-solid));
+      box-shadow: 0 0 0 4px var(--shot-soft, var(--video-soft));
+    }
+
+    .large-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.85;
+    }
+
+    /* Shot Sub-Group Labels (Color-Coded) */
+    .shot-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--lbl-text, var(--text-secondary));
+      background: var(--lbl-soft, var(--surface-subtle));
+      border: 1px solid var(--lbl-border, var(--border-subtle));
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      margin: 14px 0 10px;
+    }
+
+    .shot-label:first-of-type {
+      margin-top: 2px;
+    }
+
+    .shot-label.lbl-cam {
+      --lbl-text: var(--grp-cam-text);
+      --lbl-soft: var(--grp-cam-soft);
+      --lbl-border: var(--grp-cam-border);
+    }
+
+    .shot-label.lbl-motion {
+      --lbl-text: var(--grp-motion-text);
+      --lbl-soft: var(--grp-motion-soft);
+      --lbl-border: var(--grp-motion-border);
+    }
+
+    .shot-label.lbl-speed {
+      --lbl-text: var(--grp-mint-text);
+      --lbl-soft: var(--grp-mint-soft);
+      --lbl-border: var(--grp-mint-border);
+    }
+
+    /* ==========================================================================
+       9. CHOICE CHIPS (COLOR-CODED PER GROUP IN LIGHT & DARK MODES)
+       ========================================================================== */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+      gap: 9px;
+    }
+
+    .choice-grid.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .choice-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .choice-grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 48px;
+      padding: 9px 13px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.93rem;
+      font-weight: 500;
+      text-align: left;
+      line-height: 1.3;
+      position: relative;
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    /* Per-Group Choice Color Mapping */
+    .choice[data-fgroup="cam"] {
+      --ch-grad: var(--grp-cam-grad);
+      --ch-solid: var(--grp-cam-solid);
+      --ch-text: var(--grp-cam-text);
+      --ch-soft: var(--grp-cam-soft);
+      --ch-border: var(--grp-cam-border);
+      --ch-glow: var(--grp-cam-glow);
+    }
+
+    .choice[data-fgroup="motion"] {
+      --ch-grad: var(--grp-motion-grad);
+      --ch-solid: var(--grp-motion-solid);
+      --ch-text: var(--grp-motion-text);
+      --ch-soft: var(--grp-motion-soft);
+      --ch-border: var(--grp-motion-border);
+      --ch-glow: var(--grp-motion-glow);
+    }
+
+    .choice[data-fgroup="speed"],
+    .choice[data-fgroup="duration"] {
+      --ch-grad: var(--grp-mint-grad);
+      --ch-solid: var(--grp-mint-solid);
+      --ch-text: var(--grp-mint-text);
+      --ch-soft: var(--grp-mint-soft);
+      --ch-border: var(--grp-mint-border);
+      --ch-glow: var(--grp-mint-glow);
+    }
+
+    .choice[data-fgroup="style"] {
+      --ch-grad: var(--grp-style-grad);
+      --ch-solid: var(--grp-style-solid);
+      --ch-text: var(--grp-style-text);
+      --ch-soft: var(--grp-style-soft);
+      --ch-border: var(--grp-style-border);
+      --ch-glow: var(--grp-style-glow);
+    }
+
+    .choice[data-fgroup="lock"] {
+      --ch-grad: var(--grp-lock-grad);
+      --ch-solid: var(--grp-lock-solid);
+      --ch-text: var(--grp-lock-text);
+      --ch-soft: var(--grp-lock-soft);
+      --ch-border: var(--grp-lock-border);
+      --ch-glow: var(--grp-lock-glow);
+    }
+
+    .choice[data-fgroup="lang"] {
+      --ch-grad: var(--grp-lang-grad);
+      --ch-solid: var(--grp-lang-solid);
+      --ch-text: var(--grp-lang-text);
+      --ch-soft: var(--grp-lang-soft);
+      --ch-border: var(--grp-lang-border);
+      --ch-glow: var(--grp-lang-glow);
+    }
+
+    .choice:hover {
+      border-color: var(--ch-solid, var(--video-solid));
+      background: var(--glass-bg-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .choice-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--ch-soft, var(--video-soft));
+      color: var(--ch-text, var(--video-text));
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .choice-icon svg {
+      width: 17px;
+      height: 17px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .choice:hover .choice-icon {
+      transform: scale(1.05);
+    }
+
+    .choice-label {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .lang-code-pill {
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--ch-soft);
+      color: var(--ch-text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* Selected State */
+    .choice.selected,
+    .choice.active,
+    .choice[aria-pressed="true"] {
+      background: var(--ch-grad, var(--video-grad));
+      border-color: transparent;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 8px 20px var(--ch-glow, var(--video-glow));
+      transform: translateY(-1px);
+    }
+
+    .choice.selected .choice-icon,
+    .choice.active .choice-icon,
+    .choice[aria-pressed="true"] .choice-icon {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+    }
+
+    .choice.selected .lang-code-pill,
+    .choice.active .lang-code-pill,
+    .choice[aria-pressed="true"] .lang-code-pill {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+    }
+
+    .choice.selected:hover,
+    .choice.active:hover,
+    .choice[aria-pressed="true"]:hover {
+      filter: brightness(1.06);
+      color: #FFFFFF;
+    }
+
+    /* Multi-select check indicator for Step 4 Locks */
+    .choice[data-multi="1"]::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid var(--ch-border);
+      background: transparent;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .choice[data-multi="1"].selected::after {
+      border-color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.24) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+    }
+
+    /* ==========================================================================
+       10. ACTION BUTTONS & PROMPT RESULT PANEL
+       ========================================================================== */
+    .button-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .gen-row {
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 24px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--video-grad);
+      color: #FFFFFF;
+      border: 1.5px solid transparent;
+      box-shadow: 0 10px 24px var(--video-glow);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px var(--video-glow);
+    }
+
+    .secondary-btn {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--video-solid);
+      color: var(--video-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .danger-btn {
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1.5px solid var(--err-border);
+    }
+
+    .danger-btn:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: var(--err-solid);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 9px 17px;
+      font-size: 0.92rem;
+    }
+
+    /* Result Sheet (#flowResult) */
+    .result {
+      margin-top: 28px;
+      border-radius: var(--radius-lg);
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1.5px solid var(--sheet-border);
+      box-shadow: var(--sheet-shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 24px;
+      animation: fadeSlideUp 0.28s ease;
+    }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--video-grad);
+    }
+
+    .result-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .result h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.26rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .result-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--video-grad);
+      box-shadow: 0 0 12px var(--sheet-key);
+      flex-shrink: 0;
+    }
+
+    .result-live-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--sheet-key);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .result-desc {
+      font-size: 0.95rem;
+      color: var(--sheet-dim);
+      margin-bottom: 18px;
+    }
+
+    .result-desc .live-hint {
+      color: var(--sheet-key);
+      font-size: 0.88rem;
+    }
+
+    /* Shot Outputs Container (#flowShots — compatible with both app.js & built-in engine) */
+    #flowShots {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #flowShots > div,
+    .flow-shot-output {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      color: var(--sheet-ink);
+    }
+
+    .flow-shot-output[data-shot-out="1"] { border-left: 4px solid #A78BFA; }
+    .flow-shot-output[data-shot-out="2"] { border-left: 4px solid #38BDF8; }
+    .flow-shot-output[data-shot-out="3"] { border-left: 4px solid #FB7185; }
+
+    .flow-shot-out-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .flow-shot-out-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    .flow-shot-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .flow-shot-badge.s1 { background: var(--shot1-grad); }
+    .flow-shot-badge.s2 { background: var(--shot2-grad); }
+    .flow-shot-badge.s3 { background: var(--shot3-grad); }
+
+    #flowShots .prompt-box,
+    .flow-shot-text {
+      background: rgba(6, 10, 24, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      line-height: 1.72;
+      color: var(--sheet-ink);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-top: 8px;
+    }
+
+    #flowShots h4,
+    #flowShots strong {
+      font-family: var(--font-heading);
+      color: #FFFFFF;
+    }
+
+    #flowShots button,
+    .result .secondary-btn {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #F8FAFC;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+
+    #flowShots button:hover,
+    .result .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: var(--sheet-key);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .result .secondary-btn {
+      padding: 11px 20px;
+      font-size: 0.95rem;
+    }
+
+    #flowCopyMessage {
+      color: #34D399;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      min-height: 1.5em;
+      margin-top: 12px;
+    }
+
+    .open-app-row {
+      margin-top: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .open-app-row p {
+      font-size: 0.92rem;
+      color: var(--sheet-dim);
+      margin-bottom: 14px;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .app-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .app-btn.flow {
+      background: linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%);
+      box-shadow: 0 8px 22px rgba(124, 58, 237, 0.36);
+    }
+
+    .app-btn.capcut {
+      background: linear-gradient(135deg, #10B981 0%, #0284C7 100%);
+      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.34);
+    }
+
+    .app-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .app-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: inherit;
+    }
+
+    /* ==========================================================================
+       11. RELATED TOOLS SECTION ("ไปต่อที่เกี่ยวข้อง")
+       ========================================================================== */
+    .related {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .related-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .related-head-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--video-soft);
+      border: 1px solid var(--video-border);
+      color: var(--video-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .related h3 {
+      font-size: 1.24rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .rel-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .rel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--video-solid);
+    }
+
+    .rel-card .ic {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .rel-card .ic.cat-video { background: var(--cat-video-grad); }
+    .rel-card .ic.cat-create { background: var(--cat-create-grad); }
+    .rel-card .ic.cat-ai { background: var(--cat-ai-grad); }
+
+    .rel-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rel-card span {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       12. MODAL, LIGHTBOX & TOAST
+       ========================================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      background: rgba(10, 13, 30, 0.64);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.open,
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--video-solid);
+      color: #FFFFFF;
+      transform: rotate(90deg);
+    }
+
+    .modal-box hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 16px 0;
+    }
+
+    .modal-box h3 {
+      font-size: 1.02rem;
+      margin: 12px 0 6px;
+    }
+
+    .modal-box .prompt-box {
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1px solid var(--sheet-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 8px 0 18px;
+      white-space: pre-wrap;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1600;
+      background: rgba(7, 10, 24, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open,
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: min(94vw, 960px);
+      max-height: 86vh;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      object-fit: contain;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      transform: translate(-50%, 18px);
+      background: var(--video-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 14px 34px var(--video-glow);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1700;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       13. FOOTER (MATCHING index.html & STYLING footer.js OUTPUT)
+       ========================================================================== */
+    .site-footer,
+    footer.footer,
+    body > footer {
+      background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 44px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--video-grad);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(124, 58, 237, 0.26), rgba(6, 182, 212, 0.24));
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       14. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.84rem;
+      }
+
+      .logo-slot {
+        height: 30px;
+      }
+
+      .logo-slot img {
+        height: 32px;
+      }
+
+      .topbar-title {
+        font-size: 0.98rem;
+      }
+
+      .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+
+      .page {
+        padding: 18px 14px 36px;
+      }
+
+      .page-hero {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .hero-icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+      }
+
+      .builder-panel {
+        padding: 18px 14px;
+        border-radius: 24px;
+      }
+
+      .step {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .shot-card {
+        padding: 16px 14px 18px;
+        border-radius: 18px;
+      }
+
+      .choice-grid,
+      .choice-grid.cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .choice-grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .choice {
+        padding: 8px 10px;
+        font-size: 0.87rem;
+        gap: 7px;
+        min-height: 46px;
+      }
+
+      .choice-icon {
+        width: 26px;
+        height: 26px;
+      }
+
+      .choice-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .gen-row .primary-btn {
+        flex: 1 1 100%;
+      }
+
+      .gen-row .secondary-btn,
+      .gen-row .danger-btn {
+        flex: 1 1 auto;
+      }
+
+      .result {
+        padding: 18px 14px;
+      }
+
+      .related {
+        padding: 0 14px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-back-text,
+      .logo-slot,
+      .brand-divider,
+      #themeText {
+        display: none;
+      }
+
+      .nav-back-btn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .choice-grid.cols-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS TOPBAR (MATCHING index.html)
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="แถบนำทาง ภาพนิ่ง → วิดีโอ 3 ช็อต">
+      <div class="nav-left">
+        <a class="nav-back-btn back-home" href="index.html" aria-label="กลับหน้าหลัก">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
+          <span class="nav-back-text">หน้าหลัก</span>
+        </a>
+
+        <div class="nav-brand">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display='none'" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="topbar-title">ภาพนิ่ง → วิดีโอ 3 ช็อต</div>
+        </div>
+      </div>
+
+      <div class="nav-actions topbar-tools">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับธีมสว่าง/มืด" aria-label="สลับธีมสว่าง/มืด">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN CONTENT
+       ======================================================================== -->
+  <main class="page">
+
+    <!-- Page Hero (Video Category Gradient #7C3AED -> #06B6D4) -->
+    <section class="page-hero">
+      <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+      <div class="page-hero-inner cat-video">
+        <div class="hero-main-col">
+          <div class="hero-icon-box" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2"/>
+              <path d="M7 3v18"/>
+              <path d="M3 7.5h4"/>
+              <path d="M3 12h18"/>
+              <path d="M3 16.5h4"/>
+              <path d="M17 3v18"/>
+              <path d="M17 7.5h4"/>
+              <path d="M17 16.5h4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-kicker">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m22 8-6 4 6 4V8Z"/>
+                <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+              </svg>
+              <span>AiBA Connect · หมวดวิดีโอ</span>
+            </div>
+            <h1>ภาพนิ่ง → วิดีโอ 3 ช็อต</h1>
+            <p>กำหนดการเคลื่อนกล้องและการเคลื่อนไหวทีละช็อต สำหรับ Google Flow</p>
+          </div>
+        </div>
+
+        <div class="hero-pills" aria-hidden="true">
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="6 3 20 12 6 21 6 3"/>
+            </svg>
+            <span>Frames to Video</span>
+          </span>
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2"/>
+              <path d="M9 3v18"/>
+              <path d="M15 3v18"/>
+            </svg>
+            <span>วางแผนครบ 3 ช็อต</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Banner -->
+    <div id="resumeBanner" class="resume-banner" role="region" aria-label="กู้คืนงานที่ทำค้างไว้">
+      <div class="resume-left">
+        <div class="resume-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+        </div>
+        <div class="resume-text">
+          <strong>พบงานที่ทำค้างไว้ในหน้านี้</strong>
+          <span id="resumeInfo"></span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button type="button" class="primary-btn btn-sm" onclick="restoreWork()">ทำต่อจากเดิม</button>
+        <button type="button" class="danger-btn btn-sm" onclick="discardWork()">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <!-- Flow Builder Section -->
+    <section id="flowBuilder" class="builder-panel builder active">
+      <div class="section-description">
+        ใน Flow ให้เลือกโหมด "Frames to Video" แล้วอัปโหลดภาพนิ่งเป็นเฟรมแรกของแต่ละช็อต
+        จากนั้นวาง Prompt ที่ได้จากที่นี่ทีละช็อต — หัวใจของการคุมการเคลื่อนไหวคือบอกให้ชัด 3 อย่าง:
+        <div class="desc-pillars">
+          <span class="pillar-chip cam">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m22 8-6 4 6 4V8Z"/>
+              <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+            </svg>
+            <span>กล้องขยับยังไง</span>
+          </span>
+          <span class="pillar-chip motion">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+              <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+              <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+            </svg>
+            <span>อะไรในภาพขยับ</span>
+          </span>
+          <span class="pillar-chip lock">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            <span>อะไรห้ามเปลี่ยน</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="steps-stack">
+
+        <!-- ================================================================
+             STEP 1: กำหนดแต่ละช็อต (ช็อตที่ 1, 2, 3)
+             ================================================================ -->
+        <div class="step" data-step="1">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">1</span>
+              <span class="step-title">กำหนดแต่ละช็อต</span>
+            </div>
+          </div>
+          <p class="step-help">บอกว่าภาพนิ่งคืออะไร แล้วเลือกการเคลื่อนกล้อง การเคลื่อนไหว และความเร็ว (ทำครบทั้ง 3 ช็อต หรือทำแค่บางช็อตก็ได้)</p>
+
+          <div class="shots-stack">
+
+            <!-- SHOT 1 (Violet Indigo) -->
+            <div class="shot-card" data-shot-card="1">
+              <div class="shot-card-header">
+                <h4>
+                  <span class="shot-num">1</span>
+                  <span>ช็อตที่ 1</span>
+                </h4>
+                <span class="shot-role-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="18" height="18" x="3" y="3" rx="2"/>
+                    <path d="m10 8 6 4-6 4Z"/>
+                  </svg>
+                  <span>ช็อตเปิดเรื่อง</span>
+                </span>
+              </div>
+
+              <input id="flowImg1" class="large-input" type="text"
+                placeholder="ภาพนิ่งนี้คืออะไร เช่น ชามก๋วยเตี๋ยวเรือมีไอน้ำ วางบนโต๊ะไม้"
+                oninput="refreshFlowPrompt()" />
+
+              <div class="shot-label lbl-cam">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+                <span>การเคลื่อนกล้อง</span>
+              </div>
+              <div class="choice-grid">
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="กล้องนิ่ง ไม่ขยับ" data-en="static locked-off camera" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="choice-label">กล้องนิ่ง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="ค่อย ๆ ซูมเข้าหาตัวแบบช้า ๆ" data-en="slow push-in toward the subject" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="11" x2="11" y1="8" y2="14"/><line x1="8" x2="14" y1="11" y2="11"/></svg></span><span class="choice-label">ซูมเข้า</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="ค่อย ๆ ถอยกล้องออกเผยให้เห็นภาพกว้าง" data-en="slow pull-out revealing the wider scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="8" x2="14" y1="11" y2="11"/></svg></span><span class="choice-label">ถอยออก</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="แพนกล้องจากซ้ายไปขวา" data-en="smooth pan from left to right" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span><span class="choice-label">แพนซ้าย→ขวา</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="แพนกล้องจากขวาไปซ้าย" data-en="smooth pan from right to left" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></span><span class="choice-label">แพนขวา→ซ้าย</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="เงยกล้องขึ้นช้า ๆ" data-en="slow tilt up" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span><span class="choice-label">เงยขึ้น</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="ก้มกล้องลงช้า ๆ" data-en="slow tilt down" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span><span class="choice-label">ก้มลง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="กล้องหมุนรอบตัวแบบช้า ๆ" data-en="slow orbit around the subject" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span><span class="choice-label">หมุนรอบ</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="กล้องสไลด์ไปด้านข้าง" data-en="lateral dolly slide" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 8 22 12 18 16"/><polyline points="6 8 2 12 6 16"/><line x1="2" x2="22" y1="12" y2="12"/></svg></span><span class="choice-label">สไลด์ข้าง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="กล้องเคลื่อนขึ้นสูงแบบเครน" data-en="crane up rising above the scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/><path d="M4 20h16"/></svg></span><span class="choice-label">เครนขึ้น</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="กล้องมือถือสั่นเล็กน้อยเหมือนคนถ่าย" data-en="subtle handheld movement" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="10" height="16" x="7" y="4" rx="2"/><path d="M12 17h.01"/><path d="M3 9v6"/><path d="M21 9v6"/></svg></span><span class="choice-label">มือถือสั่นเบา ๆ</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="1" data-value="เปลี่ยนโฟกัสจากหน้าไปหลัง" data-en="rack focus from foreground to background" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg></span><span class="choice-label">เปลี่ยนโฟกัส</span></button>
+              </div>
+
+              <div class="shot-label lbl-motion">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+                <span>สิ่งที่อยู่ในภาพเคลื่อนไหวอย่างไร</span>
+              </div>
+              <div class="choice-grid">
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="ไม่มีอะไรขยับ ให้ทุกอย่างนิ่งเหมือนภาพต้นฉบับ" data-en="no subject motion, everything stays exactly as in the image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="10" x2="10" y1="8" y2="16"/><line x1="14" x2="14" y1="8" y2="16"/></svg></span><span class="choice-label">ทุกอย่างนิ่ง</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="ขยับเล็กน้อยตามธรรมชาติ เช่น ผม ใบไม้ ผ้า ไหวตามลม" data-en="subtle natural ambient motion only, like hair, leaves or fabric in a light breeze" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></span><span class="choice-label">ไหวเบา ๆ ตามลม</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="ควันหรือไอน้ำลอยขึ้นช้า ๆ" data-en="steam or smoke gently rising" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18c0-2 2-2 2-4s-2-2-2-4 2-2 2-4"/><path d="M14 18c0-2 2-2 2-4s-2-2-2-4 2-2 2-4"/><path d="M5 21h14"/></svg></span><span class="choice-label">ควัน/ไอน้ำลอย</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="น้ำไหลหรือคลื่นเคลื่อนไหวช้า ๆ" data-en="water flowing or waves moving slowly" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></span><span class="choice-label">น้ำไหล</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="สินค้าหมุนช้า ๆ รอบตัวเอง" data-en="the product slowly rotates in place" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="choice-label">สินค้าหมุน</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="คนหันหน้ามาแล้วยิ้มเล็กน้อย" data-en="the person slowly turns toward the camera and smiles slightly" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span><span class="choice-label">คนหันมายิ้ม</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="คนหรือสัตว์เดินไปข้างหน้าช้า ๆ" data-en="the subject walks slowly forward" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="m10 21 1-6-3-2 2-4 4 1 2 3"/><path d="m14 21-1-5"/></svg></span><span class="choice-label">เดินไปข้างหน้า</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="แสงเปลี่ยนช้า ๆ เช่น แดดเคลื่อน ไฟกะพริบ" data-en="light slowly changes, like sun moving or lights flickering" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><span class="choice-label">แสงเปลี่ยน</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="ฝุ่นหรืออนุภาคเล็ก ๆ ลอยในอากาศ" data-en="tiny dust particles floating in the air" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></span><span class="choice-label">ฝุ่นลอย</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="ฝนตกหรือหิมะโปรยเบา ๆ" data-en="light rain or snow falling" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v2"/><path d="M12 17v2"/><path d="M16 19v2"/></svg></span><span class="choice-label">ฝน/หิมะ</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="กะพริบตาและหายใจเบา ๆ เหมือนมีชีวิต" data-en="natural blinking and gentle breathing" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></span><span class="choice-label">กะพริบตา/หายใจ</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="1" data-value="ทุกอย่างในภาพเคลื่อนไหวเต็มที่แบบวิดีโอจริง" data-en="full natural motion of everything in the scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span><span class="choice-label">เคลื่อนไหวเต็มที่</span></button>
+              </div>
+
+              <div class="shot-label lbl-speed">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                <span>ความเร็ว</span>
+              </div>
+              <div class="choice-grid cols-4">
+                <button type="button" class="choice" data-fgroup="speed" data-shot="1" data-value="ช้ามาก แทบไม่รู้สึก" data-en="very slow, almost imperceptible" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg></span><span class="choice-label">ช้ามาก</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="1" data-value="ช้า นุ่มนวล" data-en="slow and smooth" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.5-4 5.5-4 8 0s5.5 4 8 0 4-4 4-4"/></svg></span><span class="choice-label">ช้า</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="1" data-value="ความเร็วปกติ" data-en="normal speed" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></span><span class="choice-label">ปกติ</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="1" data-value="เร็ว มีพลัง" data-en="fast and energetic" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="choice-label">เร็ว</span></button>
+              </div>
+            </div>
+
+            <!-- SHOT 2 (Cyan Sky) -->
+            <div class="shot-card" data-shot-card="2">
+              <div class="shot-card-header">
+                <h4>
+                  <span class="shot-num">2</span>
+                  <span>ช็อตที่ 2</span>
+                </h4>
+                <span class="shot-role-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="18" height="18" x="3" y="3" rx="2"/>
+                    <path d="M9 3v18"/>
+                    <path d="M15 3v18"/>
+                  </svg>
+                  <span>ช็อตเชื่อมเรื่อง</span>
+                </span>
+              </div>
+
+              <input id="flowImg2" class="large-input" type="text"
+                placeholder="ภาพนิ่งนี้คืออะไร เช่น ชามก๋วยเตี๋ยวเรือมีไอน้ำ วางบนโต๊ะไม้"
+                oninput="refreshFlowPrompt()" />
+
+              <div class="shot-label lbl-cam">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+                <span>การเคลื่อนกล้อง</span>
+              </div>
+              <div class="choice-grid">
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="กล้องนิ่ง ไม่ขยับ" data-en="static locked-off camera" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="choice-label">กล้องนิ่ง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="ค่อย ๆ ซูมเข้าหาตัวแบบช้า ๆ" data-en="slow push-in toward the subject" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="11" x2="11" y1="8" y2="14"/><line x1="8" x2="14" y1="11" y2="11"/></svg></span><span class="choice-label">ซูมเข้า</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="ค่อย ๆ ถอยกล้องออกเผยให้เห็นภาพกว้าง" data-en="slow pull-out revealing the wider scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="8" x2="14" y1="11" y2="11"/></svg></span><span class="choice-label">ถอยออก</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="แพนกล้องจากซ้ายไปขวา" data-en="smooth pan from left to right" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span><span class="choice-label">แพนซ้าย→ขวา</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="แพนกล้องจากขวาไปซ้าย" data-en="smooth pan from right to left" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></span><span class="choice-label">แพนขวา→ซ้าย</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="เงยกล้องขึ้นช้า ๆ" data-en="slow tilt up" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span><span class="choice-label">เงยขึ้น</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="ก้มกล้องลงช้า ๆ" data-en="slow tilt down" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span><span class="choice-label">ก้มลง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="กล้องหมุนรอบตัวแบบช้า ๆ" data-en="slow orbit around the subject" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span><span class="choice-label">หมุนรอบ</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="กล้องสไลด์ไปด้านข้าง" data-en="lateral dolly slide" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 8 22 12 18 16"/><polyline points="6 8 2 12 6 16"/><line x1="2" x2="22" y1="12" y2="12"/></svg></span><span class="choice-label">สไลด์ข้าง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="กล้องเคลื่อนขึ้นสูงแบบเครน" data-en="crane up rising above the scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/><path d="M4 20h16"/></svg></span><span class="choice-label">เครนขึ้น</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="กล้องมือถือสั่นเล็กน้อยเหมือนคนถ่าย" data-en="subtle handheld movement" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="10" height="16" x="7" y="4" rx="2"/><path d="M12 17h.01"/><path d="M3 9v6"/><path d="M21 9v6"/></svg></span><span class="choice-label">มือถือสั่นเบา ๆ</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="2" data-value="เปลี่ยนโฟกัสจากหน้าไปหลัง" data-en="rack focus from foreground to background" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg></span><span class="choice-label">เปลี่ยนโฟกัส</span></button>
+              </div>
+
+              <div class="shot-label lbl-motion">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+                <span>สิ่งที่อยู่ในภาพเคลื่อนไหวอย่างไร</span>
+              </div>
+              <div class="choice-grid">
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="ไม่มีอะไรขยับ ให้ทุกอย่างนิ่งเหมือนภาพต้นฉบับ" data-en="no subject motion, everything stays exactly as in the image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="10" x2="10" y1="8" y2="16"/><line x1="14" x2="14" y1="8" y2="16"/></svg></span><span class="choice-label">ทุกอย่างนิ่ง</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="ขยับเล็กน้อยตามธรรมชาติ เช่น ผม ใบไม้ ผ้า ไหวตามลม" data-en="subtle natural ambient motion only, like hair, leaves or fabric in a light breeze" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></span><span class="choice-label">ไหวเบา ๆ ตามลม</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="ควันหรือไอน้ำลอยขึ้นช้า ๆ" data-en="steam or smoke gently rising" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18c0-2 2-2 2-4s-2-2-2-4 2-2 2-4"/><path d="M14 18c0-2 2-2 2-4s-2-2-2-4 2-2 2-4"/><path d="M5 21h14"/></svg></span><span class="choice-label">ควัน/ไอน้ำลอย</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="น้ำไหลหรือคลื่นเคลื่อนไหวช้า ๆ" data-en="water flowing or waves moving slowly" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></span><span class="choice-label">น้ำไหล</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="สินค้าหมุนช้า ๆ รอบตัวเอง" data-en="the product slowly rotates in place" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="choice-label">สินค้าหมุน</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="คนหันหน้ามาแล้วยิ้มเล็กน้อย" data-en="the person slowly turns toward the camera and smiles slightly" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span><span class="choice-label">คนหันมายิ้ม</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="คนหรือสัตว์เดินไปข้างหน้าช้า ๆ" data-en="the subject walks slowly forward" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="m10 21 1-6-3-2 2-4 4 1 2 3"/><path d="m14 21-1-5"/></svg></span><span class="choice-label">เดินไปข้างหน้า</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="แสงเปลี่ยนช้า ๆ เช่น แดดเคลื่อน ไฟกะพริบ" data-en="light slowly changes, like sun moving or lights flickering" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><span class="choice-label">แสงเปลี่ยน</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="ฝุ่นหรืออนุภาคเล็ก ๆ ลอยในอากาศ" data-en="tiny dust particles floating in the air" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></span><span class="choice-label">ฝุ่นลอย</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="ฝนตกหรือหิมะโปรยเบา ๆ" data-en="light rain or snow falling" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v2"/><path d="M12 17v2"/><path d="M16 19v2"/></svg></span><span class="choice-label">ฝน/หิมะ</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="กะพริบตาและหายใจเบา ๆ เหมือนมีชีวิต" data-en="natural blinking and gentle breathing" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></span><span class="choice-label">กะพริบตา/หายใจ</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="2" data-value="ทุกอย่างในภาพเคลื่อนไหวเต็มที่แบบวิดีโอจริง" data-en="full natural motion of everything in the scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span><span class="choice-label">เคลื่อนไหวเต็มที่</span></button>
+              </div>
+
+              <div class="shot-label lbl-speed">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                <span>ความเร็ว</span>
+              </div>
+              <div class="choice-grid cols-4">
+                <button type="button" class="choice" data-fgroup="speed" data-shot="2" data-value="ช้ามาก แทบไม่รู้สึก" data-en="very slow, almost imperceptible" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg></span><span class="choice-label">ช้ามาก</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="2" data-value="ช้า นุ่มนวล" data-en="slow and smooth" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.5-4 5.5-4 8 0s5.5 4 8 0 4-4 4-4"/></svg></span><span class="choice-label">ช้า</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="2" data-value="ความเร็วปกติ" data-en="normal speed" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></span><span class="choice-label">ปกติ</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="2" data-value="เร็ว มีพลัง" data-en="fast and energetic" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="choice-label">เร็ว</span></button>
+              </div>
+            </div>
+
+            <!-- SHOT 3 (Coral Rose) -->
+            <div class="shot-card" data-shot-card="3">
+              <div class="shot-card-header">
+                <h4>
+                  <span class="shot-num">3</span>
+                  <span>ช็อตที่ 3</span>
+                </h4>
+                <span class="shot-role-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                    <line x1="4" x2="4" y1="22" y2="15"/>
+                  </svg>
+                  <span>ช็อตปิดท้าย</span>
+                </span>
+              </div>
+
+              <input id="flowImg3" class="large-input" type="text"
+                placeholder="ภาพนิ่งนี้คืออะไร เช่น ชามก๋วยเตี๋ยวเรือมีไอน้ำ วางบนโต๊ะไม้"
+                oninput="refreshFlowPrompt()" />
+
+              <div class="shot-label lbl-cam">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+                <span>การเคลื่อนกล้อง</span>
+              </div>
+              <div class="choice-grid">
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="กล้องนิ่ง ไม่ขยับ" data-en="static locked-off camera" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="choice-label">กล้องนิ่ง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="ค่อย ๆ ซูมเข้าหาตัวแบบช้า ๆ" data-en="slow push-in toward the subject" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="11" x2="11" y1="8" y2="14"/><line x1="8" x2="14" y1="11" y2="11"/></svg></span><span class="choice-label">ซูมเข้า</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="ค่อย ๆ ถอยกล้องออกเผยให้เห็นภาพกว้าง" data-en="slow pull-out revealing the wider scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="8" x2="14" y1="11" y2="11"/></svg></span><span class="choice-label">ถอยออก</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="แพนกล้องจากซ้ายไปขวา" data-en="smooth pan from left to right" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span><span class="choice-label">แพนซ้าย→ขวา</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="แพนกล้องจากขวาไปซ้าย" data-en="smooth pan from right to left" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></span><span class="choice-label">แพนขวา→ซ้าย</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="เงยกล้องขึ้นช้า ๆ" data-en="slow tilt up" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span><span class="choice-label">เงยขึ้น</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="ก้มกล้องลงช้า ๆ" data-en="slow tilt down" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span><span class="choice-label">ก้มลง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="กล้องหมุนรอบตัวแบบช้า ๆ" data-en="slow orbit around the subject" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span><span class="choice-label">หมุนรอบ</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="กล้องสไลด์ไปด้านข้าง" data-en="lateral dolly slide" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 8 22 12 18 16"/><polyline points="6 8 2 12 6 16"/><line x1="2" x2="22" y1="12" y2="12"/></svg></span><span class="choice-label">สไลด์ข้าง</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="กล้องเคลื่อนขึ้นสูงแบบเครน" data-en="crane up rising above the scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/><path d="M4 20h16"/></svg></span><span class="choice-label">เครนขึ้น</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="กล้องมือถือสั่นเล็กน้อยเหมือนคนถ่าย" data-en="subtle handheld movement" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="10" height="16" x="7" y="4" rx="2"/><path d="M12 17h.01"/><path d="M3 9v6"/><path d="M21 9v6"/></svg></span><span class="choice-label">มือถือสั่นเบา ๆ</span></button>
+                <button type="button" class="choice" data-fgroup="cam" data-shot="3" data-value="เปลี่ยนโฟกัสจากหน้าไปหลัง" data-en="rack focus from foreground to background" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg></span><span class="choice-label">เปลี่ยนโฟกัส</span></button>
+              </div>
+
+              <div class="shot-label lbl-motion">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+                <span>สิ่งที่อยู่ในภาพเคลื่อนไหวอย่างไร</span>
+              </div>
+              <div class="choice-grid">
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="ไม่มีอะไรขยับ ให้ทุกอย่างนิ่งเหมือนภาพต้นฉบับ" data-en="no subject motion, everything stays exactly as in the image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="10" x2="10" y1="8" y2="16"/><line x1="14" x2="14" y1="8" y2="16"/></svg></span><span class="choice-label">ทุกอย่างนิ่ง</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="ขยับเล็กน้อยตามธรรมชาติ เช่น ผม ใบไม้ ผ้า ไหวตามลม" data-en="subtle natural ambient motion only, like hair, leaves or fabric in a light breeze" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></span><span class="choice-label">ไหวเบา ๆ ตามลม</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="ควันหรือไอน้ำลอยขึ้นช้า ๆ" data-en="steam or smoke gently rising" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18c0-2 2-2 2-4s-2-2-2-4 2-2 2-4"/><path d="M14 18c0-2 2-2 2-4s-2-2-2-4 2-2 2-4"/><path d="M5 21h14"/></svg></span><span class="choice-label">ควัน/ไอน้ำลอย</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="น้ำไหลหรือคลื่นเคลื่อนไหวช้า ๆ" data-en="water flowing or waves moving slowly" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></span><span class="choice-label">น้ำไหล</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="สินค้าหมุนช้า ๆ รอบตัวเอง" data-en="the product slowly rotates in place" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="choice-label">สินค้าหมุน</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="คนหันหน้ามาแล้วยิ้มเล็กน้อย" data-en="the person slowly turns toward the camera and smiles slightly" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span><span class="choice-label">คนหันมายิ้ม</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="คนหรือสัตว์เดินไปข้างหน้าช้า ๆ" data-en="the subject walks slowly forward" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="m10 21 1-6-3-2 2-4 4 1 2 3"/><path d="m14 21-1-5"/></svg></span><span class="choice-label">เดินไปข้างหน้า</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="แสงเปลี่ยนช้า ๆ เช่น แดดเคลื่อน ไฟกะพริบ" data-en="light slowly changes, like sun moving or lights flickering" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><span class="choice-label">แสงเปลี่ยน</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="ฝุ่นหรืออนุภาคเล็ก ๆ ลอยในอากาศ" data-en="tiny dust particles floating in the air" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></span><span class="choice-label">ฝุ่นลอย</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="ฝนตกหรือหิมะโปรยเบา ๆ" data-en="light rain or snow falling" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v2"/><path d="M12 17v2"/><path d="M16 19v2"/></svg></span><span class="choice-label">ฝน/หิมะ</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="กะพริบตาและหายใจเบา ๆ เหมือนมีชีวิต" data-en="natural blinking and gentle breathing" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></span><span class="choice-label">กะพริบตา/หายใจ</span></button>
+                <button type="button" class="choice" data-fgroup="motion" data-shot="3" data-value="ทุกอย่างในภาพเคลื่อนไหวเต็มที่แบบวิดีโอจริง" data-en="full natural motion of everything in the scene" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span><span class="choice-label">เคลื่อนไหวเต็มที่</span></button>
+              </div>
+
+              <div class="shot-label lbl-speed">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                <span>ความเร็ว</span>
+              </div>
+              <div class="choice-grid cols-4">
+                <button type="button" class="choice" data-fgroup="speed" data-shot="3" data-value="ช้ามาก แทบไม่รู้สึก" data-en="very slow, almost imperceptible" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg></span><span class="choice-label">ช้ามาก</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="3" data-value="ช้า นุ่มนวล" data-en="slow and smooth" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.5-4 5.5-4 8 0s5.5 4 8 0 4-4 4-4"/></svg></span><span class="choice-label">ช้า</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="3" data-value="ความเร็วปกติ" data-en="normal speed" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></span><span class="choice-label">ปกติ</span></button>
+                <button type="button" class="choice" data-fgroup="speed" data-shot="3" data-value="เร็ว มีพลัง" data-en="fast and energetic" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="choice-label">เร็ว</span></button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 2: ความยาวแต่ละช็อต (Mint / Emerald)
+             ================================================================ -->
+        <div class="step" data-step="2">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">2</span>
+              <span class="step-title">ความยาวแต่ละช็อต</span>
+            </div>
+          </div>
+          <p class="step-help">Flow สร้างคลิปได้ครั้งละประมาณ 8 วินาที</p>
+          <div class="choice-grid cols-3">
+            <button type="button" class="choice" data-fgroup="duration" data-value="4 วินาที" data-en="4 seconds" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg></span><span class="choice-label">4 วินาที</span></button>
+            <button type="button" class="choice" data-fgroup="duration" data-value="6 วินาที" data-en="6 seconds" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg></span><span class="choice-label">6 วินาที</span></button>
+            <button type="button" class="choice" data-fgroup="duration" data-value="8 วินาที" data-en="8 seconds" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg></span><span class="choice-label">8 วินาที</span></button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 3: สไตล์ภาพและแสงรวมของทั้ง 3 ช็อต (Violet / Pink)
+             ================================================================ -->
+        <div class="step" data-step="3">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">3</span>
+              <span class="step-title">สไตล์ภาพและแสงรวมของทั้ง 3 ช็อต</span>
+            </div>
+          </div>
+          <p class="step-help">ใช้ค่าเดียวกันทุกช็อต เพื่อให้ตัดต่อกันแล้วดูเป็นวิดีโอเดียวกัน</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-fgroup="style" data-value="เหมือนภาพถ่ายจริง แบบภาพยนตร์" data-en="photorealistic, cinematic film look" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M17 3v18"/><path d="M3 12h18"/><path d="M3 7.5h4"/><path d="M3 16.5h4"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg></span><span class="choice-label">ภาพยนตร์</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="เหมือนภาพถ่ายจริง แบบสารคดี" data-en="photorealistic, documentary look" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg></span><span class="choice-label">สารคดี</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="โฆษณาสินค้า สะอาด คมชัด" data-en="clean commercial product-shot look" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span><span class="choice-label">โฆษณา</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="นุ่มฝัน โทนอบอุ่น" data-en="soft dreamy look with warm tones" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="M16 18a4 4 0 0 0-8 0"/></svg></span><span class="choice-label">นุ่มฝัน</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="โทนเย็น มืด ดูลึกลับ" data-en="cool moody low-key look" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="choice-label">โทนเย็น มืด</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="สดใส สีสันจัด" data-en="bright vivid colorful look" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span><span class="choice-label">สดใส</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="แสงธรรมชาติ ตามภาพต้นฉบับ" data-en="natural lighting matching the source image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span><span class="choice-label">ตามภาพต้นฉบับ</span></button>
+            <button type="button" class="choice" data-fgroup="style" data-value="ภาพวาด/แอนิเมชัน ตามสไตล์ภาพต้นฉบับ" data-en="keep the illustrated/animated style of the source image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></span><span class="choice-label">ภาพวาด/แอนิเมชัน</span></button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 4: สิ่งที่ห้ามเปลี่ยน (Rose Red / Amber — Multi-select)
+             ================================================================ -->
+        <div class="step" data-step="4">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">4</span>
+              <span class="step-title">สิ่งที่ห้ามเปลี่ยน</span>
+              <span class="multi-hint">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <span>เลือกได้หลายข้อ</span>
+              </span>
+            </div>
+          </div>
+          <p class="step-help">ส่วนนี้สำคัญมาก ช่วยให้ AI ไม่เปลี่ยนหน้าตา สินค้า หรือองค์ประกอบของภาพต้นฉบับ</p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="คงหน้าตาและรูปร่างของคนให้เหมือนภาพต้นฉบับ" data-en="keep the person's face and body identical to the reference image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span><span class="choice-label">หน้าตาคน</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="คงรูปทรง สี และโลโก้ของสินค้าให้ตรงต้นฉบับ" data-en="keep the product's shape, colors and logo exactly as in the image" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span><span class="choice-label">สินค้า/โลโก้</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="คงองค์ประกอบและตำแหน่งของสิ่งต่าง ๆ ในภาพ" data-en="keep the composition and placement of all elements" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></span><span class="choice-label">องค์ประกอบภาพ</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="ห้ามเพิ่มคน วัตถุ หรือข้อความใหม่เข้ามา" data-en="do not add new people, objects or text" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg></span><span class="choice-label">ห้ามเพิ่มของใหม่</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="ห้ามบิดเบี้ยว ละลาย หรือเปลี่ยนรูปทรง (no morphing)" data-en="no morphing, warping or distortion" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><span class="choice-label">ห้ามบิดเบี้ยว</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="คงโทนสีและแสงเดิมของภาพ" data-en="keep the original color palette and lighting" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span><span class="choice-label">สีและแสงเดิม</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="ห้ามตัดสลับฉาก ให้เป็นช็อตเดียวต่อเนื่อง" data-en="single continuous shot, no cuts or scene changes" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span><span class="choice-label">ช็อตเดียวต่อเนื่อง</span></button>
+            <button type="button" class="choice" data-fgroup="lock" data-multi="1" data-value="พื้นหลังต้องคงเดิม ไม่เปลี่ยนสถานที่" data-en="background stays the same, no location change" onclick="selectFlowChoice(this)"><span class="choice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="choice-label">พื้นหลังเดิม</span></button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 5: ภาษาของ Prompt (Indigo / Cyan)
+             ================================================================ -->
+        <div class="step" data-step="5">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">5</span>
+              <span class="step-title">ภาษาของ Prompt</span>
+            </div>
+          </div>
+          <p class="step-help">Flow / Veo เข้าใจภาษาอังกฤษได้แม่นยำกว่า แนะนำให้ใช้อังกฤษ</p>
+          <div class="choice-grid cols-2">
+            <button type="button" class="choice" data-fgroup="lang" data-value="en" onclick="selectFlowChoice(this)">
+              <span class="choice-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              </span>
+              <span class="choice-label">อังกฤษ (แนะนำ)</span>
+              <span class="lang-code-pill">EN</span>
+            </button>
+            <button type="button" class="choice" data-fgroup="lang" data-value="th" onclick="selectFlowChoice(this)">
+              <span class="choice-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+              </span>
+              <span class="choice-label">ไทย</span>
+              <span class="lang-code-pill">TH</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="button-row gen-row">
+        <button type="button" class="primary-btn" onclick="generateFlowPrompt()">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+          <span>สร้าง Prompt ทั้ง 3 ช็อต</span>
+        </button>
+
+        <button type="button" class="secondary-btn" onclick="flowExample()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+          </svg>
+          <span>ลองตัวอย่าง</span>
+        </button>
+
+        <button type="button" class="danger-btn" onclick="clearFlowBuilder()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+
+      <!-- Result Box (#flowResult) -->
+      <div id="flowResult" class="result" style="display:none;">
+        <div class="result-head-row">
+          <h3>
+            <span class="result-dot" aria-hidden="true"></span>
+            <span>Prompt สำหรับ Flow พร้อมแล้ว</span>
+          </h3>
+          <span class="result-live-badge">อัปเดตอัตโนมัติ</span>
+        </div>
+
+        <p class="result-desc">
+          วางทีละช็อต: อัปโหลดภาพนิ่งของช็อตนั้นเป็นเฟรมแรก แล้ววาง Prompt ของช็อตเดียวกัน
+          <span class="live-hint">(เปลี่ยนตัวเลือกด้านบนได้ตลอด ข้อความจะอัปเดตให้เอง)</span>
+        </p>
+
+        <div id="flowShots"></div>
+        <p id="flowCopyMessage"></p>
+        <div id="flowAllOutput" style="display:none;"></div>
+
+        <div class="open-app-row">
+          <p>ใน Google Flow: สร้างทีละช็อต (อัปโหลดภาพ → วาง Prompt → Generate) ทำครบ 3 ช็อตแล้วดาวน์โหลดมาสั่งตัดใน CapCut</p>
+          <div class="button-row">
+            <a class="app-btn flow" href="https://labs.google/flow" target="_blank" rel="noopener">
+              <span class="app-logo" aria-hidden="true">
+                <img src="flow.png" alt="Google Flow" onerror="this.style.display='none'" />
+              </span>
+              <span>เปิด Google Flow</span>
+            </a>
+
+            <button type="button" class="secondary-btn" onclick="copyText('flowAllOutput','flowCopyMessage','คัดลอกทั้ง 3 ช็อตเรียบร้อยแล้ว (เก็บไว้เป็นบันทึก)')">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+              </svg>
+              <span>คัดลอกทั้งหมดเก็บไว้</span>
+            </button>
+
+            <button type="button" class="app-btn capcut" onclick="goToCapcutFromFlow()">
+              <span class="app-logo" aria-hidden="true">
+                <img src="capcut-logo-.png" alt="CapCut" onerror="this.style.display='none'" />
+              </span>
+              <span>ไปต่อ: สั่งตัดใน CapCut →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       RELATED TOOLS ("ไปต่อที่เกี่ยวข้อง")
+       ======================================================================== -->
+  <aside class="related" aria-label="เครื่องมือที่เกี่ยวข้อง">
+    <div class="related-head">
+      <span class="related-head-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="m12 5 7 7-7 7"/>
+        </svg>
+      </span>
+      <h3>ไปต่อที่เกี่ยวข้อง</h3>
+    </div>
+
+    <div class="related-grid">
+      <a class="rel-card" href="page-capcut.html">
+        <div class="ic cat-video" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="6" r="3"/>
+            <path d="M8.12 8.12 12 12"/>
+            <path d="M20 4 8.12 15.88"/>
+            <circle cx="6" cy="18" r="3"/>
+            <path d="M14.8 14.8 20 20"/>
+          </svg>
+        </div>
+        <div>
+          <b>สั่งตัดวิดีโอใน CapCut</b>
+          <span>สร้าง Prompt สั้น ๆ สำหรับฟีเจอร์ตัดอัตโนมัติด้วย AI พร้อมนับตัวอักษร</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-image.html">
+        <div class="ic cat-create" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+        </div>
+        <div>
+          <b>สร้างภาพด้วย AI</b>
+          <span>ตอบคำถามทีละข้อ แล้วรับ Prompt สำหรับให้ AI สร้างภาพ พร้อมคลังคำสั่งพิเศษ</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-post.html">
+        <div class="ic cat-ai" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+            <path d="m15 5 4 4"/>
+          </svg>
+        </div>
+        <div>
+          <b>เขียนโพสต์โซเชียล</b>
+          <span>ขายของ เล่าเรื่อง แจ้งข่าว ให้ AI เขียนโพสต์มาให้เลือก 3 แบบ</span>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Modal & Lightbox (Preserved for app.js compatibility) -->
+  <div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="ปิดหน้าต่าง">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      </button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <hr />
+      <h3>ใช้เมื่อไหร่?</h3>
+      <p id="modalUse"></p>
+      <h3>ตัวอย่าง</h3>
+      <div id="modalExample" class="prompt-box"></div>
+      <div class="button-row">
+        <button type="button" class="primary-btn" onclick="useCommand()">ใช้คำสั่งนี้</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" alt="ภาพขยาย" />
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- External Shared Scripts -->
+  <script src="app.js?v=20260926"></script>
+  <script src="footer.js?v=20260926"></script>
+
+  <!-- Liquid Glass Theme/Font Controller + Standalone Fallback Engine -->
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const MOON_SVG = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+      const SUN_SVG = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+
+      /* ======================================================================
+         1. THEME & FONT SIZE CONTROLLER (MATCHING index.html, ZERO EMOJIS)
+         ====================================================================== */
+      function renderThemeButton(theme) {
+        const btn = document.getElementById('themeBtn');
+        if (!btn) return;
+        const isDark = theme === 'dark';
+        btn.innerHTML =
+          '<svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          (isDark ? SUN_SVG : MOON_SVG) +
+          '</svg><span id="themeText">' + (isDark ? 'สว่าง' : 'มืด') + '</span>';
+      }
+
+      function applyTheme(theme) {
+        const safeTheme = theme === 'dark' ? 'dark' : 'light';
+        htmlEl.setAttribute('data-theme', safeTheme);
+        document.body.classList.toggle('dark', safeTheme === 'dark');
+        try {
+          localStorage.setItem('aiba:theme', safeTheme);
+          localStorage.setItem('theme', safeTheme);
+        } catch (e) {}
+        renderThemeButton(safeTheme);
+      }
+
+      const FONT_SIZES = [16, 18, 20];
+      let currentFontIdx = 0;
+      try {
+        const storedIdx = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+        if (!isNaN(storedIdx) && storedIdx >= 0 && storedIdx < FONT_SIZES.length) {
+          currentFontIdx = storedIdx;
+        }
+      } catch (e) {}
+
+      function applyFontSize(idx) {
+        currentFontIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+        htmlEl.style.fontSize = FONT_SIZES[currentFontIdx] + 'px';
+        try { localStorage.setItem('aiba:fontIdx', String(currentFontIdx)); } catch (e) {}
+      }
+
+      window.toggleTheme = function () {
+        const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      };
+
+      window.changeFontSize = function (delta) {
+        applyFontSize(currentFontIdx + (delta > 0 ? 1 : -1));
+      };
+
+      // Initialize Theme & Font Size immediately and guard against external script DOMContentLoaded overwrites
+      let initialTheme = 'light';
+      try {
+        initialTheme = localStorage.getItem('aiba:theme') || localStorage.getItem('theme') || 'light';
+      } catch (e) {}
+      applyTheme(initialTheme);
+      applyFontSize(currentFontIdx);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const t = htmlEl.getAttribute('data-theme') || initialTheme;
+        applyTheme(t);
+        applyFontSize(currentFontIdx);
+      });
+
+      /* ======================================================================
+         2. TOAST HELPER
+         ====================================================================== */
+      let toastTimer = null;
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        if (!toast || !message) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2600);
+      }
+
+      /* ======================================================================
+         3. STANDALONE FLOW BUILDER FALLBACK (ACTIVE ONLY IF app.js NOT LOADED)
+         ====================================================================== */
+      const hasExternalApp = typeof window.generateFlowPrompt === 'function' && typeof window.selectFlowChoice === 'function';
+
+      if (!hasExternalApp) {
+        const DRAFT_KEY = 'aiba:flowDraft:v1';
+
+        function escapeHtml(str) {
+          return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+        }
+
+        function fallbackCopy(text) {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        async function copyString(text) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+              await navigator.clipboard.writeText(text);
+              return true;
+            } catch (e) {
+              fallbackCopy(text);
+              return true;
+            }
+          }
+          fallbackCopy(text);
+          return true;
+        }
+
+        function getSelectedButton(group, shot) {
+          const selector = shot
+            ? '.choice.selected[data-fgroup="' + group + '"][data-shot="' + shot + '"]'
+            : '.choice.selected[data-fgroup="' + group + '"]';
+          return document.querySelector(selector);
+        }
+
+        function getSelectedButtons(group) {
+          return Array.from(document.querySelectorAll('.choice.selected[data-fgroup="' + group + '"]'));
+        }
+
+        function collectState() {
+          const shots = [1, 2, 3].map(function (n) {
+            const input = document.getElementById('flowImg' + n);
+            const camBtn = getSelectedButton('cam', n);
+            const motionBtn = getSelectedButton('motion', n);
+            const speedBtn = getSelectedButton('speed', n);
+            return {
+              num: n,
+              img: input ? input.value.trim() : '',
+              camTh: camBtn ? (camBtn.dataset.value || '') : '',
+              camEn: camBtn ? (camBtn.dataset.en || '') : '',
+              motionTh: motionBtn ? (motionBtn.dataset.value || '') : '',
+              motionEn: motionBtn ? (motionBtn.dataset.en || '') : '',
+              speedTh: speedBtn ? (speedBtn.dataset.value || '') : '',
+              speedEn: speedBtn ? (speedBtn.dataset.en || '') : ''
+            };
+          });
+
+          const durBtn = getSelectedButton('duration');
+          const styleBtn = getSelectedButton('style');
+          const langBtn = getSelectedButton('lang');
+          const lockBtns = getSelectedButtons('lock');
+
+          return {
+            shots: shots,
+            durationTh: durBtn ? (durBtn.dataset.value || '') : '',
+            durationEn: durBtn ? (durBtn.dataset.en || '') : '',
+            styleTh: styleBtn ? (styleBtn.dataset.value || '') : '',
+            styleEn: styleBtn ? (styleBtn.dataset.en || '') : '',
+            locksTh: lockBtns.map(function (b) { return b.dataset.value || ''; }).filter(Boolean),
+            locksEn: lockBtns.map(function (b) { return b.dataset.en || ''; }).filter(Boolean),
+            lang: langBtn ? (langBtn.dataset.value || 'en') : 'en'
+          };
+        }
+
+        function isStateEmpty(st) {
+          const hasShotData = st.shots.some(function (s) {
+            return s.img || s.camTh || s.motionTh || s.speedTh;
+          });
+          return !(hasShotData || st.durationTh || st.styleTh || st.locksTh.length > 0);
+        }
+
+        function saveDraft() {
+          const st = collectState();
+          const resultEl = document.getElementById('flowResult');
+          if (isStateEmpty(st)) {
+            try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+            return;
+          }
+          const payload = {
+            img1: st.shots[0].img,
+            img2: st.shots[1].img,
+            img3: st.shots[2].img,
+            selected: Array.from(document.querySelectorAll('#flowBuilder .choice.selected')).map(function (b) {
+              return {
+                fgroup: b.dataset.fgroup || '',
+                shot: b.dataset.shot || '',
+                value: b.dataset.value || ''
+              };
+            }),
+            resultVisible: resultEl ? resultEl.style.display !== 'none' : false,
+            updatedAt: Date.now()
+          };
+          try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch (e) {}
+        }
+
+        function hideResumeBanner() {
+          const banner = document.getElementById('resumeBanner');
+          if (banner) {
+            banner.classList.remove('show');
+            banner.style.display = '';
+          }
+        }
+
+        function buildShotPrompt(shot, st) {
+          const isTh = st.lang === 'th';
+          const parts = [];
+          if (isTh) {
+            if (shot.img) parts.push('ภาพตั้งต้น: ' + shot.img);
+            if (shot.camTh) {
+              parts.push('การเคลื่อนกล้อง: ' + shot.camTh + (shot.speedTh ? ' (' + shot.speedTh + ')' : ''));
+            } else if (shot.speedTh) {
+              parts.push('ความเร็วการเคลื่อนไหว: ' + shot.speedTh);
+            }
+            if (shot.motionTh) parts.push('การเคลื่อนไหวในภาพ: ' + shot.motionTh);
+            if (st.durationTh) parts.push('ความยาวคลิป: ประมาณ ' + st.durationTh);
+            if (st.styleTh) parts.push('สไตล์ภาพและแสง: ' + st.styleTh);
+            if (st.locksTh.length) parts.push('สิ่งที่ห้ามเปลี่ยน: ' + st.locksTh.join(', '));
+          } else {
+            if (shot.img) parts.push('Starting from the reference image (' + shot.img + ').');
+            if (shot.camEn) {
+              parts.push('Camera movement: ' + shot.camEn + (shot.speedEn ? ', ' + shot.speedEn : '') + '.');
+            } else if (shot.speedEn) {
+              parts.push('Motion pace: ' + shot.speedEn + '.');
+            }
+            if (shot.motionEn) parts.push('Subject motion: ' + shot.motionEn + '.');
+            if (st.durationEn) parts.push('Duration: ' + st.durationEn + '.');
+            if (st.styleEn) parts.push('Visual style and lighting: ' + st.styleEn + '.');
+            if (st.locksEn.length) parts.push('Constraints (do not change): ' + st.locksEn.join('; ') + '.');
+          }
+          return parts.join('\n');
+        }
+
+        function renderFlowOutput(shouldScroll) {
+          const st = collectState();
+          const activeShots = st.shots.filter(function (s) {
+            return s.img || s.camTh || s.motionTh || s.speedTh;
+          });
+          const shotsToRender = activeShots.length > 0 ? activeShots : st.shots;
+
+          const container = document.getElementById('flowShots');
+          const allOut = document.getElementById('flowAllOutput');
+          const resultEl = document.getElementById('flowResult');
+          const copyMsg = document.getElementById('flowCopyMessage');
+
+          if (!container || !allOut || !resultEl) return;
+
+          const allBlocks = [];
+          container.innerHTML = shotsToRender.map(function (shot) {
+            const promptText = buildShotPrompt(shot, st) || (st.lang === 'th'
+              ? 'ช็อตที่ ' + shot.num + ': กรุณาเลือกการเคลื่อนกล้องหรือการเคลื่อนไหวด้านบน'
+              : 'Shot ' + shot.num + ': Please select camera movement or subject motion above.');
+            const outId = 'flowShotPrompt' + shot.num;
+            allBlocks.push('=== ช็อตที่ ' + shot.num + (shot.img ? ' (' + shot.img + ')' : '') + ' ===\n' + promptText);
+
+            return (
+              '<div class="flow-shot-output" data-shot-out="' + shot.num + '">' +
+                '<div class="flow-shot-out-head">' +
+                  '<div class="flow-shot-out-title">' +
+                    '<span class="flow-shot-badge s' + shot.num + '">' + shot.num + '</span>' +
+                    '<span>ช็อตที่ ' + shot.num + (shot.img ? ' — ' + escapeHtml(shot.img) : '') + '</span>' +
+                  '</div>' +
+                  '<button type="button" onclick="copyText(\'' + outId + '\',\'flowCopyMessage\',\'คัดลอกช็อตที่ ' + shot.num + ' เรียบร้อยแล้ว\')">' +
+                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>' +
+                    '<span>คัดลอกช็อตที่ ' + shot.num + '</span>' +
+                  '</button>' +
+                '</div>' +
+                '<div id="' + outId + '" class="flow-shot-text">' + escapeHtml(promptText) + '</div>' +
+              '</div>'
+            );
+          }).join('');
+
+          allOut.textContent = allBlocks.join('\n\n');
+          resultEl.style.display = 'block';
+          if (copyMsg) copyMsg.textContent = '';
+
+          if (shouldScroll) {
+            resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        window.selectFlowChoice = function (btn) {
+          if (!btn) return;
+          hideResumeBanner();
+          const isMulti = btn.dataset.multi === '1';
+          const group = btn.dataset.fgroup || '';
+          const shot = btn.dataset.shot || '';
+
+          if (isMulti) {
+            btn.classList.toggle('selected');
+            btn.setAttribute('aria-pressed', String(btn.classList.contains('selected')));
+          } else {
+            const wasSelected = btn.classList.contains('selected');
+            const selector = shot
+              ? '.choice[data-fgroup="' + group + '"][data-shot="' + shot + '"]'
+              : '.choice[data-fgroup="' + group + '"]';
+            document.querySelectorAll(selector).forEach(function (other) {
+              other.classList.remove('selected');
+              other.setAttribute('aria-pressed', 'false');
+            });
+            if (!wasSelected) {
+              btn.classList.add('selected');
+              btn.setAttribute('aria-pressed', 'true');
+            }
+          }
+          window.refreshFlowPrompt();
+        };
+
+        window.refreshFlowPrompt = function () {
+          hideResumeBanner();
+          const resultEl = document.getElementById('flowResult');
+          if (resultEl && resultEl.style.display !== 'none') {
+            renderFlowOutput(false);
+          }
+          saveDraft();
+        };
+
+        window.generateFlowPrompt = function () {
+          hideResumeBanner();
+          renderFlowOutput(true);
+          saveDraft();
+          showToast('สร้าง Prompt ทั้ง 3 ช็อตเรียบร้อยแล้ว');
+        };
+
+        window.flowExample = function () {
+          window.clearFlowBuilder(true);
+          const examples = [
+            { id: 'flowImg1', text: 'ชามก๋วยเตี๋ยวเรือมีไอน้ำลอย วางบนโต๊ะไม้ในร้านบรรยากาศอบอุ่น', cam: 'ค่อย ๆ ซูมเข้าหาตัวแบบช้า ๆ', motion: 'ควันหรือไอน้ำลอยขึ้นช้า ๆ', speed: 'ช้า นุ่มนวล' },
+            { id: 'flowImg2', text: 'พ่อค้ากำลังตักน้ำซุปร้อน ๆ ราดลงชามก๋วยเตี๋ยวอย่างตั้งใจ', cam: 'แพนกล้องจากซ้ายไปขวา', motion: 'ควันหรือไอน้ำลอยขึ้นช้า ๆ', speed: 'ความเร็วปกติ' },
+            { id: 'flowImg3', text: 'ภาพมุมกว้างหน้าร้านก๋วยเตี๋ยวเรือ แสงแดดอุ่นยามเช้า', cam: 'ค่อย ๆ ถอยกล้องออกเผยให้เห็นภาพกว้าง', motion: 'ขยับเล็กน้อยตามธรรมชาติ เช่น ผม ใบไม้ ผ้า ไหวตามลม', speed: 'ช้า นุ่มนวล' }
+          ];
+
+          examples.forEach(function (ex, idx) {
+            const shotNum = String(idx + 1);
+            const input = document.getElementById(ex.id);
+            if (input) input.value = ex.text;
+
+            [
+              ['cam', ex.cam],
+              ['motion', ex.motion],
+              ['speed', ex.speed]
+            ].forEach(function (pair) {
+              const b = document.querySelector('.choice[data-fgroup="' + pair[0] + '"][data-shot="' + shotNum + '"][data-value="' + pair[1] + '"]');
+              if (b) {
+                b.classList.add('selected');
+                b.setAttribute('aria-pressed', 'true');
+              }
+            });
+          });
+
+          const presets = [
+            ['duration', '6 วินาที'],
+            ['style', 'เหมือนภาพถ่ายจริง แบบภาพยนตร์'],
+            ['lock', 'คงองค์ประกอบและตำแหน่งของสิ่งต่าง ๆ ในภาพ'],
+            ['lock', 'ห้ามบิดเบี้ยว ละลาย หรือเปลี่ยนรูปทรง (no morphing)'],
+            ['lock', 'คงโทนสีและแสงเดิมของภาพ'],
+            ['lang', 'en']
+          ];
+          presets.forEach(function (pair) {
+            const b = document.querySelector('.choice[data-fgroup="' + pair[0] + '"][data-value="' + pair[1] + '"]');
+            if (b) {
+              b.classList.add('selected');
+              b.setAttribute('aria-pressed', 'true');
+            }
+          });
+
+          renderFlowOutput(true);
+          saveDraft();
+          showToast('โหลดตัวอย่างครบทั้ง 3 ช็อตแล้ว');
+        };
+
+        window.clearFlowBuilder = function (silent) {
+          ['flowImg1', 'flowImg2', 'flowImg3'].forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+          });
+          document.querySelectorAll('#flowBuilder .choice').forEach(function (b) {
+            b.classList.remove('selected');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          const resultEl = document.getElementById('flowResult');
+          const copyMsg = document.getElementById('flowCopyMessage');
+          if (resultEl) resultEl.style.display = 'none';
+          if (copyMsg) copyMsg.textContent = '';
+          try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+          hideResumeBanner();
+          if (!silent) showToast('ล้างข้อมูลเริ่มใหม่เรียบร้อยแล้ว');
+        };
+
+        window.copyText = async function (outputId, msgId, successMsg) {
+          const el = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = el ? (el.textContent || '').trim() : '';
+          if (!text) return;
+          await copyString(text);
+          if (msgEl) msgEl.textContent = successMsg || 'คัดลอกเรียบร้อยแล้ว';
+          showToast(successMsg || 'คัดลอกเรียบร้อยแล้ว');
+        };
+
+        window.goToCapcutFromFlow = function () {
+          const allOut = document.getElementById('flowAllOutput');
+          const summary = allOut ? (allOut.textContent || '').trim() : '';
+          try {
+            localStorage.setItem('aiba:flowToCapcut', summary);
+            sessionStorage.setItem('flowToCapcut', summary);
+          } catch (e) {}
+          window.location.href = 'page-capcut.html';
+        };
+
+        window.restoreWork = function () {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            window.clearFlowBuilder(true);
+            if (document.getElementById('flowImg1')) document.getElementById('flowImg1').value = data.img1 || '';
+            if (document.getElementById('flowImg2')) document.getElementById('flowImg2').value = data.img2 || '';
+            if (document.getElementById('flowImg3')) document.getElementById('flowImg3').value = data.img3 || '';
+
+            (data.selected || []).forEach(function (item) {
+              const sel = item.shot
+                ? '.choice[data-fgroup="' + item.fgroup + '"][data-shot="' + item.shot + '"][data-value="' + item.value + '"]'
+                : '.choice[data-fgroup="' + item.fgroup + '"][data-value="' + item.value + '"]';
+              const b = document.querySelector(sel);
+              if (b) {
+                b.classList.add('selected');
+                b.setAttribute('aria-pressed', 'true');
+              }
+            });
+
+            if (data.resultVisible) {
+              renderFlowOutput(false);
+            }
+            hideResumeBanner();
+            showToast('กู้คืนงานที่ทำค้างไว้เรียบร้อยแล้ว');
+          } catch (e) {
+            hideResumeBanner();
+          }
+        };
+
+        window.discardWork = function () {
+          window.clearFlowBuilder(true);
+          showToast('ล้างงานเดิมแล้ว พร้อมเริ่มใหม่');
+        };
+
+        window.closeModal = function (ev) {
+          if (ev && ev.target && ev.target.id !== 'modal') return;
+          const modal = document.getElementById('modal');
+          if (modal) modal.classList.remove('open', 'show');
+        };
+
+        window.useCommand = function () {
+          window.closeModal();
+        };
+
+        window.closeLightbox = function () {
+          const lb = document.getElementById('lightbox');
+          if (lb) lb.classList.remove('open', 'show');
+        };
+
+        // Check saved draft on startup
+        (function checkDraft() {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            const parts = [];
+            if (data.img1) parts.push('ช็อต 1: "' + data.img1.slice(0, 32) + (data.img1.length > 32 ? '...' : '') + '"');
+            if (data.selected && data.selected.length) parts.push('เลือกแล้ว ' + data.selected.length + ' ตัวเลือก');
+            if (data.updatedAt) {
+              const dt = new Date(data.updatedAt);
+              parts.push('บันทึกล่าสุด ' + dt.toLocaleString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
+            }
+            const infoEl = document.getElementById('resumeInfo');
+            const banner = document.getElementById('resumeBanner');
+            if (infoEl) infoEl.textContent = parts.join(' · ') || 'ข้อมูลที่ทำค้างไว้พร้อมทำต่อ';
+            if (banner) banner.classList.add('show');
+          } catch (e) {}
+        })();
+      }
+
+      /* ======================================================================
+         4. STANDARD FOOTER FALLBACK (ONLY IF footer.js DID NOT INJECT ONE)
+         ====================================================================== */
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.querySelector('footer')) {
+          const footerHtml =
+            '<footer class="site-footer">' +
+              '<div class="container">' +
+                '<div class="footer-grid">' +
+                  '<div>' +
+                    '<div class="footer-logos">' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                    '</div>' +
+                    '<h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>' +
+                    '<p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>' +
+                    '<p class="footer-text">85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />โทร 0 2855 0000</p>' +
+                    '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">' +
+                      '<span>www.pim.ac.th</span>' +
+                      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>' +
+                    '</a>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>' +
+                    '<p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>' +
+                    '<div class="footer-socials" aria-label="โซเชียลมีเดีย">' +
+                      '<a href="#" class="social-btn" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>' +
+                      '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="footer-bottom-bar">© 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED</div>' +
+            '</footer>';
+          document.body.insertAdjacentHTML('beforeend', footerHtml);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

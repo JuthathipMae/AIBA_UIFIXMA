@@ -1,0 +1,3453 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>เขียนโพสต์โซเชียล — AiBA Connect</title>
+  <meta name="theme-color" content="#0D9488" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — AiBA CONNECT LIQUID GLASS TOKENS (LIGHT & DARK)
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode (Matching index.html) */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --muted: #64748B;
+      --green: #10B981;
+
+      /* Brand & AI Assistant Category Theme (#0D9488 -> #0EA5E9) */
+      --brand-coral: #FF6B6B;
+      --brand-violet: #7C3AED;
+      --brand-blue: #38BDF8;
+      --brand-mint: #10B981;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+
+      --ai-grad: linear-gradient(135deg, #0D9488 0%, #0EA5E9 100%);
+      --ai-solid: #0D9488;
+      --ai-text: #0F766E;
+      --ai-soft: rgba(13, 148, 136, 0.12);
+      --ai-border: rgba(13, 148, 136, 0.34);
+      --ai-glow: rgba(14, 165, 233, 0.28);
+
+      /* Liquid Glass System — Light Mode */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(13, 148, 136, 0.14);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+
+      /* Surfaces */
+      --surface-input: rgba(255, 255, 255, 0.95);
+      --surface-subtle: rgba(241, 239, 251, 0.64);
+      --border-subtle: rgba(19, 24, 54, 0.10);
+
+      /* Prompt Result Sheet — High-Contrast Dark Layer */
+      --sheet-bg: linear-gradient(155deg, #0D182C 0%, #102540 54%, #0C2C33 100%);
+      --sheet-border: rgba(45, 212, 191, 0.28);
+      --sheet-ink: #F0FDF9;
+      --sheet-dim: #99B8C8;
+      --sheet-key: #5EEAD4;
+      --sheet-shadow: 0 22px 48px rgba(15, 23, 42, 0.24);
+
+      /* Status Colors */
+      --ok-solid: #10B981;
+      --ok-text: #047857;
+      --ok-bg: rgba(16, 185, 129, 0.13);
+      --ok-border: rgba(16, 185, 129, 0.36);
+
+      --err-solid: #EF4444;
+      --err-text: #DC2626;
+      --err-bg: rgba(239, 68, 68, 0.10);
+      --err-border: rgba(239, 68, 68, 0.32);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --shadow-lg: 0 20px 48px rgba(13, 148, 136, 0.14);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 30px;
+      --radius-pill: 9999px;
+      --container-max: 1180px;
+
+      /* ========================================================================
+         TOPIC COLOR SYSTEM — LIGHT MODE (STEPS 1–7 + CHECKLIST)
+         Step 1: Sky Blue #0284C7   | Step 2: Violet #7C3AED
+         Step 3: Coral #E11D48      | Step 4: Orange #EA580C
+         Step 5: Mint #0D9488       | Step 6: Indigo #4F46E5
+         Step 7: Plum #9333EA       | Checklist: Warm Amber / Coral #EA580C
+         ======================================================================== */
+      /* Step 1 — Sky Blue (#0284C7) */
+      --s1-grad: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+      --s1-solid: #0284C7;
+      --s1-text: #0369A1;
+      --s1-soft: rgba(2, 132, 199, 0.11);
+      --s1-bg: linear-gradient(155deg, rgba(240, 249, 255, 0.92), rgba(255, 255, 255, 0.84));
+      --s1-border: rgba(2, 132, 199, 0.34);
+      --s1-glow: rgba(2, 132, 199, 0.26);
+
+      /* Step 2 — Violet (#7C3AED) */
+      --s2-grad: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+      --s2-solid: #7C3AED;
+      --s2-text: #5B21B6;
+      --s2-soft: rgba(124, 58, 237, 0.11);
+      --s2-bg: linear-gradient(155deg, rgba(245, 243, 255, 0.92), rgba(255, 255, 255, 0.84));
+      --s2-border: rgba(124, 58, 237, 0.34);
+      --s2-glow: rgba(124, 58, 237, 0.26);
+
+      /* Step 3 — Coral (#E11D48) */
+      --s3-grad: linear-gradient(135deg, #FF6B6B 0%, #E11D48 100%);
+      --s3-solid: #E11D48;
+      --s3-text: #BE123C;
+      --s3-soft: rgba(225, 29, 72, 0.11);
+      --s3-bg: linear-gradient(155deg, rgba(255, 241, 242, 0.92), rgba(255, 255, 255, 0.84));
+      --s3-border: rgba(225, 29, 72, 0.34);
+      --s3-glow: rgba(225, 29, 72, 0.26);
+
+      /* Step 4 — Orange (#EA580C) */
+      --s4-grad: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+      --s4-solid: #EA580C;
+      --s4-text: #C2410C;
+      --s4-soft: rgba(234, 88, 12, 0.11);
+      --s4-bg: linear-gradient(155deg, rgba(255, 247, 237, 0.92), rgba(255, 255, 255, 0.84));
+      --s4-border: rgba(234, 88, 12, 0.34);
+      --s4-glow: rgba(234, 88, 12, 0.26);
+
+      /* Step 5 — Mint / Teal (#0D9488) */
+      --s5-grad: linear-gradient(135deg, #10B981 0%, #0D9488 100%);
+      --s5-solid: #0D9488;
+      --s5-text: #0F766E;
+      --s5-soft: rgba(13, 148, 136, 0.11);
+      --s5-bg: linear-gradient(155deg, rgba(240, 253, 250, 0.92), rgba(255, 255, 255, 0.84));
+      --s5-border: rgba(13, 148, 136, 0.36);
+      --s5-glow: rgba(13, 148, 136, 0.26);
+
+      /* Step 6 — Indigo (#4F46E5) */
+      --s6-grad: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+      --s6-solid: #4F46E5;
+      --s6-text: #3730A3;
+      --s6-soft: rgba(79, 70, 229, 0.11);
+      --s6-bg: linear-gradient(155deg, rgba(238, 242, 255, 0.92), rgba(255, 255, 255, 0.84));
+      --s6-border: rgba(79, 70, 229, 0.34);
+      --s6-glow: rgba(79, 70, 229, 0.26);
+
+      /* Step 7 — Plum Purple (#9333EA) */
+      --s7-grad: linear-gradient(135deg, #A855F7 0%, #9333EA 100%);
+      --s7-solid: #9333EA;
+      --s7-text: #7E22CE;
+      --s7-soft: rgba(147, 51, 234, 0.11);
+      --s7-bg: linear-gradient(155deg, rgba(250, 245, 255, 0.92), rgba(255, 255, 255, 0.84));
+      --s7-border: rgba(147, 51, 234, 0.34);
+      --s7-glow: rgba(147, 51, 234, 0.26);
+
+      /* Checklist / Safety Strip — Amber & Coral Orange */
+      --check-grad: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+      --check-solid: #EA580C;
+      --check-text: #C2410C;
+      --check-soft: rgba(245, 158, 11, 0.16);
+      --check-border: rgba(251, 146, 60, 0.48);
+
+      /* Related Category Gradients */
+      --cat-create-grad: linear-gradient(135deg, #FF6B6B 0%, #F97316 100%);
+      --cat-greeting-grad: linear-gradient(135deg, #EC4899 0%, #9333EA 100%);
+      --cat-poster-grad: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --muted: #94A3B8;
+      --green: #34D399;
+
+      --ai-solid: #2DD4BF;
+      --ai-text: #99F6E4;
+      --ai-soft: rgba(45, 212, 191, 0.18);
+      --ai-border: rgba(45, 212, 191, 0.42);
+      --ai-glow: rgba(14, 165, 233, 0.38);
+
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(45, 212, 191, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+      --surface-input: rgba(13, 17, 36, 0.86);
+      --surface-subtle: rgba(15, 18, 37, 0.60);
+      --border-subtle: rgba(255, 255, 255, 0.12);
+
+      --sheet-bg: linear-gradient(155deg, #060B18 0%, #0A172B 54%, #081F26 100%);
+      --sheet-border: rgba(45, 212, 191, 0.30);
+      --sheet-ink: #F1F5F9;
+      --sheet-dim: #8DA8BD;
+      --sheet-key: #5EEAD4;
+      --sheet-shadow: 0 24px 56px rgba(0, 0, 0, 0.55);
+
+      --ok-text: #34D399;
+      --ok-bg: rgba(16, 185, 129, 0.18);
+      --ok-border: rgba(52, 211, 153, 0.44);
+
+      --err-solid: #F87171;
+      --err-text: #FCA5A5;
+      --err-bg: rgba(239, 68, 68, 0.16);
+      --err-border: rgba(248, 113, 113, 0.38);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+
+      /* Topic Colors — Dark Mode (Steps 1–7) */
+      --s1-solid: #38BDF8;
+      --s1-text: #BAE6FD;
+      --s1-soft: rgba(56, 189, 248, 0.20);
+      --s1-bg: linear-gradient(155deg, rgba(14, 42, 74, 0.60), rgba(22, 28, 56, 0.82));
+      --s1-border: rgba(56, 189, 248, 0.45);
+      --s1-glow: rgba(14, 165, 233, 0.36);
+
+      --s2-solid: #A78BFA;
+      --s2-text: #DDD6FE;
+      --s2-soft: rgba(167, 139, 250, 0.20);
+      --s2-bg: linear-gradient(155deg, rgba(46, 26, 82, 0.58), rgba(22, 28, 56, 0.82));
+      --s2-border: rgba(167, 139, 250, 0.45);
+      --s2-glow: rgba(139, 92, 246, 0.38);
+
+      --s3-solid: #FB7185;
+      --s3-text: #FECDD3;
+      --s3-soft: rgba(251, 113, 133, 0.20);
+      --s3-bg: linear-gradient(155deg, rgba(72, 20, 38, 0.58), rgba(22, 28, 56, 0.82));
+      --s3-border: rgba(251, 113, 133, 0.46);
+      --s3-glow: rgba(225, 29, 72, 0.38);
+
+      --s4-solid: #FB923C;
+      --s4-text: #FED7AA;
+      --s4-soft: rgba(251, 146, 60, 0.20);
+      --s4-bg: linear-gradient(155deg, rgba(68, 32, 20, 0.60), rgba(22, 28, 56, 0.82));
+      --s4-border: rgba(251, 146, 60, 0.46);
+      --s4-glow: rgba(234, 88, 12, 0.38);
+
+      --s5-solid: #2DD4BF;
+      --s5-text: #99F6E4;
+      --s5-soft: rgba(45, 212, 191, 0.20);
+      --s5-bg: linear-gradient(155deg, rgba(12, 52, 48, 0.58), rgba(22, 28, 56, 0.82));
+      --s5-border: rgba(45, 212, 191, 0.45);
+      --s5-glow: rgba(13, 148, 136, 0.38);
+
+      --s6-solid: #818CF8;
+      --s6-text: #C7D2FE;
+      --s6-soft: rgba(129, 140, 248, 0.20);
+      --s6-bg: linear-gradient(155deg, rgba(28, 32, 82, 0.60), rgba(22, 28, 56, 0.82));
+      --s6-border: rgba(129, 140, 248, 0.46);
+      --s6-glow: rgba(79, 70, 229, 0.38);
+
+      --s7-solid: #C084FC;
+      --s7-text: #F3E8FF;
+      --s7-soft: rgba(192, 132, 252, 0.20);
+      --s7-bg: linear-gradient(155deg, rgba(56, 22, 82, 0.60), rgba(22, 28, 56, 0.82));
+      --s7-border: rgba(192, 132, 252, 0.46);
+      --s7-glow: rgba(147, 51, 234, 0.38);
+
+      --check-solid: #FB923C;
+      --check-text: #FDE68A;
+      --check-soft: rgba(251, 146, 60, 0.22);
+      --check-border: rgba(251, 146, 60, 0.48);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(920px 520px at 8% -4%, rgba(13, 148, 136, 0.15), transparent 60%),
+        radial-gradient(920px 560px at 94% 4%, rgba(14, 165, 233, 0.14), transparent 60%),
+        radial-gradient(760px 520px at 50% 48%, rgba(124, 58, 237, 0.08), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--ai-solid);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       3. FLOATING GLASS NAVBAR (MATCHING index.html)
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 40px;
+      padding: 0 15px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--ai-solid);
+      color: var(--ai-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      background: var(--ai-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--ai-solid);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       4. MAIN PAGE WRAPPER & AI ASSISTANT HERO CARD (#0D9488 -> #0EA5E9)
+       ========================================================================== */
+    .page {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 26px 24px 48px;
+      flex: 1;
+    }
+
+    .page-hero {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: var(--ai-grad);
+      color: #FFFFFF;
+      padding: 32px 34px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 44px var(--ai-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 280px;
+      height: 280px;
+      top: -110px;
+      right: -60px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.28), transparent 70%);
+    }
+
+    .hero-orb-2 {
+      width: 240px;
+      height: 240px;
+      bottom: -110px;
+      left: 28%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.36), transparent 70%);
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-main-col {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1 1 420px;
+      min-width: 0;
+    }
+
+    .hero-icon-box {
+      width: 74px;
+      height: 74px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.34);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .page-hero p {
+      font-size: 1.04rem;
+      color: rgba(255, 255, 255, 0.93);
+      max-width: 60ch;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.20);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       5. RESUME BANNER (SAVED WORK RECOVERY)
+       ========================================================================== */
+    .resume-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--ai-border);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--ai-soft);
+      animation: fadeSlideUp 0.25s ease;
+    }
+
+    .resume-banner.show {
+      display: flex;
+    }
+
+    .resume-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .resume-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--ai-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--ai-glow);
+    }
+
+    .resume-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-text span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       6. BUILDER SHELL & INTRO CALLOUT
+       ========================================================================== */
+    .builder-panel {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .builder-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--ai-grad);
+    }
+
+    .section-description {
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      color: var(--text-secondary);
+      font-size: 0.99rem;
+      line-height: 1.7;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-description strong {
+      color: var(--text-primary);
+    }
+
+    .desc-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .flow-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.81rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    .flow-chip:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .flow-chip.c-s1 { background: var(--s1-soft); color: var(--s1-text); border: 1px solid var(--s1-border); }
+    .flow-chip.c-s2 { background: var(--s2-soft); color: var(--s2-text); border: 1px solid var(--s2-border); }
+    .flow-chip.c-s3 { background: var(--s3-soft); color: var(--s3-text); border: 1px solid var(--s3-border); }
+    .flow-chip.c-s4 { background: var(--s4-soft); color: var(--s4-text); border: 1px solid var(--s4-border); }
+    .flow-chip.c-s5 { background: var(--s5-soft); color: var(--s5-text); border: 1px solid var(--s5-border); }
+    .flow-chip.c-s6 { background: var(--s6-soft); color: var(--s6-text); border: 1px solid var(--s6-border); }
+    .flow-chip.c-s7 { background: var(--s7-soft); color: var(--s7-text); border: 1px solid var(--s7-border); }
+
+    /* ==========================================================================
+       7. COLOR-CODED STEP BLOCKS (STEPS 1–7)
+       ========================================================================== */
+    .steps-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .step {
+      position: relative;
+      background: var(--step-bg, var(--surface-subtle));
+      border: 1.5px solid var(--step-border, var(--border-subtle));
+      border-left: 5px solid var(--step-solid, var(--ai-solid));
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .step:focus-within {
+      border-color: var(--step-solid, var(--ai-solid));
+      box-shadow: 0 10px 28px var(--step-soft, var(--ai-soft));
+    }
+
+    /* Step 1 — Sky Blue (#0284C7) */
+    .step[data-step="1"] {
+      --step-grad: var(--s1-grad);
+      --step-solid: var(--s1-solid);
+      --step-text: var(--s1-text);
+      --step-soft: var(--s1-soft);
+      --step-bg: var(--s1-bg);
+      --step-border: var(--s1-border);
+      --step-glow: var(--s1-glow);
+    }
+
+    /* Step 2 — Violet (#7C3AED) */
+    .step[data-step="2"] {
+      --step-grad: var(--s2-grad);
+      --step-solid: var(--s2-solid);
+      --step-text: var(--s2-text);
+      --step-soft: var(--s2-soft);
+      --step-bg: var(--s2-bg);
+      --step-border: var(--s2-border);
+      --step-glow: var(--s2-glow);
+    }
+
+    /* Step 3 — Coral (#E11D48) */
+    .step[data-step="3"] {
+      --step-grad: var(--s3-grad);
+      --step-solid: var(--s3-solid);
+      --step-text: var(--s3-text);
+      --step-soft: var(--s3-soft);
+      --step-bg: var(--s3-bg);
+      --step-border: var(--s3-border);
+      --step-glow: var(--s3-glow);
+    }
+
+    /* Step 4 — Orange (#EA580C) */
+    .step[data-step="4"] {
+      --step-grad: var(--s4-grad);
+      --step-solid: var(--s4-solid);
+      --step-text: var(--s4-text);
+      --step-soft: var(--s4-soft);
+      --step-bg: var(--s4-bg);
+      --step-border: var(--s4-border);
+      --step-glow: var(--s4-glow);
+    }
+
+    /* Step 5 — Mint (#0D9488) */
+    .step[data-step="5"] {
+      --step-grad: var(--s5-grad);
+      --step-solid: var(--s5-solid);
+      --step-text: var(--s5-text);
+      --step-soft: var(--s5-soft);
+      --step-bg: var(--s5-bg);
+      --step-border: var(--s5-border);
+      --step-glow: var(--s5-glow);
+    }
+
+    /* Step 6 — Indigo (#4F46E5) */
+    .step[data-step="6"] {
+      --step-grad: var(--s6-grad);
+      --step-solid: var(--s6-solid);
+      --step-text: var(--s6-text);
+      --step-soft: var(--s6-soft);
+      --step-bg: var(--s6-bg);
+      --step-border: var(--s6-border);
+      --step-glow: var(--s6-glow);
+    }
+
+    /* Step 7 — Plum Purple (#9333EA) */
+    .step[data-step="7"] {
+      --step-grad: var(--s7-grad);
+      --step-solid: var(--s7-solid);
+      --step-text: var(--s7-text);
+      --step-soft: var(--s7-soft);
+      --step-bg: var(--s7-bg);
+      --step-border: var(--s7-border);
+      --step-glow: var(--s7-glow);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .step-title-wrap {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--step-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--step-glow);
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .multi-hint,
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--step-soft);
+      border: 1px solid var(--step-border);
+      color: var(--step-text);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .step-help {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.55;
+    }
+
+    .step-help-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--step-soft);
+      color: var(--step-text);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ==========================================================================
+       8. CHOICE GRIDS & CARDS (STEPS 2–6)
+       ========================================================================== */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .choice-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 54px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: left;
+      line-height: 1.35;
+      position: relative;
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    .choice:hover {
+      border-color: var(--step-solid);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .choice-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--step-soft);
+      color: var(--step-text);
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .choice-icon svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .choice:hover .choice-icon {
+      transform: scale(1.06);
+    }
+
+    .choice-label {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    /* Selected / Active Choice State (Supports both .selected and .active for app.js) */
+    .choice.selected,
+    .choice.active,
+    .choice[aria-pressed="true"] {
+      background: var(--step-grad);
+      border-color: transparent;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 10px 24px var(--step-glow);
+      transform: translateY(-2px);
+    }
+
+    .choice.selected .choice-icon,
+    .choice.active .choice-icon,
+    .choice[aria-pressed="true"] .choice-icon {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+    }
+
+    .choice.selected:hover,
+    .choice.active:hover,
+    .choice[aria-pressed="true"]:hover {
+      filter: brightness(1.06);
+      color: #FFFFFF;
+    }
+
+    /* Multi-select Checkbox Indicator on Steps 4 & 5 */
+    .choice[data-multi="1"]::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid var(--step-border);
+      background: transparent;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .choice[data-multi="1"].selected::after,
+    .choice[data-multi="1"].active::after,
+    .choice[data-multi="1"][aria-pressed="true"]::after {
+      border-color: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.24) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+    }
+
+    /* ==========================================================================
+       9. TEXTAREAS (STEP 1 & STEP 7)
+       ========================================================================== */
+    .large-textarea {
+      width: 100%;
+      min-height: 124px;
+      resize: vertical;
+      background: var(--surface-input);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-family: var(--font-body);
+      font-size: 1.04rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .large-textarea.compact {
+      min-height: 94px;
+    }
+
+    .large-textarea:hover {
+      border-color: var(--step-border);
+    }
+
+    .large-textarea:focus {
+      outline: none;
+      border-color: var(--step-solid);
+      box-shadow: 0 0 0 4px var(--step-soft);
+    }
+
+    .large-textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.86;
+    }
+
+    /* ==========================================================================
+       10. ACTION BUTTONS & RESULT PANEL (#postResult)
+       ========================================================================== */
+    .button-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .gen-row {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 24px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--ai-grad);
+      color: #FFFFFF;
+      border: 1.5px solid transparent;
+      box-shadow: 0 10px 24px var(--ai-glow);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px var(--ai-glow);
+    }
+
+    .secondary-btn {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--ai-solid);
+      color: var(--ai-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .danger-btn {
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1.5px solid var(--err-border);
+    }
+
+    .danger-btn:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: var(--err-solid);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 9px 17px;
+      font-size: 0.92rem;
+    }
+
+    /* Result Sheet (#postResult) */
+    .result {
+      --green: #34D399;
+      --muted: #99B8C8;
+      margin-top: 28px;
+      border-radius: var(--radius-lg);
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1.5px solid var(--sheet-border);
+      box-shadow: var(--sheet-shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 24px;
+      animation: fadeSlideUp 0.28s ease;
+    }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--ai-grad);
+    }
+
+    .result-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .result h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.26rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .result-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--ai-grad);
+      box-shadow: 0 0 12px var(--sheet-key);
+      flex-shrink: 0;
+    }
+
+    .result-live-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--sheet-key);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .result-desc {
+      font-size: 0.96rem;
+      color: var(--sheet-dim);
+      margin-bottom: 16px;
+      line-height: 1.65;
+    }
+
+    .result-desc .live-hint {
+      color: var(--sheet-key);
+      font-size: 0.88rem;
+    }
+
+    /* Image Prompt Toggle Row (#tglPostImage) */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #E2E8F0;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .toggle:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--sheet-key);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .toggle .toggle-ic {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: rgba(94, 234, 212, 0.16);
+      color: var(--sheet-key);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .toggle::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(255, 255, 255, 0.36);
+      background: transparent;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .toggle.active,
+    .toggle.on,
+    .toggle.selected,
+    .toggle[aria-pressed="true"] {
+      background: var(--ai-grad);
+      border-color: rgba(255, 255, 255, 0.42);
+      color: #FFFFFF;
+      box-shadow: 0 8px 22px rgba(14, 165, 233, 0.34);
+    }
+
+    .toggle.active .toggle-ic,
+    .toggle.on .toggle-ic,
+    .toggle.selected .toggle-ic,
+    .toggle[aria-pressed="true"] .toggle-ic {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+    }
+
+    .toggle.active::after,
+    .toggle.on::after,
+    .toggle.selected::after,
+    .toggle[aria-pressed="true"]::after {
+      border-color: rgba(255, 255, 255, 0.90);
+      background: rgba(255, 255, 255, 0.24) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+    }
+
+    .result .prompt-box {
+      background: rgba(6, 12, 26, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-left: 4px solid #0D9488;
+      border-radius: 14px;
+      padding: 18px 20px;
+      min-height: 120px;
+      font-family: var(--font-body);
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: var(--sheet-ink);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 18px;
+    }
+
+    .result .secondary-btn {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #F8FAFC;
+      padding: 12px 20px;
+      font-size: 0.96rem;
+    }
+
+    .result .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: var(--sheet-key);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    #postCopyMessage {
+      color: #34D399;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      min-height: 1.4em;
+      margin-top: 12px;
+    }
+
+    .open-app-row {
+      margin-top: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .open-app-row p {
+      font-size: 0.94rem;
+      color: var(--sheet-dim);
+      margin-bottom: 14px;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 22px 10px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .app-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .app-btn.gpt {
+      background: linear-gradient(135deg, #0F172A 0%, #0F766E 55%, #10B981 100%);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.30);
+    }
+
+    .app-btn.gemini {
+      background: linear-gradient(135deg, #1D4ED8 0%, #4F46E5 52%, #0EA5E9 100%);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.34);
+    }
+
+    /* Real Brand Images inside .app-logo (object-fit: cover) */
+    .app-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .app-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .app-btn .app-logo {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.72);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    }
+
+    /* Pre-Post 3-Item Verification Strip (.hotline — Distinct Amber/Coral Orange Theme) */
+    .hotline {
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(145deg, rgba(234, 88, 12, 0.24), rgba(245, 158, 11, 0.14));
+      border: 1.5px solid var(--check-border);
+      border-left: 5px solid var(--check-solid);
+      color: #FFF7ED;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.18);
+    }
+
+    .hotline-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hotline-head-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--check-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+    }
+
+    .hotline-head strong {
+      font-family: var(--font-heading);
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #FDE68A;
+    }
+
+    .hotline-checks {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hotline-check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 10px 13px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.44);
+      border: 1px solid rgba(251, 146, 60, 0.36);
+      font-size: 0.91rem;
+      line-height: 1.5;
+      color: #FFF7ED;
+    }
+
+    .hotline-check-icon {
+      color: #34D399;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: inline-flex;
+    }
+
+    /* ==========================================================================
+       11. RELATED TOOLS SECTION ("ไปต่อที่เกี่ยวข้อง")
+       ========================================================================== */
+    .related {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .related-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .related-head-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--ai-soft);
+      border: 1px solid var(--ai-border);
+      color: var(--ai-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .related h3 {
+      font-size: 1.24rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .rel-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .rel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--ai-solid);
+    }
+
+    .rel-card .ic {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .rel-card .ic.cat-create { background: var(--cat-create-grad); }
+    .rel-card .ic.cat-greeting { background: var(--cat-greeting-grad); }
+    .rel-card .ic.cat-poster { background: var(--cat-poster-grad); }
+
+    .rel-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rel-card span {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       12. MODAL, LIGHTBOX & TOAST
+       ========================================================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      background: rgba(10, 13, 30, 0.64);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.open,
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--ai-solid);
+      color: #FFFFFF;
+      transform: rotate(90deg);
+    }
+
+    .modal-box hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 16px 0;
+    }
+
+    .modal-box h3 {
+      font-size: 1.02rem;
+      margin: 12px 0 6px;
+    }
+
+    .modal-box .prompt-box {
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1px solid var(--sheet-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 8px 0 18px;
+      white-space: pre-wrap;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1600;
+      background: rgba(7, 10, 24, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open,
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: min(94vw, 960px);
+      max-height: 86vh;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      object-fit: contain;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      transform: translate(-50%, 18px);
+      background: var(--ai-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 14px 34px var(--ai-glow);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1700;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       13. FOOTER (MATCHING index.html & STYLING footer.js OUTPUT)
+       ========================================================================== */
+    .site-footer,
+    footer.footer,
+    body > footer {
+      background: linear-gradient(135deg, #161936 0%, #172B47 55%, #12364A 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 44px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--ai-grad);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(13, 148, 136, 0.26), rgba(14, 165, 233, 0.24));
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       14. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .choice-grid,
+      .choice-grid.cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hotline-checks {
+        grid-template-columns: 1fr;
+      }
+
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.84rem;
+      }
+
+      .logo-slot {
+        height: 30px;
+      }
+
+      .logo-slot img {
+        height: 32px;
+      }
+
+      .topbar-title {
+        font-size: 1rem;
+      }
+
+      .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+
+      .page {
+        padding: 18px 14px 36px;
+      }
+
+      .page-hero {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .hero-icon-box {
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+      }
+
+      .builder-panel {
+        padding: 18px 14px;
+        border-radius: 24px;
+      }
+
+      .step {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .gen-row .primary-btn {
+        flex: 1 1 100%;
+      }
+
+      .gen-row .secondary-btn,
+      .gen-row .danger-btn {
+        flex: 1 1 auto;
+      }
+
+      .result {
+        padding: 18px 14px;
+      }
+
+      .toggle {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .app-btn {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .related {
+        padding: 0 14px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-back-text,
+      .logo-slot,
+      .brand-divider,
+      #themeText {
+        display: none;
+      }
+
+      .nav-back-btn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .choice-grid,
+      .choice-grid.cols-3 {
+        gap: 9px;
+      }
+
+      .choice {
+        padding: 10px 11px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS TOPBAR (MATCHING index.html)
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="แถบนำทาง เขียนโพสต์โซเชียล">
+      <div class="nav-left">
+        <a class="nav-back-btn back-home" href="index.html" aria-label="กลับหน้าหลัก">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
+          <span class="nav-back-text">หน้าหลัก</span>
+        </a>
+
+        <div class="nav-brand">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display='none'" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="topbar-title">เขียนโพสต์โซเชียล</div>
+        </div>
+      </div>
+
+      <div class="nav-actions topbar-tools">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับธีมสว่าง/มืด" aria-label="สลับธีมสว่าง/มืด">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       MAIN CONTENT
+       ======================================================================== -->
+  <main class="page">
+
+    <!-- Page Hero (AI Assistant Category Gradient #0D9488 -> #0EA5E9) -->
+    <section class="page-hero">
+      <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+      <div class="page-hero-inner cat-ai">
+        <div class="hero-main-col">
+          <div class="hero-icon-box" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-kicker">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 8V4H8"/>
+                <rect width="16" height="12" x="4" y="8" rx="2"/>
+                <path d="M2 14h2"/>
+                <path d="M20 14h2"/>
+                <path d="M15 13v2"/>
+                <path d="M9 13v2"/>
+              </svg>
+              <span>AiBA Connect · หมวดผู้ช่วย AI</span>
+            </div>
+            <h1>เขียนโพสต์โซเชียล</h1>
+            <p>ขายของ เล่าเรื่อง แจ้งข่าว ให้ AI เขียนโพสต์มาให้เลือก 3 แบบ</p>
+          </div>
+        </div>
+
+        <div class="hero-pills" aria-hidden="true">
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+            </svg>
+            <span>ได้โพสต์ 3 แบบให้เลือก</span>
+          </span>
+          <span class="hero-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
+            </svg>
+            <span>พูดเล่าและอ่านให้ฟังได้</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Banner (#resumeBanner) -->
+    <div id="resumeBanner" class="resume-banner" role="region" aria-label="กู้คืนงานที่ทำค้างไว้">
+      <div class="resume-left">
+        <div class="resume-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+        </div>
+        <div class="resume-text">
+          <strong>พบงานที่ทำค้างไว้ในหน้านี้</strong>
+          <span id="resumeInfo"></span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button type="button" class="primary-btn btn-sm" onclick="restoreWork()">ทำต่อจากเดิม</button>
+        <button type="button" class="danger-btn btn-sm" onclick="discardWork()">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <!-- Post Builder Section (#postBuilder) -->
+    <section id="postBuilder" class="builder-panel builder active">
+      <div class="section-description">
+        บอกว่าจะโพสต์เรื่องอะไร ลงที่ไหน อยากให้เสียงเป็นแบบไหน ระบบจะสร้างคำสั่งให้ AI
+        <strong>เขียนโพสต์มาให้เลือก 3 แบบ พร้อมแฮชแท็กและคำชวนกดสั่ง/ติดตาม</strong> เลือกแบบที่ชอบแล้วก๊อปไปโพสต์ได้เลย
+        <div class="desc-flow" aria-label="สรุป 7 ขั้นตอนการสร้างโพสต์">
+          <a class="flow-chip c-s1" href="#step1">1. เรื่องที่จะโพสต์</a>
+          <a class="flow-chip c-s2" href="#step2">2. ช่องทาง</a>
+          <a class="flow-chip c-s3" href="#step3">3. เป้าหมาย</a>
+          <a class="flow-chip c-s4" href="#step4">4. โทนเสียง</a>
+          <a class="flow-chip c-s5" href="#step5">5. สิ่งที่ควรมี</a>
+          <a class="flow-chip c-s6" href="#step6">6. คนอ่าน</a>
+          <a class="flow-chip c-s7" href="#step7">7. เพิ่มเติม</a>
+        </div>
+      </div>
+
+      <div class="steps-stack">
+
+        <!-- ================================================================
+             STEP 1: จะโพสต์เรื่องอะไร? (Sky Blue #0284C7)
+             ================================================================ -->
+        <div id="step1" class="step" data-step="1">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">1</span>
+              <span class="step-title">จะโพสต์เรื่องอะไร?</span>
+            </div>
+            <span class="step-badge">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" x2="12" y1="19" y2="22"/>
+              </svg>
+              <span>พิมพ์หรือพูดด้วยไมค์ได้</span>
+            </span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" x2="12" y1="19" y2="22"/>
+              </svg>
+            </span>
+            <span>พิมพ์หรือกดไมค์แล้วเล่าตามธรรมชาติ ยิ่งมีรายละเอียด (ชื่อ ราคา วันเวลา สถานที่) โพสต์จะยิ่งดี</span>
+          </p>
+          <textarea id="postTopic" class="large-textarea" placeholder="เช่น ขายขนมครกสูตรคุณยาย ทำสดทุกเช้า กล่องละ 40 บาท ขายที่ตลาดนัดวัดใหญ่ทุกวันเสาร์ 7-11 โมง รับสั่งล่วงหน้าทาง LINE" oninput="refreshPostPrompt()"></textarea>
+        </div>
+
+        <!-- ================================================================
+             STEP 2: ลงที่ไหน? (Violet #7C3AED)
+             ================================================================ -->
+        <div id="step2" class="step" data-step="2">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">2</span>
+              <span class="step-title">ลงที่ไหน?</span>
+            </div>
+            <span class="step-badge">เลือก 1 ช่องทาง</span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
+                <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
+              </svg>
+            </span>
+            <span>แต่ละที่มีความยาวและสไตล์ที่เหมาะต่างกัน</span>
+          </p>
+          <div class="choice-grid cols-3">
+            <button type="button" class="choice" data-pgroup="platform" data-value="Facebook" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </span>
+              <span class="choice-label">Facebook</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="platform" data-value="LINE (โพสต์ในกลุ่ม หรือ LINE VOOM)" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                  <path d="M8 12h.01"/>
+                  <path d="M12 12h.01"/>
+                  <path d="M16 12h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">LINE</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="platform" data-value="TikTok (แคปชันใต้คลิป)" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+                </svg>
+              </span>
+              <span class="choice-label">TikTok</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="platform" data-value="Instagram" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
+              </span>
+              <span class="choice-label">Instagram</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="platform" data-value="ข้อความส่งลูกค้าใน LINE แบบตัวต่อตัว" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2z"/>
+                  <path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/>
+                </svg>
+              </span>
+              <span class="choice-label">แชทหาลูกค้า</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="platform" data-value="ป้ายหรือใบปลิว (ข้อความสั้น)" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="14" x="3" y="3" rx="2"/>
+                  <path d="M7 8h10"/>
+                  <path d="M7 12h6"/>
+                  <path d="M12 17v4"/>
+                  <path d="M8 21h8"/>
+                </svg>
+              </span>
+              <span class="choice-label">ป้าย/ใบปลิว</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 3: โพสต์เพื่ออะไร? (Coral #E11D48)
+             ================================================================ -->
+        <div id="step3" class="step" data-step="3">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">3</span>
+              <span class="step-title">โพสต์เพื่ออะไร?</span>
+            </div>
+            <span class="step-badge">เลือก 1 อย่าง</span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+            </span>
+            <span>เลือก 1 อย่าง เพื่อให้ AI วางโครงเรื่องและคำชวนให้ตรงจุดประสงค์</span>
+          </p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-pgroup="purpose" data-value="ขายสินค้าหรือบริการ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                  <path d="M3 6h18"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+              </span>
+              <span class="choice-label">ขายของ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="รีวิวหรือแนะนำร้าน/สินค้าที่ชอบ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <span class="choice-label">รีวิว/แนะนำ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="เล่าเรื่องราวหรือชีวิตประจำวัน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              </span>
+              <span class="choice-label">เล่าเรื่อง</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="ทักทายหรืออวยพรเพื่อน ๆ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 2v2"/>
+                  <path d="M12 20v2"/>
+                  <path d="m4.93 4.93 1.41 1.41"/>
+                  <path d="m17.66 17.66 1.41 1.41"/>
+                  <path d="M2 12h2"/>
+                  <path d="M20 12h2"/>
+                  <path d="m6.34 17.66-1.41 1.41"/>
+                  <path d="m19.07 4.93-1.41 1.41"/>
+                </svg>
+              </span>
+              <span class="choice-label">ทักทาย/อวยพร</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="แจ้งข่าว กิจกรรม หรือนัดหมาย" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m3 11 18-5v12L3 14v-3z"/>
+                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+                </svg>
+              </span>
+              <span class="choice-label">แจ้งข่าว/กิจกรรม</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="ชวนเข้าร่วมกลุ่มหรือกิจกรรม" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <line x1="19" x2="19" y1="8" y2="14"/>
+                  <line x1="22" x2="16" y1="11" y2="11"/>
+                </svg>
+              </span>
+              <span class="choice-label">ชวนเข้าร่วม</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="ขอบคุณลูกค้าหรือคนที่ช่วยเหลือ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+              </span>
+              <span class="choice-label">ขอบคุณ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="purpose" data-value="แบ่งปันข้อคิดหรือธรรมะ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+              </span>
+              <span class="choice-label">ข้อคิด/ธรรมะ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 4: อยากให้เสียงของโพสต์เป็นแบบไหน? (Orange #EA580C)
+             ================================================================ -->
+        <div id="step4" class="step" data-step="4">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">4</span>
+              <span class="step-title">อยากให้เสียงของโพสต์เป็นแบบไหน?</span>
+            </div>
+            <span class="multi-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m3 17 2 2 4-4"/>
+                <path d="m3 7 2 2 4-4"/>
+                <path d="M13 6h8"/>
+                <path d="M13 12h8"/>
+                <path d="M13 18h8"/>
+              </svg>
+              <span>เลือกได้หลายข้อ</span>
+            </span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 10v3"/>
+                <path d="M6 6v11"/>
+                <path d="M10 3v18"/>
+                <path d="M14 8v7"/>
+                <path d="M18 5v13"/>
+                <path d="M22 10v3"/>
+              </svg>
+            </span>
+            <span>แนะนำ 1-2 อย่าง เพื่อให้น้ำเสียงอ่านแล้วเป็นธรรมชาติตรงกับตัวคุณ</span>
+          </p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="เป็นกันเอง เหมือนคุยกับเพื่อนบ้าน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                  <line x1="9" x2="9.01" y1="9" y2="9"/>
+                  <line x1="15" x2="15.01" y1="9" y2="9"/>
+                </svg>
+              </span>
+              <span class="choice-label">เป็นกันเอง</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="สุภาพ น่าเชื่อถือ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <polyline points="16 11 18 13 22 9"/>
+                </svg>
+              </span>
+              <span class="choice-label">สุภาพ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="สนุก มีมุกเล็กน้อย" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M18 13a6 6 0 0 1-6 5 6 6 0 0 1-6-5h12Z"/>
+                  <line x1="9" x2="9.01" y1="9" y2="9"/>
+                  <line x1="15" x2="15.01" y1="9" y2="9"/>
+                </svg>
+              </span>
+              <span class="choice-label">สนุก</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="อบอุ่น ซาบซึ้ง" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                  <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/>
+                </svg>
+              </span>
+              <span class="choice-label">อบอุ่น</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="กระตุ้นให้รีบตัดสินใจ (มีจำนวนจำกัด/โปรหมดเมื่อไหร่)" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="13" r="8"/>
+                  <path d="M12 9v4l2 2"/>
+                  <path d="M5 3 2 6"/>
+                  <path d="m22 6-3-3"/>
+                </svg>
+              </span>
+              <span class="choice-label">เร่งด่วน</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="ภูมิใจในฝีมือและความตั้งใจ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+              </span>
+              <span class="choice-label">ภูมิใจ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="สั้น ตรงประเด็น ไม่เยิ่นเย้อ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </span>
+              <span class="choice-label">กระชับ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="tone" data-multi="1" data-value="ใช้ภาษาถิ่น/สำนวนท้องถิ่นนิด ๆ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  <path d="M8 9h8"/>
+                  <path d="M8 13h6"/>
+                </svg>
+              </span>
+              <span class="choice-label">ภาษาถิ่น</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 5: ในโพสต์ควรมีอะไรบ้าง? (Mint / Teal #0D9488)
+             ================================================================ -->
+        <div id="step5" class="step" data-step="5">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">5</span>
+              <span class="step-title">ในโพสต์ควรมีอะไรบ้าง?</span>
+            </div>
+            <span class="multi-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m3 17 2 2 4-4"/>
+                <path d="m3 7 2 2 4-4"/>
+                <path d="M13 6h8"/>
+                <path d="M13 12h8"/>
+                <path d="M13 18h8"/>
+              </svg>
+              <span>เลือกได้หลายข้อ</span>
+            </span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <span>ข้อที่ไม่เลือก AI จะไม่ใส่</span>
+          </p>
+          <div class="choice-grid">
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="อีโมจิพอเหมาะ ไม่เยอะเกิน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11v1a10 10 0 1 1-9-10"/>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                  <line x1="9" x2="9.01" y1="9" y2="9"/>
+                  <line x1="15" x2="15.01" y1="9" y2="9"/>
+                  <path d="M16 5h6"/>
+                  <path d="M19 2v6"/>
+                </svg>
+              </span>
+              <span class="choice-label">อีโมจิ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="แฮชแท็ก 3-5 อัน ท้ายโพสต์" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="4" x2="20" y1="9" y2="9"/>
+                  <line x1="4" x2="20" y1="15" y2="15"/>
+                  <line x1="10" x2="8" y1="3" y2="21"/>
+                  <line x1="16" x2="14" y1="3" y2="21"/>
+                </svg>
+              </span>
+              <span class="choice-label">แฮชแท็ก</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="ประโยคชวนให้ทำต่อ เช่น ทักมาสั่งได้เลย / กดติดตาม / แชร์ให้เพื่อน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M8 12h8"/>
+                  <path d="m12 16 4-4-4-4"/>
+                </svg>
+              </span>
+              <span class="choice-label">คำชวน (CTA)</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="คำถามท้ายโพสต์ชวนคนมาคอมเมนต์" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <path d="M12 17h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">คำถามชวนคุย</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="ราคา วิธีสั่ง และช่องทางติดต่อให้ชัด" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/>
+                  <circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="choice-label">ราคา/วิธีสั่ง</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="ประโยคเปิดที่ดึงความสนใจในบรรทัดแรก" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                </svg>
+              </span>
+              <span class="choice-label">เปิดให้สะดุด</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="เว้นบรรทัดเยอะ ๆ อ่านง่ายบนมือถือ" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                  <path d="M12 18h.01"/>
+                </svg>
+              </span>
+              <span class="choice-label">อ่านง่ายบนมือถือ</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="include" data-multi="1" data-value="ไม่ใช้ศัพท์วัยรุ่นหรือคำทับศัพท์" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="4 7 4 4 20 4 20 7"/>
+                  <line x1="9" x2="15" y1="20" y2="20"/>
+                  <line x1="12" x2="12" y1="4" y2="20"/>
+                </svg>
+              </span>
+              <span class="choice-label">ภาษาเข้าใจง่าย</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 6: คนที่อ่านคือใคร? (Indigo #4F46E5)
+             ================================================================ -->
+        <div id="step6" class="step" data-step="6">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">6</span>
+              <span class="step-title">คนที่อ่านคือใคร?</span>
+            </div>
+            <span class="step-badge">เลือก 1 กลุ่ม (ไม่บังคับ)</span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </span>
+            <span>ไม่บังคับ แต่ช่วยให้ AI เลือกคำได้ตรงกับคนที่คุณอยากสื่อสารด้วย</span>
+          </p>
+          <div class="choice-grid cols-3">
+            <button type="button" class="choice" data-pgroup="audience" data-value="เพื่อน ๆ และคนรู้จักวัยเดียวกัน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </span>
+              <span class="choice-label">เพื่อนวัยเดียวกัน</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="audience" data-value="ลูกค้าทั่วไปในละแวกบ้าน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                  <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+                  <path d="M2 7h20"/>
+                </svg>
+              </span>
+              <span class="choice-label">ลูกค้าแถวบ้าน</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="audience" data-value="คนวัยทำงานที่ซื้อของออนไลน์" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+              </span>
+              <span class="choice-label">วัยทำงาน</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="audience" data-value="ลูกหลานและครอบครัว" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                </svg>
+              </span>
+              <span class="choice-label">ครอบครัว</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="audience" data-value="สมาชิกกลุ่มหรือชุมชน" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M5 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/>
+                  <circle cx="19" cy="9" r="2.2"/>
+                  <circle cx="5" cy="9" r="2.2"/>
+                </svg>
+              </span>
+              <span class="choice-label">กลุ่ม/ชุมชน</span>
+            </button>
+
+            <button type="button" class="choice" data-pgroup="audience" data-value="คนที่ยังไม่รู้จักเราเลย" onclick="pickChoice(this)">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                  <path d="M2 12h20"/>
+                </svg>
+              </span>
+              <span class="choice-label">คนทั่วไป</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             STEP 7: ข้อมูลเพิ่มเติม (ไม่บังคับ) (Plum Purple #9333EA)
+             ================================================================ -->
+        <div id="step7" class="step" data-step="7">
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-number">7</span>
+              <span class="step-title">ข้อมูลเพิ่มเติม (ไม่บังคับ)</span>
+            </div>
+            <span class="step-badge">เพิ่มจุดเด่นหรือข้อห้าม</span>
+          </div>
+          <p class="step-help">
+            <span class="step-help-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+              </svg>
+            </span>
+            <span>เช่น ชื่อร้าน เบอร์โทร ไอดี LINE จุดเด่นที่อยากเน้น หรือสิ่งที่ห้ามพูดถึง</span>
+          </p>
+          <textarea id="postExtra" class="large-textarea compact" placeholder="เช่น ชื่อร้าน ขนมครกยายแจ่ม / LINE: yaijam / ห้ามบอกว่าถูกที่สุด" oninput="refreshPostPrompt()"></textarea>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="button-row gen-row">
+        <button type="button" class="primary-btn" onclick="generatePostPrompt()">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+          <span>สร้างคำสั่งเขียนโพสต์</span>
+        </button>
+
+        <button type="button" class="secondary-btn" onclick="postExample()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+          </svg>
+          <span>ลองตัวอย่าง</span>
+        </button>
+
+        <button type="button" class="danger-btn" onclick="clearPost()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+
+      <!-- Result Box (#postResult) -->
+      <div id="postResult" class="result" style="display:none;">
+        <div class="result-head-row">
+          <h3>
+            <span class="result-dot" aria-hidden="true"></span>
+            <span>คำสั่งพร้อมส่งให้ AI เขียนโพสต์</span>
+          </h3>
+          <span class="result-live-badge">อัปเดตอัตโนมัติ</span>
+        </div>
+
+        <p class="result-desc">
+          วางใน ChatGPT หรือ Gemini จะได้โพสต์ 3 แบบให้เลือก ชอบแบบไหนก๊อปไปโพสต์ หรือบอก AI ให้แก้ต่อได้
+          <span class="live-hint">(เปลี่ยนตัวเลือกด้านบนได้ตลอด ข้อความจะอัปเดตให้เอง)</span>
+        </p>
+
+        <div class="toggle-row">
+          <button type="button" class="toggle" id="tglPostImage" onclick="togglePostImage()" aria-pressed="false">
+            <span class="toggle-ic" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+            </span>
+            <span>ขอ Prompt ภาพประกอบโพสต์ด้วย</span>
+          </button>
+        </div>
+
+        <div id="postPromptOutput" class="prompt-box"></div>
+
+        <div class="button-row">
+          <button type="button" class="primary-btn" onclick="copyText('postPromptOutput','postCopyMessage','คัดลอกคำสั่งเรียบร้อยแล้ว')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span>คัดลอกคำสั่ง</span>
+          </button>
+
+          <button type="button" class="secondary-btn" onclick="speakText(document.getElementById('postPromptOutput').textContent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
+            </svg>
+            <span>อ่านให้ฟัง</span>
+          </button>
+        </div>
+
+        <p id="postCopyMessage"></p>
+
+        <div class="open-app-row">
+          <p>ขั้นต่อไป: เปิดแอปแล้ววางคำสั่ง (ระบบคัดลอกให้อัตโนมัติ)</p>
+          <div class="button-row">
+            <a class="app-btn gpt" href="https://chatgpt.com" target="_blank" rel="noopener" onclick="return copyForApp('postPromptOutput', 'postCopyMessage')">
+              <span class="app-logo">
+                <img src="ChatGPT.png" alt="ChatGPT" onerror="this.style.display='none'" />
+              </span>
+              <span>เปิด ChatGPT</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+
+            <a class="app-btn gemini" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="return copyForApp('postPromptOutput', 'postCopyMessage')">
+              <span class="app-logo">
+                <img src="Gemini.jpg" alt="Gemini" onerror="this.style.display='none'" />
+              </span>
+              <span>เปิด Gemini</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pre-Post 3-Item Check Strip (.hotline — Warm Amber / Coral Orange) -->
+        <div class="hotline" role="note" aria-label="ตรวจ 3 อย่างก่อนโพสต์">
+          <div class="hotline-head">
+            <span class="hotline-head-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <strong>ก่อนโพสต์ ตรวจ 3 อย่าง:</strong>
+          </div>
+          <div class="hotline-checks">
+            <span class="hotline-check-item">
+              <span class="hotline-check-icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </span>
+              <span>ราคา วันเวลา เบอร์ ถูกต้อง</span>
+            </span>
+            <span class="hotline-check-item">
+              <span class="hotline-check-icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </span>
+              <span>ไม่โอ้อวดเกินจริง (เช่น รักษาโรค ถูกที่สุด ดีที่สุด)</span>
+            </span>
+            <span class="hotline-check-item">
+              <span class="hotline-check-icon" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </span>
+              <span>ไม่ใส่ข้อมูลส่วนตัวเกินจำเป็น เช่น ที่อยู่บ้าน เลขบัญชี</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       RELATED TOOLS ("ไปต่อที่เกี่ยวข้อง")
+       ======================================================================== -->
+  <aside class="related" aria-label="เครื่องมือที่เกี่ยวข้อง">
+    <div class="related-head">
+      <span class="related-head-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="m12 5 7 7-7 7"/>
+        </svg>
+      </span>
+      <h3>ไปต่อที่เกี่ยวข้อง</h3>
+    </div>
+
+    <div class="related-grid">
+      <a class="rel-card" href="page-image.html">
+        <div class="ic cat-create" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+        </div>
+        <div>
+          <b>สร้างภาพด้วย AI</b>
+          <span>ตอบคำถามทีละข้อ แล้วรับ Prompt สำหรับให้ AI สร้างภาพ พร้อมคลังสไตล์</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-greeting.html">
+        <div class="ic cat-greeting" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
+        </div>
+        <div>
+          <b>ภาพอวยพร</b>
+          <span>เลือกสไตล์ เปลี่ยนวัน คำอวยพร ชื่อ แล้วรับ Prompt สำเร็จรูปสำหรับส่งต่อ</span>
+        </div>
+      </a>
+
+      <a class="rel-card" href="page-poster.html">
+        <div class="ic cat-poster" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+          </svg>
+        </div>
+        <div>
+          <b>สไตล์โปสเตอร์โฆษณาสินค้า</b>
+          <span>เลือกสไตล์จากภาพตัวอย่าง 10 แบบ รับ Prompt สำเร็จรูปสำหรับรูปสินค้า</span>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Modal & Lightbox (Preserved for app.js compatibility) -->
+  <div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="ปิดหน้าต่าง">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      </button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <hr />
+      <h3>ใช้เมื่อไหร่?</h3>
+      <p id="modalUse"></p>
+      <h3>ตัวอย่าง</h3>
+      <div id="modalExample" class="prompt-box"></div>
+      <div class="button-row">
+        <button type="button" class="primary-btn" onclick="useCommand()">ใช้คำสั่งนี้</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" alt="ภาพขยาย" />
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- External Shared Scripts -->
+  <script src="app.js?v=20260926"></script>
+  <script src="footer.js?v=20260926"></script>
+
+  <!-- Liquid Glass Theme/Font Controller + Standalone Fallback Engine -->
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const MOON_SVG = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+      const SUN_SVG = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+
+      /* ======================================================================
+         1. THEME & FONT SIZE CONTROLLER (MATCHING index.html, ZERO EMOJIS)
+         ====================================================================== */
+      function renderThemeButton(theme) {
+        const btn = document.getElementById('themeBtn');
+        if (!btn) return;
+        const isDark = theme === 'dark';
+        btn.innerHTML =
+          '<svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          (isDark ? SUN_SVG : MOON_SVG) +
+          '</svg><span id="themeText">' + (isDark ? 'สว่าง' : 'มืด') + '</span>';
+      }
+
+      function applyTheme(theme) {
+        const safeTheme = theme === 'dark' ? 'dark' : 'light';
+        htmlEl.setAttribute('data-theme', safeTheme);
+        document.body.classList.toggle('dark', safeTheme === 'dark');
+        try {
+          localStorage.setItem('aiba:theme', safeTheme);
+          localStorage.setItem('theme', safeTheme);
+        } catch (e) {}
+        renderThemeButton(safeTheme);
+      }
+
+      const FONT_SIZES = [16, 18, 20];
+      let currentFontIdx = 0;
+      try {
+        const storedIdx = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10);
+        if (!isNaN(storedIdx) && storedIdx >= 0 && storedIdx < FONT_SIZES.length) {
+          currentFontIdx = storedIdx;
+        }
+      } catch (e) {}
+
+      function applyFontSize(idx) {
+        currentFontIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+        htmlEl.style.fontSize = FONT_SIZES[currentFontIdx] + 'px';
+        try { localStorage.setItem('aiba:fontIdx', String(currentFontIdx)); } catch (e) {}
+      }
+
+      window.toggleTheme = function () {
+        const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      };
+
+      window.changeFontSize = function (delta) {
+        applyFontSize(currentFontIdx + (delta > 0 ? 1 : -1));
+      };
+
+      let initialTheme = 'light';
+      try {
+        initialTheme = localStorage.getItem('aiba:theme') || localStorage.getItem('theme') || 'light';
+      } catch (e) {}
+      applyTheme(initialTheme);
+      applyFontSize(currentFontIdx);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const t = htmlEl.getAttribute('data-theme') || initialTheme;
+        applyTheme(t);
+        applyFontSize(currentFontIdx);
+      });
+
+      /* ======================================================================
+         2. TOAST HELPER
+         ====================================================================== */
+      let toastTimer = null;
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        if (!toast || !message) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2600);
+      }
+
+      /* ======================================================================
+         3. STANDALONE POST BUILDER FALLBACK (ONLY ACTIVE IF app.js NOT LOADED)
+         ====================================================================== */
+      const hasExternalApp = typeof window.generatePostPrompt === 'function' && typeof window.pickChoice === 'function';
+
+      if (!hasExternalApp) {
+        const DRAFT_KEY = 'aiba:postDraft:v1';
+        let wantPostImage = false;
+
+        function fallbackCopy(text) {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        async function copyString(text) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+              await navigator.clipboard.writeText(text);
+              return true;
+            } catch (e) {
+              fallbackCopy(text);
+              return true;
+            }
+          }
+          fallbackCopy(text);
+          return true;
+        }
+
+        function setChoiceState(btn, on) {
+          if (!btn) return;
+          btn.classList.toggle('selected', on);
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+
+        function syncImageToggleUI() {
+          const tgl = document.getElementById('tglPostImage');
+          if (!tgl) return;
+          tgl.classList.toggle('active', wantPostImage);
+          tgl.classList.toggle('on', wantPostImage);
+          tgl.classList.toggle('selected', wantPostImage);
+          tgl.setAttribute('aria-pressed', wantPostImage ? 'true' : 'false');
+        }
+
+        function getSingleVal(group) {
+          const btn = document.querySelector('#postBuilder .choice.selected[data-pgroup="' + group + '"], #postBuilder .choice.active[data-pgroup="' + group + '"]');
+          return btn ? (btn.getAttribute('data-value') || '') : '';
+        }
+
+        function getMultiVals(group) {
+          return Array.from(document.querySelectorAll('#postBuilder .choice.selected[data-pgroup="' + group + '"], #postBuilder .choice.active[data-pgroup="' + group + '"]'))
+            .map(function (b) { return b.getAttribute('data-value') || ''; })
+            .filter(Boolean);
+        }
+
+        function collectState() {
+          const topicEl = document.getElementById('postTopic');
+          const extraEl = document.getElementById('postExtra');
+          return {
+            topic: topicEl ? topicEl.value.trim() : '',
+            platform: getSingleVal('platform'),
+            purpose: getSingleVal('purpose'),
+            tones: getMultiVals('tone'),
+            includes: getMultiVals('include'),
+            audience: getSingleVal('audience'),
+            extra: extraEl ? extraEl.value.trim() : '',
+            wantImage: wantPostImage
+          };
+        }
+
+        function isStateEmpty(st) {
+          return !(
+            st.topic ||
+            st.platform ||
+            st.purpose ||
+            st.tones.length > 0 ||
+            st.includes.length > 0 ||
+            st.audience ||
+            st.extra ||
+            st.wantImage
+          );
+        }
+
+        function hideResumeBanner() {
+          const banner = document.getElementById('resumeBanner');
+          if (banner) {
+            banner.classList.remove('show');
+            banner.style.display = '';
+          }
+        }
+
+        function saveDraft() {
+          const st = collectState();
+          const resultEl = document.getElementById('postResult');
+          if (isStateEmpty(st)) {
+            try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+            return;
+          }
+          const payload = {
+            topic: st.topic,
+            platform: st.platform,
+            purpose: st.purpose,
+            tones: st.tones,
+            includes: st.includes,
+            audience: st.audience,
+            extra: st.extra,
+            wantImage: st.wantImage,
+            resultVisible: resultEl ? resultEl.style.display !== 'none' : false,
+            updatedAt: Date.now()
+          };
+          try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch (e) {}
+        }
+
+        function composePostPrompt(st) {
+          const lines = [];
+          lines.push('ช่วยเขียนโพสต์โซเชียลภาษาไทยให้เลือก 3 แบบที่แตกต่างกัน (เช่น แบบสั้นกระชับ, แบบเล่าเรื่องเป็นกันเอง, และแบบดึงดูดให้น่ากดสั่ง/ติดตาม)');
+          lines.push('');
+          lines.push('เรื่องที่จะโพสต์: ' + (st.topic || '[ระบุรายละเอียดสินค้า เรื่องราว ราคา วันเวลา หรือสถานที่]'));
+          if (st.platform) lines.push('ช่องทางที่ลง: ' + st.platform);
+          if (st.purpose) lines.push('จุดประสงค์ของโพสต์: ' + st.purpose);
+          if (st.audience) lines.push('กลุ่มคนที่อ่าน: ' + st.audience);
+          if (st.tones.length > 0) lines.push('น้ำเสียงและสไตล์: ' + st.tones.join(', '));
+          if (st.includes.length > 0) {
+            lines.push('');
+            lines.push('องค์ประกอบที่ต้องการในโพสต์:');
+            st.includes.forEach(function (item, idx) {
+              lines.push((idx + 1) + '. ' + item);
+            });
+          }
+          if (st.extra) {
+            lines.push('');
+            lines.push('ข้อมูลเพิ่มเติม / เงื่อนไขพิเศษ: ' + st.extra);
+          }
+          lines.push('');
+          lines.push('เงื่อนไขเพิ่มเติม:');
+          lines.push('- ใช้ภาษาไทยที่เป็นธรรมชาติ อ่านง่าย ไม่โอ้อวดเกินจริง และไม่แต่งข้อมูลราคาหรือช่องทางติดต่อเพิ่มเอง');
+          lines.push('- แยกหัวข้อ แบบที่ 1, แบบที่ 2, แบบที่ 3 ให้ชัดเจนพร้อมก๊อปไปโพสต์ได้ทันที');
+          if (st.wantImage) {
+            lines.push('- แถม Prompt สำหรับสร้างภาพประกอบโพสต์ที่เข้ากับเนื้อหานี้ (ทั้งคำอธิบายภาษาไทยและ Prompt ภาษาอังกฤษ) ให้ 1 ชุดด้วย');
+          }
+          return lines.join('\n');
+        }
+
+        function renderPostOutput(shouldScroll) {
+          const st = collectState();
+          const outEl = document.getElementById('postPromptOutput');
+          const resultEl = document.getElementById('postResult');
+          const copyMsg = document.getElementById('postCopyMessage');
+          if (!outEl || !resultEl) return;
+
+          outEl.textContent = composePostPrompt(st);
+          resultEl.style.display = 'block';
+          if (copyMsg) copyMsg.textContent = '';
+
+          if (shouldScroll) {
+            resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        window.pickChoice = function (btn) {
+          if (!btn) return;
+          hideResumeBanner();
+          const group = btn.getAttribute('data-pgroup');
+          const isMulti = btn.getAttribute('data-multi') === '1';
+
+          if (isMulti) {
+            const isOn = btn.classList.contains('selected') || btn.classList.contains('active');
+            setChoiceState(btn, !isOn);
+          } else if (group) {
+            const alreadyOn = btn.classList.contains('selected') || btn.classList.contains('active');
+            document.querySelectorAll('#postBuilder .choice[data-pgroup="' + group + '"]').forEach(function (el) {
+              setChoiceState(el, false);
+            });
+            setChoiceState(btn, !alreadyOn);
+          }
+
+          window.refreshPostPrompt();
+        };
+
+        window.togglePostImage = function () {
+          hideResumeBanner();
+          wantPostImage = !wantPostImage;
+          syncImageToggleUI();
+          window.refreshPostPrompt();
+          showToast(wantPostImage ? 'เพิ่มคำสั่งขอ Prompt ภาพประกอบแล้ว' : 'นำคำสั่งภาพประกอบออกแล้ว');
+        };
+
+        window.refreshPostPrompt = function () {
+          hideResumeBanner();
+          const resultEl = document.getElementById('postResult');
+          if (resultEl && resultEl.style.display !== 'none') {
+            renderPostOutput(false);
+          }
+          saveDraft();
+        };
+
+        window.generatePostPrompt = function () {
+          hideResumeBanner();
+          renderPostOutput(true);
+          saveDraft();
+          showToast('สร้างคำสั่งเขียนโพสต์เรียบร้อยแล้ว');
+        };
+
+        window.postExample = function () {
+          hideResumeBanner();
+          document.querySelectorAll('#postBuilder .choice').forEach(function (el) {
+            setChoiceState(el, false);
+          });
+
+          const topicEl = document.getElementById('postTopic');
+          const extraEl = document.getElementById('postExtra');
+          if (topicEl) {
+            topicEl.value = 'ขายขนมครกสูตรคุณยาย ทำสดทุกเช้า แป้งกรอบนอกนุ่มใน กะทิคั้นสด กล่องละ 40 บาท มีหน้าต้นหอม ข้าวโพด เผือก ขายที่ตลาดนัดวัดใหญ่ทุกวันเสาร์ 7-11 โมง รับสั่งล่วงหน้าทาง LINE';
+          }
+          if (extraEl) {
+            extraEl.value = 'ชื่อร้าน ขนมครกยายแจ่ม / LINE: yaijam / ห้ามบอกว่าถูกที่สุด';
+          }
+
+          const selectByVal = function (group, values) {
+            document.querySelectorAll('#postBuilder .choice[data-pgroup="' + group + '"]').forEach(function (el) {
+              if (values.indexOf(el.getAttribute('data-value')) !== -1) {
+                setChoiceState(el, true);
+              }
+            });
+          };
+
+          selectByVal('platform', ['Facebook']);
+          selectByVal('purpose', ['ขายสินค้าหรือบริการ']);
+          selectByVal('tone', ['เป็นกันเอง เหมือนคุยกับเพื่อนบ้าน', 'ภูมิใจในฝีมือและความตั้งใจ']);
+          selectByVal('include', [
+            'อีโมจิพอเหมาะ ไม่เยอะเกิน',
+            'แฮชแท็ก 3-5 อัน ท้ายโพสต์',
+            'ประโยคชวนให้ทำต่อ เช่น ทักมาสั่งได้เลย / กดติดตาม / แชร์ให้เพื่อน',
+            'ราคา วิธีสั่ง และช่องทางติดต่อให้ชัด',
+            'เว้นบรรทัดเยอะ ๆ อ่านง่ายบนมือถือ'
+          ]);
+          selectByVal('audience', ['ลูกค้าทั่วไปในละแวกบ้าน']);
+
+          wantPostImage = true;
+          syncImageToggleUI();
+          renderPostOutput(true);
+          saveDraft();
+          showToast('โหลดตัวอย่างคำสั่งเขียนโพสต์เรียบร้อยแล้ว');
+        };
+
+        window.clearPost = function (silent) {
+          document.querySelectorAll('#postBuilder .choice').forEach(function (el) {
+            setChoiceState(el, false);
+          });
+          const topicEl = document.getElementById('postTopic');
+          const extraEl = document.getElementById('postExtra');
+          const resultEl = document.getElementById('postResult');
+          const copyMsg = document.getElementById('postCopyMessage');
+          if (topicEl) topicEl.value = '';
+          if (extraEl) extraEl.value = '';
+          if (resultEl) resultEl.style.display = 'none';
+          if (copyMsg) copyMsg.textContent = '';
+          wantPostImage = false;
+          syncImageToggleUI();
+          try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+          hideResumeBanner();
+          if (!silent) showToast('ล้างข้อมูลเริ่มใหม่เรียบร้อยแล้ว');
+        };
+
+        window.copyText = async function (outputId, msgId, successMsg) {
+          const outEl = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = outEl ? (outEl.textContent || '').trim() : '';
+          if (!text) return;
+          await copyString(text);
+          const msg = successMsg || 'คัดลอกคำสั่งเรียบร้อยแล้ว';
+          if (msgEl) msgEl.textContent = msg;
+          showToast(msg);
+        };
+
+        window.copyForApp = function (outputId, msgId) {
+          const el = document.getElementById(outputId);
+          const msgEl = document.getElementById(msgId);
+          const text = el ? (el.textContent || '').trim() : '';
+          if (text) {
+            copyString(text);
+            if (msgEl) msgEl.textContent = 'คัดลอกคำสั่งแล้ว กำลังเปิดแอป AI...';
+            showToast('คัดลอกคำสั่งแล้ว กำลังเปิดแอป AI');
+          }
+          return true;
+        };
+
+        window.speakText = function (text) {
+          const clean = String(text || '').trim();
+          if (!clean) return;
+          if (!('speechSynthesis' in window)) {
+            showToast('เบราว์เซอร์นี้ไม่รองรับการอ่านออกเสียง');
+            return;
+          }
+          try {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(clean);
+            const hasThai = /[\u0E00-\u0E7F]/.test(clean);
+            utter.lang = hasThai ? 'th-TH' : 'en-US';
+            utter.rate = 0.96;
+            window.speechSynthesis.speak(utter);
+            showToast('กำลังอ่านคำสั่งให้ฟัง...');
+          } catch (e) {
+            showToast('ไม่สามารถเริ่มการอ่านออกเสียงได้');
+          }
+        };
+
+        window.restoreWork = function () {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            document.querySelectorAll('#postBuilder .choice').forEach(function (el) {
+              setChoiceState(el, false);
+            });
+            const selectByVal = function (group, values) {
+              if (!Array.isArray(values)) return;
+              document.querySelectorAll('#postBuilder .choice[data-pgroup="' + group + '"]').forEach(function (el) {
+                if (values.indexOf(el.getAttribute('data-value')) !== -1) setChoiceState(el, true);
+              });
+            };
+            if (data.platform) selectByVal('platform', [data.platform]);
+            if (data.purpose) selectByVal('purpose', [data.purpose]);
+            if (Array.isArray(data.tones)) selectByVal('tone', data.tones);
+            if (Array.isArray(data.includes)) selectByVal('include', data.includes);
+            if (data.audience) selectByVal('audience', [data.audience]);
+
+            const topicEl = document.getElementById('postTopic');
+            const extraEl = document.getElementById('postExtra');
+            if (topicEl) topicEl.value = data.topic || '';
+            if (extraEl) extraEl.value = data.extra || '';
+            wantPostImage = Boolean(data.wantImage);
+            syncImageToggleUI();
+
+            if (data.resultVisible) {
+              renderPostOutput(false);
+            }
+            hideResumeBanner();
+            showToast('กู้คืนงานที่ทำค้างไว้เรียบร้อยแล้ว');
+          } catch (e) {
+            hideResumeBanner();
+          }
+        };
+
+        window.discardWork = function () {
+          window.clearPost(true);
+          showToast('ล้างงานเดิมแล้ว พร้อมเริ่มใหม่');
+        };
+
+        window.closeModal = function (ev) {
+          if (ev && ev.target && ev.target.id !== 'modal') return;
+          const modal = document.getElementById('modal');
+          if (modal) modal.classList.remove('open', 'show');
+        };
+
+        window.useCommand = function () {
+          window.closeModal();
+        };
+
+        window.closeLightbox = function () {
+          const lb = document.getElementById('lightbox');
+          if (lb) lb.classList.remove('open', 'show');
+        };
+
+        (function checkDraft() {
+          try {
+            const raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            const parts = [];
+            if (data.platform) parts.push('ช่องทาง: ' + data.platform);
+            if (data.topic) parts.push('"' + data.topic.slice(0, 32) + (data.topic.length > 32 ? '...' : '') + '"');
+            if (data.updatedAt) {
+              const dt = new Date(data.updatedAt);
+              parts.push('บันทึกล่าสุด ' + dt.toLocaleString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
+            }
+            const infoEl = document.getElementById('resumeInfo');
+            const banner = document.getElementById('resumeBanner');
+            if (infoEl) infoEl.textContent = parts.join(' · ') || 'ข้อมูลที่ทำค้างไว้พร้อมทำต่อ';
+            if (banner) banner.classList.add('show');
+          } catch (e) {}
+        })();
+      }
+
+      /* ======================================================================
+         4. STANDARD FOOTER FALLBACK (ONLY IF footer.js DID NOT INJECT ONE)
+         ====================================================================== */
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.querySelector('footer')) {
+          const footerHtml =
+            '<footer class="site-footer">' +
+              '<div class="container">' +
+                '<div class="footer-grid">' +
+                  '<div>' +
+                    '<div class="footer-logos">' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/แอลลบพื้นหลัง.png" alt="โลโก้ศูนย์ AiBA" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                      '<span class="logo-slot"><img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" onerror="this.parentElement.style.display=\'none\'" /></span>' +
+                    '</div>' +
+                    '<h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>' +
+                    '<p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>' +
+                    '<p class="footer-text">85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />โทร 0 2855 0000</p>' +
+                    '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">' +
+                      '<span>www.pim.ac.th</span>' +
+                      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>' +
+                    '</a>' +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>' +
+                    '<p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>' +
+                    '<div class="footer-socials" aria-label="โซเชียลมีเดีย">' +
+                      '<a href="#" class="social-btn" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a>' +
+                      '<a href="#" class="social-btn" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>' +
+                      '<a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="footer-bottom-bar">© 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED</div>' +
+            '</footer>';
+          document.body.insertAdjacentHTML('beforeend', footerHtml);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

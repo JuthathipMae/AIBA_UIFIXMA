@@ -1,0 +1,4306 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ภาพอวยพร — AiBA Connect</title>
+  <meta name="theme-color" content="#FF6B6B" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM — AiBA CONNECT LIQUID GLASS TOKENS (LIGHT & DARK)
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-heading: 'Kanit', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+
+      /* Base Palette — Light Mode */
+      --bg-base: #F8F9FE;
+      --bg-lavender: #F1EFFB;
+      --text-primary: #131836;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+
+      /* Brand Gradient */
+      --brand-coral: #FF6B6B;
+      --brand-violet: #7C3AED;
+      --brand-sky: #0EA5E9;
+      --brand-teal: #10B981;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+      --secondary-gradient: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+
+      /* Liquid Glass System — Light Mode */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(124, 58, 237, 0.12);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+      /* Surfaces */
+      --surface-input: rgba(248, 249, 254, 0.94);
+      --surface-subtle: rgba(241, 239, 251, 0.70);
+      --surface-img: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(241, 239, 251, 0.96));
+      --border-subtle: rgba(19, 24, 54, 0.10);
+
+      /* Shadows & Radii */
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --shadow-lg: 0 20px 48px rgba(19, 24, 54, 0.13);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --radius-pill: 9999px;
+      --container-max: 1240px;
+
+      /* Status Colors */
+      --ok-solid: #10B981;
+      --ok-text: #047857;
+      --ok-bg: rgba(16, 185, 129, 0.12);
+      --ok-border: rgba(16, 185, 129, 0.34);
+
+      --err-solid: #EF4444;
+      --err-text: #DC2626;
+      --err-bg: rgba(239, 68, 68, 0.10);
+      --err-border: rgba(239, 68, 68, 0.32);
+
+      /* ========================================================================
+         SECTION COLOR THEMES (LIGHT MODE)
+         ======================================================================== */
+      /* Section 1 — Gallery (4 Styles): Coral Rose */
+      --sec1-grad: linear-gradient(135deg, #FF6B6B 0%, #E11D48 100%);
+      --sec1-solid: #E11D48;
+      --sec1-text: #BE123C;
+      --sec1-soft: rgba(244, 63, 94, 0.11);
+      --sec1-border: rgba(244, 63, 94, 0.32);
+      --sec1-glow: rgba(225, 29, 72, 0.24);
+
+      /* Section 2 — Customize (Day / Wish / Names / Options): Violet */
+      --sec2-grad: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+      --sec2-solid: #7C3AED;
+      --sec2-text: #5B21B6;
+      --sec2-soft: rgba(124, 58, 237, 0.11);
+      --sec2-border: rgba(124, 58, 237, 0.34);
+      --sec2-glow: rgba(124, 58, 237, 0.25);
+
+      /* Section 3 — Prompt, Caption & AI Apps: Sky / Teal */
+      --sec3-grad: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+      --sec3-solid: #0284C7;
+      --sec3-text: #0369A1;
+      --sec3-soft: rgba(14, 165, 233, 0.12);
+      --sec3-border: rgba(14, 165, 233, 0.36);
+      --sec3-glow: rgba(14, 165, 233, 0.28);
+
+      /* Prompt Dark Sheet (Sky / Teal Accented) */
+      --sheet-bg: linear-gradient(160deg, #0D1B2A 0%, #10253A 55%, #0F2B34 100%);
+      --sheet-border: rgba(56, 189, 248, 0.26);
+      --sheet-ink: #F0F9FF;
+      --sheet-dim: #94B8CE;
+      --sheet-key: #5EEAD4;
+      --sheet-shadow: 0 22px 48px rgba(14, 116, 144, 0.22);
+
+      /* Caption Sub-card (Teal / Emerald Accented) */
+      --cap-bg: linear-gradient(155deg, rgba(240, 253, 250, 0.95) 0%, rgba(240, 249, 255, 0.95) 100%);
+      --cap-border: rgba(13, 148, 136, 0.30);
+      --cap-box-bg: rgba(255, 255, 255, 0.88);
+      --cap-text: #0F766E;
+
+      /* Section 4 — Related Tools (Per-Tool Colors — Light Mode) */
+      --rel-img-grad: linear-gradient(135deg, #FF6B6B 0%, #E11D48 100%);
+      --rel-img-solid: #E11D48;
+      --rel-img-text: #BE123C;
+      --rel-img-soft: rgba(244, 63, 94, 0.11);
+      --rel-img-border: rgba(244, 63, 94, 0.32);
+
+      --rel-post-grad: linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+      --rel-post-solid: #0D9488;
+      --rel-post-text: #0F766E;
+      --rel-post-soft: rgba(13, 148, 136, 0.11);
+      --rel-post-border: rgba(13, 148, 136, 0.34);
+
+      --rel-poster-grad: linear-gradient(135deg, #8B5CF6 0%, #4F46E5 100%);
+      --rel-poster-solid: #7C3AED;
+      --rel-poster-text: #5B21B6;
+      --rel-poster-soft: rgba(124, 58, 237, 0.11);
+      --rel-poster-border: rgba(124, 58, 237, 0.34);
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #0F1225;
+      --bg-lavender: #171B36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(167, 139, 250, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+
+      --surface-input: rgba(14, 17, 36, 0.82);
+      --surface-subtle: rgba(15, 18, 37, 0.62);
+      --surface-img: linear-gradient(145deg, rgba(24, 30, 58, 0.90), rgba(16, 20, 42, 0.96));
+      --border-subtle: rgba(255, 255, 255, 0.11);
+
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.48);
+
+      --ok-text: #34D399;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --ok-border: rgba(52, 211, 153, 0.42);
+
+      --err-solid: #F87171;
+      --err-text: #FCA5A5;
+      --err-bg: rgba(239, 68, 68, 0.16);
+      --err-border: rgba(248, 113, 113, 0.38);
+
+      /* Section 1 — Coral Rose (Dark) */
+      --sec1-solid: #FB7185;
+      --sec1-text: #FECDD3;
+      --sec1-soft: rgba(251, 113, 133, 0.18);
+      --sec1-border: rgba(251, 113, 133, 0.44);
+      --sec1-glow: rgba(244, 63, 94, 0.36);
+
+      /* Section 2 — Violet (Dark) */
+      --sec2-solid: #A78BFA;
+      --sec2-text: #DDD6FE;
+      --sec2-soft: rgba(167, 139, 250, 0.18);
+      --sec2-border: rgba(167, 139, 250, 0.46);
+      --sec2-glow: rgba(139, 92, 246, 0.38);
+
+      /* Section 3 — Sky / Teal (Dark) */
+      --sec3-solid: #38BDF8;
+      --sec3-text: #BAE6FD;
+      --sec3-soft: rgba(56, 189, 248, 0.18);
+      --sec3-border: rgba(56, 189, 248, 0.44);
+      --sec3-glow: rgba(14, 165, 233, 0.38);
+
+      --sheet-bg: linear-gradient(160deg, #06101C 0%, #0A1B2D 55%, #092128 100%);
+      --sheet-border: rgba(56, 189, 248, 0.28);
+      --sheet-ink: #F0F9FF;
+      --sheet-dim: #8BB1C9;
+      --sheet-key: #5EEAD4;
+      --sheet-shadow: 0 24px 56px rgba(0, 0, 0, 0.54);
+
+      --cap-bg: linear-gradient(155deg, rgba(13, 35, 45, 0.85) 0%, rgba(12, 31, 48, 0.90) 100%);
+      --cap-border: rgba(45, 212, 191, 0.36);
+      --cap-box-bg: rgba(8, 17, 30, 0.72);
+      --cap-text: #5EEAD4;
+
+      /* Section 4 — Related Tools (Dark) */
+      --rel-img-solid: #FB7185;
+      --rel-img-text: #FECDD3;
+      --rel-img-soft: rgba(251, 113, 133, 0.18);
+      --rel-img-border: rgba(251, 113, 133, 0.44);
+
+      --rel-post-solid: #2DD4BF;
+      --rel-post-text: #99F6E4;
+      --rel-post-soft: rgba(45, 212, 191, 0.18);
+      --rel-post-border: rgba(45, 212, 191, 0.44);
+
+      --rel-poster-solid: #A78BFA;
+      --rel-poster-text: #DDD6FE;
+      --rel-poster-soft: rgba(167, 139, 250, 0.18);
+      --rel-poster-border: rgba(167, 139, 250, 0.44);
+    }
+
+    /* ==========================================================================
+       2. PER-STYLE CHARACTER PALETTES (4 DISTINCT GREETING STYLES)
+       ========================================================================== */
+    /* Style 1: หัวใจและกุหลาบยามเช้า — Warm Coral Rose / Sunset */
+    .style-theme-rose {
+      --st-grad: linear-gradient(135deg, #FF6B6B 0%, #E11D48 100%);
+      --st-solid: #E11D48;
+      --st-text: #BE123C;
+      --st-soft: rgba(244, 63, 94, 0.12);
+      --st-border: rgba(244, 63, 94, 0.38);
+      --st-glow: rgba(225, 29, 72, 0.26);
+    }
+
+    /* Style 2: การ์ดดอกไม้ขาวมินิมอล — Fresh Botanical Emerald */
+    .style-theme-emerald {
+      --st-grad: linear-gradient(135deg, #10B981 0%, #0D9488 100%);
+      --st-solid: #0D9488;
+      --st-text: #047857;
+      --st-soft: rgba(16, 185, 129, 0.12);
+      --st-border: rgba(16, 185, 129, 0.38);
+      --st-glow: rgba(13, 148, 136, 0.26);
+    }
+
+    /* Style 3: ธรรมะมงคล แสงทองร่มเย็น — Sacred Amber Gold */
+    .style-theme-gold {
+      --st-grad: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      --st-solid: #D97706;
+      --st-text: #B45309;
+      --st-soft: rgba(245, 158, 11, 0.13);
+      --st-border: rgba(217, 119, 6, 0.40);
+      --st-glow: rgba(217, 119, 6, 0.26);
+    }
+
+    /* Style 4: ช่อดอกไม้ละมุน แสงโบเก้ — Soft Orchid Violet */
+    .style-theme-orchid {
+      --st-grad: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+      --st-solid: #9333EA;
+      --st-text: #7E22CE;
+      --st-soft: rgba(147, 51, 234, 0.12);
+      --st-border: rgba(147, 51, 234, 0.38);
+      --st-glow: rgba(147, 51, 234, 0.26);
+    }
+
+    /* Dark Mode Overrides for the 4 Style Palettes */
+    [data-theme="dark"] .style-theme-rose {
+      --st-solid: #FB7185;
+      --st-text: #FECDD3;
+      --st-soft: rgba(251, 113, 133, 0.20);
+      --st-border: rgba(251, 113, 133, 0.48);
+      --st-glow: rgba(244, 63, 94, 0.38);
+    }
+
+    [data-theme="dark"] .style-theme-emerald {
+      --st-solid: #34D399;
+      --st-text: #A7F3D0;
+      --st-soft: rgba(52, 211, 153, 0.20);
+      --st-border: rgba(52, 211, 153, 0.48);
+      --st-glow: rgba(16, 185, 129, 0.38);
+    }
+
+    [data-theme="dark"] .style-theme-gold {
+      --st-solid: #FBBF24;
+      --st-text: #FDE68A;
+      --st-soft: rgba(251, 191, 36, 0.20);
+      --st-border: rgba(251, 191, 36, 0.48);
+      --st-glow: rgba(245, 158, 11, 0.38);
+    }
+
+    [data-theme="dark"] .style-theme-orchid {
+      --st-solid: #C084FC;
+      --st-text: #F3E8FF;
+      --st-soft: rgba(192, 132, 252, 0.20);
+      --st-border: rgba(192, 132, 252, 0.48);
+      --st-glow: rgba(168, 85, 247, 0.38);
+    }
+
+    /* ==========================================================================
+       3. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background:
+        radial-gradient(920px 520px at 8% -4%, rgba(255, 107, 107, 0.13), transparent 60%),
+        radial-gradient(920px 560px at 94% 4%, rgba(124, 58, 237, 0.14), transparent 60%),
+        radial-gradient(760px 520px at 50% 48%, rgba(14, 165, 233, 0.08), transparent 70%),
+        linear-gradient(180deg, var(--bg-base) 0%, var(--bg-lavender) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      line-height: 1.25;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-heading);
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--brand-violet);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       4. FLOATING GLASS NAVBAR (MATCHING AiBA CONNECT)
+       ========================================================================== */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 38px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--sec1-solid);
+      color: var(--sec1-text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.22rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--brand-violet);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       5. HERO SECTION (2-COLUMN MAIN-PAGE LAYOUT, 1:1 SYMMETRIC PREVIEW)
+       ========================================================================== */
+    .hero-section {
+      padding: 40px 0 24px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--sec1-border);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--sec1-text);
+      margin-bottom: 16px;
+    }
+
+    .hero-badge-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--sec1-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .hero-title .highlight {
+      display: inline-block;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      max-width: 56ch;
+      margin-bottom: 24px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-jump-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .step-jump-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--chip-border, var(--glass-outline));
+      color: var(--chip-text, var(--text-primary));
+      font-family: var(--font-heading);
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .step-jump-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--chip-solid);
+    }
+
+    .step-jump-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--chip-grad);
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Hero Right Column: Symmetric 1:1 Showcase Frame (Matches 2048x2048 asset) */
+    .hero-visual-card {
+      position: relative;
+      max-width: 420px;
+      width: 100%;
+      margin-left: auto;
+      border-radius: var(--radius-xl);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--glass-outline);
+      box-shadow: var(--shadow-lg), var(--glass-inset);
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .hero-visual-orb-1,
+    .hero-visual-orb-2 {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(8px);
+    }
+
+    .hero-visual-orb-1 {
+      width: 190px;
+      height: 190px;
+      top: -60px;
+      right: -50px;
+      background: radial-gradient(circle, rgba(255, 107, 107, 0.30), transparent 70%);
+    }
+
+    .hero-visual-orb-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -65px;
+      left: -50px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.26), transparent 70%);
+    }
+
+    .hero-visual-media {
+      position: relative;
+      z-index: 1;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--surface-img);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+    }
+
+    .hero-visual-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .hero-visual-media:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero-visual-caption {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 6px 2px;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .hero-visual-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--sec1-soft);
+      border: 1px solid var(--sec1-border);
+      color: var(--sec1-text);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       6. PAGE MAIN WRAPPER & RESUME BANNER
+       ========================================================================== */
+    .page-wrap {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 6px 24px 56px;
+      flex: 1;
+    }
+
+    .resume-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--sec2-border);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--sec2-soft);
+      animation: fadeSlideUp 0.25s ease;
+    }
+
+    .resume-banner.show {
+      display: flex;
+    }
+
+    .resume-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 260px;
+    }
+
+    .resume-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--sec2-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--sec2-glow);
+    }
+
+    .resume-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-text span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       7. SHARED BUTTONS & GLASS PANELS (COLOR-CODED BY SECTION)
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--brand-gradient);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.24);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px rgba(124, 58, 237, 0.32);
+    }
+
+    .btn-sky {
+      background: var(--sec3-grad);
+      color: #FFFFFF;
+      box-shadow: 0 10px 24px var(--sec3-glow);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.07);
+      box-shadow: 0 14px 30px rgba(14, 165, 233, 0.36);
+    }
+
+    .btn-dark-ghost {
+      background: rgba(255, 255, 255, 0.10);
+      color: #E0F2FE;
+      border: 1.5px solid rgba(56, 189, 248, 0.34);
+    }
+
+    .btn-dark-ghost:hover {
+      background: rgba(56, 189, 248, 0.20);
+      border-color: #7DD3FC;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .btn-dark-ghost.is-speaking {
+      background: rgba(244, 63, 94, 0.24);
+      border-color: #FB7185;
+      color: #FFE4E6;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 1.5px solid var(--glass-outline);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--brand-violet);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-teal-outline {
+      background: var(--glass-bg-strong);
+      color: var(--sec3-text);
+      border: 1.5px solid var(--sec3-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-teal-outline:hover {
+      background: var(--sec3-grad);
+      color: #FFFFFF;
+      border-color: transparent;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px var(--sec3-glow);
+    }
+
+    .btn-danger {
+      background: var(--err-bg);
+      color: var(--err-text);
+      border: 1.5px solid var(--err-border);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: var(--err-solid);
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 9px 16px;
+      font-size: 0.9rem;
+    }
+
+    /* Section Glass Panel */
+    .glass-panel {
+      position: relative;
+      background: var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      outline: 1px solid var(--panel-border, var(--glass-outline));
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      overflow: hidden;
+      margin-bottom: 30px;
+      scroll-margin-top: 100px;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--panel-grad, var(--brand-gradient));
+    }
+
+    .glass-panel.sec-coral {
+      --panel-grad: var(--sec1-grad);
+      --panel-solid: var(--sec1-solid);
+      --panel-text: var(--sec1-text);
+      --panel-soft: var(--sec1-soft);
+      --panel-border: var(--sec1-border);
+      --panel-glow: var(--sec1-glow);
+    }
+
+    .glass-panel.sec-violet {
+      --panel-grad: var(--sec2-grad);
+      --panel-solid: var(--sec2-solid);
+      --panel-text: var(--sec2-text);
+      --panel-soft: var(--sec2-soft);
+      --panel-border: var(--sec2-border);
+      --panel-glow: var(--sec2-glow);
+    }
+
+    .glass-panel.sec-sky {
+      --panel-grad: var(--sec3-grad);
+      --panel-solid: var(--sec3-solid);
+      --panel-text: var(--sec3-text);
+      --panel-soft: var(--sec3-soft);
+      --panel-border: var(--sec3-border);
+      --panel-glow: var(--sec3-glow);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .panel-step-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--panel-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px var(--panel-glow);
+    }
+
+    .panel-title-text h2 {
+      font-size: 1.44rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .panel-title-text p {
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    .panel-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--panel-soft);
+      border: 1px solid var(--panel-border);
+      color: var(--panel-text);
+      font-family: var(--font-heading);
+      font-size: 0.86rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .gallery-note-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: var(--sec1-soft);
+      border: 1px solid var(--sec1-border);
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      margin-bottom: 22px;
+    }
+
+    .gallery-note-bar svg {
+      color: var(--sec1-solid);
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       8. SECTION 1 — 4 GREETING STYLE CARDS (3:4 PORTRAIT COVER, PER-STYLE COLOR)
+       ========================================================================== */
+    .greet-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .greet-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border-radius: 22px;
+      background: var(--glass-bg);
+      border: 2px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+    }
+
+    /* Distinct character top color strip per style */
+    .greet-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--st-grad);
+      opacity: 0.85;
+      z-index: 3;
+      transition: opacity 0.2s ease, height 0.2s ease;
+    }
+
+    .greet-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--st-solid);
+      box-shadow: 0 16px 34px var(--st-glow);
+    }
+
+    .greet-card:hover::before,
+    .greet-card.is-selected::before {
+      opacity: 1;
+      height: 6px;
+    }
+
+    .greet-card.is-selected {
+      border-color: var(--st-solid);
+      background: var(--glass-bg-strong);
+      box-shadow: 0 0 0 3px var(--st-soft), 0 18px 36px var(--st-glow);
+      transform: translateY(-4px);
+    }
+
+    .greet-card-media {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      width: 100%;
+      background: var(--surface-img);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .greet-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .greet-card:hover .greet-card-media img {
+      transform: scale(1.025);
+    }
+
+    .greet-num-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.76);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+    .greet-zoom-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(15, 18, 37, 0.68);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .greet-zoom-btn:hover {
+      background: var(--st-solid);
+      transform: scale(1.08);
+    }
+
+    .greet-selected-badge {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 2;
+      display: none;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--st-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      box-shadow: 0 6px 16px var(--st-glow);
+    }
+
+    .greet-card.is-selected .greet-selected-badge {
+      display: inline-flex;
+    }
+
+    .greet-card-body {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .greet-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.28;
+    }
+
+    .greet-card.is-selected .greet-card-title {
+      color: var(--st-text);
+    }
+
+    .greet-card-sub {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.48;
+    }
+
+    /* ==========================================================================
+       9. SECTION 2 — CUSTOMIZATION (VIOLET THEME, 3:4 PORTRAIT COVER)
+       ========================================================================== */
+    .greet-detail-grid {
+      display: grid;
+      grid-template-columns: minmax(250px, 340px) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .detail-preview-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .detail-image-frame {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--surface-img);
+      border: 2px solid var(--sec2-border);
+      box-shadow: 0 16px 36px var(--sec2-glow);
+      aspect-ratio: 3 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+    }
+
+    .detail-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .detail-image-frame:hover img {
+      transform: scale(1.02);
+    }
+
+    .detail-zoom-hint {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 18, 37, 0.76);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .style-nav-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .style-nav-btn:hover {
+      border-color: var(--sec2-solid);
+      color: var(--sec2-text);
+      background: var(--sec2-soft);
+    }
+
+    /* Auspicious Day Color Live Preview Pill below Big Image */
+    .day-color-card {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--sec2-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .day-color-orb {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.75);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .day-color-info {
+      min-width: 0;
+    }
+
+    .day-color-info span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+    }
+
+    .day-color-info strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      color: var(--text-primary);
+    }
+
+    .detail-controls-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .selected-style-header {
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--sec2-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .selected-style-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 5px;
+      background: var(--sec2-grad);
+    }
+
+    .selected-style-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .selected-style-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--sec2-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .selected-style-header h3 {
+      font-size: 1.48rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .selected-style-header p {
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      line-height: 1.58;
+    }
+
+    .style-trait-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .style-trait-tag {
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--sec2-soft);
+      border: 1px solid var(--sec2-border);
+      color: var(--sec2-text);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* Customize Form Block */
+    .custom-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .custom-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .custom-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .custom-label-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: var(--sec2-soft);
+      color: var(--sec2-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .optional-tag {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--sec2-text);
+      background: var(--sec2-soft);
+      border: 1px solid var(--sec2-border);
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* Day Selector Chips */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .day-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .day-chip:hover {
+      border-color: var(--sec2-solid);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .day-chip.on {
+      background: var(--sec2-grad);
+      border-color: transparent;
+      color: #FFFFFF;
+      box-shadow: 0 6px 18px var(--sec2-glow);
+    }
+
+    .day-swatch {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.88);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.16);
+      flex-shrink: 0;
+    }
+
+    .day-today-tag {
+      font-size: 0.72rem;
+      padding: 1px 6px;
+      border-radius: var(--radius-pill);
+      background: var(--sec2-soft);
+      color: var(--sec2-text);
+    }
+
+    .day-chip.on .day-today-tag {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+    }
+
+    /* Wish Chips */
+    .wish-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.18s ease;
+      text-align: left;
+    }
+
+    .wish-chip:hover {
+      border-color: var(--sec2-solid);
+      background: var(--sec2-soft);
+      color: var(--sec2-text);
+      transform: translateY(-1px);
+    }
+
+    .wish-chip.on {
+      background: var(--sec2-soft);
+      border-color: var(--sec2-solid);
+      color: var(--sec2-text);
+      box-shadow: 0 4px 12px var(--sec2-glow);
+    }
+
+    /* Textarea & Inputs */
+    .textarea-wrap {
+      position: relative;
+      background: var(--surface-input);
+      border: 1.5px solid var(--sec2-border);
+      border-radius: 18px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .textarea-wrap:focus-within {
+      border-color: var(--sec2-solid);
+      box-shadow: 0 0 0 4px var(--sec2-soft);
+    }
+
+    .large-textarea {
+      width: 100%;
+      min-height: 92px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      resize: vertical;
+      outline: none;
+    }
+
+    .large-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .textarea-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border-subtle);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .text-link-clear {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sec2-text);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      transition: background 0.18s ease;
+    }
+
+    .text-link-clear:hover {
+      background: var(--sec2-soft);
+    }
+
+    .name-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--surface-input);
+      border: 1.5px solid var(--sec2-border);
+      border-radius: 16px;
+      padding: 4px 10px 4px 14px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-wrap:focus-within {
+      border-color: var(--sec2-solid);
+      box-shadow: 0 0 0 4px var(--sec2-soft);
+    }
+
+    .input-prefix {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--sec2-text);
+      background: var(--sec2-soft);
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+
+    .large-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 10px 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+      outline: none;
+      min-width: 0;
+    }
+
+    .large-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .input-clear-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface-subtle);
+      color: var(--text-muted);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .input-clear-btn.show {
+      display: inline-flex;
+    }
+
+    .input-clear-btn:hover {
+      background: var(--sec2-soft);
+      color: var(--sec2-text);
+    }
+
+    /* Toggle Option Chips (Violet Theme) */
+    .toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 15px;
+      border-radius: 15px;
+      background: var(--glass-bg);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--sec2-solid);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .toggle-icon-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-subtle);
+      background: var(--surface-input);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-btn.on {
+      background: var(--sec2-soft);
+      border-color: var(--sec2-solid);
+      color: var(--sec2-text);
+      box-shadow: 0 4px 14px var(--sec2-glow);
+    }
+
+    .toggle-btn.on .toggle-icon-box {
+      background: var(--sec2-grad);
+      border-color: transparent;
+      color: #FFFFFF;
+    }
+
+    .tip-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 15px;
+      border-radius: 14px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--sec2-border);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .tip-callout svg {
+      color: var(--sec2-solid);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ==========================================================================
+       10. SECTION 3 — PROMPT OUTPUT, CAPTION & AI APPS (SKY / TEAL THEME)
+       ========================================================================== */
+    .result-sheet {
+      border-radius: var(--radius-lg);
+      background: var(--sheet-bg);
+      color: var(--sheet-ink);
+      border: 1.5px solid var(--sheet-border);
+      box-shadow: var(--sheet-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .result-sheet::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--sec3-grad);
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 18px 22px 14px;
+      background: rgba(56, 189, 248, 0.07);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.16);
+    }
+
+    .result-head-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--sec3-grad);
+      box-shadow: 0 0 12px var(--sheet-key);
+      flex-shrink: 0;
+    }
+
+    .result-head h3 {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    .result-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .result-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(94, 234, 212, 0.30);
+      color: var(--sheet-key);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .result-body {
+      padding: 20px 22px 24px;
+    }
+
+    .result-steps-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      color: var(--sheet-dim);
+    }
+
+    .result-step-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #E0F2FE;
+      font-weight: 500;
+    }
+
+    .result-step-mini span.mini-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(14, 165, 233, 0.25);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #7DD3FC;
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prompt-box {
+      background: rgba(4, 12, 22, 0.62);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      font-family: var(--font-body);
+      font-size: 1.03rem;
+      line-height: 1.78;
+      color: var(--sheet-ink);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 18px;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .copy-message {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #34D399;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.94rem;
+      min-height: 1.5em;
+      margin-top: 12px;
+    }
+
+    .copy-message:empty {
+      display: none;
+    }
+
+    .open-app-row {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(56, 189, 248, 0.18);
+    }
+
+    .open-app-row p {
+      font-size: 0.92rem;
+      color: var(--sheet-dim);
+      margin-bottom: 12px;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 20px 10px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .app-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .app-btn.gpt {
+      background: linear-gradient(135deg, #10A37F 0%, #047857 100%);
+      box-shadow: 0 8px 22px rgba(16, 163, 127, 0.32);
+    }
+
+    .app-btn.gemini {
+      background: linear-gradient(135deg, #0284C7 0%, #6366F1 100%);
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.34);
+    }
+
+    .app-logo-img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+    }
+
+    /* Caption Sub-card inside Section 3 (Sky / Teal Harmony) */
+    .caption-card {
+      margin-top: 22px;
+      border-radius: var(--radius-lg);
+      background: var(--cap-bg);
+      border: 1.5px solid var(--cap-border);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .caption-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .caption-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .caption-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--sec3-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 14px var(--sec3-glow);
+    }
+
+    .caption-title-wrap h3 {
+      font-size: 1.16rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .caption-title-wrap p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .caption-box {
+      background: var(--cap-box-bg);
+      border: 1px solid var(--cap-border);
+      border-radius: var(--radius-md);
+      padding: 15px 18px;
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      line-height: 1.72;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 14px;
+    }
+
+    .caption-copy-msg {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ok-text);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .caption-copy-msg:empty {
+      display: none;
+    }
+
+    /* ==========================================================================
+       11. SECTION 4 — RELATED TOOLS (PER-TOOL DISTINCT COLOR CODING)
+       ========================================================================== */
+    .related-section {
+      margin-top: 10px;
+      scroll-margin-top: 100px;
+    }
+
+    .related-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .related-header-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: var(--brand-gradient);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .related-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .related-sub {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rel-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--rel-border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .rel-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--rel-grad);
+    }
+
+    .rel-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--rel-solid);
+      box-shadow: var(--shadow-md);
+    }
+
+    .rel-card.tool-image {
+      --rel-grad: var(--rel-img-grad);
+      --rel-solid: var(--rel-img-solid);
+      --rel-text: var(--rel-img-text);
+      --rel-soft: var(--rel-img-soft);
+      --rel-border: var(--rel-img-border);
+    }
+
+    .rel-card.tool-post {
+      --rel-grad: var(--rel-post-grad);
+      --rel-solid: var(--rel-post-solid);
+      --rel-text: var(--rel-post-text);
+      --rel-soft: var(--rel-post-soft);
+      --rel-border: var(--rel-post-border);
+    }
+
+    .rel-card.tool-poster {
+      --rel-grad: var(--rel-poster-grad);
+      --rel-solid: var(--rel-poster-solid);
+      --rel-text: var(--rel-poster-text);
+      --rel-soft: var(--rel-poster-soft);
+      --rel-border: var(--rel-poster-border);
+    }
+
+    .rel-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .rel-card .ic {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--rel-grad);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .rel-cat-tag {
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      background: var(--rel-soft);
+      border: 1px solid var(--rel-border);
+      color: var(--rel-text);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .rel-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .rel-card p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .rel-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--rel-text);
+      margin-top: auto;
+    }
+
+    .rel-card:hover .rel-cta svg {
+      transform: translateX(3px);
+    }
+
+    .rel-cta svg {
+      transition: transform 0.2s ease;
+    }
+
+    /* ==========================================================================
+       12. LIGHTBOX & TOAST NOTIFICATION
+       ========================================================================== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1600;
+      background: rgba(7, 10, 24, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      gap: 14px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .lightbox-close:hover {
+      background: var(--sec1-solid);
+      transform: scale(1.06);
+    }
+
+    .lightbox img {
+      max-width: min(94vw, 960px);
+      max-height: 82vh;
+      width: auto;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      color: #F8FAFC;
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      transform: translate(-50%, 18px);
+      background: var(--sec3-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.94rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 14px 34px rgba(14, 165, 233, 0.34);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1700;
+      max-width: calc(100vw - 32px);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       13. FOOTER (MODERN DARK GRADIENT — SELF-CONTAINED, MATCHING MAIN PAGE)
+       ========================================================================== */
+    .site-footer {
+      background: linear-gradient(135deg, #161936 0%, #261D4A 55%, #3B1E54 100%);
+      color: #F8FAFC;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 46px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.8fr;
+      gap: 32px;
+      padding-bottom: 34px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.14rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .footer-text {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    .footer-pim-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38BDF8;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-pim-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--brand-gradient);
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom-bar {
+      background: linear-gradient(90deg, rgba(255, 107, 107, 0.22), rgba(124, 58, 237, 0.28));
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 18px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    /* ==========================================================================
+       14. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1040px) {
+      .greet-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+
+      .hero-visual-card {
+        margin: 0 auto;
+      }
+
+      .greet-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .detail-preview-col {
+        position: static;
+        max-width: 340px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.82rem;
+      }
+
+      .logo-slot {
+        height: 32px;
+      }
+
+      .logo-slot img {
+        height: 34px;
+      }
+
+      .brand-name {
+        font-size: 1.02rem;
+      }
+
+      .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+
+      .container,
+      .page-wrap {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .hero-section {
+        padding: 24px 0 18px;
+      }
+
+      .glass-panel {
+        padding: 20px 16px;
+        border-radius: 22px;
+      }
+
+      .greet-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .name-inputs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-head,
+      .result-body,
+      .caption-card {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .nav-back-text,
+      .brand-divider,
+      .logo-pim-nav,
+      #themeText {
+        display: none;
+      }
+
+      .nav-back-btn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .greet-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       FLOATING GLASS NAVBAR (MATCHING AiBA CONNECT)
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="เมนูหลัก ภาพอวยพร">
+      <div class="nav-left">
+        <a href="index.html" class="nav-back-btn" aria-label="กลับหน้าหลัก">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="nav-back-text">หน้าหลัก</span>
+        </a>
+        <a href="index.html" class="nav-brand" aria-label="AiBA Connect — ภาพอวยพร">
+          <span class="logo-slot">
+            <img src="AiBaPicture/%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="logo-slot logo-pim-nav">
+            <img src="AiBaPicture/%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+          </span>
+          <span class="brand-name">AiBA Connect</span>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับโหมดสีหน้าจอ" aria-label="สลับโหมดสีหน้าจอ">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       HERO SECTION (2-COLUMN MAIN-PAGE LAYOUT)
+       ======================================================================== -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left Column -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </span>
+            <span>สร้างสรรค์</span>
+          </div>
+
+          <h1 class="hero-title">
+            สร้าง<span class="highlight">ภาพอวยพร</span>ประจำวัน
+          </h1>
+
+          <p class="hero-subtitle">
+            เลือกสไตล์การ์ดที่ถูกใจ เปลี่ยนวันให้สีมงคลปรับตามอัตโนมัติ ใส่คำอวยพรและชื่อผู้ส่ง-ผู้รับ แล้วรับ Prompt สำเร็จรูปพร้อมแคปชันสำหรับส่งต่อใน LINE หรือ Facebook ได้ทันที
+          </p>
+
+          <div class="hero-cta-row">
+            <a href="#section-gallery" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+              <span>เลือกสไตล์ภาพอวยพร 4 แบบ</span>
+            </a>
+            <a href="#section-result" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+              </svg>
+              <span>ดู Prompt &amp; แคปชัน</span>
+            </a>
+          </div>
+
+          <div class="hero-jump-pills" aria-label="ทางลัดขั้นตอน">
+            <a href="#section-gallery" class="step-jump-chip" style="--chip-grad: var(--sec1-grad); --chip-solid: var(--sec1-solid); --chip-text: var(--sec1-text); --chip-border: var(--sec1-border);">
+              <span class="step-jump-num">1</span>
+              <span>เลือกสไตล์ที่ชอบ</span>
+            </a>
+            <a href="#section-customize" class="step-jump-chip" style="--chip-grad: var(--sec2-grad); --chip-solid: var(--sec2-solid); --chip-text: var(--sec2-text); --chip-border: var(--sec2-border);">
+              <span class="step-jump-num">2</span>
+              <span>จุดที่เปลี่ยนได้</span>
+            </a>
+            <a href="#section-result" class="step-jump-chip" style="--chip-grad: var(--sec3-grad); --chip-solid: var(--sec3-solid); --chip-text: var(--sec3-text); --chip-border: var(--sec3-border);">
+              <span class="step-jump-num">3</span>
+              <span>Prompt &amp; แคปชัน</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Visual Showcase (1:1 Symmetric Contain matching 2048x2048 asset) -->
+        <div class="hero-visual-card">
+          <span class="hero-visual-orb-1" aria-hidden="true"></span>
+          <span class="hero-visual-orb-2" aria-hidden="true"></span>
+          <div class="hero-visual-media" id="heroVisualTrigger" role="button" tabindex="0" aria-label="ขยายดูภาพประกอบหน้าภาพอวยพร">
+            <img id="heroVisualImg" src="AiBaPicture/%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AD%E0%B8%A7%E0%B8%A2%E0%B8%9E%E0%B8%A3.jpg" alt="ภาพประกอบตัวอย่างการ์ดอวยพรประจำวัน AiBA Connect" />
+          </div>
+          <div class="hero-visual-caption">
+            <span class="hero-visual-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2"/>
+                <path d="M12 20v2"/>
+                <path d="m4.93 4.93 1.41 1.41"/>
+                <path d="m17.66 17.66 1.41 1.41"/>
+                <path d="M2 12h2"/>
+                <path d="M20 12h2"/>
+              </svg>
+              <span>สีมงคลครบ 7 วัน</span>
+            </span>
+            <span>4 สไตล์พร้อมแคปชัน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MAIN CONTENT
+       ======================================================================== -->
+  <main class="page-wrap">
+
+    <!-- RESUME SAVED WORK BANNER -->
+    <div id="resumeBanner" class="resume-banner" role="status" aria-live="polite">
+      <div class="resume-left">
+        <span class="resume-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+        </span>
+        <div class="resume-text">
+          <strong>พบงานที่ทำค้างไว้ในหน้านี้</strong>
+          <span id="resumeInfo"></span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button type="button" class="btn btn-primary btn-sm" onclick="restoreWork()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>ทำต่อจากเดิม</span>
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="discardWork()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 6h18"/>
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+          </svg>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         SECTION 1 — SELECT GREETING STYLE GALLERY (CORAL ROSE THEME)
+         ====================================================================== -->
+    <section id="section-gallery" class="glass-panel sec-coral" aria-labelledby="galleryHeading">
+      <div class="panel-head">
+        <div class="panel-title-group">
+          <div class="panel-step-badge" aria-hidden="true">1</div>
+          <div class="panel-title-text">
+            <h2 id="galleryHeading">เลือกสไตล์ที่ชอบ</h2>
+            <p>กดที่ภาพตัวอย่างเพื่อดูภาพใหญ่ ตั้งค่าวัน-คำอวยพร และสร้าง Prompt อัตโนมัติ</p>
+          </div>
+        </div>
+        <div class="panel-pill" id="galleryActivePill">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+          </svg>
+          <span>4 สไตล์ภาพอวยพร</span>
+        </div>
+      </div>
+
+      <div class="gallery-note-bar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4"/>
+          <path d="M12 8h.01"/>
+        </svg>
+        <span>ภาพตัวอย่างใช้เพื่อบอกสไตล์และอารมณ์ของภาพเท่านั้น เมื่อนำ Prompt ไปวางใน ChatGPT หรือ Gemini ระบบ AI จะวาดภาพใหม่ตามวันและคำอวยพรของคุณเอง</span>
+      </div>
+
+      <!-- 4 Style Cards Grid (Per-style character palette + 2:3 contain) -->
+      <div id="greetGrid" class="greet-grid" role="list" aria-label="รายการสไตล์ภาพอวยพร 4 แบบ"></div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2 — CUSTOMIZE DAY, WISH, NAMES & OPTIONS (VIOLET THEME)
+         ====================================================================== -->
+    <section id="section-customize" class="glass-panel sec-violet" aria-labelledby="customizeHeading">
+      <div class="panel-head">
+        <div class="panel-title-group">
+          <div class="panel-step-badge" aria-hidden="true">2</div>
+          <div class="panel-title-text">
+            <h2 id="customizeHeading">จุดที่เปลี่ยนได้</h2>
+            <p>เลือกวันเพื่อปรับสีมงคล เลือกหรือพิมพ์คำอวยพร ใส่ชื่อผู้ส่ง-ผู้รับ และตั้งค่าตัวเลือกเสริม</p>
+          </div>
+        </div>
+        <div class="panel-pill" id="customizeStylePill">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          <span id="customizePillText">สไตล์ที่เลือก: หัวใจและกุหลาบยามเช้า</span>
+        </div>
+      </div>
+
+      <div id="greetDetail" class="greet-detail-grid">
+        <!-- Left: Selected Style Large 2:3 Preview -->
+        <div class="detail-preview-col">
+          <div class="detail-image-frame" id="greetBigWrap" role="button" tabindex="0" aria-label="ขยายดูภาพตัวอย่างสไตล์ที่เลือก">
+            <img id="greetBigImg" alt="ตัวอย่างสไตล์ภาพอวยพรที่เลือก" />
+            <span class="detail-zoom-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+                <path d="M11 8v6"/>
+                <path d="M8 11h6"/>
+              </svg>
+              <span>กดเพื่อขยายภาพ</span>
+            </span>
+          </div>
+
+          <div class="detail-nav-row">
+            <button type="button" class="style-nav-btn" onclick="stepStyle(-1)" aria-label="สไตล์ก่อนหน้า">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+              <span>สไตล์ก่อนหน้า</span>
+            </button>
+            <button type="button" class="style-nav-btn" onclick="stepStyle(1)" aria-label="สไตล์ถัดไป">
+              <span>สไตล์ถัดไป</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Selected Day Auspicious Color Live Indicator -->
+          <div class="day-color-card" id="dayColorCard">
+            <span class="day-color-orb" id="dayColorOrb" aria-hidden="true"></span>
+            <div class="day-color-info">
+              <span>โทนสีมงคลที่ใส่ใน Prompt</span>
+              <strong id="dayColorLabel">วันจันทร์ · สีเหลืองทองสดใส</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Selected Style Details & Customization Form -->
+        <div class="detail-controls-col">
+          <div class="selected-style-header" id="selectedStyleHeader">
+            <div class="selected-style-meta">
+              <span class="selected-style-chip" id="greetNumberBadge">แบบที่ 01 / 04</span>
+            </div>
+            <h3 id="greetTitle">หัวใจและกุหลาบยามเช้า</h3>
+            <p id="greetSub"></p>
+            <div class="style-trait-list" id="greetTraits"></div>
+          </div>
+
+          <!-- 2.1 Day Selector -->
+          <div class="custom-block">
+            <div class="custom-label-row">
+              <span class="custom-label">
+                <span class="custom-label-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                    <line x1="16" x2="16" y1="2" y2="6"/>
+                    <line x1="8" x2="8" y1="2" y2="6"/>
+                    <line x1="3" x2="21" y1="10" y2="10"/>
+                  </svg>
+                </span>
+                <span>วัน (สีมงคลประจำวันจะเปลี่ยนตาม)</span>
+              </span>
+              <span class="optional-tag">ปรับโทนสีภาพอัตโนมัติ</span>
+            </div>
+            <div class="chip-row" id="greetDays" role="group" aria-label="เลือกวันและสีมงคลประจำวัน"></div>
+          </div>
+
+          <!-- 2.2 Wish Chips & Textarea -->
+          <div class="custom-block">
+            <div class="custom-label-row">
+              <label for="greetWish" class="custom-label">
+                <span class="custom-label-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </span>
+                <span>คำอวยพร (กดเลือก หรือพิมพ์เองด้านล่าง)</span>
+              </label>
+              <span class="optional-tag">ขึ้นบรรทัดใหม่ได้</span>
+            </div>
+
+            <div class="chip-row" id="greetWishChips" role="group" aria-label="ตัวอย่างคำอวยพรสำเร็จรูป"></div>
+
+            <div class="textarea-wrap">
+              <textarea
+                id="greetWish"
+                class="large-textarea"
+                placeholder="พิมพ์คำอวยพรเอง ขึ้นบรรทัดใหม่ได้ เช่น ขอให้มีความสุข สุขภาพแข็งแรง ตลอดวัน"
+                oninput="onWishInput()"
+                aria-label="ข้อความคำอวยพร"
+              ></textarea>
+              <div class="textarea-footer">
+                <span>ข้อความจะอัปเดตลง Prompt และแคปชันอัตโนมัติ</span>
+                <button type="button" class="text-link-clear" onclick="clearWishInput()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                  </svg>
+                  <span>ล้างข้อความ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.3 Sender & Receiver Names -->
+          <div class="custom-block">
+            <div class="custom-label-row">
+              <span class="custom-label">
+                <span class="custom-label-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </span>
+                <span>ชื่อผู้ส่ง / ผู้รับ</span>
+              </span>
+              <span class="optional-tag">ไม่บังคับ</span>
+            </div>
+
+            <div class="name-inputs-grid">
+              <div class="input-wrap">
+                <span class="input-prefix">จาก</span>
+                <input
+                  id="greetFrom"
+                  class="large-input"
+                  type="text"
+                  placeholder="เช่น ยายสมศรี"
+                  oninput="onNameInput()"
+                  aria-label="ชื่อผู้ส่ง (จาก)"
+                />
+                <button type="button" id="clearFromBtn" class="input-clear-btn" onclick="clearSingleInput('greetFrom')" aria-label="ล้างชื่อผู้ส่ง">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="input-wrap">
+                <span class="input-prefix">ถึง</span>
+                <input
+                  id="greetTo"
+                  class="large-input"
+                  type="text"
+                  placeholder="เช่น หลานน้ำใส"
+                  oninput="onNameInput()"
+                  aria-label="ชื่อผู้รับ (ถึง)"
+                />
+                <button type="button" id="clearToBtn" class="input-clear-btn" onclick="clearSingleInput('greetTo')" aria-label="ล้างชื่อผู้รับ">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.4 Extra Toggle Options -->
+          <div class="custom-block">
+            <div class="custom-label-row">
+              <span class="custom-label">
+                <span class="custom-label-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="4" y1="21" y2="14"/>
+                    <line x1="4" x2="4" y1="10" y2="3"/>
+                    <line x1="12" x2="12" y1="21" y2="12"/>
+                    <line x1="12" x2="12" y1="8" y2="3"/>
+                    <line x1="20" x2="20" y1="21" y2="16"/>
+                    <line x1="20" x2="20" y1="12" y2="3"/>
+                    <line x1="2" x2="6" y1="14" y2="14"/>
+                    <line x1="10" x2="14" y1="8" y2="8"/>
+                    <line x1="18" x2="22" y1="16" y2="16"/>
+                  </svg>
+                </span>
+                <span>ตัวเลือกเพิ่ม</span>
+              </span>
+            </div>
+
+            <div class="toggle-row" role="group" aria-label="ตัวเลือกเพิ่มเติมสำหรับภาพอวยพร">
+              <button type="button" class="toggle-btn" id="gtPhoto" aria-pressed="false" onclick="toggleChip('gtPhoto')">
+                <span class="toggle-icon-box" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                    <circle cx="12" cy="13" r="3"/>
+                  </svg>
+                </span>
+                <span>ฉันจะแนบรูปตัวเองใส่ในภาพ</span>
+              </button>
+
+              <button type="button" class="toggle-btn" id="gtEng" aria-pressed="false" onclick="toggleChip('gtEng')">
+                <span class="toggle-icon-box" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m5 8 6 6"/>
+                    <path d="m4 14 6-6 2-3"/>
+                    <path d="M2 5h12"/>
+                    <path d="M7 2h1"/>
+                    <path d="m22 22-5-10-5 10"/>
+                    <path d="M14 18h6"/>
+                  </svg>
+                </span>
+                <span>มีหัวข้อภาษาอังกฤษด้วย</span>
+              </button>
+
+              <button type="button" class="toggle-btn on" id="gtText" aria-pressed="true" onclick="toggleChip('gtText')">
+                <span class="toggle-icon-box" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span>ให้ AI ใส่ตัวหนังสือลงในภาพ</span>
+              </button>
+            </div>
+
+            <div class="tip-callout">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4"/>
+                <path d="M12 8h.01"/>
+              </svg>
+              <span>AI บางตัวยังเขียนภาษาไทยผิดบ้าง หากเจอบ่อยให้กดปิดตัวเลือก "ให้ AI ใส่ตัวหนังสือลงในภาพ" เพื่อรับเฉพาะภาพพื้นหลังสวย ๆ แล้วนำไปพิมพ์คำอวยพรเองใน CapCut หรือ LINE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3 — READY-TO-USE PROMPT, CAPTION & OPEN AI APPS (SKY / TEAL THEME)
+         ====================================================================== -->
+    <section id="section-result" class="glass-panel sec-sky" aria-labelledby="resultHeading">
+      <div class="panel-head">
+        <div class="panel-title-group">
+          <div class="panel-step-badge" aria-hidden="true">3</div>
+          <div class="panel-title-text">
+            <h2 id="resultHeading">Prompt สำเร็จรูปพร้อมใช้ &amp; แคปชันสำหรับโพสต์</h2>
+            <p>เปลี่ยนสไตล์ วัน หรือคำอวยพรด้านบนได้ตลอด ข้อความทั้งหมดจะอัปเดตให้ทันทีแบบเรียลไทม์</p>
+          </div>
+        </div>
+        <div class="panel-pill">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span>พร้อมคัดลอกใช้งาน</span>
+        </div>
+      </div>
+
+      <!-- Prompt Output Sheet -->
+      <div class="result-sheet" aria-live="polite">
+        <div class="result-head">
+          <div class="result-head-title">
+            <span class="result-dot" aria-hidden="true"></span>
+            <h3 id="resultSheetTitle">Prompt ภาพอวยพร · หัวใจและกุหลาบยามเช้า</h3>
+          </div>
+          <div class="result-badges">
+            <span class="result-live-badge" id="resultDayBadge">วันจันทร์ · สีเหลืองทอง</span>
+            <span class="result-live-badge">อัปเดตอัตโนมัติ</span>
+          </div>
+        </div>
+
+        <div class="result-body">
+          <div class="result-steps-bar" id="resultStepsBar">
+            <span class="result-step-mini"><span class="mini-num">1</span>กดคัดลอกหรือเปิดแอป AI</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="result-step-mini" id="resultStepPhotoHint"><span class="mini-num">2</span>วาง Prompt ลงในแชท AI</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="result-step-mini"><span class="mini-num">3</span>รับภาพอวยพรส่งต่อใน LINE</span>
+          </div>
+
+          <div id="greetPromptOutput" class="prompt-box"></div>
+
+          <div class="button-row">
+            <button type="button" class="btn btn-sky" onclick="copyText('greetPromptOutput', 'greetCopyMessage', 'คัดลอก Prompt เรียบร้อยแล้ว')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+              </svg>
+              <span>คัดลอก Prompt</span>
+            </button>
+
+            <button type="button" class="btn btn-dark-ghost" id="speakBtn" onclick="toggleSpeakPrompt()">
+              <svg id="speakIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+              <span id="speakBtnText">อ่านให้ฟัง</span>
+            </button>
+          </div>
+
+          <p id="greetCopyMessage" class="copy-message" aria-live="polite"></p>
+
+          <div class="open-app-row">
+            <p id="openAppHint">ขั้นต่อไป: กดเปิดแอป AI แล้ววาง Prompt ได้เลย (ระบบคัดลอกให้อัตโนมัติก่อนเปิด)</p>
+            <div class="button-row">
+              <a class="app-btn gpt" href="https://chatgpt.com" target="_blank" rel="noopener" onclick="return copyForApp('greetPromptOutput', 'greetCopyMessage', 'ChatGPT')">
+                <img src="ChatGPT.png" alt="ChatGPT" class="app-logo-img" />
+                <span>เปิด ChatGPT</span>
+              </a>
+
+              <a class="app-btn gemini" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="return copyForApp('greetPromptOutput', 'greetCopyMessage', 'Gemini')">
+                <img src="Gemini.jpg" alt="Gemini" class="app-logo-img" />
+                <span>เปิด Gemini</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Caption for Posting Card -->
+      <div class="caption-card" aria-live="polite">
+        <div class="caption-head">
+          <div class="caption-title-wrap">
+            <span class="caption-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <path d="M8 9h8"/>
+                <path d="M8 13h6"/>
+              </svg>
+            </span>
+            <div>
+              <h3>แคปชันสำหรับโพสต์</h3>
+              <p>ข้อความสั้น ๆ สำหรับส่งพร้อมภาพอวยพรใน LINE หรือโพสต์ลง Facebook</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="greetCaptionOutput" class="caption-box"></div>
+
+        <div class="button-row">
+          <button type="button" class="btn btn-teal-outline btn-sm" onclick="copyText('greetCaptionOutput', 'captionCopyMessage', 'คัดลอกแคปชันเรียบร้อยแล้ว')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span>คัดลอกแคปชัน</span>
+          </button>
+          <span id="captionCopyMessage" class="caption-copy-msg" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4 — RELATED TOOLS (PER-TOOL DISTINCT COLOR CODING)
+         ====================================================================== -->
+    <aside id="section-related" class="related-section" aria-labelledby="relatedHeading">
+      <div class="related-header">
+        <span class="related-header-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" x2="21" y1="14" y2="3"/>
+          </svg>
+        </span>
+        <div>
+          <h3 id="relatedHeading" class="related-title">ไปต่อที่เกี่ยวข้อง</h3>
+          <p class="related-sub">ต่อยอดงานสร้างสรรค์ภาพ โปสเตอร์ และข้อความโซเชียลด้วยเครื่องมืออื่นของ AiBA Connect</p>
+        </div>
+      </div>
+
+      <div class="related-grid">
+        <!-- Tool 1: สร้างภาพด้วย AI (Coral Rose) -->
+        <a class="rel-card tool-image" href="page-image.html">
+          <div class="rel-card-top">
+            <div class="ic" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+              </svg>
+            </div>
+            <span class="rel-cat-tag">สร้างสรรค์</span>
+          </div>
+          <div>
+            <b>สร้างภาพด้วย AI</b>
+            <p>ตอบคำถามทีละข้อ แล้วรับ Prompt สำหรับให้ AI สร้างภาพ พร้อมคลังคำสั่งพิเศษกว่า 20 แบบ</p>
+          </div>
+          <span class="rel-cta">
+            <span>เปิดเครื่องมือ</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <!-- Tool 2: เขียนโพสต์โซเชียล (Teal / Sky) -->
+        <a class="rel-card tool-post" href="page-post.html">
+          <div class="rel-card-top">
+            <div class="ic" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+              </svg>
+            </div>
+            <span class="rel-cat-tag">ผู้ช่วย AI</span>
+          </div>
+          <div>
+            <b>เขียนโพสต์โซเชียล</b>
+            <p>ขายของ เล่าเรื่อง แจ้งข่าว ให้ AI ช่วยเขียนโพสต์และแคปชันมาให้เลือกใช้งานถึง 3 แบบ</p>
+          </div>
+          <span class="rel-cta">
+            <span>เปิดเครื่องมือ</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <!-- Tool 3: สไตล์โปสเตอร์โฆษณาสินค้า (Violet / Indigo) -->
+        <a class="rel-card tool-poster" href="page-poster.html">
+          <div class="rel-card-top">
+            <div class="ic" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+            </div>
+            <span class="rel-cat-tag">โปสเตอร์สินค้า</span>
+          </div>
+          <div>
+            <b>สไตล์โปสเตอร์โฆษณาสินค้า</b>
+            <p>เลือกสไตล์จากภาพตัวอย่าง 10 แบบ รับ Prompt สำเร็จรูปสำหรับออกแบบโปสเตอร์รูปสินค้าของคุณ</p>
+          </div>
+          <span class="rel-cta">
+            <span>เปิดเครื่องมือ</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ========================================================================
+       FOOTER (MODERN DARK GRADIENT — SELF-CONTAINED, MATCHING MAIN PAGE)
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column 1: AiBA Center Info -->
+        <div>
+          <div class="footer-logos">
+            <span class="logo-slot">
+              <img src="AiBaPicture/%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81/%E0%B9%81%E0%B8%AD%E0%B8%A5%E0%B8%A5%E0%B8%9A%E0%B8%9E%E0%B8%B7%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%87.png" alt="โลโก้ศูนย์ AiBA" />
+            </span>
+            <span class="logo-slot">
+              <img src="AiBaPicture/%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+            </span>
+          </div>
+          <h3 class="footer-brand-title">ศูนย์ AiBA · Artificial Intelligence Beyond Academy</h3>
+          <p class="footer-text">ศูนย์พัฒนาทักษะปัญญาประดิษฐ์เพื่อทุกวัย</p>
+        </div>
+
+        <!-- Column 2: PIM Institution Info -->
+        <div>
+          <h3 class="footer-brand-title">สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</h3>
+          <p class="footer-text">
+            85/1 หมู่ 2 ถ.แจ้งวัฒนะ ต.บางตลาด อ.ปากเกร็ด นนทบุรี 11120<br />
+            โทร 0 2855 0000
+          </p>
+          <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="footer-pim-link">
+            <span>www.pim.ac.th</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 7h10v10"/>
+              <path d="M7 17 17 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Column 3: Social Media -->
+        <div>
+          <h3 class="footer-brand-title">ติดตามข่าวสารและกิจกรรม</h3>
+          <p class="footer-text">ช่องทางติดต่อสื่อสารอย่างเป็นทางการ</p>
+          <div class="footer-socials" aria-label="โซเชียลมีเดีย">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+            <a href="https://www.pim.ac.th" target="_blank" rel="noopener" class="social-btn" aria-label="Website">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      © 2569 ศูนย์ AiBA — สถาบันการจัดการปัญญาภิวัฒน์ | ALL RIGHTS RESERVED
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       LIGHTBOX & TOAST
+       ======================================================================== -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="ภาพขยาย" onclick="closeLightbox()">
+    <button type="button" class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()" aria-label="ปิดภาพขยาย">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6 6 18"/>
+        <path d="m6 6 12 12"/>
+      </svg>
+    </button>
+    <img id="lightboxImg" alt="ภาพขยาย" onclick="event.stopPropagation()" />
+    <div id="lightboxCaption" class="lightbox-caption" onclick="event.stopPropagation()"></div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       SELF-CONTAINED JAVASCRIPT
+       ======================================================================== -->
+  <script>
+    /* ========================================================================
+       1. ASSET PATH HELPER (SAFE URI ENCODING FOR THAI FOLDERS)
+       ======================================================================== */
+    const GREET_FOLDER = 'AiBaPicture/ภาพอวยพร';
+
+    function encodeAssetPath(folder, fileName) {
+      const fullPath = folder + '/' + fileName;
+      return fullPath
+        .split('/')
+        .map(seg => encodeURIComponent(seg).replace(/\(/g, '%28').replace(/\)/g, '%29'))
+        .join('/');
+    }
+
+    /* ========================================================================
+       2. GREETING STYLES DATA (4 STYLES: img-13.jpg TO img-16.jpg)
+       ======================================================================== */
+    const GREET_STYLES = [
+      {
+        id: 'morning-heart',
+        num: '01',
+        file: 'img-13.jpg',
+        themeClass: 'style-theme-rose',
+        title: 'หัวใจและกุหลาบยามเช้า',
+        shortTh: 'หัวใจ 3 มิติและดอกกุหลาบบนสนามหญ้ารับแสงเช้า',
+        description: 'การ์ดอวยพรโทนสดใสอบอุ่น โดดเด่นด้วยรูปหัวใจ 3 มิติมันวาวและดอกกุหลาบสีประจำวันวางบนสนามหญ้าเขียวชอุ่ม แสงแดดยามเช้าส่องอุ่นจากมุมบน พร้อมริบบิ้นข้อความน่ารักอ่านง่าย',
+        traits: ['หัวใจ 3 มิติ', 'ดอกกุหลาบสีประจำวัน', 'แสงเช้านุ่มละมุน'],
+        defaultWish: 'เริ่มต้นวันใหม่ด้วยรอยยิ้ม\nคิดบวก ยิ้มสู้ และก้าวต่อไป\nขอให้เป็นวันที่ดีนะคะ',
+        sceneBuilder: (day) => [
+          `สไตล์ภาพ: การ์ดอวยพรยามเช้าแนวภาพถ่ายสมจริงผสมงานจัดวางน่ารักสดใส (Warm Morning Garden Greeting Card)`,
+          `องค์ประกอบฉาก: สนามหญ้าสีเขียวสดชุ่มน้ำค้างในสวนยามเช้า มีแสงแดดสีทองอุ่นส่องเป็นลำแสงนุ่ม ๆ จากมุมขวาบน ตรงกลางค่อนด้านล่างวางประติมากรรมรูปหัวใจ 3 มิติผิวมันวาวโทน${day.colorName} และดอกกุหลาบสดโทน${day.colorName} 3-4 ดอกวางประดับรอบหัวใจอย่างเป็นธรรมชาติ ฉากหลังเป็นพุ่มดอกไม้ในสวนเบลอละมุน`,
+          `อารมณ์และการจัดวาง: เว้นพื้นที่ด้านบนที่พื้นหลังเบลอนุ่มเพื่อจัดวางข้อความอวยพรอย่างเด่นชัดและมีแถบริบบิ้นสีครีมอ่อนรองรับประโยคปิดท้ายอย่างลงตัว`
+        ].join('\n'),
+        captionMood: 'ส่งกำลังใจและรอยยิ้มสดใสในเช้าวันนี้'
+      },
+      {
+        id: 'minimal-white',
+        num: '02',
+        file: 'img-14.jpg',
+        themeClass: 'style-theme-emerald',
+        title: 'การ์ดดอกไม้ขาวมินิมอล',
+        shortTh: 'พื้นสีพาสเทลเรียบหรู คู่ดอกไม้ขาวและลายเส้นบอตานิคอล',
+        description: 'การ์ดสไตล์มินิมอลสะอาดตา ใช้พื้นหลังสีพาสเทลตามสีประจำวัน มีกรอบกระดาษโปร่งแสงตรงกลาง ตกแต่งด้วยช่อดอกไม้สีขาวละมุนและลายเส้นกิ่งไม้เล็ก ๆ ให้ความรู้สึกสุภาพ เรียบง่าย และทันสมัย',
+        traits: ['พื้นพาสเทลสะอาดตา', 'ดอกไม้สีขาวละมุน', 'ลายเส้นมินิมอล'],
+        defaultWish: 'ขอให้วันนี้เป็นวันที่สดใส\nสบายใจ ราบรื่นในทุกเรื่อง\nและมีแต่เรื่องดี ๆ เข้ามา',
+        sceneBuilder: (day) => [
+          `สไตล์ภาพ: การ์ดอวยพรสไตล์มินิมอลบอตานิคอล (Minimalist Pastel Botanical Greeting Card)`,
+          `องค์ประกอบฉาก: พื้นหลังสีพาสเทลนุ่มนวลโทน${day.colorPastel} มีกรอบการ์ดสี่เหลี่ยมสีอ่อนโปร่งแสงตรงกลางภาพ ตกแต่งด้านล่างและมุมขวาด้วยช่อดอกไม้สีขาวสดใสและใบไม้สีเขียวอ่อน ผสานลายเส้นวาดมือรูปกิ่งไม้และดาวเล็ก ๆ สีน้ำตาลเข้มอย่างประณีต`,
+          `อารมณ์และการจัดวาง: เรียบหรู สบายตา ทันสมัย จัดพื้นที่ว่างตรงกลางกรอบให้ข้อความเด่นชัดและอ่านง่ายที่สุด`
+        ].join('\n'),
+        captionMood: 'ส่งความสบายใจและพลังงานดี ๆ แบบเรียบง่าย'
+      },
+      {
+        id: 'dhamma-gold',
+        num: '03',
+        file: 'img-15.jpg',
+        themeClass: 'style-theme-gold',
+        title: 'ธรรมะมงคล แสงทองร่มเย็น',
+        shortTh: 'พระพุทธรูปปางสมาธิสีทอง แสงรัศมีและดอกไม้มงคล',
+        description: 'การ์ดอวยพรสายบุญอันสงบร่มเย็น แสดงภาพพระพุทธรูปปางสมาธิสีทองผ่องอำไพประดิษฐานบนฐานบัวพร้อมดอกไม้สีประจำวัน ท่ามกลางแสงรัศมีสีทองอร่ามและละอองโบเก้ระยิบระยับ เหมาะส่งให้ผู้ใหญ่และญาติมิตร',
+        traits: ['พระพุทธรูปสีทอง', 'แสงรัศมีและโบเก้', 'สงบร่มเย็นเป็นมงคล'],
+        defaultWish: 'ร่มเย็น เป็นสุข ไร้โรคภัย กายใจแข็งแรง\nมั่นคงความดี มั่งมีทรัพย์สิน เจริญรุ่งเรือง\nบุญรักษา พระคุ้มครอง',
+        sceneBuilder: (day) => [
+          `สไตล์ภาพ: การ์ดอวยพรธรรมะมงคลสงบร่มเย็น (Peaceful Golden Buddhist Blessing Card)`,
+          `องค์ประกอบฉาก: พระพุทธรูปปางสมาธิสีทองผ่องอำไพประดิษฐานอย่างสง่างามบนฐานดอกบัว ประดับด้วยดอกไม้มงคลบานสะพรั่งโทน${day.colorName} ด้านหน้าฐาน ฉากหลังเป็นแสงรัศมีสีทองผสมโทน${day.colorPastel} นุ่มนวล พร้อมละอองแสงระยิบระยับและโบเก้สีทองอ่อนด้านล่าง`,
+          `อารมณ์และการจัดวาง: สงบ ศักดิ์สิทธิ์ อบอุ่น และเป็นสิริมงคล เว้นพื้นที่ด้านล่างอย่างลงตัวสำหรับจัดวางคำอวยพรธรรมะให้อ่านชัดเจน`
+        ].join('\n'),
+        captionMood: 'ขอให้บุญรักษา พระคุ้มครอง ร่มเย็นเป็นสุข'
+      },
+      {
+        id: 'floral-bokeh',
+        num: '04',
+        file: 'img-16.jpg',
+        themeClass: 'style-theme-orchid',
+        title: 'ช่อดอกไม้ละมุน แสงโบเก้',
+        shortTh: 'ภาพถ่ายโคลสอัพช่อดอกไม้สด ฉากหลังเบลอแสงธรรมชาติ',
+        description: 'ภาพถ่ายธรรมชาติแบบโคลสอัพ (Close-up) โฟกัสที่ช่อดอกไม้บานสะพรั่งสีนวลละมุนตามโทนสีประจำวัน ใบเขียวสด ฉากหลังเบลอนุ่มแบบโบเก้แสงเช้ายามอ่อน ให้ความรู้สึกสุภาพ อบอุ่น และดูดีทุกโอกาส',
+        traits: ['ภาพถ่ายโคลสอัพคมชัด', 'ฉากหลังโบเก้นุ่ม', 'สุภาพดูดีทุกวัย'],
+        defaultWish: 'โชคดี\nสุขภาพดี\nมีความสุขตลอดวัน',
+        sceneBuilder: (day) => [
+          `สไตล์ภาพ: ภาพถ่ายธรรมชาติโคลสอัพช่อดอกไม้แสงเช้า (Soft Natural Floral Close-up Photography Card)`,
+          `องค์ประกอบฉาก: ภาพถ่ายระยะใกล้ (Close-up / Macro) ช่อดอกไม้สดสีขาวอม${day.colorName} บานสะพรั่งเรียงช่อเฉียงอย่างอ่อนช้อยพร้อมใบไม้สีเขียวสด แสงแดดธรรมชาติยามเช้าส่องลอดกลีบดอกอย่างนุ่มนวล ฉากหลังละลายเบลอเป็นโบเก้สีครีมและโทน${day.colorPastel} (Shallow Depth of Field)`,
+          `อารมณ์และการจัดวาง: นุ่มนวล สุภาพ เรียบหรู เว้นพื้นที่ว่างบริเวณมุมบนซ้ายและมุมล่างขวาสำหรับวางหัวข้อและคำอวยพรอย่างกลมกลืน`
+        ].join('\n'),
+        captionMood: 'ขอให้พบเจอแต่ความสุขและเรื่องดี ๆ ตลอดวัน'
+      }
+    ];
+
+    /* ========================================================================
+       3. DAYS OF WEEK (AUSPICIOUS THAI COLORS) & PRESET WISHES
+       ======================================================================== */
+    const DAYS_DATA = [
+      {
+        id: 'sun',
+        jsDay: 0,
+        label: 'วันอาทิตย์',
+        greeting: 'สวัสดีวันอาทิตย์',
+        engTitle: 'Happy Sunday',
+        colorHex: '#EF4444',
+        colorName: 'สีแดงสดใสและทองอ่อน',
+        colorPastel: 'สีแดงกุหลาบอ่อนและครีม',
+        shortColor: 'สีแดงมงคล'
+      },
+      {
+        id: 'mon',
+        jsDay: 1,
+        label: 'วันจันทร์',
+        greeting: 'สวัสดีวันจันทร์',
+        engTitle: 'Happy Monday',
+        colorHex: '#EAB308',
+        colorName: 'สีเหลืองทองสดใส',
+        colorPastel: 'สีเหลืองนวลพาสเทลและครีม',
+        shortColor: 'สีเหลืองทอง'
+      },
+      {
+        id: 'tue',
+        jsDay: 2,
+        label: 'วันอังคาร',
+        greeting: 'สวัสดีวันอังคาร',
+        engTitle: 'Happy Tuesday',
+        colorHex: '#EC4899',
+        colorName: 'สีชมพูหวานสดใส',
+        colorPastel: 'สีชมพูพาสเทลละมุน',
+        shortColor: 'สีชมพูสดใส'
+      },
+      {
+        id: 'wed',
+        jsDay: 3,
+        label: 'วันพุธ',
+        greeting: 'สวัสดีวันพุธ',
+        engTitle: 'Happy Wednesday',
+        colorHex: '#10B981',
+        colorName: 'สีเขียวใบไม้สดชื่น',
+        colorPastel: 'สีเขียวมิ้นต์พาสเทลอ่อน',
+        shortColor: 'สีเขียวสดชื่น'
+      },
+      {
+        id: 'thu',
+        jsDay: 4,
+        label: 'วันพฤหัสบดี',
+        greeting: 'สวัสดีวันพฤหัสบดี',
+        engTitle: 'Happy Thursday',
+        colorHex: '#F97316',
+        colorName: 'สีส้มแสดอบอุ่น',
+        colorPastel: 'สีส้มพีชพาสเทลอ่อน',
+        shortColor: 'สีส้มอบอุ่น'
+      },
+      {
+        id: 'fri',
+        jsDay: 5,
+        label: 'วันศุกร์',
+        greeting: 'สวัสดีวันศุกร์',
+        engTitle: 'Happy Friday',
+        colorHex: '#0EA5E9',
+        colorName: 'สีฟ้าสดใสสบายตา',
+        colorPastel: 'สีฟ้าพาสเทลอ่อนละมุน',
+        shortColor: 'สีฟ้าสดใส'
+      },
+      {
+        id: 'sat',
+        jsDay: 6,
+        label: 'วันเสาร์',
+        greeting: 'สวัสดีวันเสาร์',
+        engTitle: 'Happy Saturday',
+        colorHex: '#8B5CF6',
+        colorName: 'สีม่วงลาเวนเดอร์หรูหรา',
+        colorPastel: 'สีม่วงไลแลคพาสเทลอ่อน',
+        shortColor: 'สีม่วงลาเวนเดอร์'
+      },
+      {
+        id: 'any',
+        jsDay: -1,
+        label: 'ทุกวัน / โอกาสพิเศษ',
+        greeting: 'สวัสดีเช้าวันใหม่',
+        engTitle: 'Good Morning & Best Wishes',
+        colorHex: '#D97706',
+        colorName: 'สีทองแชมเปญและขาวบริสุทธิ์',
+        colorPastel: 'สีครีมทองพาสเทลอบอุ่น',
+        shortColor: 'สีทองอบอุ่น'
+      }
+    ];
+
+    const PRESET_WISHES = [
+      {
+        label: 'เริ่มต้นด้วยรอยยิ้ม',
+        text: 'เริ่มต้นวันใหม่ด้วยรอยยิ้ม\nคิดบวก ยิ้มสู้ และก้าวต่อไป\nขอให้เป็นวันที่ดีนะคะ'
+      },
+      {
+        label: 'โชคดี สุขภาพดี',
+        text: 'โชคดี\nสุขภาพดี\nมีความสุขตลอดวัน'
+      },
+      {
+        label: 'บุญรักษา พระคุ้มครอง',
+        text: 'ร่มเย็น เป็นสุข ไร้โรคภัย กายใจแข็งแรง\nมั่นคงความดี มั่งมีทรัพย์สิน เจริญรุ่งเรือง\nบุญรักษา พระคุ้มครอง'
+      },
+      {
+        label: 'การงานราบรื่น เงินทองไหลมา',
+        text: 'ขอให้วันนี้การงานราบรื่น\nคิดสิ่งใดสมปรารถนา เงินทองไหลมาเทมา\nพบเจอแต่กัลยาณมิตรที่ดี'
+      },
+      {
+        label: 'คิดถึง ห่วงใยเสมอ',
+        text: 'ส่งความห่วงใยและกำลังใจมาให้\nดูแลสุขภาพ พักผ่อนให้เพียงพอ\nขอให้ยิ้มได้ตลอดทั้งวันนะคะ'
+      },
+      {
+        label: 'สุขสันต์วันเกิด',
+        text: 'สุขสันต์วันเกิด\nขอให้สุขภาพแข็งแรง อายุมั่นขวัญยืน\nมีความสุขสมหวังในทุกสิ่งที่ตั้งใจ'
+      }
+    ];
+
+    /* ========================================================================
+       4. APPLICATION STATE & STORAGE KEYS
+       ======================================================================== */
+    const DRAFT_KEY = 'aiba:draft:greeting:v1';
+    const DEFAULT_STATE = {
+      selectedId: GREET_STYLES[0].id,
+      dayId: 'mon',
+      wish: GREET_STYLES[0].defaultWish,
+      from: '',
+      to: '',
+      optPhoto: false,
+      optEng: false,
+      optText: true
+    };
+
+    const state = { ...DEFAULT_STATE };
+    const fontSizes = [16, 18, 20];
+    let currentFontIdx = 0;
+    let toastTimer = null;
+    let isSpeaking = false;
+
+    /* ========================================================================
+       5. THEME & ACCESSIBILITY FONT SIZE CONTROLLER (MATCHING MAIN PAGE)
+       ======================================================================== */
+    function applyTheme(theme) {
+      const normalized = theme === 'dark' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', normalized);
+      try { localStorage.setItem('aiba:theme', normalized); } catch (e) {}
+
+      const themeText = document.getElementById('themeText');
+      const themeIcon = document.getElementById('themeIcon');
+      if (normalized === 'dark') {
+        if (themeText) themeText.textContent = 'สว่าง';
+        if (themeIcon) {
+          themeIcon.innerHTML =
+            '<circle cx="12" cy="12" r="4"/>' +
+            '<path d="M12 2v2"/><path d="M12 20v2"/>' +
+            '<path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>' +
+            '<path d="M2 12h2"/><path d="M20 12h2"/>' +
+            '<path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+        }
+      } else {
+        if (themeText) themeText.textContent = 'มืด';
+        if (themeIcon) {
+          themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    function applyFontSize(idx) {
+      currentFontIdx = Math.max(0, Math.min(fontSizes.length - 1, idx));
+      document.documentElement.style.fontSize = fontSizes[currentFontIdx] + 'px';
+      try { localStorage.setItem('aiba:fontIdx', String(currentFontIdx)); } catch (e) {}
+    }
+
+    function changeFontSize(delta) {
+      applyFontSize(currentFontIdx + delta);
+    }
+
+    /* ========================================================================
+       6. HELPERS & TOAST
+       ======================================================================== */
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getStyleById(id) {
+      return GREET_STYLES.find(s => s.id === id) || GREET_STYLES[0];
+    }
+
+    function getDayById(id) {
+      return DAYS_DATA.find(d => d.id === id) || DAYS_DATA[1];
+    }
+
+    function getStyleImgSrc(style) {
+      return encodeAssetPath(GREET_FOLDER, style.file);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>${escapeHtml(msg)}</span>
+      `;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    /* ========================================================================
+       7. RENDER GALLERY, DAYS & WISH CHIPS
+       ======================================================================== */
+    function renderGreetGrid() {
+      const grid = document.getElementById('greetGrid');
+      if (!grid) return;
+
+      grid.innerHTML = GREET_STYLES.map(style => {
+        const isSelected = style.id === state.selectedId;
+        const imgSrc = getStyleImgSrc(style);
+        return `
+          <article
+            class="greet-card ${style.themeClass}${isSelected ? ' is-selected' : ''}"
+            data-id="${style.id}"
+            role="listitem"
+            tabindex="0"
+            aria-current="${isSelected ? 'true' : 'false'}"
+            aria-label="เลือกสไตล์ ${escapeHtml(style.title)} — ${escapeHtml(style.shortTh)}"
+            onclick="selectGreetStyle('${style.id}', true)"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectGreetStyle('${style.id}', true)}"
+          >
+            <div class="greet-card-media">
+              <img src="${imgSrc}" alt="ตัวอย่างภาพอวยพรสไตล์ ${escapeHtml(style.title)}" loading="lazy" />
+              <span class="greet-num-badge">${style.num}</span>
+              <button
+                type="button"
+                class="greet-zoom-btn"
+                title="ขยายดูภาพตัวอย่าง ${escapeHtml(style.title)}"
+                aria-label="ขยายดูภาพตัวอย่าง ${escapeHtml(style.title)}"
+                onclick="event.stopPropagation(); openStyleLightbox('${style.id}')"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                  <path d="M11 8v6"/>
+                  <path d="M8 11h6"/>
+                </svg>
+              </button>
+              <span class="greet-selected-badge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>กำลังเลือก</span>
+              </span>
+            </div>
+            <div class="greet-card-body">
+              <h3 class="greet-card-title">${escapeHtml(style.title)}</h3>
+              <p class="greet-card-sub">${escapeHtml(style.shortTh)}</p>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderDayChips() {
+      const container = document.getElementById('greetDays');
+      if (!container) return;
+      const todayJsDay = new Date().getDay();
+
+      container.innerHTML = DAYS_DATA.map(day => {
+        const isActive = day.id === state.dayId;
+        const isToday = day.jsDay === todayJsDay;
+        return `
+          <button
+            type="button"
+            class="day-chip${isActive ? ' on' : ''}"
+            data-day="${day.id}"
+            aria-pressed="${isActive ? 'true' : 'false'}"
+            onclick="selectDay('${day.id}')"
+          >
+            <span class="day-swatch" style="background:${day.colorHex};" aria-hidden="true"></span>
+            <span>${escapeHtml(day.label)}</span>
+            ${isToday ? '<span class="day-today-tag">วันนี้</span>' : ''}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderWishChips() {
+      const container = document.getElementById('greetWishChips');
+      if (!container) return;
+
+      const currentWish = (state.wish || '').trim();
+      container.innerHTML = PRESET_WISHES.map((item, idx) => {
+        const isMatch = currentWish === item.text.trim();
+        return `
+          <button
+            type="button"
+            class="wish-chip${isMatch ? ' on' : ''}"
+            data-wish-idx="${idx}"
+            onclick="applyPresetWish(${idx})"
+          >
+            <span>${escapeHtml(item.label)}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function syncSelectedCardUI() {
+      document.querySelectorAll('#greetGrid .greet-card').forEach(card => {
+        const active = card.dataset.id === state.selectedId;
+        card.classList.toggle('is-selected', active);
+        card.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+    }
+
+    function syncDayChipsUI() {
+      document.querySelectorAll('#greetDays .day-chip').forEach(chip => {
+        const active = chip.dataset.day === state.dayId;
+        chip.classList.toggle('on', active);
+        chip.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    function syncWishChipsUI() {
+      const currentWish = (state.wish || '').trim();
+      document.querySelectorAll('#greetWishChips .wish-chip').forEach((chip, idx) => {
+        const item = PRESET_WISHES[idx];
+        chip.classList.toggle('on', Boolean(item && currentWish === item.text.trim()));
+      });
+    }
+
+    function syncToggleChipsUI() {
+      const map = [
+        ['gtPhoto', state.optPhoto],
+        ['gtEng', state.optEng],
+        ['gtText', state.optText]
+      ];
+      map.forEach(([id, isOn]) => {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+        btn.classList.toggle('on', isOn);
+        btn.setAttribute('aria-pressed', String(isOn));
+      });
+    }
+
+    function syncClearButtonsUI() {
+      const fromBtn = document.getElementById('clearFromBtn');
+      const toBtn = document.getElementById('clearToBtn');
+      if (fromBtn) fromBtn.classList.toggle('show', (state.from || '').trim().length > 0);
+      if (toBtn) toBtn.classList.toggle('show', (state.to || '').trim().length > 0);
+    }
+
+    /* ========================================================================
+       8. INTERACTIVE CONTROLLERS
+       ======================================================================== */
+    function selectGreetStyle(styleId, shouldScroll) {
+      const prevStyle = getStyleById(state.selectedId);
+      const nextStyle = getStyleById(styleId);
+      state.selectedId = nextStyle.id;
+
+      // If wish is still empty or matches previous style's default, offer the new style's matching wish
+      const trimmedWish = (state.wish || '').trim();
+      if (!trimmedWish || trimmedWish === prevStyle.defaultWish.trim()) {
+        state.wish = nextStyle.defaultWish;
+        const wishEl = document.getElementById('greetWish');
+        if (wishEl) wishEl.value = state.wish;
+      }
+
+      hideResumeBanner();
+      syncSelectedCardUI();
+      syncWishChipsUI();
+      updateDetailPanel();
+      buildGreetPrompt();
+      saveDraft();
+
+      if (shouldScroll) {
+        const target = document.getElementById('section-customize');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function stepStyle(delta) {
+      const idx = GREET_STYLES.findIndex(s => s.id === state.selectedId);
+      const nextIdx = (idx + delta + GREET_STYLES.length) % GREET_STYLES.length;
+      selectGreetStyle(GREET_STYLES[nextIdx].id, false);
+    }
+
+    function selectDay(dayId) {
+      state.dayId = getDayById(dayId).id;
+      hideResumeBanner();
+      syncDayChipsUI();
+      updateDayIndicator();
+      buildGreetPrompt();
+      saveDraft();
+    }
+
+    function applyPresetWish(idx) {
+      const item = PRESET_WISHES[idx];
+      if (!item) return;
+      state.wish = item.text;
+      const wishEl = document.getElementById('greetWish');
+      if (wishEl) wishEl.value = state.wish;
+      hideResumeBanner();
+      syncWishChipsUI();
+      buildGreetPrompt();
+      saveDraft();
+    }
+
+    function onWishInput() {
+      const wishEl = document.getElementById('greetWish');
+      state.wish = wishEl ? wishEl.value : '';
+      hideResumeBanner();
+      syncWishChipsUI();
+      buildGreetPrompt();
+      saveDraft();
+    }
+
+    function clearWishInput() {
+      const wishEl = document.getElementById('greetWish');
+      if (wishEl) {
+        wishEl.value = '';
+        wishEl.focus();
+      }
+      onWishInput();
+    }
+
+    function onNameInput() {
+      const fromEl = document.getElementById('greetFrom');
+      const toEl = document.getElementById('greetTo');
+      state.from = fromEl ? fromEl.value : '';
+      state.to = toEl ? toEl.value : '';
+      syncClearButtonsUI();
+      hideResumeBanner();
+      buildGreetPrompt();
+      saveDraft();
+    }
+
+    function clearSingleInput(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = '';
+        el.focus();
+      }
+      onNameInput();
+    }
+
+    function toggleChip(btnId) {
+      if (btnId === 'gtPhoto') state.optPhoto = !state.optPhoto;
+      else if (btnId === 'gtEng') state.optEng = !state.optEng;
+      else if (btnId === 'gtText') state.optText = !state.optText;
+
+      hideResumeBanner();
+      syncToggleChipsUI();
+      buildGreetPrompt();
+      saveDraft();
+    }
+
+    /* ========================================================================
+       9. DETAIL PANEL & REAL-TIME PROMPT + CAPTION BUILDER
+       ======================================================================== */
+    function updateDayIndicator() {
+      const day = getDayById(state.dayId);
+      const orb = document.getElementById('dayColorOrb');
+      const label = document.getElementById('dayColorLabel');
+      const resultBadge = document.getElementById('resultDayBadge');
+
+      if (orb) orb.style.background = day.colorHex;
+      if (label) label.textContent = `${day.label} · ${day.shortColor}`;
+      if (resultBadge) resultBadge.textContent = `${day.label} · ${day.shortColor}`;
+    }
+
+    function updateDetailPanel() {
+      const style = getStyleById(state.selectedId);
+      const bigImg = document.getElementById('greetBigImg');
+      const titleEl = document.getElementById('greetTitle');
+      const subEl = document.getElementById('greetSub');
+      const numBadge = document.getElementById('greetNumberBadge');
+      const traitsEl = document.getElementById('greetTraits');
+      const pillText = document.getElementById('customizePillText');
+      const resultTitle = document.getElementById('resultSheetTitle');
+      const galleryPill = document.getElementById('galleryActivePill');
+
+      if (bigImg) {
+        bigImg.src = getStyleImgSrc(style);
+        bigImg.alt = `ตัวอย่างภาพอวยพรสไตล์ ${style.title}`;
+      }
+      if (titleEl) titleEl.textContent = style.title;
+      if (subEl) subEl.textContent = style.description;
+      if (numBadge) numBadge.textContent = `แบบที่ ${style.num} / 04`;
+      if (traitsEl) {
+        traitsEl.innerHTML = style.traits
+          .map(t => `<span class="style-trait-tag">${escapeHtml(t)}</span>`)
+          .join('');
+      }
+      if (pillText) pillText.textContent = `สไตล์ที่เลือก: ${style.title}`;
+      if (resultTitle) resultTitle.textContent = `Prompt ภาพอวยพร · ${style.title}`;
+      if (galleryPill) {
+        galleryPill.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>เลือกอยู่: ${escapeHtml(style.title)}</span>
+        `;
+      }
+      updateDayIndicator();
+    }
+
+    function buildGreetPrompt() {
+      const style = getStyleById(state.selectedId);
+      const day = getDayById(state.dayId);
+      const wishClean = (state.wish || '').trim();
+      const fromClean = (state.from || '').trim();
+      const toClean = (state.to || '').trim();
+
+      const blocks = [];
+
+      // 1. Opening objective
+      blocks.push(
+        `สร้างภาพการ์ดอวยพรแนวตั้ง (สัดส่วน 2:3 หรือ 9:16 สำหรับส่งใน LINE) สไตล์ "${style.title}" สำหรับ "${day.greeting}" โดยใช้โทนสีมงคลประจำวันคือ${day.colorName}`
+      );
+
+      // 2. Scene & art direction from selected style
+      blocks.push(style.sceneBuilder(day));
+
+      // 3. Personal photo attachment option
+      if (state.optPhoto) {
+        blocks.push(
+          'การใส่รูปบุคคลที่แนบ: นำภาพบุคคลจากรูปที่ฉันแนบมาผสานลงในฉากการ์ดอวยพรอย่างเป็นธรรมชาติและนุ่มนวล คงใบหน้า รอยยิ้ม ทรงผม และเอกลักษณ์ของบุคคลในภาพต้นฉบับให้เหมือนเดิม 100% ปรับแสงและโทนสีให้กลมกลืนกับบรรยากาศของภาพ'
+        );
+      }
+
+      // 4. Typography / text instructions
+      if (state.optText) {
+        const textLines = [];
+        textLines.push(`- หัวข้อหลักภาษาไทย: "${day.greeting}" (ขนาดใหญ่เด่นชัด อ่านง่าย)`);
+        if (state.optEng) {
+          textLines.push(`- หัวข้อรองภาษาอังกฤษ: "${day.engTitle}" (จัดวางคู่กับหัวข้อหลักอย่างสวยงาม)`);
+        }
+        if (wishClean) {
+          const formattedWish = wishClean.split(/\r?\n/).map(l => l.trim()).filter(Boolean).join(' / ');
+          textLines.push(`- ข้อความคำอวยพร (คงการแบ่งบรรทัดให้อ่านสบายตา): "${formattedWish}"`);
+        }
+        if (toClean) {
+          textLines.push(`- ชื่อผู้รับ: "ถึง ${toClean}"`);
+        }
+        if (fromClean) {
+          textLines.push(`- ชื่อผู้ส่ง (วางมุมล่างอย่างสุภาพ): "จาก ${fromClean}"`);
+        }
+        blocks.push(
+          'ข้อความที่ต้องการให้ใส่ลงในภาพ (สะกดภาษาไทยให้ถูกต้องครบถ้วน 100% วรรณยุกต์ไม่ตกหล่น ตัวอักษรมีขอบหรือเงาอ่อนให้อ่านชัดตัดกับพื้นหลัง):\n' +
+          textLines.join('\n')
+        );
+      } else {
+        blocks.push(
+          'ข้อกำหนดเรื่องตัวหนังสือ: ห้ามใส่ตัวหนังสือ ตัวอักษรภาษาไทย ภาษาอังกฤษ ตัวเลข หรือลายน้ำใด ๆ ลงในภาพโดยเด็ดขาด แต่ให้เว้นพื้นที่ว่างที่พื้นหลังสะอาดและนุ่มนวลบริเวณด้านบนและด้านล่าง เพื่อให้ฉันนำภาพไปพิมพ์คำอวยพรเองใน CapCut หรือแอปแต่งภาพได้ง่าย'
+        );
+      }
+
+      // 5. Quality control
+      blocks.push(
+        'คุณภาพภาพ: ความละเอียดสูง คมชัด สีสันสดใสสบายตา จัดองค์ประกอบสมดุล ไม่มีส่วนเกินผิดธรรมชาติ ไม่มีลายน้ำ'
+      );
+
+      const promptOut = document.getElementById('greetPromptOutput');
+      if (promptOut) promptOut.textContent = blocks.join('\n\n');
+
+      // Update dynamic step hints when user toggles photo option
+      const stepPhotoHint = document.getElementById('resultStepPhotoHint');
+      const openAppHint = document.getElementById('openAppHint');
+      if (state.optPhoto) {
+        if (stepPhotoHint) stepPhotoHint.innerHTML = '<span class="mini-num">2</span>แนบรูปตัวเองก่อนแล้ววาง Prompt';
+        if (openAppHint) openAppHint.textContent = 'ขั้นต่อไป: กดเปิดแอป AI แนบรูปตัวเองก่อนแล้วจึงวาง Prompt (ระบบคัดลอกให้อัตโนมัติก่อนเปิด)';
+      } else {
+        if (stepPhotoHint) stepPhotoHint.innerHTML = '<span class="mini-num">2</span>วาง Prompt ลงในแชท AI';
+        if (openAppHint) openAppHint.textContent = 'ขั้นต่อไป: กดเปิดแอป AI แล้ววาง Prompt ได้เลย (ระบบคัดลอกให้อัตโนมัติก่อนเปิด)';
+      }
+
+      // Build accompanying caption for posting
+      buildGreetCaption(style, day, wishClean, fromClean, toClean);
+
+      // Clear old copy status messages on edit
+      const copyMsg = document.getElementById('greetCopyMessage');
+      const capMsg = document.getElementById('captionCopyMessage');
+      if (copyMsg) copyMsg.textContent = '';
+      if (capMsg) capMsg.textContent = '';
+    }
+
+    function buildGreetCaption(style, day, wishClean, fromClean, toClean) {
+      const lines = [];
+      let header = day.greeting;
+      if (state.optEng) header += ` · ${day.engTitle}`;
+      if (toClean) header += ` ถึง ${toClean}`;
+      lines.push(header);
+
+      if (wishClean) {
+        lines.push(wishClean);
+      } else {
+        lines.push(`${style.captionMood} ขอให้มีความสุข สุขภาพแข็งแรง ตลอดทั้งวัน`);
+      }
+
+      if (fromClean) {
+        lines.push(`ด้วยความปรารถนาดีจาก ${fromClean}`);
+      }
+
+      const dayTag = day.id === 'any' ? '#ภาพอวยพร' : `#${day.greeting.replace(/\s+/g, '')}`;
+      lines.push(`${dayTag} #คำอวยพรประจำวัน #ส่งต่อความสุข`);
+
+      const capOut = document.getElementById('greetCaptionOutput');
+      if (capOut) capOut.textContent = lines.join('\n\n');
+    }
+
+    /* ========================================================================
+       10. COPY, TEXT-TO-SPEECH & OPEN EXTERNAL AI APP
+       ======================================================================== */
+    function copyTextFallback(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (e) {
+          copyTextFallback(text);
+          return true;
+        }
+      }
+      copyTextFallback(text);
+      return true;
+    }
+
+    function setCopyStatus(msgEl, text) {
+      if (!msgEl) return;
+      msgEl.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>${escapeHtml(text)}</span>
+      `;
+    }
+
+    async function copyText(outputId, msgId, successLabel) {
+      const el = document.getElementById(outputId);
+      const msgEl = document.getElementById(msgId);
+      const text = el ? (el.textContent || '').trim() : '';
+      if (!text) return;
+
+      await copyToClipboard(text);
+      setCopyStatus(msgEl, successLabel || 'คัดลอกเรียบร้อยแล้ว');
+      showToast(successLabel || 'คัดลอกเรียบร้อยแล้ว');
+    }
+
+    function copyForApp(outputId, msgId, appName) {
+      const el = document.getElementById(outputId);
+      const msgEl = document.getElementById(msgId);
+      const text = el ? (el.textContent || '').trim() : '';
+      if (text) {
+        copyToClipboard(text);
+        const note = state.optPhoto
+          ? `คัดลอก Prompt ให้อัตโนมัติแล้ว แนบรูปตัวเองก่อนแล้ววางใน ${appName || 'แอป AI'} ได้เลย`
+          : `คัดลอก Prompt ให้อัตโนมัติแล้ว วางใน ${appName || 'แอป AI'} ได้เลย`;
+        setCopyStatus(msgEl, note);
+        showToast(`คัดลอกแล้ว กำลังเปิด ${appName || 'แอป AI'}...`);
+      }
+      return true;
+    }
+
+    function updateSpeakButtonUI(speaking) {
+      isSpeaking = speaking;
+      const btn = document.getElementById('speakBtn');
+      const txt = document.getElementById('speakBtnText');
+      const icon = document.getElementById('speakIcon');
+      if (btn) btn.classList.toggle('is-speaking', speaking);
+      if (txt) txt.textContent = speaking ? 'หยุดอ่าน' : 'อ่านให้ฟัง';
+      if (icon) {
+        icon.innerHTML = speaking
+          ? '<rect width="12" height="12" x="6" y="6" rx="2"/>'
+          : '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>';
+      }
+    }
+
+    function toggleSpeakPrompt() {
+      if (!('speechSynthesis' in window)) {
+        showToast('เบราว์เซอร์นี้ไม่รองรับการอ่านออกเสียง');
+        return;
+      }
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        updateSpeakButtonUI(false);
+        return;
+      }
+      const el = document.getElementById('greetPromptOutput');
+      const text = el ? (el.textContent || '').trim() : '';
+      if (!text) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'th-TH';
+      utter.rate = 0.96;
+      utter.onend = () => updateSpeakButtonUI(false);
+      utter.onerror = () => updateSpeakButtonUI(false);
+      updateSpeakButtonUI(true);
+      window.speechSynthesis.speak(utter);
+    }
+
+    /* ========================================================================
+       11. DRAFT PERSISTENCE & RESUME WORK BANNER (localStorage)
+       ======================================================================== */
+    function isDefaultDraft(d) {
+      if (!d) return true;
+      return (
+        d.selectedId === DEFAULT_STATE.selectedId &&
+        d.dayId === DEFAULT_STATE.dayId &&
+        (d.wish || '') === DEFAULT_STATE.wish &&
+        (d.from || '') === DEFAULT_STATE.from &&
+        (d.to || '') === DEFAULT_STATE.to &&
+        Boolean(d.optPhoto) === DEFAULT_STATE.optPhoto &&
+        Boolean(d.optEng) === DEFAULT_STATE.optEng &&
+        Boolean(d.optText) === DEFAULT_STATE.optText
+      );
+    }
+
+    function saveDraft() {
+      const draft = {
+        selectedId: state.selectedId,
+        dayId: state.dayId,
+        wish: state.wish,
+        from: state.from,
+        to: state.to,
+        optPhoto: state.optPhoto,
+        optEng: state.optEng,
+        optText: state.optText,
+        updatedAt: Date.now()
+      };
+      if (isDefaultDraft(draft)) {
+        clearDraftStorage();
+        return;
+      }
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); } catch (e) {}
+    }
+
+    function clearDraftStorage() {
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    }
+
+    function hideResumeBanner() {
+      const banner = document.getElementById('resumeBanner');
+      if (banner) banner.classList.remove('show');
+    }
+
+    function checkSavedDraft() {
+      try {
+        const raw = localStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        if (isDefaultDraft(draft)) return;
+
+        const style = getStyleById(draft.selectedId);
+        const day = getDayById(draft.dayId);
+        const parts = [`สไตล์: ${style.title}`, day.label];
+        if (draft.from && draft.from.trim()) parts.push(`จาก: ${draft.from.trim()}`);
+        if (draft.to && draft.to.trim()) parts.push(`ถึง: ${draft.to.trim()}`);
+        if (draft.updatedAt) {
+          const dt = new Date(draft.updatedAt);
+          const timeStr = dt.toLocaleString('th-TH', {
+            day: 'numeric',
+            month: 'short',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          parts.push(`บันทึกล่าสุด ${timeStr}`);
+        }
+
+        const infoEl = document.getElementById('resumeInfo');
+        const banner = document.getElementById('resumeBanner');
+        if (infoEl) infoEl.textContent = parts.join(' · ');
+        if (banner) banner.classList.add('show');
+      } catch (e) {}
+    }
+
+    function syncFormFieldsFromState() {
+      const wishEl = document.getElementById('greetWish');
+      const fromEl = document.getElementById('greetFrom');
+      const toEl = document.getElementById('greetTo');
+      if (wishEl) wishEl.value = state.wish;
+      if (fromEl) fromEl.value = state.from;
+      if (toEl) toEl.value = state.to;
+      syncClearButtonsUI();
+    }
+
+    function restoreWork() {
+      try {
+        const raw = localStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+
+        state.selectedId = getStyleById(draft.selectedId).id;
+        state.dayId = getDayById(draft.dayId).id;
+        state.wish = draft.wish !== undefined ? draft.wish : DEFAULT_STATE.wish;
+        state.from = draft.from || '';
+        state.to = draft.to || '';
+        state.optPhoto = Boolean(draft.optPhoto);
+        state.optEng = Boolean(draft.optEng);
+        state.optText = draft.optText !== undefined ? Boolean(draft.optText) : true;
+
+        syncFormFieldsFromState();
+        syncSelectedCardUI();
+        syncDayChipsUI();
+        syncWishChipsUI();
+        syncToggleChipsUI();
+        updateDetailPanel();
+        buildGreetPrompt();
+        hideResumeBanner();
+        showToast('กู้คืนงานที่ทำค้างไว้เรียบร้อยแล้ว');
+      } catch (e) {
+        hideResumeBanner();
+      }
+    }
+
+    function discardWork() {
+      Object.assign(state, DEFAULT_STATE);
+      clearDraftStorage();
+      hideResumeBanner();
+      syncFormFieldsFromState();
+      syncSelectedCardUI();
+      syncDayChipsUI();
+      syncWishChipsUI();
+      syncToggleChipsUI();
+      updateDetailPanel();
+      buildGreetPrompt();
+      showToast('ล้างงานเดิมแล้ว พร้อมเริ่มใหม่');
+    }
+
+    /* ========================================================================
+       12. LIGHTBOX CONTROLLER
+       ======================================================================== */
+    function openStyleLightbox(styleId) {
+      const style = getStyleById(styleId);
+      openLightbox(getStyleImgSrc(style), `${style.num}. ${style.title} — ${style.shortTh}`);
+    }
+
+    function openLightbox(src, caption) {
+      if (!src) return;
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      const cap = document.getElementById('lightboxCaption');
+
+      img.onerror = () => {
+        closeLightbox();
+        showToast('ไม่สามารถโหลดภาพขนาดใหญ่ได้');
+      };
+      img.src = src;
+      img.alt = caption || 'ภาพขยาย';
+      if (caption) {
+        cap.textContent = caption;
+        cap.style.display = 'inline-flex';
+      } else {
+        cap.textContent = '';
+        cap.style.display = 'none';
+      }
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox) lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* ========================================================================
+       13. INITIALIZATION
+       ======================================================================== */
+    (function init() {
+      // Restore Theme
+      let savedTheme = 'light';
+      try { savedTheme = localStorage.getItem('aiba:theme') || 'light'; } catch (e) {}
+      applyTheme(savedTheme);
+
+      // Restore Font Size
+      let savedFontIdx = 0;
+      try { savedFontIdx = parseInt(localStorage.getItem('aiba:fontIdx') || '0', 10); } catch (e) {}
+      if (isNaN(savedFontIdx)) savedFontIdx = 0;
+      applyFontSize(savedFontIdx);
+
+      // Setup Hero Lightbox
+      const heroTrigger = document.getElementById('heroVisualTrigger');
+      const heroImg = document.getElementById('heroVisualImg');
+      if (heroTrigger && heroImg) {
+        const openHeroLightbox = () => openLightbox(heroImg.src, 'ภาพอวยพรประจำวัน — AiBA Connect');
+        heroTrigger.addEventListener('click', openHeroLightbox);
+        heroTrigger.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openHeroLightbox();
+          }
+        });
+      }
+
+      // Setup Big Preview Lightbox
+      const bigWrap = document.getElementById('greetBigWrap');
+      if (bigWrap) {
+        const triggerBigZoom = () => openStyleLightbox(state.selectedId);
+        bigWrap.addEventListener('click', triggerBigZoom);
+        bigWrap.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerBigZoom();
+          }
+        });
+      }
+
+      // Keyboard Escape for Lightbox
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const lightbox = document.getElementById('lightbox');
+          if (lightbox && lightbox.classList.contains('open')) {
+            closeLightbox();
+          }
+        }
+      });
+
+      // Render Initial UI
+      renderGreetGrid();
+      renderDayChips();
+      renderWishChips();
+      syncFormFieldsFromState();
+      syncToggleChipsUI();
+      updateDetailPanel();
+      buildGreetPrompt();
+      checkSavedDraft();
+    })();
+  </script>
+</body>
+</html>

@@ -1660,7 +1660,7 @@
             </div>
           </div>
 
-          <a href="page-guide.html" class="btn-primary-gradient" style="background: var(--cat-guide-grad);">
+          <a href="#top" id="guideStartBtn" class="btn-primary-gradient" style="background: var(--cat-guide-grad);">
             <span>เริ่มใช้งาน</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
@@ -2020,6 +2020,21 @@
           }, 800);
         });
       });
+
+      // Smooth scroll back to top when clicking "เริ่มใช้งาน" in #cat-guide
+      const guideStartBtn = document.getElementById('guideStartBtn');
+      if (guideStartBtn) {
+        guideStartBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          clearTimeout(smoothScrollTimer);
+          isSmoothScrolling = false;
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          onScrollUpdate();
+        });
+      }
 
       // Passive scroll and resize listeners with requestAnimationFrame
       let scrollRaf = null;

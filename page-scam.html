@@ -752,159 +752,175 @@
     }
 
     /* ==========================================================================
-       7. FIVE WARNING SIGNS PANEL (#scamSigns — RED / ORANGE / AMBER)
+       7. FIVE WARNING SIGNS INFOGRAPHIC PANEL (RED / ORANGE / AMBER LIQUID GLASS)
        ========================================================================== */
     .signs-panel {
       position: relative;
       border-radius: var(--radius-lg);
       background: var(--sign-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: 1.5px solid var(--sign-border);
-      border-left: 5px solid var(--sign-solid);
-      padding: 20px 22px 22px;
+      outline: 1px solid var(--glass-border);
+      padding: 22px;
       margin-bottom: 24px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 16px 38px var(--sign-glow), var(--glass-inset);
+      overflow: hidden;
     }
 
-    .signs-panel-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .signs-panel-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .signs-panel-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+    .signs-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
       background: var(--sign-grad);
-      color: #FFFFFF;
-      display: inline-flex;
+    }
+
+    .signs-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(420px 260px at 12% 8%, rgba(239, 68, 68, 0.14), transparent 70%),
+        radial-gradient(420px 260px at 88% 92%, rgba(234, 179, 8, 0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    .signs-infographic-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 6px 16px var(--sign-glow);
-    }
-
-    .signs-panel-title {
-      font-family: var(--font-heading);
-      font-size: 1.12rem;
-      font-weight: 700;
-      color: var(--sign-heading);
-    }
-
-    .signs-panel-sub {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      margin-top: 1px;
-    }
-
-    .signs-panel-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: var(--radius-pill);
-      background: var(--sign-soft);
-      border: 1px solid var(--sign-border);
-      color: var(--sign-heading);
-      font-family: var(--font-heading);
-      font-size: 0.82rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .signs-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
     }
 
-    /* Styles any card injected by app.js or fallback inside #scamSigns */
-    .signs-grid > * {
+    .signs-infographic-trigger {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 14px 14px 15px;
-      border-radius: var(--radius-md);
-      background: var(--sign-card-bg);
-      border: 1.5px solid var(--sign-border);
-      box-shadow: var(--shadow-sm);
-      color: var(--text-primary);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.64);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(255, 255, 255, 0.86);
+      outline: 1px solid var(--sign-border);
+      box-shadow: 0 14px 34px rgba(190, 18, 60, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.76);
+      cursor: zoom-in;
+      overflow: hidden;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
     }
 
-    .signs-grid > *:hover {
-      transform: translateY(-3px);
+    [data-theme="dark"] .signs-infographic-trigger {
+      background: rgba(15, 18, 37, 0.56);
+      border-color: rgba(251, 146, 60, 0.40);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .signs-infographic-trigger:hover {
+      transform: translateY(-2px);
       border-color: var(--sign-solid);
-      box-shadow: 0 10px 22px var(--sign-glow);
+      box-shadow: 0 20px 44px var(--sign-glow), inset 0 1px 0 rgba(255, 255, 255, 0.78);
     }
 
-    .signs-grid .sign-top {
-      display: flex;
+    .signs-infographic-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      border-radius: 15px;
+      background: #1B090B;
+      transition: transform 0.28s ease;
+    }
+
+    .signs-infographic-trigger:hover .signs-infographic-img {
+      transform: scale(1.012);
+    }
+
+    .signs-zoom-btn {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      justify-content: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--sign-border);
+      color: var(--sign-heading);
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .signs-grid .sign-icon,
-    .signs-grid .ic {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
+    .signs-zoom-btn:hover {
+      background: var(--sign-grad);
+      border-color: transparent;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px var(--sign-glow);
+    }
+
+    .signs-infographic-fallback {
+      display: none;
+      width: 100%;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg-strong);
+      border: 1.5px solid var(--sign-border);
+      color: var(--text-primary);
+      text-align: left;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .signs-infographic-fallback.show {
+      display: flex;
+    }
+
+    .signs-fallback-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
       background: var(--sign-grad);
       color: #FFFFFF;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px var(--sign-glow);
+      box-shadow: 0 6px 14px var(--sign-glow);
     }
 
-    .signs-grid .sign-num,
-    .signs-grid .num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 26px;
-      height: 24px;
-      padding: 0 8px;
-      border-radius: var(--radius-pill);
-      background: var(--sign-soft);
-      border: 1px solid var(--sign-border);
-      color: var(--sign-heading);
-      font-family: var(--font-heading);
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-
-    .signs-grid b,
-    .signs-grid strong,
-    .signs-grid h4,
-    .signs-grid .sign-title {
+    .signs-infographic-fallback strong {
       display: block;
       font-family: var(--font-heading);
-      font-size: 0.96rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--sign-heading);
-      line-height: 1.35;
+      margin-bottom: 3px;
     }
 
-    .signs-grid p,
-    .signs-grid span:not(.sign-icon):not(.sign-num):not(.num),
-    .signs-grid small,
-    .signs-grid .sign-desc {
-      font-size: 0.86rem;
+    .signs-infographic-fallback p {
+      font-size: 0.92rem;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.55;
+    }
+
+    .signs-infographic-fallback code {
+      font-size: 0.86em;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: var(--sign-soft);
+      color: var(--sign-heading);
     }
 
     /* ==========================================================================
@@ -2106,12 +2122,6 @@
     /* ==========================================================================
        16. RESPONSIVE BREAKPOINTS
        ========================================================================== */
-    @media (max-width: 1060px) {
-      .signs-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
     @media (max-width: 960px) {
       .choice-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2189,13 +2199,17 @@
       }
 
       .signs-panel {
-        padding: 16px 14px;
-        border-radius: 18px;
+        padding: 14px 12px;
+        border-radius: 20px;
       }
 
-      .signs-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+      .signs-infographic-trigger {
+        padding: 7px;
+        border-radius: 17px;
+      }
+
+      .signs-infographic-img {
+        border-radius: 12px;
       }
 
       .step {
@@ -2255,10 +2269,6 @@
         width: 36px;
         padding: 0;
         justify-content: center;
-      }
-
-      .signs-grid {
-        grid-template-columns: 1fr;
       }
 
       .choice-grid {
@@ -2413,32 +2423,57 @@
         </div>
       </div>
 
-      <!-- 5 Warning Signs Panel (#scamSigns — Red / Orange / Amber Theme) -->
-      <div class="signs-panel" role="region" aria-label="สัญญาณเตือน 5 ข้อ รู้ทันมิจฉาชีพ">
-        <div class="signs-panel-head">
-          <div class="signs-panel-title-wrap">
-            <span class="signs-panel-icon" aria-hidden="true">
+      <!-- 5 Warning Signs Infographic Panel (Red / Orange / Amber Liquid Glass) -->
+      <div class="signs-panel signs-infographic-panel" role="region" aria-label="ภาพอินโฟกราฟิก สัญญาณเตือน 5 ข้อ ถ้าเจอให้หยุดทันที">
+        <div class="signs-infographic-wrap">
+          <button
+            type="button"
+            id="scamInfographicBtn"
+            class="signs-infographic-trigger"
+            onclick="openScamInfographicLightbox()"
+            aria-label="คลิกเพื่อขยายภาพสัญญาณเตือน 5 ข้อแบบเต็มจอ"
+            title="คลิกเพื่อขยายดูภาพเต็มจอ"
+          >
+            <img
+              id="scamInfographicImg"
+              class="signs-infographic-img"
+              src="AiBaPicture/รู้ทันหลอกลวง/5 สัญญาณ.png"
+              alt="อินโฟกราฟิก สัญญาณเตือน 5 ข้อ ถ้าเจอให้หยุดทันที: 01 เร่งรัด ขู่ให้กลัว, 02 ขอ OTP หรือข้อมูลลับ, 03 ให้กดลิงก์ หรือโหลดแอป, 04 โอนก่อน หรือกำไรสูงเกินจริง, 05 อ้างเจ้าหน้าที่ หรือญาติด่วน"
+              loading="eager"
+              decoding="async"
+              onerror="if(window.handleScamInfographicError){handleScamInfographicError(this);}else{this.dataset.failed='1';this.style.display='none';}"
+            />
+          </button>
+
+          <button
+            type="button"
+            id="scamInfographicZoomBtn"
+            class="signs-zoom-btn"
+            onclick="openScamInfographicLightbox()"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+              <path d="M11 8v6"/>
+              <path d="M8 11h6"/>
+            </svg>
+            <span>แตะภาพเพื่อขยายดูเต็มจอ</span>
+          </button>
+
+          <div id="scamInfographicFallback" class="signs-infographic-fallback" role="alert">
+            <span class="signs-fallback-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
-                <path d="M12 9v4"/>
-                <path d="M12 17h.01"/>
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
               </svg>
             </span>
             <div>
-              <h2 class="signs-panel-title">สัญญาณเตือน 5 ข้อ ถ้าเจอให้หยุดทันที</h2>
-              <p class="signs-panel-sub">ตั้งสติ วางสาย และตรวจสอบก่อนทุกครั้ง</p>
+              <strong>ไม่สามารถโหลดภาพสัญญาณเตือน 5 ข้อได้ในขณะนี้</strong>
+              <p>กรุณาตรวจสอบไฟล์ภาพ <code>AiBaPicture/รู้ทันหลอกลวง/5 สัญญาณ.png</code> หรือลองรีเฟรชหน้านี้อีกครั้ง</p>
             </div>
           </div>
-          <span class="signs-panel-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" x2="12" y1="8" y2="12"/>
-              <line x1="12" x2="12.01" y1="16" y2="16"/>
-            </svg>
-            <span>เตือนภัย 5 ข้อ</span>
-          </span>
         </div>
-        <div class="signs-grid" id="scamSigns"></div>
       </div>
 
       <div class="steps-stack">
@@ -3066,65 +3101,59 @@
       }
 
       /* ======================================================================
-         3. STANDALONE SCAM GUARD FALLBACK (ONLY IF app.js NOT LOADED)
+         3. INFOGRAPHIC LIGHTBOX & ERROR HANDLER
+         ====================================================================== */
+      window.openScamInfographicLightbox = function () {
+        const img = document.getElementById('scamInfographicImg');
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        if (!img || !lb || !lbImg || !img.complete || img.naturalWidth === 0) return;
+
+        lbImg.src = img.currentSrc || img.src;
+        lbImg.alt = img.alt || 'ภาพขยาย สัญญาณเตือน 5 ข้อ ถ้าเจอให้หยุดทันที';
+        lb.classList.add('open');
+      };
+
+      window.handleScamInfographicError = function (imgEl) {
+        if (imgEl) imgEl.style.display = 'none';
+        const btn = document.getElementById('scamInfographicBtn');
+        const zoomBtn = document.getElementById('scamInfographicZoomBtn');
+        const fallback = document.getElementById('scamInfographicFallback');
+        if (btn) btn.style.display = 'none';
+        if (zoomBtn) zoomBtn.style.display = 'none';
+        if (fallback) fallback.classList.add('show');
+      };
+
+      (function checkInfographicState() {
+        const img = document.getElementById('scamInfographicImg');
+        if (img && (img.dataset.failed === '1' || (img.complete && img.naturalWidth === 0))) {
+          window.handleScamInfographicError(img);
+        }
+      })();
+
+      if (typeof window.closeLightbox !== 'function') {
+        window.closeLightbox = function () {
+          const lb = document.getElementById('lightbox');
+          if (lb) lb.classList.remove('open', 'show');
+        };
+      }
+
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape') {
+          const lb = document.getElementById('lightbox');
+          if (lb && (lb.classList.contains('open') || lb.classList.contains('show'))) {
+            window.closeLightbox();
+          }
+        }
+      });
+
+      /* ======================================================================
+         4. STANDALONE SCAM GUARD FALLBACK (ONLY IF app.js NOT LOADED)
          ====================================================================== */
       const hasExternalApp = typeof window.generateScamPrompt === 'function' && typeof window.pickChoice === 'function';
 
-      const FALLBACK_SIGNS = [
-        {
-          num: '01',
-          title: 'เร่งรัด ขู่ให้กลัว',
-          desc: 'ขู่ว่ามีคดีความ บัญชีจะถูกอายัด หรือต้องทำทันทีภายในไม่กี่นาที',
-          icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
-        },
-        {
-          num: '02',
-          title: 'ขอ OTP หรือข้อมูลลับ',
-          desc: 'ถามรหัส OTP รหัสผ่าน เลขหลังบัตร หรือให้ถ่ายรูปบัตรประชาชนส่งให้',
-          icon: '<path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/>'
-        },
-        {
-          num: '03',
-          title: 'ให้กดลิงก์ / โหลดแอป',
-          desc: 'ส่งลิงก์แปลกทาง SMS หรือ LINE หรือบอกให้ติดตั้งแอปนอก Store',
-          icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'
-        },
-        {
-          num: '04',
-          title: 'โอนก่อน / กำไรสูงเกินจริง',
-          desc: 'ชวนลงทุนได้ผลตอบแทนเร็ว หรืออ้างได้รางวัลแต่ต้องโอนค่าธรรมเนียมก่อน',
-          icon: '<rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>'
-        },
-        {
-          num: '05',
-          title: 'อ้างเจ้าหน้าที่ / ญาติด่วน',
-          desc: 'วิดีโอคอลใส่ชุดเครื่องแบบ หรืออ้างเป็นคนรู้จักเดือดร้อนขอยืมเงินด่วน',
-          icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/>'
-        }
-      ];
-
-      function renderFallbackSigns() {
-        const container = document.getElementById('scamSigns');
-        if (!container || container.children.length > 0) return;
-        container.innerHTML = FALLBACK_SIGNS.map(function (item) {
-          return (
-            '<div class="sign-card">' +
-              '<div class="sign-top">' +
-                '<span class="sign-icon" aria-hidden="true">' +
-                  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + item.icon + '</svg>' +
-                '</span>' +
-                '<span class="sign-num">' + item.num + '</span>' +
-              '</div>' +
-              '<strong class="sign-title">' + item.title + '</strong>' +
-              '<p class="sign-desc">' + item.desc + '</p>' +
-            '</div>'
-          );
-        }).join('');
-      }
-
       if (!hasExternalApp) {
         const DRAFT_KEY = 'aiba:scamDraft:v1';
-        renderFallbackSigns();
 
         function fallbackCopy(text) {
           const ta = document.createElement('textarea');
@@ -3480,14 +3509,10 @@
             if (banner) banner.classList.add('show');
           } catch (e) {}
         })();
-      } else {
-        document.addEventListener('DOMContentLoaded', function () {
-          renderFallbackSigns();
-        });
       }
 
       /* ======================================================================
-         4. STANDARD FOOTER FALLBACK (ONLY IF footer.js DID NOT INJECT ONE)
+         5. STANDARD FOOTER FALLBACK (ONLY IF footer.js DID NOT INJECT ONE)
          ====================================================================== */
       document.addEventListener('DOMContentLoaded', function () {
         if (!document.querySelector('footer')) {

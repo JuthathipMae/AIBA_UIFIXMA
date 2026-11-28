@@ -705,15 +705,48 @@
     }
 
     .section-description {
-      background: var(--glass-bg-strong);
-      border: 1px solid var(--glass-outline);
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(210px, 244px);
+      align-items: center;
+      gap: 20px 26px;
+      background:
+        radial-gradient(420px 220px at 96% 8%, rgba(14, 165, 233, 0.11), transparent 72%),
+        radial-gradient(360px 220px at 4% 92%, rgba(13, 148, 136, 0.10), transparent 72%),
+        var(--glass-bg-strong);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--ai-border);
+      outline: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 18px 20px;
+      padding: 20px 22px;
       margin-bottom: 24px;
       color: var(--text-secondary);
       font-size: 0.99rem;
-      line-height: 1.7;
-      box-shadow: var(--shadow-sm);
+      line-height: 1.72;
+      box-shadow: var(--shadow-sm), var(--glass-inset);
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .section-description {
+      background:
+        radial-gradient(420px 220px at 96% 8%, rgba(14, 165, 233, 0.18), transparent 72%),
+        radial-gradient(360px 220px at 4% 92%, rgba(13, 148, 136, 0.18), transparent 72%),
+        var(--glass-bg-strong);
+      border-color: rgba(45, 212, 191, 0.34);
+      outline-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .section-description.no-preview {
+      grid-template-columns: 1fr;
+    }
+
+    .desc-copy {
+      min-width: 0;
+    }
+
+    .desc-copy p {
+      margin: 0;
     }
 
     .section-description strong {
@@ -725,7 +758,141 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
+    }
+
+    .desc-preview-wrap {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .desc-preview-btn {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 10px;
+      border-radius: 20px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.86) 0%, rgba(240, 253, 250, 0.78) 52%, rgba(240, 249, 255, 0.84) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 255, 255, 0.90);
+      outline: 1px solid rgba(13, 148, 136, 0.30);
+      box-shadow:
+        0 14px 30px rgba(13, 148, 136, 0.16),
+        0 4px 12px rgba(14, 165, 233, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      cursor: zoom-in;
+      text-align: left;
+      overflow: hidden;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, outline-color 0.24s ease;
+    }
+
+    .desc-preview-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--ai-grad);
+      opacity: 0.95;
+    }
+
+    [data-theme="dark"] .desc-preview-btn {
+      background:
+        linear-gradient(145deg, rgba(13, 148, 136, 0.22) 0%, rgba(15, 23, 42, 0.72) 52%, rgba(14, 165, 233, 0.22) 100%);
+      border-color: rgba(45, 212, 191, 0.36);
+      outline-color: rgba(56, 189, 248, 0.26);
+      box-shadow:
+        0 16px 34px rgba(0, 0, 0, 0.44),
+        0 0 0 1px rgba(45, 212, 191, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    .desc-preview-btn:hover {
+      transform: translateY(-3px);
+      outline-color: var(--ai-solid);
+      box-shadow:
+        0 18px 38px var(--ai-glow),
+        0 6px 16px rgba(13, 148, 136, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    }
+
+    [data-theme="dark"] .desc-preview-btn:hover {
+      border-color: rgba(94, 234, 212, 0.65);
+      box-shadow:
+        0 20px 42px rgba(14, 165, 233, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.20);
+    }
+
+    .desc-preview-frame {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 13px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(13, 148, 136, 0.12), rgba(14, 165, 233, 0.12));
+      border: 1px solid rgba(13, 148, 136, 0.18);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+
+    [data-theme="dark"] .desc-preview-frame {
+      background: linear-gradient(145deg, rgba(13, 148, 136, 0.20), rgba(14, 165, 233, 0.16));
+      border-color: rgba(45, 212, 191, 0.24);
+    }
+
+    .desc-preview-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.32s ease;
+    }
+
+    .desc-preview-btn:hover .desc-preview-frame img {
+      transform: scale(1.03);
+    }
+
+    .desc-preview-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 4px 2px;
+    }
+
+    .desc-preview-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--ai-grad);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.26);
+    }
+
+    .desc-preview-zoom {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ai-text);
+      white-space: nowrap;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .desc-preview-btn:hover .desc-preview-zoom {
+      color: var(--ai-solid);
+      transform: translateX(1px);
     }
 
     .flow-chip {
@@ -1821,6 +1988,11 @@
        14. RESPONSIVE BREAKPOINTS
        ========================================================================== */
     @media (max-width: 960px) {
+      .section-description {
+        grid-template-columns: minmax(0, 1fr) minmax(195px, 224px);
+        gap: 18px 20px;
+      }
+
       .choice-grid,
       .choice-grid.cols-3 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1837,6 +2009,19 @@
       .footer-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .section-description {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 18px 16px;
+      }
+
+      .desc-preview-wrap {
+        max-width: 300px;
+        margin: 0 auto;
       }
     }
 
@@ -2085,17 +2270,47 @@
 
     <!-- Post Builder Section (#postBuilder) -->
     <section id="postBuilder" class="builder-panel builder active">
-      <div class="section-description">
-        บอกว่าจะโพสต์เรื่องอะไร ลงที่ไหน อยากให้เสียงเป็นแบบไหน ระบบจะสร้างคำสั่งให้ AI
-        <strong>เขียนโพสต์มาให้เลือก 3 แบบ พร้อมแฮชแท็กและคำชวนกดสั่ง/ติดตาม</strong> เลือกแบบที่ชอบแล้วก๊อปไปโพสต์ได้เลย
-        <div class="desc-flow" aria-label="สรุป 7 ขั้นตอนการสร้างโพสต์">
-          <a class="flow-chip c-s1" href="#step1">1. เรื่องที่จะโพสต์</a>
-          <a class="flow-chip c-s2" href="#step2">2. ช่องทาง</a>
-          <a class="flow-chip c-s3" href="#step3">3. เป้าหมาย</a>
-          <a class="flow-chip c-s4" href="#step4">4. โทนเสียง</a>
-          <a class="flow-chip c-s5" href="#step5">5. สิ่งที่ควรมี</a>
-          <a class="flow-chip c-s6" href="#step6">6. คนอ่าน</a>
-          <a class="flow-chip c-s7" href="#step7">7. เพิ่มเติม</a>
+      <div class="section-description" id="postSectionDescription">
+        <div class="desc-copy">
+          <p>
+            บอกว่าจะโพสต์เรื่องอะไร ลงที่ไหน อยากให้เสียงเป็นแบบไหน ระบบจะสร้างคำสั่งให้ AI
+            <strong>เขียนโพสต์มาให้เลือก 3 แบบ พร้อมแฮชแท็กและคำชวนกดสั่ง/ติดตาม</strong> เลือกแบบที่ชอบแล้วก๊อปไปโพสต์ได้เลย
+          </p>
+          <div class="desc-flow" aria-label="สรุป 7 ขั้นตอนการสร้างโพสต์">
+            <a class="flow-chip c-s1" href="#step1">1. เรื่องที่จะโพสต์</a>
+            <a class="flow-chip c-s2" href="#step2">2. ช่องทาง</a>
+            <a class="flow-chip c-s3" href="#step3">3. เป้าหมาย</a>
+            <a class="flow-chip c-s4" href="#step4">4. โทนเสียง</a>
+            <a class="flow-chip c-s5" href="#step5">5. สิ่งที่ควรมี</a>
+            <a class="flow-chip c-s6" href="#step6">6. คนอ่าน</a>
+            <a class="flow-chip c-s7" href="#step7">7. เพิ่มเติม</a>
+          </div>
+        </div>
+
+        <div class="desc-preview-wrap" id="postPreviewWrap">
+          <button type="button" class="desc-preview-btn" onclick="openPostPreviewLightbox()" aria-label="คลิกเพื่อขยายดูภาพตัวอย่างโพสต์">
+            <div class="desc-preview-frame">
+              <img
+                id="postPreviewImg"
+                src="AiBaPicture/เขียนโพสต์โซเชียล/ตัวอย่างโพสต์.JPG"
+                alt="ตัวอย่างโพสต์โซเชียล"
+                loading="lazy"
+                onerror="this.dataset.failed='1'; if(window.handlePostPreviewError){window.handlePostPreviewError(this);} else { this.style.display='none'; var w=document.getElementById('postPreviewWrap'); if(w) w.style.display='none'; var d=document.getElementById('postSectionDescription'); if(d) d.classList.add('no-preview'); }"
+              />
+            </div>
+            <div class="desc-preview-meta">
+              <span class="desc-preview-tag">ตัวอย่างโพสต์</span>
+              <span class="desc-preview-zoom">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                  <path d="M11 8v6"/>
+                  <path d="M8 11h6"/>
+                </svg>
+                <span>ขยายดู</span>
+              </span>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -3013,6 +3228,51 @@
           toast.classList.remove('show');
         }, 2600);
       }
+
+      /* ======================================================================
+         2.5 EXAMPLE PREVIEW LIGHTBOX & ERROR HANDLER
+         ====================================================================== */
+      window.openPostPreviewLightbox = function () {
+        const img = document.getElementById('postPreviewImg');
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        if (!img || !lb || !lbImg || !img.complete || img.naturalWidth === 0) return;
+
+        lbImg.src = img.currentSrc || img.src;
+        lbImg.alt = img.alt || 'ภาพขยาย ตัวอย่างโพสต์โซเชียล';
+        lb.classList.add('open');
+      };
+
+      window.handlePostPreviewError = function (imgEl) {
+        if (imgEl) imgEl.style.display = 'none';
+        const wrap = document.getElementById('postPreviewWrap');
+        const desc = document.getElementById('postSectionDescription');
+        if (wrap) wrap.style.display = 'none';
+        if (desc) desc.classList.add('no-preview');
+      };
+
+      (function checkPostPreviewState() {
+        const img = document.getElementById('postPreviewImg');
+        if (img && (img.dataset.failed === '1' || (img.complete && img.naturalWidth === 0))) {
+          window.handlePostPreviewError(img);
+        }
+      })();
+
+      if (typeof window.closeLightbox !== 'function') {
+        window.closeLightbox = function () {
+          const lb = document.getElementById('lightbox');
+          if (lb) lb.classList.remove('open', 'show');
+        };
+      }
+
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape') {
+          const lb = document.getElementById('lightbox');
+          if (lb && (lb.classList.contains('open') || lb.classList.contains('show'))) {
+            window.closeLightbox();
+          }
+        }
+      });
 
       /* ======================================================================
          3. STANDALONE POST BUILDER FALLBACK (ONLY ACTIVE IF app.js NOT LOADED)

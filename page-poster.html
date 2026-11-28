@@ -2188,19 +2188,23 @@
         font-size: 0.82rem;
       }
 
-      .logo-slot {
+      .floating-navbar .logo-slot {
         height: 32px;
       }
 
-      .logo-slot img {
+      .floating-navbar .logo-slot img {
         height: 34px;
       }
 
-      .brand-name {
+      .floating-navbar .brand-name {
         font-size: 1.02rem;
       }
 
-      .a11y-btn {
+      .floating-navbar .nav-actions {
+        gap: 6px;
+      }
+
+      .floating-navbar .a11y-btn {
         height: 36px;
         min-width: 36px;
         padding: 0 10px;
@@ -2243,22 +2247,82 @@
       }
     }
 
-    @media (max-width: 460px) {
-      .nav-back-text,
-      .brand-divider,
-      .logo-pim-nav,
-      #themeText {
+    @media (max-width: 640px) {
+      .floating-navbar .nav-brand {
+        gap: 8px;
+      }
+
+      .floating-navbar .nav-back-text,
+      .floating-navbar .brand-divider,
+      .floating-navbar .logo-slot.logo-pim-nav {
         display: none;
       }
 
-      .nav-back-btn {
+      .floating-navbar .nav-back-btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .floating-navbar #themeText {
+        display: none;
+      }
+
+      .floating-navbar #themeBtn {
         width: 36px;
         padding: 0;
         justify-content: center;
       }
+    }
 
+    @media (max-width: 460px) {
       .ref-thumb-btn {
         width: 92px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .floating-navbar {
+        padding: 7px 10px;
+        gap: 6px;
+      }
+
+      .nav-left,
+      .floating-navbar .nav-brand {
+        gap: 6px;
+      }
+
+      .floating-navbar .logo-slot {
+        height: 28px;
+      }
+
+      .floating-navbar .logo-slot img {
+        height: 30px;
+      }
+
+      .floating-navbar .brand-name {
+        font-size: 0.94rem;
+      }
+
+      .floating-navbar .nav-actions {
+        gap: 4px;
+      }
+
+      .floating-navbar .nav-back-btn,
+      .floating-navbar .a11y-btn {
+        height: 34px;
+        min-width: 34px;
+        padding: 0 8px;
+        font-size: 0.8rem;
+      }
+
+      .floating-navbar .nav-back-btn,
+      .floating-navbar #themeBtn {
+        width: 34px;
+        padding: 0;
       }
     }
 

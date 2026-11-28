@@ -218,7 +218,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-shrink: 0;
+      min-width: 0;
     }
 
     .logo-slot {
@@ -230,6 +230,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .logo-slot img {
@@ -242,6 +243,7 @@
       width: 1px;
       height: 26px;
       background: var(--glass-outline);
+      flex-shrink: 0;
     }
 
     .brand-name {
@@ -253,6 +255,9 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-left: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Navbar Right: Accessibility Tools */
@@ -1062,7 +1067,7 @@
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 640px) {
       .navbar-wrapper {
         top: 8px;
         padding: 0 10px;
@@ -1070,14 +1075,62 @@
 
       .floating-navbar {
         padding: 8px 12px;
-        border-radius: 20px;
+        border-radius: 22px;
       }
 
       .floating-navbar.has-capsules {
-        border-radius: 20px;
-        padding: 8px 10px 10px;
+        border-radius: 22px;
+        padding: 8px 12px 10px;
       }
 
+      .nav-top-row {
+        gap: 8px;
+      }
+
+      .floating-navbar .nav-brand {
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .floating-navbar .logo-slot {
+        height: 32px;
+        padding: 0;
+        display: inline-flex;
+        flex-shrink: 0;
+      }
+
+      .floating-navbar .logo-slot img {
+        height: 34px;
+        width: auto;
+      }
+
+      .floating-navbar .logo-slot.logo-pim-nav,
+      .floating-navbar .brand-divider {
+        display: none;
+      }
+
+      .floating-navbar .brand-name {
+        font-size: 1.02rem;
+        margin-left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .floating-navbar .nav-actions {
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .floating-navbar .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+    }
+
+    @media (max-width: 560px) {
       .floating-navbar .category-capsules {
         gap: 6px;
         padding: 2px 0 4px;
@@ -1097,19 +1150,6 @@
       .floating-navbar .cat-capsule-icon svg {
         width: 12px;
         height: 12px;
-      }
-
-      .brand-name {
-        font-size: 18px;
-      }
-
-    .logo-slot {
-        height: 34px;
-        padding: 0;
-      }
-
-      .logo-slot img {
-        height: 50px;
       }
 
       .hero-title {
@@ -1133,6 +1173,56 @@
         grid-template-columns: 1fr;
       }
     }
+
+    @media (max-width: 480px) {
+      .floating-navbar #themeText {
+        display: none;
+      }
+
+      .floating-navbar #themeToggleBtn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .floating-navbar {
+        padding: 7px 10px;
+      }
+
+      .floating-navbar .nav-brand {
+        gap: 6px;
+      }
+
+      .floating-navbar .logo-slot {
+        height: 28px;
+      }
+
+      .floating-navbar .logo-slot img {
+        height: 30px;
+      }
+
+      .floating-navbar .brand-name {
+        font-size: 0.94rem;
+      }
+
+      .floating-navbar .nav-actions {
+        gap: 4px;
+      }
+
+      .floating-navbar .a11y-btn {
+        height: 34px;
+        min-width: 34px;
+        padding: 0 8px;
+        font-size: 0.8rem;
+      }
+
+      .floating-navbar #themeToggleBtn {
+        width: 34px;
+        padding: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1150,7 +1240,7 @@
             <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
           </span>
           <span class="brand-divider" aria-hidden="true"></span>
-          <span class="logo-slot" data-figma-layer="Logo-PIM">
+          <span class="logo-slot logo-pim-nav" data-figma-layer="Logo-PIM">
             <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
           </span>
           <span class="brand-name">AiBA Connect</span>

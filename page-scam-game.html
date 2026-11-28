@@ -399,6 +399,20 @@
       text-overflow: ellipsis;
     }
 
+    .brand-name-mobile {
+      display: none;
+      font-family: var(--font-heading);
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -1963,19 +1977,25 @@
         font-size: 0.84rem;
       }
 
-      .logo-slot {
-        height: 30px;
-      }
-
-      .logo-slot img {
+      .floating-navbar .logo-slot {
         height: 32px;
+        display: inline-flex;
+        flex-shrink: 0;
       }
 
-      .topbar-title {
+      .floating-navbar .logo-slot img {
+        height: 34px;
+      }
+
+      .floating-navbar .topbar-title {
         font-size: 1rem;
       }
 
-      .a11y-btn {
+      .floating-navbar .nav-actions {
+        gap: 6px;
+      }
+
+      .floating-navbar .a11y-btn {
         height: 36px;
         min-width: 36px;
         padding: 0 10px;
@@ -2048,15 +2068,37 @@
       }
     }
 
-    @media (max-width: 480px) {
-      .nav-back-text,
-      .logo-slot,
-      .brand-divider,
-      #themeText {
+    @media (max-width: 640px) {
+      .floating-navbar .nav-brand {
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .floating-navbar .nav-back-text,
+      .floating-navbar .brand-divider,
+      .floating-navbar .logo-slot.logo-pim-nav,
+      .floating-navbar .topbar-title {
         display: none;
       }
 
-      .nav-back-btn {
+      .floating-navbar .brand-name-mobile {
+        display: block;
+      }
+
+      .floating-navbar .nav-back-btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .floating-navbar #themeText {
+        display: none;
+      }
+
+      .floating-navbar #themeBtn {
         width: 36px;
         padding: 0;
         justify-content: center;
@@ -2064,6 +2106,48 @@
 
       .game-pts {
         width: 100%;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .floating-navbar {
+        padding: 7px 10px;
+        gap: 6px;
+      }
+
+      .nav-left,
+      .floating-navbar .nav-brand {
+        gap: 6px;
+      }
+
+      .floating-navbar .logo-slot {
+        height: 28px;
+      }
+
+      .floating-navbar .logo-slot img {
+        height: 30px;
+      }
+
+      .floating-navbar .brand-name-mobile {
+        font-size: 0.94rem;
+      }
+
+      .floating-navbar .nav-actions {
+        gap: 4px;
+      }
+
+      .floating-navbar .nav-back-btn,
+      .floating-navbar .a11y-btn {
+        height: 34px;
+        min-width: 34px;
+        padding: 0 8px;
+        font-size: 0.8rem;
+      }
+
+      .floating-navbar .nav-back-btn,
+      .floating-navbar #themeBtn {
+        width: 34px;
+        padding: 0;
       }
     }
 
@@ -2097,6 +2181,7 @@
           </span>
           <span class="brand-divider" aria-hidden="true"></span>
           <div class="topbar-title">เกม วัยเก๋ารู้ทัน</div>
+          <span class="brand-name-mobile">AiBA Connect</span>
         </div>
       </div>
 

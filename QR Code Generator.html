@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>QR Code Generator — AiBA Connect</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
   <style>
     :root {
+      --font-heading: "Kanit", sans-serif;
       --bg-grad-1: #eef2ff;
       --bg-grad-2: #fdf2f8;
+      --bg-base: #f1f5f9;
       --card-bg: rgba(255, 255, 255, 0.9);
       --border-soft: rgba(148, 163, 184, 0.25);
       --text-main: #1e293b;
@@ -21,11 +23,53 @@
       --accent-secondary: #1e293b;
       --accent-secondary-hover: #0f172a;
       --input-bg: #f8fafc;
+      --input-border: #cbd5e1;
       --ring: rgba(190, 18, 60, 0.16);
+      --brand-violet: #7C3AED;
+      --brand-gradient: linear-gradient(135deg, #FF6B6B 0%, #7C3AED 100%);
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-bg-strong: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-outline: rgba(124, 58, 237, 0.12);
+      --glass-blur: blur(18px);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+      --shadow-sm: 0 4px 16px rgba(19, 24, 54, 0.05);
+      --shadow-md: 0 12px 32px rgba(19, 24, 54, 0.08);
+      --radius-pill: 9999px;
+      --container-max: 1240px;
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg-grad-1: rgba(255, 107, 107, 0.14);
+      --bg-grad-2: rgba(124, 58, 237, 0.16);
+      --bg-base: #0F1225;
+      --card-bg: rgba(26, 31, 60, 0.88);
+      --border-soft: rgba(255, 255, 255, 0.12);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent-primary: #FB7185;
+      --accent-primary-hover: #F43F5E;
+      --accent-secondary: #334155;
+      --accent-secondary-hover: #475569;
+      --input-bg: rgba(14, 17, 36, 0.82);
+      --input-border: rgba(255, 255, 255, 0.16);
+      --ring: rgba(251, 113, 133, 0.24);
+      --glass-bg: rgba(26, 31, 60, 0.80);
+      --glass-bg-strong: rgba(30, 36, 68, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --glass-outline: rgba(167, 139, 250, 0.22);
+      --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.38);
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
     }
 
     body {
@@ -36,11 +80,156 @@
       background:
         radial-gradient(circle at top left, var(--bg-grad-1), transparent 55%),
         radial-gradient(circle at bottom right, var(--bg-grad-2), transparent 55%),
-        #f1f5f9;
+        var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      overflow-x: clip;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Floating Glass Navbar (Matching page-poster.html) */
+    .navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1000;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .floating-navbar {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-md), var(--glass-inset);
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .nav-back-btn {
+      height: 38px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-slot {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-slot img {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--glass-outline);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.22rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .a11y-btn {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-outline);
+      color: var(--text-main);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .a11y-btn:hover {
+      border-color: var(--brand-violet);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .qr-page-main {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 28px 24px;
     }
 
     .app-shell {
@@ -102,7 +291,7 @@
     .file-input {
       width: 100%;
       border-radius: 14px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--input-border);
       background: var(--input-bg);
       padding: 12px 14px;
       font-family: inherit;
@@ -115,7 +304,7 @@
     .file-input:focus {
       outline: none;
       border-color: var(--accent-primary);
-      background: #ffffff;
+      background: var(--glass-bg-strong);
       box-shadow: 0 0 0 4px var(--ring);
     }
 
@@ -123,8 +312,8 @@
       margin-right: 12px;
       padding: 6px 12px;
       border-radius: 10px;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
+      border: 1px solid var(--input-border);
+      background: var(--glass-bg-strong);
       font-family: inherit;
       font-size: 0.85rem;
       font-weight: 500;
@@ -134,7 +323,7 @@
     }
 
     .file-input::file-selector-button:hover {
-      background: #f1f5f9;
+      opacity: 0.88;
     }
 
     .actions {
@@ -180,7 +369,7 @@
     }
 
     .preview-panel {
-      background: #ffffff;
+      background: var(--glass-bg-strong);
       border: 1px solid var(--border-soft);
       border-radius: 22px;
       padding: 24px;
@@ -190,7 +379,7 @@
       justify-content: center;
       min-height: 330px;
       text-align: center;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      box-shadow: var(--glass-inset);
     }
 
     .qr-canvas-wrap {
@@ -225,6 +414,10 @@
     }
 
     @media (max-width: 768px) {
+      .qr-page-main {
+        padding: 20px 14px 28px;
+      }
+
       .app-shell {
         padding: 22px 18px;
         border-radius: 22px;
@@ -238,9 +431,164 @@
         flex-direction: column;
       }
     }
+
+    @media (max-width: 680px) {
+      .navbar-wrapper {
+        top: 8px;
+        padding: 0 10px;
+      }
+
+      .floating-navbar {
+        padding: 8px 12px;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .nav-left {
+        gap: 8px;
+      }
+
+      .nav-back-btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.82rem;
+      }
+
+      .floating-navbar .logo-slot {
+        height: 32px;
+      }
+
+      .floating-navbar .logo-slot img {
+        height: 34px;
+      }
+
+      .floating-navbar .brand-name {
+        font-size: 1.02rem;
+      }
+
+      .floating-navbar .nav-actions {
+        gap: 6px;
+      }
+
+      .floating-navbar .a11y-btn {
+        height: 36px;
+        min-width: 36px;
+        padding: 0 10px;
+        font-size: 0.84rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .floating-navbar .nav-brand {
+        gap: 8px;
+      }
+
+      .floating-navbar .nav-back-text,
+      .floating-navbar .brand-divider,
+      .floating-navbar .logo-slot.logo-pim-nav {
+        display: none;
+      }
+
+      .floating-navbar .nav-back-btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .floating-navbar #themeText {
+        display: none;
+      }
+
+      .floating-navbar #themeBtn {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .floating-navbar {
+        padding: 7px 10px;
+        gap: 6px;
+      }
+
+      .nav-left,
+      .floating-navbar .nav-brand {
+        gap: 6px;
+      }
+
+      .floating-navbar .logo-slot {
+        height: 28px;
+      }
+
+      .floating-navbar .logo-slot img {
+        height: 30px;
+      }
+
+      .floating-navbar .brand-name {
+        font-size: 0.94rem;
+      }
+
+      .floating-navbar .nav-actions {
+        gap: 4px;
+      }
+
+      .floating-navbar .nav-back-btn,
+      .floating-navbar .a11y-btn {
+        height: 34px;
+        min-width: 34px;
+        padding: 0 8px;
+        font-size: 0.8rem;
+      }
+
+      .floating-navbar .nav-back-btn,
+      .floating-navbar #themeBtn {
+        width: 34px;
+        padding: 0;
+      }
+    }
   </style>
 </head>
 <body>
+  <header class="navbar-wrapper">
+    <nav class="floating-navbar" aria-label="เมนูหลัก QR Code Generator">
+      <div class="nav-left">
+        <a href="index.html" class="nav-back-btn" aria-label="กลับหน้าหลัก">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="nav-back-text">หน้าหลัก</span>
+        </a>
+        <a href="index.html" class="nav-brand" aria-label="AiBA Connect — QR Code Generator">
+          <span class="logo-slot">
+            <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="logo-slot logo-pim-nav">
+            <img src="AiBaPicture/หน้าหลัก/pim-logo.png" alt="โลโก้สถาบันการจัดการปัญญาภิวัฒน์ (PIM)" />
+          </span>
+          <span class="brand-name">AiBA Connect</span>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="a11y-btn" id="fontDecBtn" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร" aria-label="ลดขนาดตัวอักษร">A-</button>
+        <button type="button" class="a11y-btn" id="fontIncBtn" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+        <button type="button" class="a11y-btn" id="themeBtn" onclick="toggleTheme()" title="สลับโหมดสีหน้าจอ" aria-label="สลับโหมดสีหน้าจอ">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeText">มืด</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="qr-page-main">
   <main class="app-shell">
     <header class="app-header">
       <h1>QR Code Generator</h1>
@@ -296,8 +644,60 @@
       </aside>
     </div>
   </main>
+  </div>
 
   <script>
+    const FONT_SIZES = [16, 18, 20];
+    let currentFontIdx = 0;
+
+    function applyTheme(theme) {
+      const normalized = theme === "dark" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", normalized);
+      try { localStorage.setItem("aiba:theme", normalized); } catch (e) {}
+      const themeText = document.getElementById("themeText");
+      const themeIcon = document.getElementById("themeIcon");
+      if (normalized === "dark") {
+        if (themeText) themeText.textContent = "สว่าง";
+        if (themeIcon) {
+          themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+        }
+      } else {
+        if (themeText) themeText.textContent = "มืด";
+        if (themeIcon) {
+          themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const curr = document.documentElement.getAttribute("data-theme") || "light";
+      applyTheme(curr === "light" ? "dark" : "light");
+    }
+
+    function applyFontSize(idx) {
+      currentFontIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx));
+      document.documentElement.style.fontSize = FONT_SIZES[currentFontIdx] + "px";
+      try { localStorage.setItem("aiba:fontIdx", String(currentFontIdx)); } catch (e) {}
+    }
+
+    function changeFontSize(delta) {
+      const next = currentFontIdx + delta;
+      if (next >= 0 && next < FONT_SIZES.length) {
+        applyFontSize(next);
+      }
+    }
+
+    (function initNavbarPrefs() {
+      let savedTheme = "light";
+      let savedFont = 0;
+      try {
+        savedTheme = localStorage.getItem("aiba:theme") || "light";
+        savedFont = parseInt(localStorage.getItem("aiba:fontIdx") || "0", 10);
+      } catch (e) {}
+      applyTheme(savedTheme);
+      applyFontSize(Number.isNaN(savedFont) ? 0 : savedFont);
+    })();
+
     const urlInput = document.getElementById("urlInput");
     const logoInput = document.getElementById("logoInput");
     const filenameInput = document.getElementById("filenameInput");

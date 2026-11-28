@@ -341,7 +341,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
+  min-width: 0;
 }
 
 .logo-slot {
@@ -349,6 +349,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .logo-slot img {
@@ -373,6 +374,22 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand-name-mobile {
+  display: none;
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-actions {
@@ -1377,31 +1394,87 @@ li.no .cw {
 
 @media (max-width: 760px) {
   .floating-navbar {
-    border-radius: 24px;
-    flex-wrap: wrap;
-    padding: 10px 14px;
+    padding: 8px 14px;
     gap: 10px;
   }
 
-  .nav-left {
-    width: 100%;
-    justify-content: space-between;
+  .floating-navbar .btn-reset span {
+    display: none;
   }
 
-  .nav-actions {
-    width: 100%;
-    justify-content: flex-end;
-    padding-top: 8px;
-    border-top: 1px solid var(--glass-outline);
+  .floating-navbar .btn-reset {
+    width: 38px;
+    padding: 0;
+    justify-content: center;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .navbar-wrapper {
     top: 8px;
     padding: 0 10px;
   }
 
+  .floating-navbar {
+    padding: 8px 12px;
+    border-radius: 22px;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .nav-left,
+  .floating-navbar .nav-brand {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .floating-navbar .nav-back-text,
+  .floating-navbar .brand-divider,
+  .floating-navbar .logo-slot.logo-pim-nav,
+  .floating-navbar .brand-name-desktop {
+    display: none;
+  }
+
+  .floating-navbar .brand-name-mobile {
+    display: block;
+  }
+
+  .floating-navbar .nav-back-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .floating-navbar .logo-slot {
+    height: 32px;
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .floating-navbar .logo-slot img {
+    height: 34px;
+  }
+
+  .floating-navbar .nav-actions {
+    gap: 6px;
+  }
+
+  .floating-navbar .a11y-btn {
+    height: 36px;
+    min-width: 36px;
+    padding: 0 10px;
+    font-size: 0.84rem;
+  }
+
+  .floating-navbar .btn-reset {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
   .wrap {
     padding: 18px 14px 44px;
   }
@@ -1410,28 +1483,63 @@ li.no .cw {
     padding: 20px 18px;
   }
 
-  .brand-name {
-    font-size: 1.08rem;
-  }
-
-  .logo-slot img {
-    height: 36px;
-  }
-
-  .nav-back-btn {
-    padding: 0 11px;
-    font-size: 0.82rem;
-  }
-
-  .a11y-btn {
-    height: 36px;
-    min-width: 36px;
-    padding: 0 10px;
-    font-size: 0.84rem;
-  }
-
   .lab-title {
     font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-navbar #themeText {
+    display: none;
+  }
+
+  .floating-navbar #themeToggleBtn {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .floating-navbar {
+    padding: 7px 10px;
+    gap: 6px;
+  }
+
+  .nav-left,
+  .floating-navbar .nav-brand {
+    gap: 6px;
+  }
+
+  .floating-navbar .logo-slot {
+    height: 28px;
+  }
+
+  .floating-navbar .logo-slot img {
+    height: 30px;
+  }
+
+  .floating-navbar .brand-name-mobile {
+    font-size: 0.92rem;
+  }
+
+  .floating-navbar .nav-actions {
+    gap: 4px;
+  }
+
+  .floating-navbar .nav-back-btn,
+  .floating-navbar .a11y-btn {
+    height: 34px;
+    min-width: 34px;
+    padding: 0 7px;
+    font-size: 0.8rem;
+  }
+
+  .floating-navbar .nav-back-btn,
+  .floating-navbar #themeToggleBtn,
+  .floating-navbar .btn-reset {
+    width: 34px;
+    padding: 0;
   }
 }
 </style>
@@ -1445,15 +1553,19 @@ li.no .cw {
     <nav class="floating-navbar" aria-label="เมนูหลัก AiBA Prompt Lab">
       <div class="nav-left">
         <a href="index.html" class="nav-back-btn" aria-label="กลับหน้าหลัก">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          <span>กลับหน้าหลัก</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="nav-back-text">กลับหน้าหลัก</span>
         </a>
-        <a href="index.html" class="nav-brand" aria-label="AiBA Prompt Lab">
+        <a href="index.html" class="nav-brand" aria-label="AiBA Connect — AiBA Prompt Lab">
           <span class="logo-slot">
             <img src="AiBaPicture/หน้าหลัก/aiba-logo.png" alt="โลโก้ศูนย์ AiBA" />
           </span>
           <span class="brand-divider" aria-hidden="true"></span>
-          <span class="brand-name">AiBA Prompt Lab</span>
+          <span class="brand-name brand-name-desktop">AiBA Prompt Lab</span>
+          <span class="brand-name-mobile">AiBA Connect</span>
         </a>
       </div>
 
